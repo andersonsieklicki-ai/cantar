@@ -39,6 +39,47 @@ canvas{touch-action:pan-y}
 }
 @media(max-width:390px){.hero h1{font-size:19px}.topline .pill:nth-child(2){display:none}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(orientation:landscape) and (max-height:500px){.tabs{position:relative}.noteHero{min-height:130px}}
+
+.micLaunch{border:1px solid #287b91;background:linear-gradient(135deg,#16364c 0%,#17263d 58%,#202448 100%);box-shadow:0 16px 40px #0004}
+.micHead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:800;color:#79e1ee}
+.micGlyph{width:64px;height:64px;display:grid;place-items:center;border-radius:20px;background:#1c6278;font-size:31px;box-shadow:0 8px 22px #0003}
+.micQuickStatus{margin:13px 0;padding:12px 14px;border:1px solid #43546b;border-radius:12px;background:#0c1a2b;color:#b7c8dc;font-weight:650}
+.micQuickStatus.active{border-color:#269c74;background:#103b35;color:#9cf0c8}
+.micActions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button.micBig{min-height:60px;border-radius:15px;font-size:15px;font-weight:850;letter-spacing:.2px}
+@media(max-width:760px){
+ body{font-size:16px;line-height:1.55}
+ .wrap{max-width:100%;padding:15px 12px calc(36px + env(safe-area-inset-bottom))}
+ .hero{align-items:center;margin:8px 2px 16px}.hero .logo{width:56px;height:56px;flex-basis:56px;font-size:29px;border-radius:17px}
+ .hero h1{font-size:23px;line-height:1.2}.hero p{font-size:14px}
+ .topline{gap:7px;margin-bottom:12px}.topline .pill{font-size:12px;padding:7px 10px}
+ .tabs{margin:0 -12px 14px;padding:10px 12px;gap:8px}
+ .tab{font-size:14px;min-height:52px;padding:12px 16px;border-radius:14px;font-weight:750}
+ .panel{padding:17px;border-radius:19px;margin-bottom:14px}
+ .panel h2{font-size:20px;line-height:1.3}
+ .panel h3{font-size:17px}
+ .panel p{font-size:15px;line-height:1.6}
+ button{min-height:52px;padding:13px 16px;border-radius:13px;font-size:15px}
+ .row button{flex:1 1 145px}
+ .card{padding:16px;border-radius:15px}.card strong{font-size:18px}
+ .step{padding:16px;border-radius:14px;font-size:14px}
+ .field label{font-size:14px}
+ select,input[type=number],input[type=text],textarea{min-height:50px;padding:12px;font-size:16px}
+ .noteHero{min-height:220px;padding:20px}.bigNote{font-size:86px}
+ .freq{font-size:16px}.cents{font-size:22px}.status{font-size:14px}
+ .meter{height:19px;margin:16px 0 7px}.meter .dot{width:15px;height:15px;top:1px}
+ .meterlabels{font-size:13px}
+ canvas{height:220px}
+ .stats{gap:9px}.stat{padding:13px;border-radius:14px}.stat b{font-size:23px}.stat span{font-size:12px}
+ .piano{gap:6px}.key{min-height:76px;border-radius:10px;font-size:14px}
+ .filebox{padding:15px}.filebox input[type=file]{font-size:15px}
+ .micGlyph{width:58px;height:58px}
+ .micActions{grid-template-columns:1fr}
+ button.micBig{min-height:64px;font-size:17px}
+ .authCard{padding:24px 19px}.authCard h1{font-size:25px}.authCard input{min-height:52px}
+}
+@media(max-width:390px){.hero h1{font-size:21px}.topline .pill:nth-child(2){display:none}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style></head>
 <body><section id="authGate" class="authGate"><div class="authCard"><div class="logo">♫</div><h1>Assistente Vocal — Estrelinha</h1><p class="muted">Entre para acessar o treinamento de Silvane e Marla e sincronizar o progresso entre aparelhos.</p><form id="loginForm"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="username" required placeholder="seu@email.com"><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Sua senha"><div class="row"><button class="primary" type="submit" id="emailLoginBtn">Entrar</button><button type="button" id="registerBtn">Criar conta</button></div></form><button class="googleBtn" id="googleLoginBtn" type="button">Entrar com Google</button><button class="ghost full" id="resetPasswordBtn" type="button">Esqueci minha senha</button><p class="small muted" id="authMessage" aria-live="polite">Use uma conta autorizada para acessar.</p><p class="tiny muted">O áudio do microfone é analisado no navegador. Não é enviado automaticamente para a nuvem.</p></div></section><main class="wrap appLocked" id="appMain">
 <header class="hero"><div class="logo">♫</div><div><h1>Assistente Vocal — Estrelinha</h1><p>Treinamento guiado para Silvane (voz principal) e Marla (segunda voz)</p></div></header>
@@ -60,6 +101,12 @@ canvas{touch-action:pan-y}
 <div class="panel"><div class="row between"><div><h2>Missão: cantar em harmonia no dia 11</h2><p class="muted small">A Marla aprende a segunda voz sem precisar conhecer teoria musical. Silvane mantém a melodia principal. O aplicativo ensina por audição, repetição e comparação.</p></div><span class="tag">Meta: apresentação segura</span></div>
 <div class="grid"><div class="c4"><div class="card"><strong>Silvane</strong><span class="small muted">Voz principal: canta a melodia original, com projeção e emoção sem forçar.</span></div></div><div class="c4"><div class="card"><strong>Marla — camiseta verde</strong><span class="small muted">Segunda voz: aprende a linha harmônica em separado e depois junta com Silvane.</span></div></div><div class="c4"><div class="card"><strong>Banda ao vivo</strong><span class="small muted">Teclado/violão confirmam tom, acordes, notas de apoio e entradas.</span></div></div></div>
 <div class="callout" style="margin-top:12px"><b>Regra técnica:</b> os vídeos enviados têm voz e playback misturados. Eles não permitem atribuir com segurança cada nota a cada cantora nem confirmar o tom. Não usaremos a hipótese F# como certeza. A tonalidade será conferida com o instrumental original e com o instrumento da banda.</div></div>
+<div class="panel micLaunch" id="micQuickPanel">
+ <div class="micHead"><div><span class="eyebrow">TREINO PELO CELULAR</span><h2>Microfone e afinação</h2><p class="muted small">Toque para liberar o microfone e começar a acompanhar as notas cantadas.</p></div><div class="micGlyph">🎙</div></div>
+ <div class="micQuickStatus" id="micQuickStatus" role="status">Microfone ainda não foi ativado</div>
+ <div class="micActions"><button class="primary micBig" id="micQuickStart" type="button">🎙 ATIVAR MICROFONE</button><button class="warn micBig" id="micQuickStop" type="button" disabled>PARAR MICROFONE</button></div>
+ <p class="tiny muted">O navegador solicitará permissão. Escolha “Permitir”. Use Chrome ou Safari atualizado e abra o site por HTTPS. Para medir afinação, grave uma cantora por vez e use fones para o playback.</p>
+</div>
 <div class="panel"><h2>Seu progresso</h2><div class="progressline"><b id="doneCount">0/12</b><div class="bar"><i id="overallBar"></i></div><span class="small muted" id="percentDone">0%</span></div><p class="small muted">Marque as etapas na aba Avaliação. O progresso fica salvo no navegador deste aparelho.</p><div class="row"><button class="primary" data-goto="lesson">Começar pela aula 1</button><button data-goto="plan">Ver calendário de ensaios</button><button class="ghost" onclick="window.print()">Imprimir material</button></div></div>
 <div class="panel"><h2>O que significa cantar segunda voz?</h2><p>A Marla canta a mesma letra que Silvane, no mesmo ritmo, mas em notas diferentes. As duas notas precisam combinar com o acorde tocado pela banda. Não basta escolher qualquer terça ou sexta: a nota muda conforme a melodia e o acorde.</p><div class="steps"><div class="step"><b>1 · ouvir</b>Escutar Silvane e reconhecer a melodia.</div><div class="step"><b>2 · aprender</b>Repetir a melodia principal antes de tentar harmonizar.</div><div class="step"><b>3 · harmonizar</b>Aprender outra nota com teclado/violão e sustentar sua própria linha.</div></div></div>
 </section>
@@ -139,8 +186,18 @@ function drawLive(){drawChart(liveCanvas,lctx,history.slice(-100).map(p=>p&&p.mi
 // Estimador YIN: útil para uma voz isolada e sustentada; pode confundir harmônicos e instrumentos.
 function yin(buffer,sampleRate){let size=buffer.length,rms=0;for(let i=0;i<size;i++)rms+=buffer[i]*buffer[i];rms=Math.sqrt(rms/size);if(rms<.008)return null;let minTau=Math.floor(sampleRate/1000),maxTau=Math.min(Math.floor(sampleRate/65),Math.floor(size/2)),diff=new Float32Array(maxTau+1),cmnd=new Float32Array(maxTau+1);for(let tau=minTau;tau<=maxTau;tau++){let sum=0;for(let i=0;i<size-maxTau;i++){let d=buffer[i]-buffer[i+tau];sum+=d*d}diff[tau]=sum}cmnd[0]=1;let running=0;for(let tau=1;tau<=maxTau;tau++){running+=diff[tau];cmnd[tau]=running?diff[tau]*tau/running:1}let chosen=-1;for(let tau=minTau+1;tau<maxTau;tau++){if(cmnd[tau]<.16&&cmnd[tau]<=cmnd[tau-1]&&cmnd[tau]<cmnd[tau+1]){chosen=tau;while(chosen+1<maxTau&&cmnd[chosen+1]<cmnd[chosen])chosen++;break}}if(chosen<0){let best=1;for(let tau=minTau;tau<=maxTau;tau++)if(cmnd[tau]<best){best=cmnd[tau];chosen=tau}if(best>.32)return null}let x0=chosen>minTau?cmnd[chosen-1]:cmnd[chosen],x1=cmnd[chosen],x2=chosen<maxTau?cmnd[chosen+1]:cmnd[chosen],den=2*(2*x1-x2-x0),shift=den?(x2-x0)/den:0,tau=chosen+Math.max(-.5,Math.min(.5,shift)),f=sampleRate/tau;if(f<65||f>1000)return null;return{freq:f,clarity:1-cmnd[chosen],rms}}
 function liveLoop(){if(!analyser)return;const raw=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(raw);const p=yin(raw,ctx.sampleRate);if(p&&p.clarity>.65){const ni=noteInfo(p.freq);latest={...ni,clarity:p.clarity,time:Date.now()};lastValid=Date.now();history.push({midi:ni.midi+ni.cents/100,cents:ni.cents,time:Date.now()});if(history.length>180)history.shift();let compare=activeTargetMidi!==null?Math.round((freqMidi(p.freq)-activeTargetMidi)*100):ni.cents,ok=Math.abs(compare)<=25;$('note').textContent=ni.name;$('freq').textContent=p.freq.toFixed(1)+' Hz';$('cents').textContent=(compare>0?'+':'')+compare+' cents';$('cents').className='cents '+(ok?'goodtxt':Math.abs(compare)<=40?'warntxt':'badtxt');$('pitchStatus').textContent=activeTargetMidi!==null?(ok?'Próxima da nota-alvo '+midiName(activeTargetMidi):compare<0?'Abaixo da nota-alvo '+midiName(activeTargetMidi):'Acima da nota-alvo '+midiName(activeTargetMidi)):(ok?'Próxima do centro da nota':'Ajuste a altura da voz com suavidade');$('meterDot').style.left=(50+Math.max(-50,Math.min(50,compare))*.9)+'%';$('signal').textContent='Sinal '+Math.round(p.rms*100)+'% · clareza '+Math.round(p.clarity*100)+'%';$('useDetected').disabled=false;if(recording)csvRows.push([((Date.now()-recStart)/1000).toFixed(2),$('singer').value,ni.name,ni.freq.toFixed(2),ni.cents,compare,p.clarity.toFixed(2)])}else{history.push(null);if(history.length>180)history.shift();if(Date.now()-lastValid>1000){$('note').textContent='—';$('freq').textContent='Sem nota estável';$('cents').textContent='— cents';$('pitchStatus').textContent='Sustente uma vogal; afaste a base do alto-falante';$('signal').textContent='Sinal baixo ou indefinido'}}drawLive();updateStats();raf=setTimeout(()=>requestAnimationFrame(liveLoop),75)}
-async function startMic(){try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false},video:false});audioContext();source=ctx.createMediaStreamSource(stream);analyser=ctx.createAnalyser();analyser.fftSize=4096;analyser.smoothingTimeConstant=0;source.connect(analyser);$('micState').textContent='Microfone ativo';$('startMic').disabled=true;$('stopMic').disabled=false;$('recordBtn').disabled=false;history=[];csvRows=[['tempo_s','cantora','nota','frequencia_Hz','desvio_cents','desvio_nota_alvo_cents','clareza']];liveLoop()}catch(e){alert('O microfone exige permissão e, geralmente, HTTPS ou localhost. Detalhe: '+e.message)}}
-function stopMic(){clearTimeout(raf);if(mediaRecorder&&mediaRecorder.state==='recording')stopRecording();if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;analyser=null;source=null;$('micState').textContent='Microfone desligado';$('startMic').disabled=false;$('stopMic').disabled=true;$('recordBtn').disabled=true}
+async function startMic(){try{
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error('Este navegador não disponibiliza acesso ao microfone. Abra o endereço HTTPS no Chrome ou Safari atualizado.');
+ stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});
+ audioContext();if(ctx.state==='suspended')await ctx.resume();
+ source=ctx.createMediaStreamSource(stream);analyser=ctx.createAnalyser();analyser.fftSize=4096;analyser.smoothingTimeConstant=0;source.connect(analyser);
+ $('micState').textContent='Microfone ativo';$('micQuickStatus').textContent='Microfone ativo — cante uma nota sustentada';$('micQuickStatus').classList.add('active');
+ $('startMic').disabled=true;$('stopMic').disabled=false;$('micQuickStart').disabled=true;$('micQuickStop').disabled=false;$('recordBtn').disabled=false;
+ history=[];csvRows=[['tempo_s','cantora','nota','frequencia_Hz','desvio_cents','desvio_nota_alvo_cents','clareza']];liveLoop()
+ }catch(e){let msg=e.name==='NotAllowedError'?'Permissão negada. Nas configurações do navegador, permita o microfone para este site e tente novamente.':e.name==='NotFoundError'?'Nenhum microfone foi encontrado no aparelho.':e.message;
+ $('micQuickStatus').textContent=msg;$('micQuickStatus').classList.remove('active');alert('Não foi possível ativar o microfone. '+msg+' Verifique também se o site está aberto em HTTPS.')}}
+
+function stopMic(){clearTimeout(raf);if(mediaRecorder&&mediaRecorder.state==='recording')stopRecording();if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;analyser=null;source=null;$('micState').textContent='Microfone desligado';$('micQuickStatus').textContent='Microfone desligado';$('micQuickStatus').classList.remove('active');$('startMic').disabled=false;$('stopMic').disabled=true;$('micQuickStart').disabled=false;$('micQuickStop').disabled=true;$('recordBtn').disabled=true}
 function updateStats(){let a=history.filter(p=>p&&p.midi),c=a.map(p=>Math.abs(p.cents));if(!a.length)return;$('statAccuracy').textContent=Math.round(c.filter(v=>v<=25).length/c.length*100)+'%';$('statCents').textContent=(c.reduce((x,y)=>x+y,0)/c.length).toFixed(0)+'¢';let ms=a.map(p=>p.midi);$('statLow').textContent=midiName(Math.min(...ms));$('statHigh').textContent=midiName(Math.max(...ms));let avg=c.reduce((x,y)=>x+y,0)/c.length;$('sessionAdvice').textContent=avg<=20?'Boa aproximação do centro das notas nesta amostra; ouça também os finais das frases.':avg<=35?'Há desvios perceptíveis; repitam as frases em andamento mais lento.':'A amostra oscilou; trabalhem nota por nota, sem aumentar a força vocal.'}
 function startRecording(){if(!stream)return;recordChunks=[];try{mediaRecorder=new MediaRecorder(stream);mediaRecorder.ondataavailable=e=>{if(e.data.size)recordChunks.push(e.data)};mediaRecorder.onstop=()=>{let blob=new Blob(recordChunks,{type:mediaRecorder.mimeType||'audio/webm'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ensaio_'+new Date().toISOString().replace(/[:.]/g,'-')+'.webm';a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);$('recordState').textContent='Áudio baixado no dispositivo.'};mediaRecorder.start();recording=true;recStart=Date.now();$('recordBtn').disabled=true;$('stopRecord').disabled=false;$('recordState').textContent='Gravando...'}catch(e){alert('Gravação não suportada: '+e.message)}}
 function stopRecording(){if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();recording=false;$('recordBtn').disabled=false;$('stopRecord').disabled=true;$('downloadCsv').disabled=!csvRows.length;$('recordState').textContent='Gravação finalizada.'}
@@ -177,7 +234,9 @@ function renderCalendar(){let root=$('calendarTasks');root.innerHTML='';days.for
 // Restaura dados locais, se existirem
 try{let m=JSON.parse(localStorage.getItem('estrelinha_songmap')||'null');if(m&&m.length){let body=$('songTable').tBodies[0];body.innerHTML='';m.forEach(x=>{let r=body.insertRow();let c=r.insertCell();c.textContent=x.part;['chord','lead','friend','cue'].forEach(k=>{let q=r.insertCell(),i=document.createElement('input');i.dataset.k=k;i.value=x[k]||'';q.appendChild(i)});let a=r.insertCell();a.className='no-print';a.innerHTML='<button class="warn delrow">×</button>'})}let b=JSON.parse(localStorage.getItem('estrelinha_band')||'null');if(b){$('bandKey').value=b.key||'';$('bandBpm').value=b.bpm||'';$('bandMeter').value=b.meter||'';$('bandNotes').value=b.notes||''}}catch(e){}
 // Botões e estado inicial
-$('startMic').addEventListener('click',startMic);$('stopMic').addEventListener('click',stopMic);$('recordBtn').addEventListener('click',startRecording);$('stopRecord').addEventListener('click',stopRecording);$('downloadCsv').addEventListener('click',()=>downloadCsv(csvRows,'analise_ao_vivo.csv'));$('downloadFileCsv').addEventListener('click',()=>downloadCsv(fileRows,'analise_gravacao.csv'));$('lessonNote').addEventListener('change',()=>{});calcHarmony(false);drawLive();drawChart(fileCanvas,fctx,[]);window.addEventListener('beforeunload',()=>{if(stream)stream.getTracks().forEach(t=>t.stop());clearInterval(metroTimer)});
+$('startMic').addEventListener('click',startMic);$('stopMic').addEventListener('click',stopMic);
+$('micQuickStart').addEventListener('click',()=>{document.querySelector('[data-tab="live"]').click();startMic()});
+$('micQuickStop').addEventListener('click',stopMic);$('recordBtn').addEventListener('click',startRecording);$('stopRecord').addEventListener('click',stopRecording);$('downloadCsv').addEventListener('click',()=>downloadCsv(csvRows,'analise_ao_vivo.csv'));$('downloadFileCsv').addEventListener('click',()=>downloadCsv(fileRows,'analise_gravacao.csv'));$('lessonNote').addEventListener('change',()=>{});calcHarmony(false);drawLive();drawChart(fileCanvas,fctx,[]);window.addEventListener('beforeunload',()=>{if(stream)stream.getTracks().forEach(t=>t.stop());clearInterval(metroTimer)});
 })();
 </script>
 <script type="module">
