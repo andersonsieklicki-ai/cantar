@@ -80,6 +80,42 @@ button.micBig{min-height:60px;border-radius:15px;font-size:15px;font-weight:850;
  .authCard{padding:24px 19px}.authCard h1{font-size:25px}.authCard input{min-height:52px}
 }
 @media(max-width:390px){.hero h1{font-size:21px}.topline .pill:nth-child(2){display:none}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ 
+/* Interface simplificada: foco em Estrelinha */
+.simpleTabs .tab{font-size:14px;font-weight:800;padding:13px 16px;min-height:52px;border-radius:14px}
+.songWelcome{background:linear-gradient(145deg,#173954,#182747 65%,#29234a);border-color:#3a6a87;padding:22px}
+.songEyebrow{font-size:11px;font-weight:900;letter-spacing:1.8px;color:#79e3ed}
+.songWelcome h2{font-size:30px;margin:6px 0}
+.songWelcome>p{font-size:16px;max-width:600px;color:#d0deef}
+.songPeople{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.personTile{display:flex;align-items:center;gap:12px;padding:13px;background:#0c1b2d99;border:1px solid #54718d;border-radius:16px}
+.personIcon{width:46px;height:46px;display:grid;place-items:center;background:#244d69;border-radius:14px;font-size:23px}
+.personTile b,.personTile small{display:block}.personTile small{color:#b2c5db;font-size:12px}
+.songStartGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+button.songStart{min-height:62px;border-radius:16px;font-size:16px;font-weight:850;padding:14px}
+.songStartGrid .duet{grid-column:1/-1;background:#40356d;border-color:#7663b6}
+.nowPanel{padding:20px}.nowHeader{display:flex;align-items:center;justify-content:space-between}
+.roundMusic{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#244b67;font-size:24px;color:#8ce6ee}
+.simpleSteps{display:grid;gap:11px;margin:15px 0 18px}
+.simpleStep{display:flex;align-items:center;gap:13px;padding:12px;border:1px solid #2e4863;background:#101e30;border-radius:14px}
+.simpleStep>span{width:34px;height:34px;flex:0 0 34px;border-radius:50%;display:grid;place-items:center;background:#23627b;color:#fff;font-weight:900;font-size:17px}
+.simpleStep b,.simpleStep small{display:block}.simpleStep small{color:#aebfd3;font-size:13px}
+.songGoal{border-left:4px solid #6ed6a3}
+.quickCoach{border:1px solid #35748a;background:linear-gradient(145deg,#142e42,#101b2d)}
+.quickCoach h2{font-size:25px;margin:5px 0}
+.quickCoach .field select{font-size:17px;min-height:56px}
+.quickCoach .songStart{flex:1}
+.coachTip{margin-top:12px;padding:13px;border-radius:13px;background:#102e39;border:1px solid #2b6878;color:#d1f4f5;font-weight:650}
+@media(max-width:600px){
+ .songWelcome{padding:18px}.songWelcome h2{font-size:27px}
+ .songPeople{gap:8px}.personTile{padding:10px;gap:8px}.personIcon{width:40px;height:40px}
+ .songStartGrid{grid-template-columns:1fr}.songStartGrid .duet{grid-column:auto}
+ button.songStart{width:100%;min-height:66px;font-size:17px}
+ .simpleTabs{display:grid;grid-template-columns:1fr 1fr;position:sticky;top:0}
+ .simpleTabs .tab{white-space:normal;line-height:1.15;font-size:13px;padding:10px 7px;min-height:54px}
+ .simpleStep{padding:13px}.simpleStep small{font-size:13px}
+ .quickCoach{padding:17px}
+}
 </style></head>
 <body><section id="authGate" class="authGate"><div class="authCard"><div class="logo">♫</div><h1>Assistente Vocal — Estrelinha</h1><p class="muted">Entre para acessar o treinamento de Silvane e Marla e sincronizar o progresso entre aparelhos.</p><form id="loginForm"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="username" required placeholder="seu@email.com"><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Sua senha"><div class="row"><button class="primary" type="submit" id="emailLoginBtn">Entrar</button><button type="button" id="registerBtn">Criar conta</button></div></form><button class="googleBtn" id="googleLoginBtn" type="button">Entrar com Google</button><button class="ghost full" id="resetPasswordBtn" type="button">Esqueci minha senha</button><p class="small muted" id="authMessage" aria-live="polite">Use uma conta autorizada para acessar.</p><p class="tiny muted">O áudio do microfone é analisado no navegador. Não é enviado automaticamente para a nuvem.</p></div></section><main class="wrap appLocked" id="appMain">
 <header class="hero"><div class="logo">♫</div><div><h1>Assistente Vocal — Estrelinha</h1><p>Treinamento guiado para Silvane (voz principal) e Marla (segunda voz)</p></div></header>
@@ -94,21 +130,42 @@ button.micBig{min-height:60px;border-radius:15px;font-size:15px;font-weight:850;
 </section>
 <div class="row no-print" style="margin:0 0 12px"><button class="good" id="installApp" type="button" hidden>＋ Instalar aplicativo</button><span class="tiny muted" id="installHelp">No iPhone: Compartilhar → Adicionar à Tela de Início. No Android: menu do navegador → Instalar aplicativo.</span></div>
 <div class="topline"><span class="pill">Apresentação: 11 nov 2026</span><span class="pill">Versão 2.1 · conta e sincronização</span><span class="pill" id="micState">Microfone desligado</span><span class="pill" id="savedState">Aguardando login</span><span class="pill" id="cloudState">Nuvem não conectada</span><button class="tab" id="logoutBtn" type="button">Sair</button></div>
-<nav class="tabs no-print" aria-label="Módulos do treinamento">
-<button class="tab active" data-tab="home">Início</button><button class="tab" data-tab="lesson">Aprender do zero</button><button class="tab" data-tab="live">Afinador ao vivo</button><button class="tab" data-tab="harmony">Segunda voz</button><button class="tab" data-tab="recordings">Gravações</button><button class="tab" data-tab="songmap">Mapa da música</button><button class="tab" data-tab="band">Guia da banda</button><button class="tab" data-tab="plan">Plano até o dia 11</button><button class="tab" data-tab="check">Avaliação</button>
+<nav class="tabs no-print simpleTabs" aria-label="Treino Estrelinha">
+<button class="tab active" data-tab="home">🎵 Treinar Estrelinha</button>
+<button class="tab" data-tab="live">🎙 Cantar e afinar</button>
+<button class="tab" data-tab="recordings">▶ Minhas gravações</button>
+<button class="tab" data-tab="songmap">🎼 Notas da banda</button>
 </nav>
 <section id="tab-home" class="tabcontent">
-<div class="panel"><div class="row between"><div><h2>Missão: cantar em harmonia no dia 11</h2><p class="muted small">A Marla aprende a segunda voz sem precisar conhecer teoria musical. Silvane mantém a melodia principal. O aplicativo ensina por audição, repetição e comparação.</p></div><span class="tag">Meta: apresentação segura</span></div>
-<div class="grid"><div class="c4"><div class="card"><strong>Silvane</strong><span class="small muted">Voz principal: canta a melodia original, com projeção e emoção sem forçar.</span></div></div><div class="c4"><div class="card"><strong>Marla — camiseta verde</strong><span class="small muted">Segunda voz: aprende a linha harmônica em separado e depois junta com Silvane.</span></div></div><div class="c4"><div class="card"><strong>Banda ao vivo</strong><span class="small muted">Teclado/violão confirmam tom, acordes, notas de apoio e entradas.</span></div></div></div>
-<div class="callout" style="margin-top:12px"><b>Regra técnica:</b> os vídeos enviados têm voz e playback misturados. Eles não permitem atribuir com segurança cada nota a cada cantora nem confirmar o tom. Não usaremos a hipótese F# como certeza. A tonalidade será conferida com o instrumental original e com o instrumento da banda.</div></div>
-<div class="panel micLaunch" id="micQuickPanel">
- <div class="micHead"><div><span class="eyebrow">TREINO PELO CELULAR</span><h2>Microfone e afinação</h2><p class="muted small">Toque para liberar o microfone e começar a acompanhar as notas cantadas.</p></div><div class="micGlyph">🎙</div></div>
- <div class="micQuickStatus" id="micQuickStatus" role="status">Microfone ainda não foi ativado</div>
- <div class="micActions"><button class="primary micBig" id="micQuickStart" type="button">🎙 ATIVAR MICROFONE</button><button class="warn micBig" id="micQuickStop" type="button" disabled>PARAR MICROFONE</button></div>
- <p class="tiny muted">O navegador solicitará permissão. Escolha “Permitir”. Use Chrome ou Safari atualizado e abra o site por HTTPS. Para medir afinação, grave uma cantora por vez e use fones para o playback.</p>
+<div class="panel songWelcome">
+ <div class="songEyebrow">TREINO GUIADO · ESTRELINHA</div>
+ <h2>Vamos ensaiar?</h2>
+ <p>Sem aulas longas e sem teoria. Escolha quem vai cantar, aperte o botão e siga as orientações na tela.</p>
+ <div class="songPeople">
+  <div class="personTile"><span class="personIcon">🎤</span><div><b>Silvane</b><small>Voz principal</small></div></div>
+  <div class="personTile"><span class="personIcon">🎶</span><div><b>Marla</b><small>Segunda voz</small></div></div>
+ </div>
+ <div class="songStartGrid">
+  <button class="songStart primary" data-practice="silvane">🎤 Treinar com Silvane</button>
+  <button class="songStart good" data-practice="marla">🎶 Treinar com Marla</button>
+  <button class="songStart duet" data-practice="duet">👭 Cantar as duas juntas</button>
+ </div>
+ <p class="tiny muted">Dica: para medir a afinação, treinem uma de cada vez e usem fones no playback.</p>
 </div>
-<div class="panel"><h2>Seu progresso</h2><div class="progressline"><b id="doneCount">0/12</b><div class="bar"><i id="overallBar"></i></div><span class="small muted" id="percentDone">0%</span></div><p class="small muted">Marque as etapas na aba Avaliação. O progresso fica salvo no navegador deste aparelho.</p><div class="row"><button class="primary" data-goto="lesson">Começar pela aula 1</button><button data-goto="plan">Ver calendário de ensaios</button><button class="ghost" onclick="window.print()">Imprimir material</button></div></div>
-<div class="panel"><h2>O que significa cantar segunda voz?</h2><p>A Marla canta a mesma letra que Silvane, no mesmo ritmo, mas em notas diferentes. As duas notas precisam combinar com o acorde tocado pela banda. Não basta escolher qualquer terça ou sexta: a nota muda conforme a melodia e o acorde.</p><div class="steps"><div class="step"><b>1 · ouvir</b>Escutar Silvane e reconhecer a melodia.</div><div class="step"><b>2 · aprender</b>Repetir a melodia principal antes de tentar harmonizar.</div><div class="step"><b>3 · harmonizar</b>Aprender outra nota com teclado/violão e sustentar sua própria linha.</div></div></div>
+<div class="panel nowPanel">
+ <div class="nowHeader"><div><span class="songEyebrow">PASSO A PASSO</span><h2>O ensaio de hoje</h2></div><span class="roundMusic">♫</span></div>
+ <div class="simpleSteps">
+  <div class="simpleStep"><span>1</span><div><b>Ouvir o trecho</b><small>Escolham uma parte curta: estrofe ou refrão.</small></div></div>
+  <div class="simpleStep"><span>2</span><div><b>Cantar e gravar</b><small>Uma cantora por vez. O afinador mostra se a nota está alta ou baixa.</small></div></div>
+  <div class="simpleStep"><span>3</span><div><b>Ouvir e repetir</b><small>Corrijam só o trecho que ficou difícil.</small></div></div>
+ </div>
+ <div class="row"><button class="primary songStart" data-tabgo="live">🎙 Começar agora</button><button class="songStart" data-tabgo="recordings">▶ Ouvir gravações</button></div>
+</div>
+<div class="panel songGoal">
+ <b>Meta do ensaio</b>
+ <p>Silvane segura a melodia. Marla aprende sua linha e entra nos trechos combinados. A banda confirma as notas com teclado ou violão.</p>
+ <div class="row"><span class="tag">Uma frase de cada vez</span><span class="tag">Sem forçar a voz</span><span class="tag">Com fones</span></div>
+</div>
 </section>
 <section id="tab-lesson" class="tabcontent hidden">
 <div class="panel"><h2>Aula 1 — Aprender do zero</h2><p class="muted small">Faça nesta ordem. Não pule para a segunda voz antes de a Marla conseguir repetir a melodia com ritmo e letra corretos.</p>
@@ -119,6 +176,14 @@ button.micBig{min-height:60px;border-radius:15px;font-size:15px;font-weight:850;
 </div>
 <div class="panel"><h2>Mini dicionário sem complicação</h2><div class="grid"><div class="c6 card"><strong>Agudo</strong><span class="small muted">Som mais alto, como uma nota que parece subir.</span></div><div class="c6 card"><strong>Grave</strong><span class="small muted">Som mais baixo, com sensação de maior profundidade.</span></div><div class="c6 card"><strong>Afinação</strong><span class="small muted">Acertar a altura da nota que se pretende cantar.</span></div><div class="c6 card"><strong>Tom da música</strong><span class="small muted">A referência musical geral que organiza as notas e os acordes.</span></div><div class="c6 card"><strong>Acorde</strong><span class="small muted">Duas ou mais notas tocadas juntas; a banda usa acordes para acompanhar.</span></div><div class="c6 card"><strong>Harmonia / segunda voz</strong><span class="small muted">Outra linha de notas cantada junto com a melodia principal.</span></div></div></div>
 </section>
+<div class="panel quickCoach">
+ <span class="songEyebrow">AGORA É SUA VEZ</span>
+ <h2 id="practiceTitle">Cantar e afinar</h2>
+ <p id="practiceHint">Escolha quem está cantando. Cante uma frase curta de Estrelinha e acompanhe o indicador.</p>
+ <div class="field"><label>Quem está cantando?</label><select id="quickSinger"><option value="Marla — segunda voz">Marla — segunda voz</option><option value="Silvane — voz principal">Silvane — voz principal</option><option value="Ensaio individual">As duas juntas (somente escuta)</option></select></div>
+ <div class="row" style="margin-top:10px"><button class="primary songStart" id="quickMicStart">🎙 LIGAR MICROFONE</button><button class="warn songStart" id="quickMicStop" disabled>PARAR</button></div>
+ <div class="coachTip" id="coachTip">🎧 Use fones. Cante uma nota longa em “uuu”, sem gritar.</div>
+</div>
 <section id="tab-live" class="tabcontent hidden">
 <div class="panel"><div class="row between"><h2>Afinador ao vivo</h2><div class="row"><button class="primary" id="startMic">Ligar microfone</button><button id="stopMic" disabled>Parar</button></div></div><p class="small muted">Use uma cantora por vez. Desligue o playback no alto-falante; escutem a base por fones. O medidor mostra a nota mais provável, frequência e desvio em cents. Não é uma avaliação artística completa.</p>
 <div class="grid"><div class="c4"><div class="field"><label>Quem está treinando?</label><select id="singer"><option>Marla — segunda voz</option><option>Silvane — voz principal</option><option>Ensaio individual</option></select></div><div class="noteHero" style="margin-top:10px"><div class="bigNote" id="note">—</div><div class="freq" id="freq">Aguardando voz</div><div class="cents" id="cents">— cents</div><div class="status" id="pitchStatus">Sustente uma vogal confortável</div></div><div class="meter"><div class="center"></div><div class="dot" id="meterDot"></div></div><div class="meterlabels"><span>grave ♭</span><span>centro da nota</span><span>agudo ♯</span></div></div><div class="c8"><h3>Histórico de notas</h3><canvas id="liveChart" width="900" height="240"></canvas><div class="row between"><span class="small muted">O gráfico é uma estimativa da frequência fundamental.</span><span class="small" id="signal">Sinal: —</span></div></div></div>
@@ -296,6 +361,29 @@ onAuthStateChanged(auth,user=>{if(user)enter(user);else{currentUser=null;main.cl
  if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
   window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(err=>console.warn('PWA indisponível:',err)));
  }
+})();
+</script>
+<script>
+(()=> {
+ const $=id=>document.getElementById(id);
+ function openTab(name){document.querySelector('[data-tab="'+name+'"]')?.click();window.scrollTo({top:0,behavior:'smooth'});}
+ document.querySelectorAll('[data-practice]').forEach(btn=>btn.addEventListener('click',()=>{
+  const who=btn.dataset.practice;
+  openTab('live');
+  if(who==='silvane')$('quickSinger').value='Silvane — voz principal';
+  if(who==='marla')$('quickSinger').value='Marla — segunda voz';
+  if(who==='duet')$('quickSinger').value='Ensaio individual';
+  $('singer').value=$('quickSinger').value;
+  $('practiceTitle').textContent=who==='duet'?'Ensaio das duas':who==='silvane'?'Vez da Silvane':'Vez da Marla';
+  $('practiceHint').textContent=who==='duet'?'Cantem juntas e gravem para ouvir o equilíbrio. A leitura de afinação é menos precisa com duas vozes ao mesmo tempo.':'Cante uma frase curta de Estrelinha. Depois ouça a gravação e repita.';
+  $('coachTip').textContent=who==='marla'?'🎶 Marla: primeiro ouça Silvane. Depois cante sua parte sem copiar a melodia principal.':'🎤 Cante confortável, sem forçar. Procure manter a nota até o fim da frase.';
+ }));
+ document.querySelectorAll('[data-tabgo]').forEach(btn=>btn.addEventListener('click',()=>openTab(btn.dataset.tabgo)));
+ $('quickMicStart')?.addEventListener('click',()=>{ $('singer').value=$('quickSinger').value; $('startMic').click(); $('quickMicStart').disabled=true; $('quickMicStop').disabled=false; });
+ $('quickMicStop')?.addEventListener('click',()=>{ $('stopMic').click(); $('quickMicStart').disabled=false; $('quickMicStop').disabled=true; });
+ $('quickSinger')?.addEventListener('change',()=>{$('singer').value=$('quickSinger').value});
+ const micState=$('micState');
+ if(micState){new MutationObserver(()=>{const on=micState.textContent.toLowerCase().includes('ativo');$('quickMicStart').disabled=on;$('quickMicStop').disabled=!on}).observe(micState,{childList:true,subtree:true,characterData:true})}
 })();
 </script>
 </body></html>
