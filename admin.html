@@ -11,7 +11,7 @@
 <body>
 <section class="panel auth" id="authPanel">
  <div class="hero"><div class="logo">♫</div><div><h1>Painel administrativo</h1><p>Entre com a conta autorizada do administrador.</p></div></div>
- <form id="loginForm"><div><label for="email">E-mail</label><input id="email" type="email" required autocomplete="username"></div><div><label for="password">Senha</label><input id="password" type="password" required autocomplete="current-password"></div><button class="primary" type="submit">Entrar</button></form>
+ <button class="primary" id="googleLoginBtn" type="button" style="width:100%;margin:4px 0 12px;background:linear-gradient(135deg,#2563eb,#0f766e)">Entrar com Google</button><div style="text-align:center;color:var(--muted);font-size:12px;margin:4px 0 10px">ou entre com e-mail e senha</div><form id="loginForm"><div><label for="email">E-mail</label><input id="email" type="email" required autocomplete="username"></div><div><label for="password">Senha</label><input id="password" type="password" required autocomplete="current-password"></div><button type="submit">Entrar</button></form>
  <p id="authMessage" class="small muted" aria-live="polite">A administração é restrita a usuários cadastrados em admins/{uid} no Firestore.</p>
 </section>
 <main class="wrap hidden" id="adminApp">
@@ -64,14 +64,16 @@
 </main>
 <script type="module">
 import {auth,db,storage} from './firebase-config.js';
-import {onAuthStateChanged,signInWithEmailAndPassword,signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import {GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import {collection,doc,getDoc,getDocs,setDoc,updateDoc,serverTimestamp,Timestamp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 import {ref as storageRef,uploadBytesResumable,getDownloadURL} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js';
-const $=id=>document.getElementById(id);let adminUser=null,lastInvite=null,songs=[];
+const $=id=>document.getElementById(id);const ADMIN_EMAIL='andersonsieklicki@gmail.com';let adminUser=null,lastInvite=null,songs=[];
+function isAuthorizedAdmin(user){return !!user && (String(user.email||'').toLowerCase()===ADMIN_EMAIL && user.emailVerified===true);}
 function say(id,text,kind='muted'){const el=$(id);el.textContent=text;el.className='small '+kind}
 $('loginForm').addEventListener('submit',async e=>{e.preventDefault();try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(err){$('authMessage').textContent='Falha no login: '+(err.message||err.code)}});
+$('googleLoginBtn').addEventListener('click',async()=>{try{$('authMessage').textContent='Abrindo autenticação Google…';const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await signInWithPopup(auth,provider)}catch(err){$('authMessage').textContent='Falha no login Google: '+(err.message||err.code)}});
 $('logoutBtn').addEventListener('click',()=>signOut(auth));
-onAuthStateChanged(auth,async user=>{if(!user){adminUser=null;$('adminApp').classList.add('hidden');$('authPanel').classList.remove('hidden');return}try{const snap=await getDoc(doc(db,'admins',user.uid));if(!snap.exists()||snap.data().ativo!==true){await signOut(auth);$('authMessage').textContent='Esta conta não possui permissão administrativa. Peça ao responsável para liberar seu UID.';return}adminUser=user;$('adminIdentity').textContent=user.email||user.uid;$('authPanel').classList.add('hidden');$('adminApp').classList.remove('hidden');await refreshSongs();await refreshInvites()}catch(e){$('authMessage').textContent='Não foi possível validar o administrador: '+e.message}});
+onAuthStateChanged(auth,async user=>{if(!user){adminUser=null;$('adminApp').classList.add('hidden');$('authPanel').classList.remove('hidden');return}try{const snap=await getDoc(doc(db,'admins',user.uid));const allowed=isAuthorizedAdmin(user)||(snap.exists()&&snap.data().ativo===true);if(!allowed){await signOut(auth);$('authMessage').textContent='Acesso negado. Somente '+ADMIN_EMAIL+' (com e-mail verificado) ou contas liberadas em admins/{uid} podem administrar.';return}adminUser=user;$('adminIdentity').textContent=user.email||user.uid;$('authPanel').classList.add('hidden');$('adminApp').classList.remove('hidden');await refreshSongs();await refreshInvites()}catch(e){$('authMessage').textContent='Não foi possível validar o administrador: '+e.message}});
 function makeId(prefix){const bytes=new Uint8Array(8);crypto.getRandomValues(bytes);return prefix+'_'+[...bytes].map(x=>x.toString(16).padStart(2,'0')).join('')}
 function codeInvite(){const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';const bytes=new Uint8Array(12);crypto.getRandomValues(bytes);return 'AV-'+[...bytes].map(x=>alphabet[x%alphabet.length]).join('')}
 $('songForm').addEventListener('submit',async e=>{e.preventDefault();if(!adminUser)return;const title=$('songTitle').value.trim();if(!title)return;const id=makeId('mus');const data={titulo:title,artista:$('songArtist').value.trim(),tonalidade:$('songKey').value.trim(),bpm:Number($('songBpm').value)||null,observacoes:$('songNotes').value.trim(),publicada:false,originalUrl:'',originalPath:'',playbackUrl:'',playbackPath:'',vocalUrl:'',vocalPath:'',separationStatus:'sem_audio',createdBy:adminUser.uid,createdAt:serverTimestamp(),updatedAt:serverTimestamp()};try{await setDoc(doc(db,'musicas',id),data);$('songForm').reset();say('songFormStatus','Música cadastrada.','success');await refreshSongs()}catch(err){say('songFormStatus','Erro: '+err.message,'error')}});
