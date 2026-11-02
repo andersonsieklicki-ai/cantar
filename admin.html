@@ -64,14 +64,15 @@
 </main>
 <script type="module">
 import {auth,db,storage} from './firebase-config.js';
-import {GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import {GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import {collection,doc,getDoc,getDocs,setDoc,updateDoc,serverTimestamp,Timestamp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 import {ref as storageRef,uploadBytesResumable,getDownloadURL} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js';
 const $=id=>document.getElementById(id);const ADMIN_EMAIL='andersonsieklicki@gmail.com';let adminUser=null,lastInvite=null,songs=[];
 function isAuthorizedAdmin(user){return !!user && (String(user.email||'').toLowerCase()===ADMIN_EMAIL && user.emailVerified===true);}
 function say(id,text,kind='muted'){const el=$(id);el.textContent=text;el.className='small '+kind}
 $('loginForm').addEventListener('submit',async e=>{e.preventDefault();try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(err){$('authMessage').textContent='Falha no login: '+(err.message||err.code)}});
-$('googleLoginBtn').addEventListener('click',async()=>{try{$('authMessage').textContent='Abrindo autenticação Google…';const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await signInWithPopup(auth,provider)}catch(err){$('authMessage').textContent='Falha no login Google: '+(err.message||err.code)}});
+$('googleLoginBtn').addEventListener('click',async()=>{const btn=$('googleLoginBtn');try{$('authMessage').textContent='Abrindo autenticação Google…';btn.disabled=true;const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await signInWithPopup(auth,provider)}catch(err){if(['auth/popup-blocked','auth/cancelled-popup-request','auth/popup-closed-by-user'].includes(err.code)){try{const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await signInWithRedirect(auth,provider);return}catch(redirectErr){err=redirectErr}}$('authMessage').textContent='Falha no login Google: '+(err.message||err.code);btn.disabled=false}});
+getRedirectResult(auth).catch(err=>{$('authMessage').textContent='Falha ao retornar do Google: '+(err.message||err.code)});
 $('logoutBtn').addEventListener('click',()=>signOut(auth));
 onAuthStateChanged(auth,async user=>{if(!user){adminUser=null;$('adminApp').classList.add('hidden');$('authPanel').classList.remove('hidden');return}try{const snap=await getDoc(doc(db,'admins',user.uid));const allowed=isAuthorizedAdmin(user)||(snap.exists()&&snap.data().ativo===true);if(!allowed){await signOut(auth);$('authMessage').textContent='Acesso negado. Somente '+ADMIN_EMAIL+' (com e-mail verificado) ou contas liberadas em admins/{uid} podem administrar.';return}adminUser=user;$('adminIdentity').textContent=user.email||user.uid;$('authPanel').classList.add('hidden');$('adminApp').classList.remove('hidden');await refreshSongs();await refreshInvites()}catch(e){$('authMessage').textContent='Não foi possível validar o administrador: '+e.message}});
 function makeId(prefix){const bytes=new Uint8Array(8);crypto.getRandomValues(bytes);return prefix+'_'+[...bytes].map(x=>x.toString(16).padStart(2,'0')).join('')}
