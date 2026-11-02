@@ -110,6 +110,51 @@ button.primary{background:linear-gradient(135deg,#087e9a,#3a69d3)}button.good{ba
 .trackCard{background:linear-gradient(150deg,#182d49,#14243a);border-color:#3a5c84}.playerTransport button{min-width:110px}
 @media(max-width:760px){.songPicker .row.between{align-items:flex-start}.songPicker .tag{white-space:normal}.teacherAction{min-height:78px}.playerTransport{display:grid;grid-template-columns:1fr 1fr}.playerTransport button{min-width:0}.playerPosition{grid-column:1/-1;text-align:center}}
 @media(min-width:1100px){.wrap{padding-top:25px}.teacherActions{grid-template-columns:repeat(3,minmax(0,1fr))}.teacherAction{min-height:112px}}
+
+/* v3.1 — navegação inferior e fluxo orientado por etapas */
+:root{--av-teal:#17b6ad;--av-blue:#3976e8;--av-purple:#7962db;--av-orange:#f0a33b;--av-surface:#142238}
+body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+.wrap{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+#toolsNavigation{display:none!important}
+.av-screen{display:block;min-height:55vh}
+.av-screen.hidden{display:none!important}
+.av-wizard{border:1px solid #385674;border-radius:22px;padding:16px;background:linear-gradient(150deg,#172e49,#18223e 68%,#27264c);box-shadow:0 14px 30px #0003;margin:8px 0 14px}
+.av-wizard-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}
+.av-wizard-head h2{font-size:19px;margin:0}.av-wizard-head p{font-size:12px;color:#b6c7df;margin:3px 0 0}
+.av-stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:12px 0 15px}
+.av-stepper span{height:5px;border-radius:9px;background:#334863}.av-stepper span.done{background:linear-gradient(90deg,var(--av-teal),#6dd5b0)}
+.av-step{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-top:1px solid #ffffff12}
+.av-step-number{width:29px;height:29px;flex:0 0 29px;display:grid;place-items:center;border-radius:10px;background:#2b5274;color:#fff;font-weight:850}
+.av-step-body{flex:1;min-width:0}.av-step-body h3{font-size:14px;margin:0 0 3px}.av-step-body p{font-size:12px;color:#aebfd5;margin:0 0 8px}
+.av-step-button{border:1px solid #4d7898;background:#183b59;color:#eafaff;border-radius:12px;padding:9px 12px;min-height:40px;font-size:12px}
+.av-step-button.primary{background:linear-gradient(135deg,#087f96,#355fca);border-color:#398bb3}
+.av-selected-song{font-size:13px;font-weight:750;color:#7fe5e8;padding:8px 10px;background:#0e1b2d;border:1px solid #314b6b;border-radius:10px;overflow-wrap:anywhere}
+.av-purpose-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0}
+.av-purpose{min-height:94px;border-radius:15px;padding:10px;text-align:left;border:1px solid #476584;background:linear-gradient(145deg,#1e4561,#202e4f);display:flex;flex-direction:column;justify-content:center;gap:4px}
+.av-purpose:nth-child(2){background:linear-gradient(145deg,#51417a,#26385f);border-color:#7765a9}
+.av-purpose:nth-child(3){background:linear-gradient(145deg,#176b62,#234c68);border-color:#4d9d8a}
+.av-purpose strong{font-size:12px;line-height:1.2}.av-purpose small{font-size:10px;color:#d4e2f5;line-height:1.35}
+.teacherAction.selected{outline:2px solid #7ee5d7;outline-offset:1px;box-shadow:0 0 0 4px #26c6ad20}
+.av-purpose.selected{outline:2px solid #7ee5d7;outline-offset:1px;box-shadow:0 0 0 4px #26c6ad20}
+.av-focus{width:100%;border:1px solid #405b7a;background:#0d1a2c;color:#edf5ff;border-radius:12px;padding:11px;margin-top:5px}
+.av-objective-info{background:#0d1a2c;border:1px solid #334a69;border-radius:12px;padding:11px;margin-top:9px;font-size:12px;color:#c6d5e7}
+.av-objective-info b{display:block;color:#7de2e2;margin-bottom:4px}
+.av-start{width:100%;min-height:52px;border:0;border-radius:15px;background:linear-gradient(110deg,#0b9d92,#3377dc 60%,#725ad8);font-size:15px;font-weight:850;box-shadow:0 8px 22px #147bb355;margin-top:13px}
+.av-page-title{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:8px 2px 13px}.av-page-title h2{font-size:20px;margin:0}.av-page-title p{font-size:12px;color:var(--muted);margin:3px 0 0}
+.av-module-grid,.av-progress-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0 13px}
+.av-module,.av-progress-action{min-height:80px;padding:12px;text-align:left;border-radius:15px;background:#172942;border:1px solid #344e70;display:flex;flex-direction:column;gap:4px}
+.av-module strong,.av-progress-action strong{font-size:13px}.av-module span,.av-progress-action span{font-size:11px;color:#aebed4;line-height:1.35}
+.av-module.active,.av-progress-action.active{border-color:#6ed6c6;background:linear-gradient(135deg,#16445a,#20395e);box-shadow:0 0 0 2px #4ad6c333}
+.av-section-content>.tabcontent{margin-top:10px}
+.av-bottom-nav{position:fixed;z-index:100;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(8,17,31,.96);border-top:1px solid #30435e;backdrop-filter:blur(18px);box-shadow:0 -8px 28px #0004}
+.av-bottom-nav button{min-width:0;min-height:56px;padding:6px 4px;border:0;border-radius:12px;background:transparent;color:#91a4bd;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:650}
+.av-bottom-nav button .av-icon{font-size:20px;line-height:1.2}.av-bottom-nav button.active{color:#8ce9e1;background:linear-gradient(145deg,#153d55,#242e52)}
+.av-utility{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.av-utility .pill{font-size:10px}
+.topline{margin-bottom:8px}.topline .pill:first-child{display:none}
+#tab-home{display:none!important}
+@media(min-width:761px){.av-bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,760px);border:1px solid #334763;border-bottom:0;border-radius:18px 18px 0 0}.av-wizard{padding:22px}.av-purpose{min-height:110px}.av-bottom-nav button{font-size:11px}}
+@media(max-width:600px){#micState,#cloudState{display:none}.av-purpose-grid{grid-template-columns:1fr}.av-purpose{min-height:68px;display:grid;grid-template-columns:36px 1fr;align-items:center}.av-purpose small{grid-column:2}.av-module-grid,.av-progress-grid{grid-template-columns:1fr 1fr}.av-step{padding:10px 0}.av-step-button{width:100%}.av-bottom-nav{padding-left:6px;padding-right:6px}.av-bottom-nav button{font-size:10px}}
+
 </style></head>
 <body><section id="authGate" class="authGate"><div class="authCard"><div class="logo">♫</div><h1>Assistente Vocal</h1><p class="muted">Seu espaço de treino vocal: afinação, ouvido musical e segunda voz em várias músicas.</p><form id="loginForm"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="username" required placeholder="seu@email.com"><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Sua senha"><div id="registerFields" class="hidden"><label for="registerName">Nome da cantora</label><input id="registerName" type="text" autocomplete="name" placeholder="Seu nome"><label for="inviteCodeInput">ID do convite</label><input id="inviteCodeInput" type="text" autocomplete="off" placeholder="Ex.: AV-7K2P9QW"><p class="tiny muted">O cadastro exige um convite individual. Se você já tem conta, informe o ID e entre com sua senha para ativá-la.</p></div><div class="row"><button class="primary" type="submit" id="emailLoginBtn">Entrar</button><button type="button" id="registerBtn">Criar conta com convite</button></div></form><button class="googleBtn" id="googleLoginBtn" type="button">Entrar com Google</button><button class="ghost full" id="resetPasswordBtn" type="button">Esqueci minha senha</button><p class="small muted" id="authMessage" aria-live="polite">Use uma conta autorizada para acessar.</p><p class="tiny muted">O áudio do microfone é analisado no navegador. Não é enviado automaticamente para a nuvem.</p></div></section><main class="wrap appLocked" id="appMain">
 <header class="hero"><div class="logo">♫</div><div><h1>Assistente Vocal</h1><p>Treinamento guiado e biblioteca musical personalizada</p></div></header>
@@ -399,7 +444,7 @@ const originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.rem
 Storage.prototype.setItem=function(k,v){originalSet.call(this,k,v);if(this===localStorage&&CLOUD_KEYS.includes(String(k)))syncCloud()};
 Storage.prototype.removeItem=function(k){originalRemove.call(this,k);if(this===localStorage&&CLOUD_KEYS.includes(String(k)))syncCloud()};
 function authError(e){const map={'auth/invalid-credential':'E-mail ou senha incorretos.','auth/user-not-found':'Conta não encontrada.','auth/wrong-password':'Senha incorreta.','auth/email-already-in-use':'Este e-mail já possui cadastro.','auth/weak-password':'A senha deve ter pelo menos 6 caracteres.','auth/unauthorized-domain':'Adicione este domínio aos domínios autorizados do Firebase Authentication.','auth/operation-not-allowed':'Ative este método de login no Firebase Authentication.','auth/network-request-failed':'Falha de conexão. Verifique a internet.'};return map[e.code]||('Não foi possível autenticar: '+(e.message||e.code||'erro desconhecido'))}
-function showLibrary(songs){const sel=$('studentSongSelect');sel.replaceChildren();songs.forEach(song=>{const op=new Option(song.titulo||song.id,song.id);sel.add(op)});sel.disabled=!songs.length;if(!songs.length){sel.add(new Option('Nenhuma música liberada',''));$('libraryCloudStatus').textContent='Sem músicas atribuídas';$('currentSongInfo').textContent='Peça ao administrador um convite com pelo menos uma música.';return}const requested=new URLSearchParams(location.search).get('musica');let selected=songs.find(x=>x.id===requested)||songs.find(x=>x.id===localStorage.getItem('av3:lastSong:'+currentUser.uid))||songs[0];sel.value=selected.id;loadSong(selected)}
+function showLibrary(songs){const sel=$('studentSongSelect');sel.replaceChildren();songs.forEach(song=>{const op=new Option(song.titulo||song.id,song.id);sel.add(op)});sel.disabled=!songs.length;if(!songs.length){sel.add(new Option('Nenhuma música cadastrada/liberada',''));$('libraryCloudStatus').textContent=isAdmin?'Biblioteca vazia':'Sem músicas atribuídas';$('currentSongInfo').textContent=isAdmin?'Você está como administrador. Cadastre a primeira música em Administração e depois publique para as alunas.':'Peça ao administrador um convite com pelo menos uma música.';if(isAdmin){const link=document.createElement('a');link.href='/admin.html';link.textContent='Abrir administração e cadastrar a primeira música';link.style.cssText='display:inline-flex;margin-top:8px;color:#8ce9e1;font-weight:800';$('currentSongInfo').append(document.createElement('br'),link)}return}const requested=new URLSearchParams(location.search).get('musica');let selected=songs.find(x=>x.id===requested)||songs.find(x=>x.id===localStorage.getItem('av3:lastSong:'+currentUser.uid))||songs[0];sel.value=selected.id;loadSong(selected)}
 async function loadSong(song){if(!song||!currentUser)return;activeSong=song;setContext(currentUser.uid,song.id,song.titulo);window.clearAVTracks?.();localStorage.setItem('av3:lastSong:'+currentUser.uid,song.id);$('teacherSongTitle').textContent=song.titulo||'Treino vocal';$('currentSongInfo').textContent=[song.artista,song.tonalidade?'Tom: '+song.tonalidade:'Tom não informado',song.bpm?song.bpm+' BPM':''].filter(Boolean).join(' · ')||'Música liberada para treino';$('libraryCloudStatus').textContent='Música selecionada';$('trainingModeText').textContent='Escolha uma das aulas. Playback e referências desta música são carregados da biblioteca.';hydrating=true;try{const progress=await getDoc(doc(db,'usuarios',currentUser.uid,'musicas',song.id,'progresso','app'));if(progress.exists())applyPayload(progress.data());const lib=await getDoc(doc(db,'bibliotecaMusical',song.id));if(lib.exists()&&Array.isArray(lib.data().events))localStorage.setItem('estrelinha_events',JSON.stringify(lib.data().events));else localStorage.setItem('estrelinha_events','[]');}catch(e){console.warn('Não foi possível carregar progresso/mapa:',e.message)}finally{hydrating=false}
  try{const t=song.trackUrls||{};const instrument=t.instrument||song.playbackUrl||'';const lead=t.lead||song.leadUrl||'';const harmony=t.harmony||song.harmonyUrl||'';const jobs=[];if(instrument)jobs.push(window.loadAVTrackFromUrl?.('instrument',instrument,song.titulo+' · playback'));if(lead)jobs.push(window.loadAVTrackFromUrl?.('lead',lead,'Voz principal de referência'));if(harmony)jobs.push(window.loadAVTrackFromUrl?.('harmony',harmony,'Segunda voz de referência'));await Promise.all(jobs.filter(Boolean));}catch(e){console.warn('Faixas da música:',e.message)}
  document.getElementById('checklist')?.replaceChildren();document.getElementById('calendarTasks')?.replaceChildren();window.dispatchEvent(new Event('storage'));}
@@ -435,4 +480,85 @@ onAuthStateChanged(auth,user=>{if(registering)return;if(user)enter(user);else{cu
 <script>
 (()=>{const installBtn=document.getElementById('installApp');let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(installBtn)installBtn.hidden=false});installBtn?.addEventListener('click',async()=>{if(!deferredPrompt){alert('Use o menu do navegador e escolha Instalar aplicativo ou Adicionar à tela inicial.');return}deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.hidden=true});window.addEventListener('appinstalled',()=>{if(installBtn)installBtn.hidden=true});if('serviceWorker'in navigator&&/^https?:$/.test(location.protocol))window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(err=>console.warn('PWA indisponível:',err)));})();
 </script>
+
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+function initBankLayout(){
+ const main=$('appMain'); if(!main||$('avBottomNav'))return;
+ const hero=main.querySelector(':scope > .hero');
+ const top=main.querySelector(':scope > .topline');
+ const home=document.createElement('section');home.id='avScreenHome';home.className='av-screen';
+ const music=document.createElement('section');music.id='avScreenMusic';music.className='av-screen hidden';
+ const train=document.createElement('section');train.id='avScreenTrain';train.className='av-screen hidden';
+ const progress=document.createElement('section');progress.id='avScreenProgress';progress.className='av-screen hidden';
+ const pages=[home,music,train,progress];
+ if(top)top.after(...pages);else hero.after(...pages);
+ const move=(id,parent)=>{const el=$(id);if(el)parent.append(el)};
+ const teacher=main.querySelector('.teacherHero'), actions=main.querySelector('.teacherActions'), guidance=$('teacherGuidance');
+ if(teacher)home.append(teacher);
+ const wizard=document.createElement('div');wizard.className='av-wizard';wizard.id='avWizard';
+ wizard.innerHTML=`
+ <div class="av-wizard-head"><div><h2>Seu treino, por etapas</h2><p>Escolha a música, defina o objetivo e comece.</p></div><span class="tag">GUIADO</span></div>
+ <div class="av-stepper"><span class="done" id="avStep1Bar"></span><span id="avStep2Bar"></span><span id="avStep3Bar"></span><span id="avStep4Bar"></span></div>
+ <div class="av-step"><div class="av-step-number">1</div><div class="av-step-body"><h3>Escolha a música</h3><p>A música define o playback, as notas de referência e seu histórico.</p><div class="av-selected-song" id="avHomeSongName">Nenhuma música selecionada</div><button class="av-step-button primary" id="avChooseSong" type="button">🎵 Abrir minha biblioteca</button></div></div>
+ <div class="av-step"><div class="av-step-number">2</div><div class="av-step-body"><h3>O que você deseja treinar?</h3><p>Escolha a modalidade da sessão.</p><div id="avPurposeMount"></div></div></div>
+ <div class="av-step"><div class="av-step-number">3</div><div class="av-step-body"><h3>Qual habilidade será trabalhada?</h3><p>O foco define o que o professor vai observar e orientar.</p><select id="avFocus" class="av-focus"><option value="pitch">Afinação e precisão das notas</option><option value="rhythm">Ritmo, tempo e entradas</option><option value="breath">Respiração, apoio e dicção</option><option value="harmony">Independência da segunda voz</option><option value="blend">Equilíbrio e encaixe das vozes</option></select><div id="avFocusInfo" class="av-objective-info"></div></div></div>
+ <button id="avStartSession" type="button" class="av-start">COMEÇAR MEU TREINO</button>
+ <p class="tiny muted" id="avWizardStatus" style="text-align:center;margin:8px 0 0">Passo 1 de 4 · selecione uma música.</p>`;
+ home.append(wizard);
+ if(actions){$('avPurposeMount').append(actions)}
+ if(guidance){guidance.classList.add('hidden');home.append(guidance)}
+ const legacyHome=$('tab-home');if(legacyHome)home.append(legacyHome);
+ // Screen Música
+ move('songPicker',music);move('playbackPanel',music);
+ const playerTitle=document.createElement('div');playerTitle.className='av-page-title';playerTitle.innerHTML='<div><h2>Biblioteca e sala de ensaio</h2><p>Selecione, ouça e ajuste as faixas desta música.</p></div><span class="tag">PASSO 1</span>';music.prepend(playerTitle);
+ // Screen Treino, com um módulo por vez.
+ const trainTitle=document.createElement('div');trainTitle.className='av-page-title';trainTitle.innerHTML='<div><h2>Área de treinamento</h2><p>Abra somente a ferramenta necessária para esta sessão.</p></div><span class="tag">PASSOS 2–3</span>';train.append(trainTitle);
+ const moduleGrid=document.createElement('div');moduleGrid.className='av-module-grid';moduleGrid.id='avModuleGrid';
+ const moduleItems=[['lesson','📘','Aprender do zero','Exercícios guiados e técnica básica'],['live','🎙️','Afinador ao vivo','Precisão, frequência e desvio em cents'],['harmony','🎶','Segunda voz','Harmonia e independência vocal'],['band','🎸','Guia da banda','Tom, acordes, entradas e final']];
+ moduleItems.forEach(([id,icon,title,desc])=>{const b=document.createElement('button');b.className='av-module';b.dataset.avModule=id;b.innerHTML=`<strong>${icon} ${title}</strong><span>${desc}</span>`;moduleGrid.append(b)});train.append(moduleGrid);
+ const trainContent=document.createElement('div');trainContent.className='av-section-content';trainContent.id='avTrainContent';train.append(trainContent);
+ ['tab-lesson','tab-live','tab-harmony','tab-band'].forEach(id=>move(id,trainContent));
+ // Screen Evolução, um painel por vez.
+ const progTitle=document.createElement('div');progTitle.className='av-page-title';progTitle.innerHTML='<div><h2>Minha evolução</h2><p>Revise gravações, referências e etapas concluídas.</p></div><span class="tag">PROGRESSO</span>';progress.append(progTitle);
+ const progressGrid=document.createElement('div');progressGrid.className='av-progress-grid';progressGrid.id='avProgressGrid';
+ const progressItems=[['recordings','▶','Gravações','Ouça suas sessões'],['songmap','🎼','Mapa musical','Notas e trechos validados'],['plan','📅','Plano de ensaio','Organize sua rotina'],['check','✓','Avaliação','Acompanhe o que já domina']];
+ progressItems.forEach(([id,icon,title,desc])=>{const b=document.createElement('button');b.className='av-progress-action';b.dataset.avProgress=id;b.innerHTML=`<strong>${icon} ${title}</strong><span>${desc}</span>`;progressGrid.append(b)});progress.append(progressGrid);
+ const progressContent=document.createElement('div');progressContent.className='av-section-content';progressContent.id='avProgressContent';progress.append(progressContent);
+ ['tab-recordings','tab-songmap','tab-plan','tab-check'].forEach(id=>move(id,progressContent));
+ // Statuses are kept, but the interface no longer shows the long horizontal navigation.
+ const legacy=$('toolsNavigation');if(legacy)legacy.hidden=true;
+ const bottom=document.createElement('nav');bottom.className='av-bottom-nav no-print';bottom.id='avBottomNav';bottom.setAttribute('aria-label','Navegação principal');
+ const navItems=[['home','⌂','Início'],['music','♫','Músicas'],['train','◎','Treinar'],['progress','▤','Evolução']];
+ navItems.forEach(([id,icon,label])=>{const b=document.createElement('button');b.type='button';b.dataset.avPage=id;b.innerHTML=`<span class="av-icon">${icon}</span><span>${label}</span>`;bottom.append(b)});document.body.append(bottom);
+ let activePage='home',activeModule='live',activeProgress='check',selectedMode='silvane';
+ const goalCopy={
+  silvane:{focus:'pitch',title:'Voz principal',purpose:'Estabilizar a melodia original, acertar as notas e cantar com emissão confortável.',items:['Altura das notas em relação à referência validada','Estabilidade da nota sustentada','Ritmo, respiração e articulação da letra']},
+  marla:{focus:'harmony',title:'Segunda voz',purpose:'Aprender a linha harmônica sem abandonar a própria nota ao ouvir a voz principal.',items:['Entrada e saída nos trechos combinados','Independência em relação à melodia principal','Afinação da nota harmônica de referência']},
+  duet:{focus:'blend',title:'Cantar juntas',purpose:'Unir as vozes com entradas alinhadas, volume equilibrado e final combinado.',items:['Sincronia de entradas e finais','Equilíbrio de volume entre as vozes','Afinação e estabilidade no conjunto']}
+ };
+ const focusCopy={pitch:['Afinação e precisão','O afinador mostra a frequência, a nota estimada e o desvio em cents. A comparação com a melodia só ocorre quando existe um mapa de notas validado.'],rhythm:['Ritmo e entradas','Trabalhe o pulso, o início das frases e os finais. O metrônomo ajuda a manter o tempo.'],breath:['Respiração, apoio e dicção','Observe respirações, clareza das palavras e emissão confortável. Interrompa se houver dor ou rouquidão.'],harmony:['Independência da segunda voz','A segunda cantora aprende sua linha separadamente e depois sustenta as notas próprias enquanto a principal canta.'],blend:['Equilíbrio e encaixe das vozes','Compare as gravações, entradas, volume e término das frases. Use gravações separadas para avaliar cada cantora com mais precisão.']};
+ function updateWizard(){const song=$('studentSongSelect')?.selectedOptions?.[0]?.textContent||'Nenhuma música selecionada';$('avHomeSongName').textContent=song;$('avFocus').value=goalCopy[selectedMode].focus;$('avFocusInfo').innerHTML='<b>'+focusCopy[$('avFocus').value][0]+'</b>'+focusCopy[$('avFocus').value][1];document.querySelectorAll('[data-training-mode]').forEach(b=>b.classList.toggle('selected',b.dataset.trainingMode===selectedMode));const hasSong=$('studentSongSelect')?.value;['avStep1Bar','avStep2Bar','avStep3Bar','avStep4Bar'].forEach((id,i)=>$(id).classList.toggle('done',i===0?!!hasSong:i===1?!!selectedMode:i===2?!!$('avFocus').value:false));$('avWizardStatus').textContent=hasSong?'Passos 1–3 preparados · seu treino está pronto.':'Passo 1 de 4 · selecione uma música.';}
+ function legacyGo(id){const b=document.querySelector('#toolsNavigation [data-tab="'+id+'"]');if(b)b.click();else{document.querySelectorAll('.tabcontent').forEach(x=>x.classList.toggle('hidden',x.id!=='tab-'+id));}}
+ function showPage(page){activePage=page;pages.forEach(x=>x.classList.toggle('hidden',x.id!=='avScreen'+page[0].toUpperCase()+page.slice(1)));bottom.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avPage===page));if(page==='home')legacyGo('home');if(page==='music')legacyGo('home');if(page==='train'){legacyGo(activeModule);moduleGrid.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avModule===activeModule));}if(page==='progress'){legacyGo(activeProgress);progressGrid.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avProgress===activeProgress));}window.scrollTo({top:0,behavior:'smooth'});}
+ function showTrainingModule(id){activeModule=id;showPage('train');legacyGo(id);moduleGrid.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avModule===id));}
+ function showProgressModule(id){activeProgress=id;showPage('progress');legacyGo(id);progressGrid.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avProgress===id));}
+ // Goal buttons are the three existing lesson choices.
+ document.querySelectorAll('[data-training-mode]').forEach(b=>{b.addEventListener('click',()=>{selectedMode=b.dataset.trainingMode;updateWizard();},true)});
+ bottom.addEventListener('click',e=>{const b=e.target.closest('[data-av-page]');if(b)showPage(b.dataset.avPage)});
+ $('avChooseSong').addEventListener('click',()=>showPage('music'));
+ $('avFocus').addEventListener('change',updateWizard);
+ $('avStartSession').addEventListener('click',()=>{if(!$('studentSongSelect')?.value){$('avWizardStatus').textContent='Primeiro selecione uma música na biblioteca.';showPage('music');return;}const old=document.querySelector('[data-training-mode="'+selectedMode+'"]');if(old)old.click();const next=selectedMode==='marla'?'harmony':selectedMode==='duet'?'live':'live';showTrainingModule(next);$('avWizardStatus').textContent='Sessão iniciada · '+goalCopy[selectedMode].title;});
+ moduleGrid.addEventListener('click',e=>{const b=e.target.closest('[data-av-module]');if(b)showTrainingModule(b.dataset.avModule)});
+ progressGrid.addEventListener('click',e=>{const b=e.target.closest('[data-av-progress]');if(b)showProgressModule(b.dataset.avProgress)});
+ $('studentSongSelect')?.addEventListener('change',updateWizard);
+ window.addEventListener('av3-auth-state',()=>{updateWizard();showPage('home')});
+ updateWizard();showPage('home');
+ }
+ if(document.readyState==='complete')initBankLayout();else window.addEventListener('load',initBankLayout,{once:true});
+})();
+</script>
+
 </body></html>
