@@ -1,37 +1,26 @@
 {
   "id": "/",
-  "name": "Assistente Vocal — Estrelinha",
-  "short_name": "Assistente Vocal",
-  "description": "Professor de música no celular: afinação, ouvido musical e segunda voz.",
-  "lang": "pt-BR",
+  "name": "Assistente Vocal",
+  "short_name": "Vocal",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "orientation": "portrait-primary",
   "background_color": "#09111e",
   "theme_color": "#101827",
-  "categories": [
-    "education",
-    "music"
-  ],
+  "orientation": "portrait-primary",
+  "description": "Treinamento vocal guiado para várias músicas.",
   "icons": [
     {
       "src": "/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }
