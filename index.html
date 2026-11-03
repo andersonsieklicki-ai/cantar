@@ -284,7 +284,7 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
 <div class="panel"><h2>Checklist de prontidão</h2><p class="small muted">Marquem cada item só quando conseguirem executar sem ajuda. A meta é chegar ao palco com os pontos essenciais resolvidos.</p><div id="checklist"></div><div class="progressline" style="margin-top:12px"><b id="checkCount">0/12</b><div class="bar"><i id="checkBar"></i></div></div><div class="row no-print" style="margin-top:12px"><button id="resetChecks" class="warn">Zerar checklist</button><button onclick="window.print()">Imprimir avaliação</button></div></div>
 <div class="panel"><h2>Critérios finais</h2><div class="grid"><div class="c6 card"><strong>Segunda voz</strong><span class="small muted">Canta sua nota sem voltar para a melodia principal; entra no tempo; respira nos pontos combinados; termina junto.</span></div><div class="c6 card"><strong>Voz principal</strong><span class="small muted">Mantém a melodia, articula a letra, administra a respiração e cresce no refrão sem tensão.</span></div><div class="c6 card"><strong>Dueto</strong><span class="small muted">As vozes permanecem distinguíveis e afinadas; nenhuma cobre a outra.</span></div><div class="c6 card"><strong>Banda</strong><span class="small muted">Tom, andamento, acordes, entradas e final foram combinados e ensaiados.</span></div></div></div>
 </section>
-<div class="foot">Assistente Vocal · versão 3.7 · biblioteca do TV Box e gravação sincronizada. Microfone exige navegador compatível e contexto seguro (HTTPS ou localhost). Não substitui professor(a) de canto ou avaliação fonoaudiológica.</div>
+<div class="foot">Assistente Vocal · versão 3.8 · biblioteca do TV Box e gravação sincronizada. Microfone exige navegador compatível e contexto seguro (HTTPS ou localhost). Não substitui professor(a) de canto ou avaliação fonoaudiológica.</div>
 </main>
 <script>
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
@@ -320,6 +320,8 @@ function resolveStoredAudioUrl(url,path){
  const filename=stored.split('/').filter(Boolean).pop();
  return filename?AV_AUDIO_SERVER_BASE+'/api/audio/'+encodeURIComponent(filename):'';
 }
+// Disponibiliza a função para o carregador de músicas, executado em outro escopo.
+window.resolveStoredAudioUrl=resolveStoredAudioUrl;
 const player={sources:[],gains:{},master:null,compressor:null,playing:false,offset:0,startedAt:0,duration:0,timer:null,generation:0,mode:'silvane'};
 let currentTrainingMode='silvane';
 let recordMixDestination=null,recordMicSource=null,recordMicGain=null,recordMicFilter=null,recordMicCompressor=null,recordPlaybackGain=null;
@@ -598,12 +600,12 @@ async function loadSong(song){if(!song||!currentUser)return;activeSong=song;setC
   const savedLocal=(()=>{try{return localStorage.getItem('av3:serverPlayback:'+song.id)||''}catch{return ''}})();
   const storedInstrument=t.instrument||song.playbackUrl||'';
   const storedPath=p.instrument||song.playbackPath||'';
-  let instrument=resolveStoredAudioUrl(storedInstrument,storedPath);
+  let instrument=window.resolveStoredAudioUrl(storedInstrument,storedPath);
   $('playerStatus').textContent='Carregando o playback cadastrado e consultando a biblioteca do TV Box…';
   let loadedInstrument=false;
   if(instrument){try{await window.loadAVTrackFromUrl('instrument',instrument,song.titulo+' · playback cadastrado');loadedInstrument=true}catch(e){console.warn('URL cadastrada falhou; tentando biblioteca do TV Box:',e.message)}}
-  const lead=resolveStoredAudioUrl(t.lead||song.leadUrl,p.lead||song.leadPath);
-  const harmony=resolveStoredAudioUrl(t.harmony||song.harmonyUrl,p.harmony||song.harmonyPath);
+  const lead=window.resolveStoredAudioUrl(t.lead||song.leadUrl,p.lead||song.leadPath);
+  const harmony=window.resolveStoredAudioUrl(t.harmony||song.harmonyUrl,p.harmony||song.harmonyPath);
   for(const [key,url,label] of [['lead',lead,'Voz principal de referência'],['harmony',harmony,'Segunda voz de referência']]){
    if(url){try{await window.loadAVTrackFromUrl(key,url,label)}catch(e){console.warn('Faixa de referência não carregada:',key,e.message)}}
   }
