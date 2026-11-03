@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101827"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Assistente Vocal"><meta name="description" content="Treinamento vocal interativo para várias músicas, afinação, ouvido musical e harmonia."><link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icons/icon-192.png"><link rel="apple-touch-icon" href="/icons/icon-192.png"><title>Assistente Vocal</title>
+<meta name="theme-color" content="#style"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Assistente Vocal"><meta name="description" content="Treinamento vocal interativo para várias músicas, afinação, ouvido musical e harmonia."><link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icons/icon-192.png"><link rel="apple-touch-icon" href="/icons/icon-192.png"><title>Assistente Vocal</title>
 <style>
 :root{--bg:#09111e;--panel:#131f31;--panel2:#192940;--line:#2d405b;--txt:#eef4ff;--muted:#9aabc3;--cyan:#62d7e8;--green:#6ed6a3;--yellow:#f3c76c;--red:#ff858b;--violet:#bba7ff;--blue:#75a9ff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1b2e49 0,#09111e 58%);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,select,textarea{font:inherit}button{border:1px solid #3b5271;border-radius:11px;background:#263953;color:var(--txt);padding:10px 13px;font-weight:650;cursor:pointer}button.primary{background:linear-gradient(135deg,#147f96,#276db7);border-color:#328da9}button.good{background:#17654e;border-color:#268366}button.warn{background:#75464c;border-color:#99585e}button.ghost{background:transparent}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
@@ -170,7 +170,7 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
 
 
 <div class="row no-print" style="margin:0 0 12px"><button class="good" id="installApp" type="button" hidden>＋ Instalar aplicativo</button><span class="tiny muted" id="installHelp">No iPhone: Compartilhar → Adicionar à Tela de Início. No Android: menu do navegador → Instalar aplicativo.</span></div>
-<div class="topline"><span class="pill">Versão 3.5 · biblioteca TV Box</span><span class="pill" id="micState">Microfone desligado</span><span class="pill" id="savedState">Aguardando login</span><span class="pill" id="cloudState">Nuvem não conectada</span><a class="tab hidden" id="adminLink" href="/admin.html">⚙ Administração</a><button class="tab" id="logoutBtn" type="button">Sair</button></div>
+<div class="topline"><span class="pill">Versão 3.6 · biblioteca TV Box</span><span class="pill" id="micState">Microfone desligado</span><span class="pill" id="savedState">Aguardando login</span><span class="pill" id="cloudState">Nuvem não conectada</span><a class="tab hidden" id="adminLink" href="/admin.html">⚙ Administração</a><button class="tab" id="logoutBtn" type="button">Sair</button></div>
 
 <section class="panel playbackPanel no-print" id="playbackPanel" aria-label="Sala de ensaio musical">
  <div class="playbackHeader"><div><span class="eyebrow">SALA DE ENSAIO</span><h2 id="playbackTitle">Playback e referências</h2><p class="small muted" id="trainingModeText">Escolha uma das três aulas. O playback será carregado automaticamente do servidor.</p></div><span class="tag" id="audioEngineState">Motor de áudio pronto</span></div>
@@ -283,7 +283,7 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
 <div class="panel"><h2>Checklist de prontidão</h2><p class="small muted">Marquem cada item só quando conseguirem executar sem ajuda. A meta é chegar ao palco com os pontos essenciais resolvidos.</p><div id="checklist"></div><div class="progressline" style="margin-top:12px"><b id="checkCount">0/12</b><div class="bar"><i id="checkBar"></i></div></div><div class="row no-print" style="margin-top:12px"><button id="resetChecks" class="warn">Zerar checklist</button><button onclick="window.print()">Imprimir avaliação</button></div></div>
 <div class="panel"><h2>Critérios finais</h2><div class="grid"><div class="c6 card"><strong>Segunda voz</strong><span class="small muted">Canta sua nota sem voltar para a melodia principal; entra no tempo; respira nos pontos combinados; termina junto.</span></div><div class="c6 card"><strong>Voz principal</strong><span class="small muted">Mantém a melodia, articula a letra, administra a respiração e cresce no refrão sem tensão.</span></div><div class="c6 card"><strong>Dueto</strong><span class="small muted">As vozes permanecem distinguíveis e afinadas; nenhuma cobre a outra.</span></div><div class="c6 card"><strong>Banda</strong><span class="small muted">Tom, andamento, acordes, entradas e final foram combinados e ensaiados.</span></div></div></div>
 </section>
-<div class="foot">Assistente Vocal · versão 3.4 · playback automático da biblioteca. Microfone exige navegador compatível e contexto seguro (HTTPS ou localhost). Não substitui professor(a) de canto ou avaliação fonoaudiológica.</div>
+<div class="foot">Assistente Vocal · versão 3.6 · biblioteca do TV Box e gravação sincronizada. Microfone exige navegador compatível e contexto seguro (HTTPS ou localhost). Não substitui professor(a) de canto ou avaliação fonoaudiológica.</div>
 </main>
 <script>
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
@@ -378,7 +378,7 @@ window.loadAVTrackFromUrl=async function(key,url,name){
   player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));
   $('playerLoopEnd').value=player.duration.toFixed(1);$('playerSeek').value='0';player.offset=0;updatePlayerUI();
   setPlayerStatus(`${trackNames[key]} carregado do TV Box.`,true);return true;
- }catch(e){trackBuffers[key]=null;trackBytes[key]=0;$('track'+cap(key)+'Name').textContent='Falha ao carregar faixa';setPlayerStatus(`Falha ao carregar ${trackNames[key]}: ${e.message}`);throw e}
+ }catch(e){trackBuffers[key]=null;trackBytes[key]=0;$('track'+cap(key)+'Name').textContent='Falha ao carregar faixa';if(key==='instrument')updateRecordAvailability();setPlayerStatus(`Falha ao carregar ${trackNames[key]}: ${e.message}`);throw e}
  finally{$('audioEngineState').textContent='Motor de áudio pronto'}
 };
 const AV_AUDIO_API=AV_AUDIO_SERVER_BASE+'/api/audio';let serverAudioFiles=[];
@@ -389,7 +389,7 @@ async function fetchServerAudioList(){
  try{
   const response=await fetch(AV_AUDIO_API,{method:'GET',mode:'cors',cache:'no-store'});
   if(!response.ok)throw new Error('HTTP '+response.status);
-  const data=await response.json();if(!data.success||!Array.isArray(data.files))throw new Error('Resposta inesperada da biblioteca de áudio.');
+  const data=await response.json();if(!data.success||!Array.isArray(data.files))throw new Error(data.error||'Resposta inesperada da biblioteca de áudio.');
   serverAudioFiles=data.files.filter(f=>f&&/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
   select.replaceChildren();
   if(!serverAudioFiles.length){select.add(new Option('Nenhum MP3 encontrado no servidor',''));status.textContent='O servidor respondeu, mas não há MP3 na pasta de uploads.';return serverAudioFiles}
@@ -464,9 +464,8 @@ async function startRecording(){
   // produzir uma trilha silenciosa no MediaRecorder.
   const micTrack=stream.getAudioTracks()[0];
   if(!micTrack||micTrack.readyState!=='live'||!micTrack.enabled||micTrack.muted)throw new Error('O microfone não está entregando áudio. Desligue e ligue o microfone novamente e permita o acesso no navegador.');
-  const probe=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(probe);
-  let probeRms=0;for(let i=0;i<probe.length;i++)probeRms+=probe[i]*probe[i];probeRms=Math.sqrt(probeRms/probe.length);
-  if(probeRms<0.00015)throw new Error('Não detectei sinal no microfone. Fale perto do aparelho por alguns segundos e tente novamente.');
+  // Não exigir voz no exato instante do clique: a cantora pode começar a cantar
+  // depois da contagem. Validamos a faixa do microfone, não o volume instantâneo.
   recordMicSource=source;
   recordMicFilter=ac.createBiquadFilter();
   recordMicFilter.type='highpass';
@@ -508,17 +507,17 @@ async function startRecording(){
   $('recordState').textContent='Preparando início sincronizado…';
   await startPlayback(false);
   if(!player.playing){if(mediaRecorder.state==='recording')mediaRecorder.stop();recording=false;return}
-  $('recordState').textContent='Gravando voz + playback. O microfone foi validado antes do início.';
+  $('recordState').textContent='Gravando voz + playback. Cante normalmente; a gravação já está em andamento.';
  }catch(e){
   try{if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();}catch{}
-  recording=false;$('recordBtn').disabled=false;$('stopRecord').disabled=true;
+  recording=false;updateRecordAvailability();$('stopRecord').disabled=true;
   $('recordSyncBadge').textContent='Não iniciado';$('recordState').textContent='Não foi possível iniciar: '+e.message;
  }
 }
 function stopRecording(){
  if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();
  recording=false;stopPlayback(false);
- $('recordBtn').disabled=!stream;$('stopRecord').disabled=true;$('downloadCsv').disabled=!csvRows.length;
+ updateRecordAvailability();$('stopRecord').disabled=true;$('downloadCsv').disabled=!csvRows.length;
  $('recordState').textContent='Finalizando o arquivo de áudio…';
 }
 function downloadCsv(rows,name){let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(';')).join('\n'),blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
