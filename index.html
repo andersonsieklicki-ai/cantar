@@ -390,19 +390,29 @@ async function startRecording(){
   // A gravação recebe o mix do playback e o microfone, sem devolver o microfone aos alto-falantes.
   recordMixDestination=ac.createMediaStreamDestination();
   player.compressor.connect(recordMixDestination);
-  recordMicSource=ac.createMediaStreamSource(stream);
-  recordMicGain=ac.createGain();recordMicGain.gain.value=1;
+  // Reutiliza a mesma fonte que alimenta o afinador. Em alguns Androids,
+  // criar uma segunda MediaStreamAudioSourceNode para o mesmo stream pode
+  // produzir uma trilha silenciosa no MediaRecorder.
+  const micTrack=stream.getAudioTracks()[0];
+  if(!micTrack||micTrack.readyState!=='live'||!micTrack.enabled||micTrack.muted)throw new Error('O microfone não está entregando áudio. Desligue e ligue o microfone novamente e permita o acesso no navegador.');
+  const probe=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(probe);
+  let probeRms=0;for(let i=0;i<probe.length;i++)probeRms+=probe[i]*probe[i];probeRms=Math.sqrt(probeRms/probe.length);
+  if(probeRms<0.00015)throw new Error('Não detectei sinal no microfone. Fale perto do aparelho por alguns segundos e tente novamente.');
+  recordMicSource=source;
+  recordMicGain=ac.createGain();recordMicGain.gain.value=1.8;
   recordMicSource.connect(recordMicGain);recordMicGain.connect(recordMixDestination);
   const mimeCandidates=['audio/webm;codecs=opus','audio/webm','audio/mp4'];
   const mimeType=mimeCandidates.find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t));
   mediaRecorder=new MediaRecorder(recordMixDestination.stream,mimeType?{mimeType}:undefined);
   mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size)recordChunks.push(e.data)};
+  mediaRecorder.onerror=e=>{console.error('Erro no MediaRecorder:',e.error||e);$('recordState').textContent='Falha durante a gravação. Verifique a permissão do microfone e tente novamente.'};
   mediaRecorder.onstop=()=>{
    const type=mediaRecorder.mimeType||'audio/webm';
    const blob=new Blob(recordChunks,{type}),url=URL.createObjectURL(blob),a=document.createElement('a');
    a.href=url;a.download='ensaio_mix_'+new Date().toISOString().replace(/[:.]/g,'-')+(type.includes('mp4')?'.mp4':'.webm');a.click();
    setTimeout(()=>URL.revokeObjectURL(url),10000);
-   try{recordMicSource?.disconnect();recordMicGain?.disconnect();recordMixDestination?.stream.getTracks().forEach(t=>t.stop());}catch{}
+   try{recordMicGain?.disconnect();recordMixDestination?.stream.getTracks().forEach(t=>t.stop());}catch{}
+   // Não desconectar recordMicSource: é a fonte original do afinador ao vivo.
    recordMicSource=recordMicGain=recordMixDestination=null;
    $('recordState').textContent='Gravação finalizada e baixada: voz + playback no mesmo arquivo.';
    $('recordSyncBadge').textContent='Ensaio salvo neste aparelho';
@@ -412,7 +422,7 @@ async function startRecording(){
   $('recordState').textContent='Preparando início sincronizado…';
   await startPlayback(false);
   if(!player.playing){if(mediaRecorder.state==='recording')mediaRecorder.stop();recording=false;return}
-  $('recordState').textContent='Gravando. Voz e playback estão sendo capturados juntos.';
+  $('recordState').textContent='Gravando voz + playback. O microfone foi validado antes do início.';
  }catch(e){
   try{if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();}catch{}
   recording=false;$('recordBtn').disabled=false;$('stopRecord').disabled=true;
