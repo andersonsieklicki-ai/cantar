@@ -33,7 +33,7 @@
  <section class="panel">
   <div class="row between"><div><h2 style="margin:0">2. Biblioteca e processamento de áudio</h2><p class="small muted">Envie a música original. Os arquivos são enviados ao armazenamento local do TV Box. Envie arquivos MP3 separados: original, instrumental, voz principal e segunda voz. A separação por IA depende de um backend específico e não é executada por esta API de armazenamento.</p></div><button id="refreshSongs">Atualizar biblioteca</button></div>
   <div class="field" style="margin:12px 0"><label for="boxStorageApiUrl">Servidor de arquivos — TV Box</label><div class="row"><input id="boxStorageApiUrl" type="url" placeholder="https://mxqpro-h313-1.tail8b8cce.ts.net:8443"><button id="testBoxStorage" type="button">Testar conexão</button></div><p id="boxStorageStatus" class="tiny muted">API pública HTTPS do MXQ Pro. As cantoras podem reproduzir os arquivos pelo celular sem instalar Tailscale.</p></div>
-  <div class="field" style="margin:12px 0"><label for="boxUploadToken">Token privado de upload do TV Box (64 caracteres)</label><input id="boxUploadToken" type="password" autocomplete="off" spellcheck="false" placeholder="Cole aqui o token configurado no backend"><p class="tiny muted">O token é usado somente nesta sessão do navegador. Não o publique no HTML, GitHub ou Vercel.</p></div>
+  <p class="tiny muted" style="margin:8px 0">O envio ao TV Box utiliza a mesma autenticação Google do painel. Somente administradores autorizados podem enviar arquivos.</p>
   <div class="field" style="margin:12px 0"><label for="separationApiUrl">Endereço público da API de separação (backend)</label><input id="separationApiUrl" type="url" placeholder="https://seu-backend.exemplo.com"><p class="tiny muted">Não coloque token secreto neste campo. A API recebe um token de sessão Firebase pelo cabeçalho Authorization.</p></div>
   <div id="songList" class="list"><p class="muted">Carregando músicas…</p></div>
   <div class="output small"><b>Limite importante:</b> o processamento pode produzir um playback instrumental e uma faixa vocal combinada. Para treinar voz principal e segunda voz de modo independente, cadastre também duas referências vocais separadas. O resultado de IA precisa ser ouvido e aprovado; não há garantia de qualidade de gravadora.</div>
@@ -95,14 +95,14 @@ async function uploadAudio(songId,kind,file,statusEl,fill){
  if(!file||!adminUser)return;
  if(!/\.mp3$/i.test(file.name)){statusEl.textContent='A API atual aceita somente arquivos MP3.';return}
  if(file.size>100*1024*1024){statusEl.textContent='Arquivo acima do limite de 100 MB.';return}
- const endpoint=$('boxStorageApiUrl').value.trim().replace(/\/$/,''),token=$('boxUploadToken').value.trim();
+ const endpoint=$('boxStorageApiUrl').value.trim().replace(/\/$/,'');
  if(!endpoint){statusEl.textContent='Informe o endereço HTTPS do TV Box.';return}
- if(!/^[a-f0-9]{64}$/i.test(token)){statusEl.textContent='Informe o token privado de upload (64 caracteres hexadecimais).';return}
- statusEl.textContent='Conectando ao TV Box…';fill.style.width='0%';
+ statusEl.textContent='Validando sua conta Google…';fill.style.width='0%';
  try{
+  const idToken=await adminUser.getIdToken(true);
   const data=await new Promise((resolve,reject)=>{
    const xhr=new XMLHttpRequest();xhr.open('POST',endpoint+'/api/upload');
-   xhr.setRequestHeader('Content-Type','audio/mpeg');xhr.setRequestHeader('X-Upload-Token',token);
+   xhr.setRequestHeader('Content-Type','audio/mpeg');xhr.setRequestHeader('Authorization','Bearer '+idToken);
    xhr.upload.addEventListener('progress',e=>{if(e.lengthComputable){const pct=Math.round(e.loaded/e.total*100);fill.style.width=pct+'%';statusEl.textContent='Enviando para o TV Box… '+pct+'%'}});
    xhr.onerror=()=>reject(new Error('Falha de rede/CORS. Verifique a conexão HTTPS com o MXQ Pro.'));
    xhr.onload=()=>{let body={};try{body=JSON.parse(xhr.responseText)}catch{}if(xhr.status<200||xhr.status>=300)reject(new Error(body.error||`TV Box respondeu HTTP ${xhr.status}`));else resolve(body)};
