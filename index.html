@@ -89,7 +89,7 @@ button.micBig{min-height:60px;border-radius:15px;font-size:15px;font-weight:850;
 .teacherAction{min-height:100px;border-radius:16px;text-align:left;padding:15px;display:flex;flex-direction:column;justify-content:center;gap:5px;background:linear-gradient(145deg,#203e5b,#18283e);border:1px solid #41617f}
 .teacherAction strong{font-size:16px}.teacherAction span{font-size:12px;color:#bdcce0;font-weight:450}
 .teacherAction[data-mode="silvane"]{border-color:#2c9c9e}.teacherAction[data-mode="marla"]{border-color:#8670bd}.teacherAction[data-mode="duet"]{border-color:#b58c4b}
-.playbackPanel{border:1px solid #2b6577;background:linear-gradient(160deg,#13283c,#0d1a2c)}
+.trackUploadInput{display:none!important}.playbackPanel{border:1px solid #2b6577;background:linear-gradient(160deg,#13283c,#0d1a2c)}
 .playbackHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.playbackHeader h2{margin:0}.playbackTracks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
 .trackCard{border:1px solid #314861;background:#0d1a2a;border-radius:13px;padding:12px;min-width:0}.trackCard h3{font-size:14px;margin:0 0 8px}.trackCard input[type=file]{width:100%;font-size:12px;color:#c5d4e8}.trackCard input[type=range]{width:100%;accent-color:#62d7e8}.trackName{font-size:11px;color:#aabbd0;overflow-wrap:anywhere;min-height:32px;margin-top:5px}
 .playerTransport{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.playerTransport button{min-width:100px}.playerPosition{font-variant-numeric:tabular-nums;color:#c4d5e9;font-size:12px;min-width:120px}.playerSeek{width:100%;accent-color:#62d7e8}.playerLoop{display:grid;grid-template-columns:auto repeat(2,minmax(100px,150px)) 1fr;align-items:end;gap:10px;margin:10px 0}.playerLoop .field{min-width:0}.playerStatus{padding:10px 12px;border:1px solid #2b4059;border-radius:10px;background:#0a1727;color:#b9cadd;font-size:12px}.playerStatus.active{border-color:#26866e;color:#9ce6c7;background:#10332f}
@@ -170,14 +170,14 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
 
 
 <div class="row no-print" style="margin:0 0 12px"><button class="good" id="installApp" type="button" hidden>＋ Instalar aplicativo</button><span class="tiny muted" id="installHelp">No iPhone: Compartilhar → Adicionar à Tela de Início. No Android: menu do navegador → Instalar aplicativo.</span></div>
-<div class="topline"><span class="pill">Versão 3.1 · ensaio sincronizado</span><span class="pill" id="micState">Microfone desligado</span><span class="pill" id="savedState">Aguardando login</span><span class="pill" id="cloudState">Nuvem não conectada</span><a class="tab hidden" id="adminLink" href="/admin.html">⚙ Administração</a><button class="tab" id="logoutBtn" type="button">Sair</button></div>
+<div class="topline"><span class="pill">Versão 3.4 · biblioteca automática</span><span class="pill" id="micState">Microfone desligado</span><span class="pill" id="savedState">Aguardando login</span><span class="pill" id="cloudState">Nuvem não conectada</span><a class="tab hidden" id="adminLink" href="/admin.html">⚙ Administração</a><button class="tab" id="logoutBtn" type="button">Sair</button></div>
 
 <section class="panel playbackPanel no-print" id="playbackPanel" aria-label="Sala de ensaio musical">
- <div class="playbackHeader"><div><span class="eyebrow">SALA DE ENSAIO</span><h2 id="playbackTitle">Playback e referências</h2><p class="small muted" id="trainingModeText">Escolha uma das três aulas e carregue os arquivos de áudio.</p></div><span class="tag" id="audioEngineState">Motor de áudio pronto</span></div>
+ <div class="playbackHeader"><div><span class="eyebrow">SALA DE ENSAIO</span><h2 id="playbackTitle">Playback e referências</h2><p class="small muted" id="trainingModeText">Escolha uma das três aulas. O playback será carregado automaticamente do servidor.</p></div><span class="tag" id="audioEngineState">Motor de áudio pronto</span></div>
  <div class="playbackTracks">
-  <div class="trackCard"><h3>1. Playback instrumental</h3><input type="file" id="trackInstrumentFile" accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,.wav,.mp3,.m4a,.ogg"><div class="trackName" id="trackInstrumentName">Nenhum instrumental carregado</div><label class="small muted" for="trackInstrumentVolume">Volume <span id="trackInstrumentPct">85%</span></label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85"></div>
-  <div class="trackCard"><h3>2. Voz principal de referência</h3><input type="file" id="trackLeadFile" accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,.wav,.mp3,.m4a,.ogg"><div class="trackName" id="trackLeadName">Nenhuma referência principal carregada</div><label class="small muted" for="trackLeadVolume">Volume <span id="trackLeadPct">45%</span></label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45"></div>
-  <div class="trackCard"><h3>3. Segunda voz de referência</h3><input type="file" id="trackHarmonyFile" accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,.wav,.mp3,.m4a,.ogg"><div class="trackName" id="trackHarmonyName">Nenhuma referência de segunda voz carregada</div><label class="small muted" for="trackHarmonyVolume">Volume <span id="trackHarmonyPct">45%</span></label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45"></div>
+  <div class="trackCard"><h3>1. Playback instrumental</h3><input class="trackUploadInput" type="file" id="trackInstrumentFile" accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,.wav,.mp3,.m4a,.ogg"><div class="trackName" id="trackInstrumentName">Nenhum instrumental carregado</div><label class="small muted" for="trackInstrumentVolume">Volume <span id="trackInstrumentPct">85%</span></label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85"></div>
+  <div class="trackCard"><h3>2. Voz principal de referência</h3><input class="trackUploadInput" type="file" id="trackLeadFile" accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,.wav,.mp3,.m4a,.ogg"><div class="trackName" id="trackLeadName">Nenhuma referência principal carregada</div><label class="small muted" for="trackLeadVolume">Volume <span id="trackLeadPct">45%</span></label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45"></div>
+  <div class="trackCard"><h3>3. Segunda voz de referência</h3><input class="trackUploadInput" type="file" id="trackHarmonyFile" accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,.wav,.mp3,.m4a,.ogg"><div class="trackName" id="trackHarmonyName">Nenhuma referência de segunda voz carregada</div><label class="small muted" for="trackHarmonyVolume">Volume <span id="trackHarmonyPct">45%</span></label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45"></div>
  </div>
  <div class="playerTransport">
   <button class="primary" id="playerPlay" type="button">▶ Reproduzir</button><button id="playerCountIn" type="button">▶ Contagem + reproduzir</button><button id="playerPause" type="button" disabled>Ⅱ Pausar</button><button id="playerStop" type="button" disabled>■ Reiniciar</button>
@@ -190,7 +190,7 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
   <div class="field"><label for="playerLoopEnd">Fim (segundos)</label><input type="number" id="playerLoopEnd" min="0" step="0.1" placeholder="Duração"></div>
   <span class="small muted">Marque início e fim para repetir apenas a passagem selecionada.</span>
  </div>
- <div class="playerStatus" id="playerStatus" role="status">As faixas publicadas para esta música serão carregadas automaticamente. Para teste local, importe arquivos alinhados no mesmo ponto inicial.</div>
+ <div class="playerStatus" id="playerStatus" role="status">A música selecionada carrega automaticamente o playback salvo no servidor. Não é necessário enviar o áudio novamente.</div>
  <div class="eventEditor" id="adminMusicTools" hidden>
   <details open>
    <summary>Mapa de notas validado — música selecionada</summary>
@@ -277,7 +277,7 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
 <div class="panel"><h2>Checklist de prontidão</h2><p class="small muted">Marquem cada item só quando conseguirem executar sem ajuda. A meta é chegar ao palco com os pontos essenciais resolvidos.</p><div id="checklist"></div><div class="progressline" style="margin-top:12px"><b id="checkCount">0/12</b><div class="bar"><i id="checkBar"></i></div></div><div class="row no-print" style="margin-top:12px"><button id="resetChecks" class="warn">Zerar checklist</button><button onclick="window.print()">Imprimir avaliação</button></div></div>
 <div class="panel"><h2>Critérios finais</h2><div class="grid"><div class="c6 card"><strong>Segunda voz</strong><span class="small muted">Canta sua nota sem voltar para a melodia principal; entra no tempo; respira nos pontos combinados; termina junto.</span></div><div class="c6 card"><strong>Voz principal</strong><span class="small muted">Mantém a melodia, articula a letra, administra a respiração e cresce no refrão sem tensão.</span></div><div class="c6 card"><strong>Dueto</strong><span class="small muted">As vozes permanecem distinguíveis e afinadas; nenhuma cobre a outra.</span></div><div class="c6 card"><strong>Banda</strong><span class="small muted">Tom, andamento, acordes, entradas e final foram combinados e ensaiados.</span></div></div></div>
 </section>
-<div class="foot">Assistente Vocal · versão 3.1 · biblioteca de várias músicas. Microfone exige navegador compatível e contexto seguro (HTTPS ou localhost). Não substitui professor(a) de canto ou avaliação fonoaudiológica.</div>
+<div class="foot">Assistente Vocal · versão 3.4 · playback automático da biblioteca. Microfone exige navegador compatível e contexto seguro (HTTPS ou localhost). Não substitui professor(a) de canto ou avaliação fonoaudiológica.</div>
 </main>
 <script>
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
@@ -300,9 +300,22 @@ function playPair(){playMidi(leadMidi,1.8,0,.10);playMidi(targetMidi,1.8,0,.10)}
 const TRACKS=['instrument','lead','harmony'];
 const trackBuffers={instrument:null,lead:null,harmony:null};
 const trackNames={instrument:'Playback instrumental',lead:'Voz principal',harmony:'Segunda voz'};
+// URLs absolutas gravadas no cadastro são sempre prioritárias. O endereço abaixo
+// serve apenas como fallback para registros antigos que tenham somente playbackPath.
+const AV_AUDIO_SERVER_BASE='https://mxqpro-h313-1.tail8b8cce.ts.net:8443';
+function resolveStoredAudioUrl(url,path){
+ const raw=String(url||'').trim();
+ if(raw){
+  try{return new URL(raw,location.href).href}catch{}
+ }
+ const stored=String(path||'').trim();
+ if(!stored)return '';
+ const filename=stored.split('/').filter(Boolean).pop();
+ return filename?AV_AUDIO_SERVER_BASE+'/api/audio/'+encodeURIComponent(filename):'';
+}
 const player={sources:[],gains:{},master:null,compressor:null,playing:false,offset:0,startedAt:0,duration:0,timer:null,generation:0,mode:'silvane'};
 let currentTrainingMode='silvane';
-let recordMixDestination=null,recordMicSource=null,recordMicGain=null;
+let recordMixDestination=null,recordMicSource=null,recordMicGain=null,recordMicFilter=null,recordMicCompressor=null,recordPlaybackGain=null;
 function ensurePlayerGraph(){
  const ac=audioContext();
  if(!player.master){
@@ -389,7 +402,12 @@ async function startRecording(){
   recordChunks=[];
   // A gravação recebe o mix do playback e o microfone, sem devolver o microfone aos alto-falantes.
   recordMixDestination=ac.createMediaStreamDestination();
-  player.compressor.connect(recordMixDestination);
+  // Mixagem de gravação independente: o playback recebe atenuação moderada
+  // e a voz passa por filtro + compressor + ganho de compensação.
+  recordPlaybackGain=ac.createGain();
+  recordPlaybackGain.gain.value=.72;
+  player.compressor.connect(recordPlaybackGain);
+  recordPlaybackGain.connect(recordMixDestination);
   // Reutiliza a mesma fonte que alimenta o afinador. Em alguns Androids,
   // criar uma segunda MediaStreamAudioSourceNode para o mesmo stream pode
   // produzir uma trilha silenciosa no MediaRecorder.
@@ -399,8 +417,22 @@ async function startRecording(){
   let probeRms=0;for(let i=0;i<probe.length;i++)probeRms+=probe[i]*probe[i];probeRms=Math.sqrt(probeRms/probe.length);
   if(probeRms<0.00015)throw new Error('Não detectei sinal no microfone. Fale perto do aparelho por alguns segundos e tente novamente.');
   recordMicSource=source;
-  recordMicGain=ac.createGain();recordMicGain.gain.value=1.8;
-  recordMicSource.connect(recordMicGain);recordMicGain.connect(recordMixDestination);
+  recordMicFilter=ac.createBiquadFilter();
+  recordMicFilter.type='highpass';
+  recordMicFilter.frequency.value=85;
+  recordMicFilter.Q.value=.707;
+  recordMicCompressor=ac.createDynamicsCompressor();
+  recordMicCompressor.threshold.value=-27;
+  recordMicCompressor.knee.value=18;
+  recordMicCompressor.ratio.value=3.5;
+  recordMicCompressor.attack.value=.008;
+  recordMicCompressor.release.value=.22;
+  recordMicGain=ac.createGain();
+  recordMicGain.gain.value=1.65;
+  recordMicSource.connect(recordMicFilter);
+  recordMicFilter.connect(recordMicCompressor);
+  recordMicCompressor.connect(recordMicGain);
+  recordMicGain.connect(recordMixDestination);
   const mimeCandidates=['audio/webm;codecs=opus','audio/webm','audio/mp4'];
   const mimeType=mimeCandidates.find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t));
   mediaRecorder=new MediaRecorder(recordMixDestination.stream,mimeType?{mimeType}:undefined);
@@ -411,9 +443,12 @@ async function startRecording(){
    const blob=new Blob(recordChunks,{type}),url=URL.createObjectURL(blob),a=document.createElement('a');
    a.href=url;a.download='ensaio_mix_'+new Date().toISOString().replace(/[:.]/g,'-')+(type.includes('mp4')?'.mp4':'.webm');a.click();
    setTimeout(()=>URL.revokeObjectURL(url),10000);
-   try{recordMicGain?.disconnect();recordMixDestination?.stream.getTracks().forEach(t=>t.stop());}catch{}
+   try{
+    recordMicGain?.disconnect();recordMicCompressor?.disconnect();recordMicFilter?.disconnect();
+    recordPlaybackGain?.disconnect();recordMixDestination?.stream.getTracks().forEach(t=>t.stop());
+   }catch{}
    // Não desconectar recordMicSource: é a fonte original do afinador ao vivo.
-   recordMicSource=recordMicGain=recordMixDestination=null;
+   recordMicSource=recordMicGain=recordMicFilter=recordMicCompressor=recordPlaybackGain=recordMixDestination=null;
    $('recordState').textContent='Gravação finalizada e baixada: voz + playback no mesmo arquivo.';
    $('recordSyncBadge').textContent='Ensaio salvo neste aparelho';
   };
@@ -506,7 +541,28 @@ Storage.prototype.removeItem=function(k){originalRemove.call(this,k);if(this===l
 function authError(e){const map={'auth/invalid-credential':'E-mail ou senha incorretos.','auth/user-not-found':'Conta não encontrada.','auth/wrong-password':'Senha incorreta.','auth/email-already-in-use':'Este e-mail já possui cadastro.','auth/weak-password':'A senha deve ter pelo menos 6 caracteres.','auth/unauthorized-domain':'Adicione este domínio aos domínios autorizados do Firebase Authentication.','auth/operation-not-allowed':'Ative este método de login no Firebase Authentication.','auth/network-request-failed':'Falha de conexão. Verifique a internet.'};return map[e.code]||('Não foi possível autenticar: '+(e.message||e.code||'erro desconhecido'))}
 function showLibrary(songs){const sel=$('studentSongSelect');sel.replaceChildren();songs.forEach(song=>{const op=new Option(song.titulo||song.id,song.id);sel.add(op)});sel.disabled=!songs.length;if(!songs.length){sel.add(new Option('Nenhuma música cadastrada/liberada',''));$('libraryCloudStatus').textContent=isAdmin?'Biblioteca vazia':'Sem músicas atribuídas';$('currentSongInfo').textContent=isAdmin?'Você está como administrador. Cadastre a primeira música em Administração e depois publique para as alunas.':'Peça ao administrador um convite com pelo menos uma música.';if(isAdmin){const link=document.createElement('a');link.href='/admin.html';link.textContent='Abrir administração e cadastrar a primeira música';link.style.cssText='display:inline-flex;margin-top:8px;color:#8ce9e1;font-weight:800';$('currentSongInfo').append(document.createElement('br'),link)}return}const requested=new URLSearchParams(location.search).get('musica');let selected=songs.find(x=>x.id===requested)||songs.find(x=>x.id===localStorage.getItem('av3:lastSong:'+currentUser.uid))||songs[0];sel.value=selected.id;loadSong(selected)}
 async function loadSong(song){if(!song||!currentUser)return;activeSong=song;setContext(currentUser.uid,song.id,song.titulo);window.clearAVTracks?.();localStorage.setItem('av3:lastSong:'+currentUser.uid,song.id);$('teacherSongTitle').textContent=song.titulo||'Treino vocal';$('currentSongInfo').textContent=[song.artista,song.tonalidade?'Tom: '+song.tonalidade:'Tom não informado',song.bpm?song.bpm+' BPM':''].filter(Boolean).join(' · ')||'Música liberada para treino';$('libraryCloudStatus').textContent='Música selecionada';$('trainingModeText').textContent='Escolha uma das aulas. Playback e referências desta música são carregados da biblioteca.';hydrating=true;try{const progress=await getDoc(doc(db,'usuarios',currentUser.uid,'musicas',song.id,'progresso','app'));if(progress.exists())applyPayload(progress.data());const lib=await getDoc(doc(db,'bibliotecaMusical',song.id));if(lib.exists()&&Array.isArray(lib.data().events))localStorage.setItem('estrelinha_events',JSON.stringify(lib.data().events));else localStorage.setItem('estrelinha_events','[]');}catch(e){console.warn('Não foi possível carregar progresso/mapa:',e.message)}finally{hydrating=false}
- try{const t=song.trackUrls||{};const instrument=t.instrument||song.playbackUrl||'';const lead=t.lead||song.leadUrl||'';const harmony=t.harmony||song.harmonyUrl||'';const jobs=[];if(instrument)jobs.push(window.loadAVTrackFromUrl?.('instrument',instrument,song.titulo+' · playback'));if(lead)jobs.push(window.loadAVTrackFromUrl?.('lead',lead,'Voz principal de referência'));if(harmony)jobs.push(window.loadAVTrackFromUrl?.('harmony',harmony,'Segunda voz de referência'));await Promise.all(jobs.filter(Boolean));}catch(e){console.warn('Faixas da música:',e.message)}
+ try{
+  const t=song.trackUrls||{},p=song.trackPaths||{};
+  const instrument=resolveStoredAudioUrl(t.instrument||song.playbackUrl,p.instrument||song.playbackPath);
+  const lead=resolveStoredAudioUrl(t.lead||song.leadUrl,p.lead||song.leadPath);
+  const harmony=resolveStoredAudioUrl(t.harmony||song.harmonyUrl,p.harmony||song.harmonyPath);
+  $('playerStatus').textContent='Buscando automaticamente as faixas desta música no servidor…';
+  const jobs=[];
+  if(instrument)jobs.push(window.loadAVTrackFromUrl?.('instrument',instrument,song.titulo+' · playback'));
+  if(lead)jobs.push(window.loadAVTrackFromUrl?.('lead',lead,'Voz principal de referência'));
+  if(harmony)jobs.push(window.loadAVTrackFromUrl?.('harmony',harmony,'Segunda voz de referência'));
+  await Promise.all(jobs.filter(Boolean));
+  if(instrument){
+   $('playerStatus').textContent='Playback carregado do servidor. Selecione a aula e toque em Gravar com playback.';
+   $('recordState').textContent='Playback pronto · ligue o microfone e grave sem reenviar o áudio.';
+  }else{
+   $('playerStatus').textContent='Esta música ainda não tem playback cadastrado no servidor. O administrador precisa enviar o instrumental uma única vez no painel Administração.';
+   $('recordState').textContent='Aguardando playback cadastrado no servidor.';
+  }
+ }catch(e){
+  console.warn('Faixas da música:',e.message);
+  $('playerStatus').textContent='Não foi possível carregar o playback do servidor: '+e.message;
+ }
  document.getElementById('checklist')?.replaceChildren();document.getElementById('calendarTasks')?.replaceChildren();window.dispatchEvent(new Event('storage'));}
 async function activateInviteForUser(user,code,name=''){
  const normalized=(code||'').trim().toUpperCase();if(!normalized)throw new Error('Informe o ID do convite enviado pelo administrador.');
