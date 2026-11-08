@@ -1,750 +1,322 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101827"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Assistente Vocal"><meta name="description" content="Treinamento vocal interativo para várias músicas, afinação, ouvido musical e harmonia."><link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icons/icon-192.png"><link rel="apple-touch-icon" href="/icons/icon-192.png"><title>Assistente Vocal</title>
-<style>
-:root{--bg:#09111e;--panel:#131f31;--panel2:#192940;--line:#2d405b;--txt:#eef4ff;--muted:#9aabc3;--cyan:#62d7e8;--green:#6ed6a3;--yellow:#f3c76c;--red:#ff858b;--violet:#bba7ff;--blue:#75a9ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1b2e49 0,#09111e 58%);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,select,textarea{font:inherit}button{border:1px solid #3b5271;border-radius:11px;background:#263953;color:var(--txt);padding:10px 13px;font-weight:650;cursor:pointer}button.primary{background:linear-gradient(135deg,#147f96,#276db7);border-color:#328da9}button.good{background:#17654e;border-color:#268366}button.warn{background:#75464c;border-color:#99585e}button.ghost{background:transparent}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
-.wrap{max-width:1160px;margin:auto;padding:20px 15px 46px}.hero{display:flex;gap:13px;align-items:center;margin-bottom:15px}.logo{width:49px;height:49px;flex:0 0 49px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(140deg,#168da5,#6957bb);font-size:25px}.hero h1{font-size:clamp(22px,4vw,31px);margin:0;letter-spacing:-.5px}.hero p{margin:3px 0 0;color:var(--muted)}.topline{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}.pill{border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:var(--muted);font-size:11px}.tabs{display:flex;gap:7px;overflow-x:auto;margin-bottom:14px;padding-bottom:5px;scrollbar-width:thin}.tab{white-space:nowrap;background:transparent;border:1px solid var(--line);color:var(--muted);font-size:13px;padding:9px 11px}.tab.active{background:#203b56;border-color:#4387a4;color:white}.panel{background:linear-gradient(160deg,rgba(22,34,53,.98),rgba(14,24,39,.98));border:1px solid var(--line);border-radius:17px;padding:16px;margin-bottom:13px;box-shadow:0 12px 36px #0002}.panel h2{font-size:18px;margin:0 0 10px}.panel h3{font-size:15px;margin:0 0 7px}.panel p{margin:7px 0}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}.c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.field{display:flex;flex-direction:column;gap:5px;min-width:120px;flex:1}.field label{font-size:12px;color:var(--muted)}select,input[type=number],input[type=text],textarea{width:100%;background:#0d1929;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:9px 10px}textarea{min-height:78px;resize:vertical}.muted{color:var(--muted)}.small{font-size:12px}.tiny{font-size:11px}.hidden{display:none!important}.callout{padding:11px 12px;border-left:3px solid var(--yellow);border-radius:8px;background:#3a321e55;color:#edddb5;font-size:13px}.goodtxt{color:var(--green)}.warntxt{color:var(--yellow)}.badtxt{color:var(--red)}.tag{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px 8px;font-size:11px;color:var(--muted)}.card{padding:12px;border-radius:12px;background:#101c2c;border:1px solid var(--line)}.card strong{display:block;margin-bottom:4px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.step{padding:12px;border-radius:11px;background:#101c2c;border:1px solid var(--line);font-size:13px}.step b{display:block;color:#fff;margin-bottom:4px}.bar{height:8px;background:#091421;border:1px solid #293b52;border-radius:99px;overflow:hidden}.bar>i{display:block;height:100%;background:linear-gradient(90deg,#188ba3,#6ed6a3);width:0;transition:width .2s}.noteHero{display:flex;align-items:center;justify-content:center;flex-direction:column;min-height:177px;text-align:center;background:radial-gradient(circle,#1c4054,#122036 70%);border:1px solid #28516a;border-radius:15px;padding:14px}.bigNote{font-size:clamp(54px,11vw,82px);line-height:1;font-weight:850;letter-spacing:-4px}.freq{color:var(--muted);margin-top:6px}.cents{font-weight:750;font-size:17px;margin-top:7px}.status{font-size:12px;color:var(--muted);margin-top:4px}.meter{height:12px;background:#0a1422;border-radius:99px;position:relative;overflow:hidden;margin:11px 0 4px;border:1px solid #263a52}.meter .center{position:absolute;left:50%;height:100%;width:2px;background:#dbeafe;opacity:.7}.meter .dot{position:absolute;top:1px;width:8px;height:8px;border-radius:50%;background:var(--cyan);transform:translateX(-50%);left:50%}.meterlabels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}canvas{width:100%;height:180px;display:block;background:#0b1625;border:1px solid var(--line);border-radius:11px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.stat{background:#101c2c;border:1px solid var(--line);border-radius:11px;padding:10px}.stat b{display:block;font-size:20px}.stat span{font-size:11px;color:var(--muted)}.target{font-size:34px;font-weight:850;color:var(--cyan)}.filebox{border:1px dashed #44617e;border-radius:12px;padding:14px;background:#101b2b}.filebox input{max-width:100%}.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:12px;min-width:620px}td,th{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:650;background:#15243a}.tablewrap input,.tablewrap select{min-width:90px;padding:7px}.checkrow{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #26374d}.checkrow input{margin-top:4px;accent-color:#59c89c}.checkrow label{flex:1}.exercise{border:1px solid var(--line);border-radius:13px;padding:12px;background:#101c2c;margin:9px 0}.exercise h3{margin:0 0 5px}.exercise .actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.progressline{display:flex;align-items:center;gap:9px}.progressline .bar{flex:1}.piano{display:grid;grid-template-columns:repeat(12,minmax(22px,1fr));gap:3px}.key{padding:8px 2px 6px;background:#e8eef6;color:#172234;border-radius:0 0 6px 6px;text-align:center;font-size:10px;min-height:66px;border:1px solid #bdc9d8}.key.black{background:#273448;color:#fff;min-height:53px}.key.sel{outline:3px solid var(--cyan);outline-offset:-3px}.foot{font-size:11px;color:var(--muted);text-align:center;padding:14px}.printonly{display:none}@media(max-width:760px){.c3,.c4,.c5,.c6,.c7,.c8{grid-column:span 12}.stats{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}.wrap{padding:14px 10px 35px}.panel{padding:13px}.hero{align-items:flex-start}.tabs{position:sticky;top:0;background:#0b1422f2;padding:8px 0;z-index:5}.piano{grid-template-columns:repeat(6,1fr)}}
-@media print{body{background:#fff;color:#111}.wrap{max-width:none;padding:0}.panel{box-shadow:none;border:1px solid #aaa;background:#fff;color:#111;break-inside:avoid}.panel p,.muted,.small,.tiny{color:#333}.tabs,.topline button,.no-print{display:none!important}.hidden{display:block!important}.tabcontent{display:block!important}.foot{color:#333}.tablewrap{overflow:visible}table{min-width:0;font-size:9px}td,th{border-color:#aaa}.tag{color:#333;border-color:#aaa}}
-.authGate{min-height:100vh;display:grid;place-items:center;padding:18px;background:radial-gradient(ellipse at top,#1b2e49 0,#09111e 65%)}.authCard{width:min(100%,440px);background:#131f31;border:1px solid #2d405b;border-radius:20px;padding:25px;box-shadow:0 18px 60px #0006}.authCard h1{font-size:23px;margin:12px 0 5px}.authCard form{display:grid;gap:8px;margin-top:18px}.authCard label{font-size:12px;color:var(--muted)}.authCard input{width:100%;background:#0d1929;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:12px}.authCard .row>*{flex:1}.googleBtn,.full{width:100%;margin-top:9px}.googleBtn{background:#f4f7fb;color:#1b2736;border-color:#d9e0e8}.authCard .ghost{background:transparent}.appLocked{display:none!important}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#121826">
+  <title>Assistente Vocal — Estrelinha</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <style>
+    :root { --bg: #09111e; --panel: #131f31; --cyan: #42d8e8; --green: #39dfa5; --txt: #f6f8ff; --muted: #b2c1d8; }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+    body { margin: 0; background: var(--bg); color: var(--txt); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+    .hidden { display: none !important; }
+    .app-container { max-width: 600px; width: 100%; }
+    
+    /* Header & Estrelinha */
+    .header { text-align: center; margin-bottom: 30px; }
+    .estrelinha-avatar { width: 120px; height: 120px; background: radial-gradient(circle, #ffd166, #ff9f1c); border-radius: 50%; margin: 0 auto 15px; display: grid; place-items: center; font-size: 60px; box-shadow: 0 0 30px #ff9f1c66; border: 4px solid #fff; }
+    .header h1 { margin: 0 0 5px; font-size: 24px; }
+    .header p { margin: 0; color: var(--muted); font-size: 15px; }
+    .guidance-box { background: #1a2942; border: 1px solid #2d405b; border-radius: 12px; padding: 15px; margin-bottom: 25px; text-align: center; color: var(--cyan); font-weight: 500; }
 
-:root{color-scheme:dark}
-html{min-height:100%;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{min-height:100dvh;overscroll-behavior-y:contain}
-button,.tab,input,select{min-height:44px;touch-action:manipulation}
-button{ -webkit-tap-highlight-color:transparent}
-input,select,textarea{font-size:16px}
-canvas{touch-action:pan-y}
-.authGate{min-height:100dvh;padding:max(16px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom))}
-@media(max-width:760px){
- .wrap{padding:12px 10px calc(28px + env(safe-area-inset-bottom))}
- .hero{gap:10px;margin:5px 2px 12px}.hero .logo{width:44px;height:44px;flex-basis:44px}
- .hero h1{font-size:21px;line-height:1.2}.hero p{font-size:12px}
- .topline{gap:6px}.topline .pill{font-size:10px;padding:5px 7px}
- .tabs{position:sticky;top:0;z-index:20;margin:0 -10px 12px;padding:8px 10px;background:#09111ef5;border-bottom:1px solid #2d405b;backdrop-filter:blur(12px);scroll-snap-type:x proximity}
- .tab{min-height:44px;padding:10px 13px;scroll-snap-align:start}
- .panel{border-radius:14px;padding:13px;margin-bottom:10px}
- .panel h2{font-size:17px}
- .row>*{max-width:100%}.row button{flex:1 1 130px}
- .noteHero{min-height:190px}.bigNote{font-size:76px}
- .meter{height:16px}.meter .dot{width:12px;height:12px;top:1px}
- .stats{gap:7px}.stat{padding:9px}.stat b{font-size:18px}
- .piano{grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}.key{min-height:64px;font-size:12px}
- .tablewrap{overscroll-behavior-x:contain}
- .filebox{padding:11px}.filebox input[type=file]{width:100%;font-size:14px}
- .authCard{padding:21px 17px;border-radius:18px}
- .authCard .row{display:grid;grid-template-columns:1fr 1fr}
-}
-@media(max-width:390px){.hero h1{font-size:19px}.topline .pill:nth-child(2){display:none}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(orientation:landscape) and (max-height:500px){.tabs{position:relative}.noteHero{min-height:130px}}
+    /* Ações Principais */
+    .main-actions { display: grid; gap: 15px; }
+    .action-btn { background: linear-gradient(135deg, #1e324f, #15243a); border: 1px solid #334c70; border-radius: 16px; padding: 20px; text-align: left; cursor: pointer; transition: transform 0.2s, border-color 0.2s; color: white; display: flex; flex-direction: column; gap: 5px; }
+    .action-btn:hover { transform: translateY(-2px); }
+    .action-btn.silvane { border-left: 4px solid #42d8e8; }
+    .action-btn.marla { border-left: 4px solid #b69aff; }
+    .action-btn.juntas { border-left: 4px solid #ffd166; }
+    .action-btn strong { font-size: 18px; }
+    .action-btn span { font-size: 13px; color: var(--muted); }
 
-.micLaunch{border:1px solid #287b91;background:linear-gradient(135deg,#16364c 0%,#17263d 58%,#202448 100%);box-shadow:0 16px 40px #0004}
-.micHead{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:800;color:#79e1ee}
-.micGlyph{width:64px;height:64px;display:grid;place-items:center;border-radius:20px;background:#1c6278;font-size:31px;box-shadow:0 8px 22px #0003}
-.micQuickStatus{margin:13px 0;padding:12px 14px;border:1px solid #43546b;border-radius:12px;background:#0c1a2b;color:#b7c8dc;font-weight:650}
-.micQuickStatus.active{border-color:#269c74;background:#103b35;color:#9cf0c8}
-.micActions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-button.micBig{min-height:60px;border-radius:15px;font-size:15px;font-weight:850;letter-spacing:.2px}
-@media(max-width:760px){
- body{font-size:16px;line-height:1.55}
- .wrap{max-width:100%;padding:15px 12px calc(36px + env(safe-area-inset-bottom))}
- .hero{align-items:center;margin:8px 2px 16px}.hero .logo{width:56px;height:56px;flex-basis:56px;font-size:29px;border-radius:17px}
- .hero h1{font-size:23px;line-height:1.2}.hero p{font-size:14px}
- .topline{gap:7px;margin-bottom:12px}.topline .pill{font-size:12px;padding:7px 10px}
- .tabs{margin:0 -12px 14px;padding:10px 12px;gap:8px}
- .tab{font-size:14px;min-height:52px;padding:12px 16px;border-radius:14px;font-weight:750}
- .panel{padding:17px;border-radius:19px;margin-bottom:14px}
- .panel h2{font-size:20px;line-height:1.3}
- .panel h3{font-size:17px}
- .panel p{font-size:15px;line-height:1.6}
- button{min-height:52px;padding:13px 16px;border-radius:13px;font-size:15px}
- .row button{flex:1 1 145px}
- .card{padding:16px;border-radius:15px}.card strong{font-size:18px}
- .step{padding:16px;border-radius:14px;font-size:14px}
- .field label{font-size:14px}
- select,input[type=number],input[type=text],textarea{min-height:50px;padding:12px;font-size:16px}
- .noteHero{min-height:220px;padding:20px}.bigNote{font-size:86px}
- .freq{font-size:16px}.cents{font-size:22px}.status{font-size:14px}
- .meter{height:19px;margin:16px 0 7px}.meter .dot{width:15px;height:15px;top:1px}
- .meterlabels{font-size:13px}
- canvas{height:220px}
- .stats{gap:9px}.stat{padding:13px;border-radius:14px}.stat b{font-size:23px}.stat span{font-size:12px}
- .piano{gap:6px}.key{min-height:76px;border-radius:10px;font-size:14px}
- .filebox{padding:15px}.filebox input[type=file]{font-size:15px}
- .micGlyph{width:58px;height:58px}
- .micActions{grid-template-columns:1fr}
- button.micBig{min-height:64px;font-size:17px}
- .authCard{padding:24px 19px}.authCard h1{font-size:25px}.authCard input{min-height:52px}
-}
-@media(max-width:390px){.hero h1{font-size:21px}.topline .pill:nth-child(2){display:none}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    /* Sala de Treinamento (Motor de Áudio) */
+    .training-room { background: var(--panel); border: 1px solid #2d405b; border-radius: 16px; padding: 20px; margin-top: 20px; }
+    .playback-controls { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+    .playback-controls button { background: #263e61; border: 1px solid #49658f; color: white; padding: 12px 24px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+    .playback-controls button.primary { background: linear-gradient(135deg, #087f69, #19a879); border: none; }
+    .playback-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    /* Pitch Visualizer */
+    .pitch-area { text-align: center; margin: 30px 0; background: #0c1524; padding: 20px; border-radius: 12px; border: 1px solid #1f304a; }
+    .target-note { font-size: 48px; font-weight: 800; color: var(--cyan); line-height: 1; }
+    .sung-note { font-size: 18px; color: var(--muted); margin-top: 10px; }
+    
+    /* Auth & Admin */
+    .top-bar { display: flex; justify-content: space-between; width: 100%; margin-bottom: 20px; font-size: 12px; color: var(--muted); }
+    .top-bar button, .top-bar a { background: none; border: none; color: var(--cyan); cursor: pointer; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
 
-/* v2.2 — sala de ensaio e interface principal */
-.teacherHero{position:sticky;top:8px;z-index:12;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:17px;border:1px solid #2b6577;background:linear-gradient(135deg,#15394b,#18253e 70%);border-radius:18px;margin-bottom:13px;box-shadow:0 8px 24px #0004}
-.teacherStar{width:70px;height:70px;border-radius:22px;display:grid;place-items:center;font-size:39px;background:radial-gradient(circle at 35% 30%,#fff4bd,#f1c55f 43%,#a96c36 100%);box-shadow:0 0 28px #f3c76c44;color:#fff}
-.teacherHero h2{margin:0 0 4px;font-size:20px}.teacherHero p{margin:0;color:#bfd0e4;font-size:13px}
-.teacherActions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
-.teacherAction{min-height:100px;border-radius:16px;text-align:left;padding:15px;display:flex;flex-direction:column;justify-content:center;gap:5px;background:linear-gradient(145deg,#203e5b,#18283e);border:1px solid #41617f}
-.teacherAction strong{font-size:16px}.teacherAction span{font-size:12px;color:#bdcce0;font-weight:450}
-.teacherAction[data-mode="silvane"]{border-color:#2c9c9e}.teacherAction[data-mode="marla"]{border-color:#8670bd}.teacherAction[data-mode="duet"]{border-color:#b58c4b}
-.trackUploadInput{display:none!important}.playbackPanel{border:1px solid #2b6577;background:linear-gradient(160deg,#13283c,#0d1a2c)}
-.playbackHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.playbackHeader h2{margin:0}.playbackTracks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
-.trackCard{border:1px solid #314861;background:#0d1a2a;border-radius:13px;padding:12px;min-width:0}.trackCard h3{font-size:14px;margin:0 0 8px}.trackCard input[type=file]{width:100%;font-size:12px;color:#c5d4e8}.trackCard input[type=range]{width:100%;accent-color:#62d7e8}.trackName{font-size:11px;color:#aabbd0;overflow-wrap:anywhere;min-height:32px;margin-top:5px}
-.playerTransport{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.playerTransport button{min-width:100px}.playerPosition{font-variant-numeric:tabular-nums;color:#c4d5e9;font-size:12px;min-width:120px}.playerSeek{width:100%;accent-color:#62d7e8}.playerLoop{display:grid;grid-template-columns:auto repeat(2,minmax(100px,150px)) 1fr;align-items:end;gap:10px;margin:10px 0}.playerLoop .field{min-width:0}.playerStatus{padding:10px 12px;border:1px solid #2b4059;border-radius:10px;background:#0a1727;color:#b9cadd;font-size:12px}.playerStatus.active{border-color:#26866e;color:#9ce6c7;background:#10332f}
-.recordStudio{margin-top:14px;padding:15px;border:1px solid #397a80;border-radius:15px;background:linear-gradient(145deg,#102e3a,#14243b 65%,#242344)}.recordStudioHead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.recordStudioHead h3{font-size:17px;margin:3px 0}.recordActions{display:grid;grid-template-columns:1fr 1fr auto;gap:9px;margin:12px 0}.recordActions button{min-height:54px}.recordStudio .eyebrow{font-size:10px}.recordStudio .tag{white-space:nowrap}@media(max-width:760px){.recordStudioHead{display:block}.recordStudioHead .tag{display:inline-flex;margin-top:6px}.recordActions{grid-template-columns:1fr 1fr}.recordActions #downloadCsv{grid-column:1/-1}}
-.eventEditor{margin-top:14px;border-top:1px solid #314861;padding-top:14px}.eventEditor summary{cursor:pointer;font-weight:750;color:#dbeafe}.eventTable{min-width:850px}.eventTable input{min-width:68px}.eventTable input[type=checkbox]{min-width:0}.eventHint{font-size:11px;color:#aebed2;margin:7px 0}
-.adminInviteToggle{width:100%;text-align:left;background:#1a3048;border:1px solid #395777}.adminInviteFields{margin-top:12px;padding:13px;border:1px solid #314861;border-radius:12px;background:#101c2c}
-.expectedPitch{font-size:13px;color:#f2d58c;margin-top:8px;font-weight:700}
-.toolsDisclosure{margin:0 0 14px;border:1px solid #2d405b;border-radius:13px;background:#101c2c;padding:0 12px}.toolsDisclosure>summary{cursor:pointer;padding:12px 2px;font-weight:750;color:#dbeafe}.toolsDisclosure[open]>summary{border-bottom:1px solid #2d405b}.toolsDisclosure .tabs{margin:8px 0}
-@media(max-width:760px){.teacherActions{grid-template-columns:1fr}.teacherAction{min-height:75px}.teacherHero{grid-template-columns:auto 1fr;padding:13px}.teacherStar{width:58px;height:58px;font-size:32px}.playbackTracks{grid-template-columns:1fr}.playerLoop{grid-template-columns:1fr 1fr}.playerLoop>label{grid-column:span 2}}
-
-
-/* v3.0: interface mais visual, responsiva e acessível */
-:root{--cyan:#47d7ea;--green:#64e0aa;--violet:#ae91ff;--yellow:#ffd166;--blue:#70a8ff}
-a.tab{display:inline-flex;align-items:center;text-decoration:none}
-.songPicker{border-color:#3a6482;background:linear-gradient(135deg,#18334c,#18223c)}
-.songPicker h2{color:#80e7f0}.songPicker select{border-color:#4c7899;background:#0d2034}
-.teacherActions{gap:12px}.teacherAction{border-radius:17px;min-height:106px;text-align:left;padding:16px;background:linear-gradient(140deg,#1a637b,#29477e 55%,#55417f);border:1px solid #5a8db8;box-shadow:0 9px 22px #0003;transition:transform .15s,filter .15s}.teacherAction:nth-child(2){background:linear-gradient(140deg,#654a91,#3e4e89 60%,#245e75)}.teacherAction:nth-child(3){background:linear-gradient(140deg,#176e61,#245b80 60%,#514785)}.teacherAction:active{transform:scale(.985)}.teacherAction strong{font-size:15px;letter-spacing:.2px}.teacherAction span{color:#e2f3ff}.teacherHero{background:linear-gradient(125deg,#124a60,#252f64 68%,#49336e);border-color:#4d84a7}
-button.primary{background:linear-gradient(135deg,#087e9a,#3a69d3)}button.good{background:linear-gradient(135deg,#08775e,#159e7e)}button.warn{background:linear-gradient(135deg,#9b435f,#c45370)}
-.trackCard{background:linear-gradient(150deg,#182d49,#14243a);border-color:#3a5c84}.playerTransport button{min-width:110px}
-@media(max-width:760px){.songPicker .row.between{align-items:flex-start}.songPicker .tag{white-space:normal}.teacherAction{min-height:78px}.playerTransport{display:grid;grid-template-columns:1fr 1fr}.playerTransport button{min-width:0}.playerPosition{grid-column:1/-1;text-align:center}}
-@media(min-width:1100px){.wrap{padding-top:25px}.teacherActions{grid-template-columns:repeat(3,minmax(0,1fr))}.teacherAction{min-height:112px}}
-
-/* v3.1 — navegação inferior e fluxo orientado por etapas */
-:root{--av-teal:#17b6ad;--av-blue:#3976e8;--av-purple:#7962db;--av-orange:#f0a33b;--av-surface:#142238}
-body{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
-.wrap{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
-#toolsNavigation{display:none!important}
-.av-screen{display:block;min-height:55vh}
-.av-screen.hidden{display:none!important}
-.av-wizard{border:1px solid #385674;border-radius:22px;padding:16px;background:linear-gradient(150deg,#172e49,#18223e 68%,#27264c);box-shadow:0 14px 30px #0003;margin:8px 0 14px}
-.av-wizard-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}
-.av-wizard-head h2{font-size:19px;margin:0}.av-wizard-head p{font-size:12px;color:#b6c7df;margin:3px 0 0}
-.av-stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:12px 0 15px}
-.av-stepper span{height:5px;border-radius:9px;background:#334863}.av-stepper span.done{background:linear-gradient(90deg,var(--av-teal),#6dd5b0)}
-.av-step{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-top:1px solid #ffffff12}
-.av-step-number{width:29px;height:29px;flex:0 0 29px;display:grid;place-items:center;border-radius:10px;background:#2b5274;color:#fff;font-weight:850}
-.av-step-body{flex:1;min-width:0}.av-step-body h3{font-size:14px;margin:0 0 3px}.av-step-body p{font-size:12px;color:#aebfd5;margin:0 0 8px}
-.av-step-button{border:1px solid #4d7898;background:#183b59;color:#eafaff;border-radius:12px;padding:9px 12px;min-height:40px;font-size:12px}
-.av-step-button.primary{background:linear-gradient(135deg,#087f96,#355fca);border-color:#398bb3}
-.av-selected-song{font-size:13px;font-weight:750;color:#7fe5e8;padding:8px 10px;background:#0e1b2d;border:1px solid #314b6b;border-radius:10px;overflow-wrap:anywhere}
-.av-purpose-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0}
-.av-purpose{min-height:94px;border-radius:15px;padding:10px;text-align:left;border:1px solid #476584;background:linear-gradient(145deg,#1e4561,#202e4f);display:flex;flex-direction:column;justify-content:center;gap:4px}
-.av-purpose:nth-child(2){background:linear-gradient(145deg,#51417a,#26385f);border-color:#7765a9}
-.av-purpose:nth-child(3){background:linear-gradient(145deg,#176b62,#234c68);border-color:#4d9d8a}
-.av-purpose strong{font-size:12px;line-height:1.2}.av-purpose small{font-size:10px;color:#d4e2f5;line-height:1.35}
-.teacherAction.selected{outline:2px solid #7ee5d7;outline-offset:1px;box-shadow:0 0 0 4px #26c6ad20}
-.av-purpose.selected{outline:2px solid #7ee5d7;outline-offset:1px;box-shadow:0 0 0 4px #26c6ad20}
-.av-focus{width:100%;border:1px solid #405b7a;background:#0d1a2c;color:#edf5ff;border-radius:12px;padding:11px;margin-top:5px}
-.av-objective-info{background:#0d1a2c;border:1px solid #334a69;border-radius:12px;padding:11px;margin-top:9px;font-size:12px;color:#c6d5e7}
-.av-objective-info b{display:block;color:#7de2e2;margin-bottom:4px}
-.av-start{width:100%;min-height:52px;border:0;border-radius:15px;background:linear-gradient(110deg,#0b9d92,#3377dc 60%,#725ad8);font-size:15px;font-weight:850;box-shadow:0 8px 22px #147bb355;margin-top:13px}
-.av-page-title{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:8px 2px 13px}.av-page-title h2{font-size:20px;margin:0}.av-page-title p{font-size:12px;color:var(--muted);margin:3px 0 0}
-.av-module-grid,.av-progress-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0 13px}
-.av-module,.av-progress-action{min-height:80px;padding:12px;text-align:left;border-radius:15px;background:#172942;border:1px solid #344e70;display:flex;flex-direction:column;gap:4px}
-.av-module strong,.av-progress-action strong{font-size:13px}.av-module span,.av-progress-action span{font-size:11px;color:#aebed4;line-height:1.35}
-.av-module.active,.av-progress-action.active{border-color:#6ed6c6;background:linear-gradient(135deg,#16445a,#20395e);box-shadow:0 0 0 2px #4ad6c333}
-.av-section-content>.tabcontent{margin-top:10px}
-.av-bottom-nav{position:fixed;z-index:100;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(8,17,31,.96);border-top:1px solid #30435e;backdrop-filter:blur(18px);box-shadow:0 -8px 28px #0004}
-.av-bottom-nav button{min-width:0;min-height:56px;padding:6px 4px;border:0;border-radius:12px;background:transparent;color:#91a4bd;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:650}
-.av-bottom-nav button .av-icon{font-size:20px;line-height:1.2}.av-bottom-nav button.active{color:#8ce9e1;background:linear-gradient(145deg,#153d55,#242e52)}
-.av-utility{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.av-utility .pill{font-size:10px}
-.topline{margin-bottom:8px}.topline .pill:first-child{display:none}
-#tab-home{display:none!important}
-@media(min-width:761px){.av-bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,760px);border:1px solid #334763;border-bottom:0;border-radius:18px 18px 0 0}.av-wizard{padding:22px}.av-purpose{min-height:110px}.av-bottom-nav button{font-size:11px}}
-@media(max-width:600px){#micState,#cloudState{display:none}.av-purpose-grid{grid-template-columns:1fr}.av-purpose{min-height:68px;display:grid;grid-template-columns:36px 1fr;align-items:center}.av-purpose small{grid-column:2}.av-module-grid,.av-progress-grid{grid-template-columns:1fr 1fr}.av-step{padding:10px 0}.av-step-button{width:100%}.av-bottom-nav{padding-left:6px;padding-right:6px}.av-bottom-nav button{font-size:10px}}
-
-</style></head>
-<body><section id="authGate" class="authGate"><div class="authCard"><div class="logo">♫</div><h1>Assistente Vocal</h1><p class="muted">Seu espaço de treino vocal: afinação, ouvido musical e segunda voz em várias músicas.</p><form id="loginForm"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="username" required placeholder="seu@email.com"><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Sua senha"><div id="registerFields" class="hidden"><label for="registerName">Nome da cantora</label><input id="registerName" type="text" autocomplete="name" placeholder="Seu nome"><label for="inviteCodeInput">ID do convite</label><input id="inviteCodeInput" type="text" autocomplete="off" placeholder="Ex.: AV-7K2P9QW"><p class="tiny muted">O cadastro exige um convite individual. Se você já tem conta, informe o ID e entre com sua senha para ativá-la.</p></div><div class="row"><button class="primary" type="submit" id="emailLoginBtn">Entrar</button><button type="button" id="registerBtn">Criar conta com convite</button></div></form><button class="googleBtn" id="googleLoginBtn" type="button">Entrar com Google</button><button class="ghost full" id="resetPasswordBtn" type="button">Esqueci minha senha</button><p class="small muted" id="authMessage" aria-live="polite">Use uma conta autorizada para acessar.</p><p class="tiny muted">O áudio do microfone é analisado no navegador. Não é enviado automaticamente para a nuvem.</p></div></section><main class="wrap appLocked" id="appMain">
-<header class="hero"><div class="logo">♫</div><div><h1>Assistente Vocal</h1><p>Treinamento guiado e biblioteca musical personalizada</p></div></header>
-<div class="teacherHero"><div class="teacherStar" aria-hidden="true">♫</div><div><h2 id="teacherSongTitle">Sua professora vocal</h2><p>Escolha a música e o tipo de treino. O aplicativo organiza playback, referências e exercícios no mesmo ambiente.</p></div></div>
-<div class="teacherActions" aria-label="Escolha sua aula">
- <button class="teacherAction" type="button" data-training-mode="silvane"><strong>🎤 TREINAR VOZ PRINCIPAL</strong><span>Melodia principal · treino individual</span></button>
- <button class="teacherAction" type="button" data-training-mode="marla"><strong>🎶 TREINAR SEGUNDA VOZ</strong><span>Harmonia · treino individual</span></button>
- <button class="teacherAction" type="button" data-training-mode="duet"><strong>♫ CANTAR JUNTAS</strong><span>Vozes alinhadas · ensaio em conjunto</span></button>
-</div>
-<p class="small muted" id="teacherGuidance" aria-live="polite">Escolha uma música na biblioteca. As faixas disponíveis serão carregadas automaticamente.</p>
-<section class="songPicker panel no-print" id="songPicker"><div class="row between"><div><h2>🎵 Minha biblioteca de músicas</h2><p class="small muted">Cada música mantém seus próprios playbacks, notas e evolução.</p></div><span class="tag" id="libraryCloudStatus">Carregando biblioteca…</span></div><div class="field"><label for="studentSongSelect">Música para treinar</label><select id="studentSongSelect" disabled><option>Carregando…</option></select></div><p class="small muted" id="currentSongInfo">As músicas liberadas pelo administrador aparecerão aqui.</p></section>
-
-
-<div class="row no-print" style="margin:0 0 12px"><button class="good" id="installApp" type="button" hidden>＋ Instalar aplicativo</button><span class="tiny muted" id="installHelp">No iPhone: Compartilhar → Adicionar à Tela de Início. No Android: menu do navegador → Instalar aplicativo.</span></div>
-<div class="topline"><span class="pill">Versão 3.7 · biblioteca TV Box</span><span class="pill" id="micState">Microfone desligado</span><span class="pill" id="savedState">Aguardando login</span><span class="pill" id="cloudState">Nuvem não conectada</span><a class="tab hidden" id="adminLink" href="/admin.html">⚙ Administração</a><button class="tab" id="logoutBtn" type="button">Sair</button></div>
-
-<section class="panel playbackPanel no-print" id="playbackPanel" aria-label="Sala de ensaio musical">
- <div class="playbackHeader"><div><span class="eyebrow">SALA DE ENSAIO</span><h2 id="playbackTitle">Playback e referências</h2><p class="small muted" id="trainingModeText">Escolha uma das três aulas. O playback será carregado automaticamente do servidor.</p></div><span class="tag" id="audioEngineState">Motor de áudio pronto</span></div>
- <div class="playbackTracks">
-  <div class="trackCard"><h3>1. Playback instrumental</h3><input class="trackUploadInput" type="file" id="trackInstrumentFile" accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,.wav,.mp3,.m4a,.ogg"><div class="trackName" id="trackInstrumentName">Nenhum instrumental carregado</div><label class="small muted" for="trackInstrumentVolume">Volume <span id="trackInstrumentPct">85%</span></label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85"></div>
-  <div class="trackCard"><h3>2. Voz principal de referência</h3><input class="trackUploadInput" type="file" id="trackLeadFile" accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,.wav,.mp3,.m4a,.ogg"><div class="trackName" id="trackLeadName">Nenhuma referência principal carregada</div><label class="small muted" for="trackLeadVolume">Volume <span id="trackLeadPct">45%</span></label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45"></div>
-  <div class="trackCard"><h3>3. Segunda voz de referência</h3><input class="trackUploadInput" type="file" id="trackHarmonyFile" accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,.wav,.mp3,.m4a,.ogg"><div class="trackName" id="trackHarmonyName">Nenhuma referência de segunda voz carregada</div><label class="small muted" for="trackHarmonyVolume">Volume <span id="trackHarmonyPct">45%</span></label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45"></div>
- </div>
- <div class="playerTransport">
-  <button class="primary" id="playerPlay" type="button">▶ Reproduzir</button><button id="playerCountIn" type="button">▶ Contagem + reproduzir</button><button id="playerPause" type="button" disabled>Ⅱ Pausar</button><button id="playerStop" type="button" disabled>■ Reiniciar</button>
-  <span class="playerPosition" id="playerPosition">00:00 / 00:00</span>
- </div>
- <input class="playerSeek" id="playerSeek" type="range" min="0" max="1000" step="1" value="0" aria-label="Posição do playback">
- <div class="playerLoop">
-  <label class="checkrow" style="border:0;padding:0;align-items:center"><input type="checkbox" id="playerLoopEnabled"><span class="small">Repetir trecho</span></label>
-  <div class="field"><label for="playerLoopStart">Início (segundos)</label><input type="number" id="playerLoopStart" min="0" step="0.1" value="0"></div>
-  <div class="field"><label for="playerLoopEnd">Fim (segundos)</label><input type="number" id="playerLoopEnd" min="0" step="0.1" placeholder="Duração"></div>
-  <span class="small muted">Marque início e fim para repetir apenas a passagem selecionada.</span>
- </div>
- <div class="playerStatus" id="playerStatus" role="status">A música selecionada carrega automaticamente o playback salvo no servidor. Não é necessário enviar o áudio novamente.</div>
-  <div class="row no-print" id="serverAudioPicker" style="margin-top:10px;display:none">
-   <div class="field"><label for="serverAudioSelect">Arquivos MP3 encontrados no TV Box</label><select id="serverAudioSelect"><option value="">Consultando biblioteca do servidor…</option></select></div>
-   <button class="good" type="button" id="loadServerAudioBtn">Carregar instrumental selecionado</button>
-   <button type="button" id="refreshServerAudioBtn">Atualizar lista</button>
+<div class="top-bar">
+  <span id="userStatus">Aguardando login...</span>
+  <div>
+    <a href="/admin.html" id="adminLink" class="hidden">Admin</a>
+    <button id="logoutBtn" class="hidden">Sair</button>
   </div>
-  <p class="tiny muted" id="serverAudioStatus" aria-live="polite"></p>
- <div class="eventEditor" id="adminMusicTools" hidden>
-  <details open>
-   <summary>Mapa de notas validado — música selecionada</summary>
-   <p class="eventHint">Cadastre uma linha por evento/nota. MIDI é a nota em número inteiro (por exemplo, C4 = 60). Somente eventos marcados como conferidos serão usados como alvo do treinamento. Não há notas pré-preenchidas porque a partitura/áudio de referência ainda não foi fornecida.</p>
-   <div class="row no-print"><button type="button" id="addMusicalEvent">＋ Adicionar nota</button><button type="button" class="good" id="saveMusicalEvents">Salvar neste aparelho</button><button type="button" id="publishMusicalEvents">Publicar biblioteca validada</button><button type="button" id="loadMusicalEvents">Carregar biblioteca da nuvem</button><button type="button" id="exportMusicalEvents">Exportar JSON</button><label class="small">Importar JSON <input type="file" id="importMusicalEvents" accept="application/json,.json"></label></div>
-   <div class="tablewrap" style="margin-top:10px"><table class="eventTable" id="musicalEventTable"><thead><tr><th>Trecho</th><th>Início (s)</th><th>Duração (s)</th><th>Voz principal MIDI</th><th>Segunda voz MIDI</th><th>Sílaba / palavra</th><th>Acorde</th><th>Conferido</th><th class="no-print">Ação</th></tr></thead><tbody></tbody></table></div>
-   <p class="small muted" id="musicalEventStatus">Nenhum evento musical cadastrado.</p>
-  </details>
- </div>
-</section>
-<details class="toolsDisclosure no-print" id="toolsNavigation">
- <summary>Mais ferramentas de ensaio</summary>
- <nav class="tabs no-print" aria-label="Módulos do treinamento">
-<button class="tab active" data-tab="home">Início</button><button class="tab" data-tab="lesson">Aprender do zero</button><button class="tab" data-tab="live">Afinador ao vivo</button><button class="tab" data-tab="harmony">Segunda voz</button><button class="tab" data-tab="recordings">Gravações</button><button class="tab" data-tab="songmap">Mapa da música</button><button class="tab" data-tab="band">Guia da banda</button><button class="tab" data-tab="plan">Plano de ensaio</button><button class="tab" data-tab="check">Avaliação</button>
-</nav>
-</details>
-<section id="tab-home" class="tabcontent">
-<div class="panel"><div class="row between"><div><h2>Missão: cantar com afinação, segurança e harmonia</h2><p class="muted small">Aprenda a melodia principal, desenvolva a segunda voz e depois una as partes. O treino combina audição, repetição, afinador e referências musicais validadas.</p></div><span class="tag">Meta: apresentação segura</span></div>
-<div class="grid"><div class="c4"><div class="card"><strong>Voz principal</strong><span class="small muted">Aprenda a melodia de referência com respiração, apoio e emissão confortável.</span></div></div><div class="c4"><div class="card"><strong>Segunda voz</strong><span class="small muted">Aprenda a linha harmônica em separado e depois cante em conjunto.</span></div></div><div class="c4"><div class="card"><strong>Banda ao vivo</strong><span class="small muted">Teclado/violão confirmam tom, acordes, notas de apoio e entradas.</span></div></div></div>
-<div class="callout" style="margin-top:12px"><b>Regra técnica:</b> os vídeos enviados têm voz e playback misturados. Eles não permitem atribuir com segurança cada nota a cada cantora nem confirmar o tom. Não usaremos a hipótese F# como certeza. A tonalidade e as notas serão cadastradas e conferidas antes de serem usadas como referência de avaliação.</div></div>
-<div class="panel micLaunch" id="micQuickPanel">
- <div class="micHead"><div><span class="eyebrow">TREINO PELO CELULAR</span><h2>Microfone e afinação</h2><p class="muted small">Toque para liberar o microfone e começar a acompanhar as notas cantadas.</p></div><div class="micGlyph">🎙</div></div>
- <div class="micQuickStatus" id="micQuickStatus" role="status">Microfone ainda não foi ativado</div>
- <div class="micActions"><button class="primary micBig" id="micQuickStart" type="button">🎙 ATIVAR MICROFONE</button><button class="warn micBig" id="micQuickStop" type="button" disabled>PARAR MICROFONE</button></div>
- <p class="tiny muted">O navegador solicitará permissão. Escolha “Permitir”. Use Chrome ou Safari atualizado e abra o site por HTTPS. Para medir afinação, grave uma cantora por vez e use fones para o playback.</p>
 </div>
-<div class="panel"><h2>Seu progresso</h2><div class="progressline"><b id="doneCount">0/12</b><div class="bar"><i id="overallBar"></i></div><span class="small muted" id="percentDone">0%</span></div><p class="small muted">Marque as etapas na aba Avaliação. O progresso fica salvo no navegador deste aparelho.</p><div class="row"><button class="primary" data-goto="lesson">Começar pela aula 1</button><button data-goto="plan">Ver calendário de ensaios</button><button class="ghost" onclick="window.print()">Imprimir material</button></div></div>
-<div class="panel"><h2>O que significa cantar segunda voz?</h2><p>A segunda voz acompanha a mesma letra e o mesmo ritmo, mas utiliza notas diferentes. As duas notas precisam combinar com o acorde tocado pela banda. Não basta escolher qualquer terça ou sexta: a nota muda conforme a melodia e o acorde.</p><div class="steps"><div class="step"><b>1 · ouvir</b>Escutar Voz principal e reconhecer a melodia.</div><div class="step"><b>2 · aprender</b>Repetir a melodia principal antes de tentar harmonizar.</div><div class="step"><b>3 · harmonizar</b>Aprender outra nota com teclado/violão e sustentar sua própria linha.</div></div></div>
-</section>
-<section id="tab-lesson" class="tabcontent hidden">
-<div class="panel"><h2>Aula 1 — Aprender do zero</h2><p class="muted small">Siga esta ordem. Antes de estudar a harmonia, estabilize a melodia principal com ritmo e letra corretos.</p>
-<div class="exercise"><h3>Exercício 1 · ouvir e imitar uma nota</h3><p>Escolha uma nota confortável, toque-a e deixe o som terminar. A cantora escuta e tenta reproduzir com “mmm” ou “uuu”. Não empurre a voz para cima ou para baixo.</p><div class="row"><div class="field"><label>Nota de treino</label><select id="lessonNote"></select></div><button class="good" id="playLessonNote">▶ Ouvir nota</button><button id="playLessonLong">Ouvir por 4 segundos</button><button id="playFiveTone">Escala de 5 notas</button><button id="playArpeggio">Arpejo 1–3–5</button></div><p class="tiny muted">Repita 5 vezes. O objetivo é reconhecer e imitar a altura, não cantar alto.</p></div>
-<div class="exercise"><h3>Exercício 2 · copiar a melodia principal</h3><ol class="small"><li>A voz principal canta uma frase curta sozinha.</li><li>A segunda voz escuta sem cantar.</li><li>A voz principal repete e a segunda voz canta exatamente igual.</li><li>Repitam até a Segunda voz acertar ritmo, entrada e final da frase.</li></ol><p class="tiny muted">Nesta etapa as duas cantam a mesma melodia. Isso é preparação, ainda não é segunda voz.</p></div>
-<div class="exercise"><h3>Exercício 3 · sustentar a nota de apoio</h3><p>O tecladista toca uma nota que combine com o acorde. A segunda voz ouve e sustenta “uuu” por 3 a 4 segundos. A voz principal pode cantar a nota principal ao mesmo tempo, primeiro bem baixinho.</p><button class="primary" data-goto="harmony">Abrir laboratório de segunda voz</button></div>
-<div class="exercise"><h3>Exercício 4 · juntar sem se perder</h3><ol class="small"><li>Comece apenas com uma frase curta do refrão.</li><li>A voz principal canta a melodia principal.</li><li>A segunda voz canta apenas a nota que treinou com o teclado.</li><li>Grave e ouça: a segunda voz manteve sua linha ou voltou a copiar a melodia principal?</li><li>Repitam lentamente três vezes; depois no andamento normal.</li></ol></div>
+
+<div class="app-container" id="authScreen">
+  <div class="header">
+    <div class="estrelinha-avatar">⭐</div>
+    <h1>Assistente Vocal</h1>
+    <p>Acesse com seu e-mail cadastrado.</p>
+  </div>
+  <div class="training-room">
+    <input type="email" id="emailInput" placeholder="E-mail" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #334c70; background:#09111e; color:white;">
+    <input type="password" id="passInput" placeholder="Senha" style="width:100%; padding:12px; margin-bottom:20px; border-radius:8px; border:1px solid #334c70; background:#09111e; color:white;">
+    <button id="loginBtn" style="width:100%; padding:14px; background:#42d8e8; border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#09111e;">Entrar</button>
+    <p id="authMsg" style="color:#ff758f; text-align:center; font-size:13px; margin-top:10px;"></p>
+  </div>
 </div>
-<div class="panel"><h2>Mini dicionário sem complicação</h2><div class="grid"><div class="c6 card"><strong>Agudo</strong><span class="small muted">Som mais alto, como uma nota que parece subir.</span></div><div class="c6 card"><strong>Grave</strong><span class="small muted">Som mais baixo, com sensação de maior profundidade.</span></div><div class="c6 card"><strong>Afinação</strong><span class="small muted">Acertar a altura da nota que se pretende cantar.</span></div><div class="c6 card"><strong>Tom da música</strong><span class="small muted">A referência musical geral que organiza as notas e os acordes.</span></div><div class="c6 card"><strong>Acorde</strong><span class="small muted">Duas ou mais notas tocadas juntas; a banda usa acordes para acompanhar.</span></div><div class="c6 card"><strong>Harmonia / segunda voz</strong><span class="small muted">Outra linha de notas cantada junto com a melodia principal.</span></div></div></div>
-</section>
-<section id="tab-live" class="tabcontent hidden">
-<div class="panel"><div class="row between"><h2>Afinador ao vivo</h2><div class="row"><button class="primary" id="startMic">Ligar microfone</button><button id="stopMic" disabled>Parar</button></div></div><p class="small muted">Use uma cantora por vez. Desligue o playback no alto-falante; escutem a base por fones. O medidor mostra a nota mais provável, frequência e desvio em cents. Não é uma avaliação artística completa.</p>
-<div class="grid"><div class="c4"><div class="field"><label>Qual voz está treinando?</label><select id="singer"><option>Segunda voz</option><option>Voz principal</option><option>Ensaio individual</option></select></div><div class="noteHero" style="margin-top:10px"><div class="bigNote" id="note">—</div><div class="freq" id="freq">Aguardando voz</div><div class="cents" id="cents">— cents</div><div class="status" id="pitchStatus">Sustente uma vogal confortável</div><div class="expectedPitch" id="expectedNote">Nota esperada: aguardando mapa musical validado</div></div><div class="meter"><div class="center"></div><div class="dot" id="meterDot"></div></div><div class="meterlabels"><span>grave ♭</span><span>centro da nota</span><span>agudo ♯</span></div></div><div class="c8"><h3>Histórico de notas</h3><canvas id="liveChart" width="900" height="240"></canvas><div class="row between"><span class="small muted">O gráfico é uma estimativa da frequência fundamental.</span><span class="small" id="signal">Sinal: —</span></div></div></div>
-<div class="recordStudio">
- <div class="recordStudioHead"><div><span class="eyebrow">GRAVAÇÃO SINCRONIZADA</span><h3>Voz + playback em uma única faixa</h3><p class="small muted">Ao tocar em gravar, o aplicativo inicia a captura do microfone e dispara o playback carregado. O arquivo final contém a voz e as faixas reproduzidas neste aparelho.</p></div><span class="tag" id="recordSyncBadge">Pronto para ensaio</span></div>
- <div class="recordActions"><button class="primary micBig" id="recordBtn" disabled>● Gravar com playback</button><button class="warn micBig" id="stopRecord" disabled>■ Finalizar gravação</button><button id="downloadCsv" disabled>Baixar análise CSV</button></div>
- <div class="row" style="margin:10px 0;gap:9px;flex-wrap:wrap"><button class="good" type="button" id="openServerLibraryBtn">☷ Escolher playback na biblioteca do servidor</button><span class="tiny muted">Selecione o MP3 salvo no TV Box. Não precisa enviar novamente.</span></div>
- <p class="tiny muted" id="recordState" role="status">1. Escolha o playback no servidor · 2. Clique em Gravar com playback e permita o microfone quando solicitado.</p>
- <p class="tiny muted">Use fones de ouvido para evitar que o playback saia pelo alto-falante e volte ao microfone. A gravação é processada localmente e baixada no próprio aparelho.</p>
- </div></div>
-<div class="panel"><h2>Resumo da sessão</h2><div class="stats"><div class="stat"><b id="statAccuracy">—</b><span>Leituras no alvo (ou centro da nota)</span></div><div class="stat"><b id="statCents">—</b><span>Desvio médio</span></div><div class="stat"><b id="statLow">—</b><span>Nota mais grave</span></div><div class="stat"><b id="statHigh">—</b><span>Nota mais aguda</span></div></div><p class="small muted" id="sessionAdvice">Faça uma leitura por cantora em ambiente silencioso.</p></div>
-</section>
-<section id="tab-harmony" class="tabcontent hidden">
-<div class="panel"><h2>Laboratório de segunda voz</h2><p class="small muted">Use quando o tecladista/violonista estiver tocando o acorde correto. O app calcula notas de exemplo dentro da escala; a banda confirma se elas combinam com o acorde real. A ferramenta não transcreve automaticamente a harmonia da música selecionada.</p>
-<div class="grid"><div class="c4 field"><label>Tonalidade confirmada pela banda</label><select id="tonic"></select></div><div class="c4 field"><label>Escala</label><select id="scale"><option value="major">Maior</option><option value="minor">Menor natural</option></select></div><div class="c4 field"><label>Nota da melodia principal</label><select id="manualLead"></select></div><div class="c4 field"><label>Intervalo para experimentar</label><select id="interval"><option value="2">Terça</option><option value="5">Sexta</option></select></div><div class="c4 field"><label>Onde fica a Segunda voz?</label><select id="direction"><option value="1">Acima da voz principal</option><option value="-1">Abaixo da voz principal</option></select></div><div class="c4 field"><label>Acorde que a banda está tocando</label><select id="chordQuality"><option value="major">Maior</option><option value="minor">Menor</option><option value="7">Sétima (7)</option><option value="maj7">Maior com sétima (maj7)</option><option value="dim">Diminuto</option></select></div><div class="c4 field"><label>Fundamental do acorde</label><select id="chordRoot"></select></div></div>
-<div class="row" style="margin-top:11px"><button class="primary" id="useDetected" disabled>Usar última nota captada</button><button id="calcHarmony">Calcular sugestão</button><button class="good" id="playLead">▶ Ouvir melodia</button><button class="good" id="playTarget">▶ Ouvir segunda voz</button><button id="playPair">Ouvir as duas juntas</button></div>
-<div class="grid" style="margin-top:13px"><div class="c4"><div class="stat"><span>Melodia principal</span><b id="leadDisplay">C4</b></div></div><div class="c4"><div class="stat"><span>Nota candidata à segunda voz</span><b class="target" id="targetDisplay">E4</b></div></div><div class="c4"><div class="stat"><span>Relação com o acorde</span><b id="chordFit">—</b></div></div></div><div class="callout" id="harmonyExplain" style="margin-top:12px">Escolha a tonalidade e o acorde confirmados pela banda. A sugestão deve ser testada cantando; não é uma cifra ou transcrição oficial.</div>
-<div style="margin-top:14px"><h3>Teclado de referência</h3><div class="piano" id="pianoKeys"></div><p class="tiny muted">Toque em uma tecla para ouvir. Teclado virtual de estudo, não substitui o som do piano/violão real.</p></div></div>
-<div class="panel"><h2>Como escolher entre terça e sexta?</h2><div class="grid"><div class="c6 card"><strong>Terça</strong><p class="small muted">Muitas vezes cria uma harmonia próxima e clara. Exemplo em Dó maior: Dó com Mi. Pode ficar em cima ou embaixo, desde que combine com o acorde.</p></div><div class="c6 card"><strong>Sexta</strong><p class="small muted">É uma distância maior entre as notas. Exemplo em Dó maior: Dó com Lá. Pode soar aberta, mas nem sempre é a melhor opção para cada acorde.</p></div></div><div class="callout" style="margin-top:12px">Não escolham “terça” ou “sexta” para a música inteira. Em algumas frases, uma nota do acorde ou uma terça invertida pode soar melhor. O tecladista deve ouvir as duas opções e decidir com as cantoras.</div></div>
-</section>
-<section id="tab-recordings" class="tabcontent hidden">
-<div class="panel"><h2>Analisar gravação individual</h2><p class="small muted">Envie uma gravação de uma cantora por vez, de preferência sem playback. Primeiro analise a voz principal; depois analise a segunda voz. Se houver duas vozes ou instrumentos, o algoritmo pode detectar a frequência de outro elemento.</p><div class="filebox"><label><b>Selecionar áudio</b> (MP3, WAV, M4A, OGG; depende do navegador)</label><br><input type="file" id="audioFile" accept="audio/*"><div class="small muted" id="fileName">Nenhum arquivo selecionado</div><div class="row" style="margin-top:9px"><button class="primary" id="analyzeFile" disabled>Analisar arquivo</button><button id="downloadFileCsv" disabled>Baixar notas CSV</button></div><div class="small muted" id="fileProgress"></div></div><canvas id="fileChart" width="900" height="240" style="margin-top:13px"></canvas><div class="stats" style="margin-top:10px"><div class="stat"><b id="fileMin">—</b><span>Nota mais grave detectada</span></div><div class="stat"><b id="fileMax">—</b><span>Nota mais aguda detectada</span></div><div class="stat"><b id="fileRange">—</b><span>Extensão observada</span></div><div class="stat"><b id="fileStable">—</b><span>Leituras no centro</span></div></div><p class="small muted" id="fileReport">O relatório aparecerá após a análise. Extensão observada não equivale à extensão vocal total.</p></div>
-<div class="panel"><h2>Como gravar para a análise ficar melhor</h2><ol class="small"><li>Coloque o celular a aproximadamente 20–30 cm da cantora.</li><li>Grave em ambiente silencioso, sem reverberação forte.</li><li>Peça para cantar uma frase curta, depois uma nota sustentada em “a” ou “u”.</li><li>Não use filtros, correção automática de afinação nem efeitos.</li><li>Grave cada voz separadamente e identifique a música, o trecho e a função vocal.</li></ol></div>
-</section>
-<section id="tab-songmap" class="tabcontent hidden">
-<div class="panel"><h2>Mapa musical da música selecionada</h2><p class="small muted">Preencham com a banda, ouvindo a versão original. Não presumimos letras nem acordes. O mapa registra os pontos em que a segunda voz entra e quais notas foram aprovadas.</p><div class="row no-print"><button class="primary" id="addSongRow">+ Adicionar trecho</button><button id="saveSongMap">Salvar mapa</button><button onclick="window.print()">Imprimir mapa</button><button id="exportSongCsv">Exportar CSV</button></div><div class="tablewrap" style="margin-top:12px"><table id="songTable"><thead><tr><th>Parte da música</th><th>Acorde da banda</th><th>Nota principal</th><th>Nota segunda voz</th><th>Entrada / instrução</th><th class="no-print">Ação</th></tr></thead><tbody>
-<tr><td>Introdução</td><td><input placeholder="ex.: F#" data-k="chord"></td><td><input placeholder="ex.: A#4" data-k="lead"></td><td><input placeholder="ex.: C#5" data-k="friend"></td><td><input placeholder="aguardar 2 compassos" data-k="cue"></td><td class="no-print"><button class="warn delrow">×</button></td></tr>
-<tr><td>Estrofe 1</td><td><input data-k="chord"></td><td><input data-k="lead"></td><td><input data-k="friend"></td><td><input placeholder="entrada / pausa" data-k="cue"></td><td class="no-print"><button class="warn delrow">×</button></td></tr>
-<tr><td>Pré-refrão</td><td><input data-k="chord"></td><td><input data-k="lead"></td><td><input data-k="friend"></td><td><input placeholder="crescer gradualmente" data-k="cue"></td><td class="no-print"><button class="warn delrow">×</button></td></tr>
-<tr><td>Refrão — frase 1</td><td><input data-k="chord"></td><td><input data-k="lead"></td><td><input data-k="friend"></td><td><input placeholder="segunda voz entra aqui" data-k="cue"></td><td class="no-print"><button class="warn delrow">×</button></td></tr>
-<tr><td>Refrão — frase 2</td><td><input data-k="chord"></td><td><input data-k="lead"></td><td><input data-k="friend"></td><td><input placeholder="manter harmonia" data-k="cue"></td><td class="no-print"><button class="warn delrow">×</button></td></tr>
-<tr><td>Final</td><td><input data-k="chord"></td><td><input data-k="lead"></td><td><input data-k="friend"></td><td><input placeholder="nota final / corte" data-k="cue"></td><td class="no-print"><button class="warn delrow">×</button></td></tr>
-</tbody></table></div><p class="tiny muted" id="mapStatus">O mapa pode ser editado e salvo neste aparelho.</p></div>
-</section>
-<section id="tab-band" class="tabcontent hidden">
-<div class="panel"><h2>Guia de execução para a banda</h2><p class="small muted">Versão combinada: arranjo aprovado para esta música, com acompanhamento ao vivo. A banda deve confirmar o tom com as cantoras antes de começar a fixar as harmonias.</p><div class="steps"><div class="step"><b>Antes do ensaio</b>Toquem a introdução e a sequência de acordes da versão original. Confirmem o tom real, o andamento e a forma da música.</div><div class="step"><b>Com a voz principal</b>Peçam que cante a melodia sozinha. Tecladista/violonista identifica notas de início, notas longas e finais das frases.</div><div class="step"><b>Com a segunda voz</b>Tocar a nota candidata de segunda voz. A segunda voz aprende a nota isolada, depois sustenta enquanto A voz principal canta a melodia.</div></div></div>
-<div class="panel"><h2>Arranjo sugerido por seção</h2><div class="tablewrap"><table><thead><tr><th>Seção</th><th>Voz principal</th><th>Segunda voz</th><th>Banda</th></tr></thead><tbody><tr><td>Introdução</td><td>Preparar entrada; não antecipar a letra.</td><td>Ouvir referência e respirar antes da entrada.</td><td>Apresentar tom e andamento com clareza.</td></tr><tr><td>Estrofes</td><td>Conduzir a melodia com dicção e dinâmica controlada.</td><td>Começar em uníssono nos ensaios; depois entrar apenas nos finais de frase aprovados.</td><td>Reduzir preenchimentos para deixar a letra inteligível.</td></tr><tr><td>Pré-refrão</td><td>Crescer progressivamente, sem gritar.</td><td>Preparar a entrada; manter a própria linha.</td><td>Construir dinâmica gradualmente.</td></tr><tr><td>Refrão</td><td>Voz principal firme e aberta.</td><td>Executar a harmonia ensaiada, sem tentar copiar a melodia.</td><td>Dar sustentação rítmica e harmônica; não cobrir as vozes.</td></tr><tr><td>Final</td><td>Seguir a duração combinada da última nota.</td><td>Terminar junto, sem antecipar o corte.</td><td>Combinar acorde final, duração e sinal de encerramento.</td></tr></tbody></table></div></div>
-<div class="panel"><h2>Ficha técnica que a banda deve preencher</h2><div class="grid"><div class="c4 field"><label>Tom confirmado</label><input id="bandKey" type="text" placeholder="preencher após testar"></div><div class="c4 field"><label>Andamento (BPM)</label><input id="bandBpm" type="number" min="40" max="220" placeholder="ex.: 72"></div><div class="c4 field"><label>Compasso</label><input id="bandMeter" type="text" placeholder="ex.: 4/4"></div><div class="c12 field"><label>Observações de arranjo / sinais do regente</label><textarea id="bandNotes" placeholder="Ex.: entrada da segunda voz no refrão; segurar última nota; corte após sinal do vocalista."></textarea></div></div><div class="row no-print"><button class="primary" id="saveBand">Salvar ficha da banda</button><button id="printBand" onclick="window.print()">Imprimir guia</button></div><p class="small muted" id="bandStatus"></p></div>
-<div class="callout">O regente deve comunicar as entradas com contagem ou gesto claro. A Segunda voz precisa saber em qual compasso entra, onde respira e em que momento encerra.</div>
-</section>
-<section id="tab-plan" class="tabcontent hidden">
-<div class="panel"><h2>Plano de preparação — 1 a 10 de novembro</h2><p class="small muted">A data de apresentação é 11/11/2026. Ajustem a duração conforme o cansaço; parem se houver dor, ardor ou rouquidão.</p><div id="calendarTasks"></div><p class="small muted" id="planProgress"></p></div>
-<div class="panel"><h2>Metrônomo para o ensaio com a banda</h2><p class="small muted">Definam o andamento ouvindo a versão original. O metrônomo é apenas referência de pulso; não altera o áudio nem determina o BPM correto da gravação.</p><div class="row"><div class="field" style="max-width:170px"><label for="metronomeBpm">Andamento (BPM)</label><input id="metronomeBpm" type="number" min="40" max="220" value="72"></div><div class="field" style="max-width:170px"><label for="metronomeBeat">Batidas por compasso</label><select id="metronomeBeat"><option value="4">4 tempos</option><option value="3">3 tempos</option><option value="2">2 tempos</option></select></div><button class="good" id="metroStart">▶ Iniciar metrônomo</button><button id="metroStop" disabled>Parar metrônomo</button><span id="metroCount" class="tag">Pronto</span></div></div><div class="panel"><h2>Modelo de ensaio diário — 25 minutos</h2><div class="tablewrap"><table><thead><tr><th>Tempo</th><th>Atividade</th><th>Como fazer</th></tr></thead><tbody><tr><td>5 min</td><td>Aquecimento leve</td><td>Vibração de lábios, “mmm” confortável e respiração tranquila. Sem forçar volume ou alcance.</td></tr><tr><td>5 min</td><td>Melodia principal</td><td>A voz principal canta uma frase; Segunda voz escuta e depois repete a melodia no mesmo ritmo.</td></tr><tr><td>7 min</td><td>Segunda voz</td><td>Teclado/violão toca a nota-alvo; Segunda voz repete e sustenta. Testar a harmonia sobre o acorde real.</td></tr><tr><td>5 min</td><td>Dueto gravado</td><td>Cantar juntas o trecho e ouvir se a Segunda voz manteve sua linha e entrou no ponto certo.</td></tr><tr><td>3 min</td><td>Correção pontual</td><td>Repetir somente o trecho difícil em andamento lento. Encerrar antes da fadiga.</td></tr></tbody></table></div></div>
-<div class="panel"><h2>Cuidados vocais</h2><ul class="small"><li>Potência não é gritar: use apoio respiratório confortável e projeção sem apertar a garganta.</li><li>Não treinem repetidamente no limite agudo. Ajustem a tonalidade se a melodia exigir esforço excessivo.</li><li>Hidratem-se; evitem ensaio longo quando houver rouquidão ou cansaço.</li><li>Não façam exercícios que provoquem dor. Dor, ardor ou perda de voz são sinais para parar.</li><li>No dia da apresentação, façam aquecimento leve e guardem a voz antes do palco.</li></ul></div>
-</section>
-<section id="tab-check" class="tabcontent hidden">
-<div class="panel"><h2>Checklist de prontidão</h2><p class="small muted">Marquem cada item só quando conseguirem executar sem ajuda. A meta é chegar ao palco com os pontos essenciais resolvidos.</p><div id="checklist"></div><div class="progressline" style="margin-top:12px"><b id="checkCount">0/12</b><div class="bar"><i id="checkBar"></i></div></div><div class="row no-print" style="margin-top:12px"><button id="resetChecks" class="warn">Zerar checklist</button><button onclick="window.print()">Imprimir avaliação</button></div></div>
-<div class="panel"><h2>Critérios finais</h2><div class="grid"><div class="c6 card"><strong>Segunda voz</strong><span class="small muted">Canta sua nota sem voltar para a melodia principal; entra no tempo; respira nos pontos combinados; termina junto.</span></div><div class="c6 card"><strong>Voz principal</strong><span class="small muted">Mantém a melodia, articula a letra, administra a respiração e cresce no refrão sem tensão.</span></div><div class="c6 card"><strong>Dueto</strong><span class="small muted">As vozes permanecem distinguíveis e afinadas; nenhuma cobre a outra.</span></div><div class="c6 card"><strong>Banda</strong><span class="small muted">Tom, andamento, acordes, entradas e final foram combinados e ensaiados.</span></div></div></div>
-</section>
-<div class="foot">Assistente Vocal · versão 3.8 · biblioteca do TV Box e gravação sincronizada. Microfone exige navegador compatível e contexto seguro (HTTPS ou localhost). Não substitui professor(a) de canto ou avaliação fonoaudiológica.</div>
-</main>
-<script>
-(()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
-</script>
-<script src="/musical-core.js"></script>
-<script>
-(()=>{'use strict';
-const $=id=>document.getElementById(id), names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}function midiLabel(m){return names[((m%12)+12)%12]+' '+(Math.floor(m/12)-1)}function freqMidi(f){return 69+12*Math.log2(f/440)}function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*100);return{midi:n,name:midiName(n),cents,freq:f}}
-// Navegação entre módulos
-function go(tab){const tools=document.getElementById('toolsNavigation');if(tools)tools.open=tab!=='home';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.tabcontent').forEach(s=>s.classList.toggle('hidden',s.id!=='tab-'+tab));window.scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>go(b.dataset.tab)));document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
-// Áudio / sintetizador simples para notas de referência
-let ctx=null,stream=null,analyser=null,source=null,raf=0,history=[],latest=null,activeTargetMidi=null,recording=false,mediaRecorder=null,recordChunks=[],csvRows=[],lastValid=0,recStart=0;
-function audioContext(){if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}
-function playMidi(midi,duration=1.8,when=0,volume=.14){let ac=audioContext(),t=ac.currentTime+when,osc=ac.createOscillator(),gain=ac.createGain();osc.type='triangle';osc.frequency.value=440*Math.pow(2,(midi-69)/12);gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(volume,t+.04);gain.gain.setTargetAtTime(.0001,t+duration-.15,.09);osc.connect(gain);gain.connect(ac.destination);osc.start(t);osc.stop(t+duration)}
-function playPair(){playMidi(leadMidi,1.8,0,.10);playMidi(targetMidi,1.8,0,.10)}
 
-// Motor de playback multifaixa: um relógio AudioContext, fontes sincronizadas e ganhos independentes.
-const TRACKS=['instrument','lead','harmony'];
-const trackBuffers={instrument:null,lead:null,harmony:null};
-const trackNames={instrument:'Playback instrumental',lead:'Voz principal',harmony:'Segunda voz'};
-// URLs absolutas gravadas no cadastro são sempre prioritárias. O endereço abaixo
-// serve apenas como fallback para registros antigos que tenham somente playbackPath.
-const AV_AUDIO_SERVER_BASE='https://mxqpro-h313-1.tail8b8cce.ts.net:8443';
-function resolveStoredAudioUrl(url,path){
- const raw=String(url||'').trim();
- if(raw){
-  try{return new URL(raw,location.href).href}catch{}
- }
- const stored=String(path||'').trim();
- if(!stored)return '';
- const filename=stored.split('/').filter(Boolean).pop();
- return filename?AV_AUDIO_SERVER_BASE+'/api/audio/'+encodeURIComponent(filename):'';
-}
-// Disponibiliza a função para o carregador de músicas, executado em outro escopo.
-window.resolveStoredAudioUrl=resolveStoredAudioUrl;
-const player={sources:[],gains:{},master:null,compressor:null,playing:false,offset:0,startedAt:0,duration:0,timer:null,generation:0,mode:'silvane'};
-let currentTrainingMode='silvane';
-let recordMixDestination=null,recordMicSource=null,recordMicGain=null,recordMicFilter=null,recordMicCompressor=null,recordPlaybackGain=null;
-function ensurePlayerGraph(){
- const ac=audioContext();
- if(!player.master){
-  player.master=ac.createGain();player.master.gain.value=.72;
-  player.compressor=ac.createDynamicsCompressor();player.compressor.threshold.value=-5;player.compressor.knee.value=5;player.compressor.ratio.value=8;player.compressor.attack.value=.003;player.compressor.release.value=.18;
-  player.master.connect(player.compressor);player.compressor.connect(ac.destination);
- }
- TRACKS.forEach(key=>{if(!player.gains[key]){const g=ac.createGain();g.gain.value=Number($('track'+cap(key)+'Volume')?.value||.5);g.connect(player.master);player.gains[key]=g}});
- return ac;
-}
-function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
-function fmtTime(sec){if(!Number.isFinite(sec)||sec<0)sec=0;let m=Math.floor(sec/60),s=Math.floor(sec%60);return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
-function playerPosition(){if(!player.playing||!ctx)return player.offset;let raw=Math.max(0,player.offset+(ctx.currentTime-player.startedAt));if($('playerLoopEnabled').checked){const a=Number($('playerLoopStart').value)||0,b=Number($('playerLoopEnd').value)||player.duration;if(b>a&&raw>=b)return a+((raw-a)%(b-a))}return Math.min(raw,player.duration)}
-function updatePlayerUI(){const pos=playerPosition(),dur=player.duration||0;$('playerPosition').textContent=fmtTime(pos)+' / '+fmtTime(dur);$('playerSeek').value=dur?String(Math.round(pos/dur*1000)):0;$('playerPlay').disabled=player.playing;$('playerPause').disabled=!player.playing;$('playerStop').disabled=!player.playing&&player.offset===0;$('audioEngineState').textContent=player.playing?'Playback em execução':'Motor de áudio pronto';}
-function setPlayerStatus(message,active=false){$('playerStatus').textContent=message;$('playerStatus').classList.toggle('active',!!active)}
-function stopPlayerSources(){player.generation++;for(const item of player.sources){try{item.stop()}catch{}try{item.disconnect()}catch{}}player.sources=[]}
-function scheduleClick(when,accent=false){const ac=ensurePlayerGraph(),o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=accent?1050:760;g.gain.setValueAtTime(.0001,when);g.gain.exponentialRampToValueAtTime(accent?.16:.10,when+.006);g.gain.exponentialRampToValueAtTime(.0001,when+.085);o.connect(g);g.connect(player.master);o.start(when);o.stop(when+.09)}
-function validateLoop(){const a=Number($('playerLoopStart').value)||0,b=Number($('playerLoopEnd').value)||player.duration;if(!$('playerLoopEnabled').checked)return{a:0,b:player.duration};if(!(b>a&&a>=0&&b<=player.duration)){throw new Error('O fim do trecho precisa ser maior que o início e não pode ultrapassar a duração do áudio.')}return{a,b}}
-async function startPlayback(withCountIn=false){
- const loaded=TRACKS.filter(k=>trackBuffers[k]);if(!loaded.length){setPlayerStatus('Carregue pelo menos uma faixa de áudio antes de reproduzir.');return}
- const ac=ensurePlayerGraph();if(ac.state==='suspended')await ac.resume();
- player.duration=Math.max(...loaded.map(k=>trackBuffers[k].duration));
- let offset=Math.min(player.offset,player.duration);let loop={a:0,b:player.duration};
- try{loop=validateLoop();if($('playerLoopEnabled').checked&&(offset<loop.a||offset>=loop.b))offset=loop.a}catch(e){setPlayerStatus(e.message);return}
- stopPlayerSources();player.offset=offset;
- const bpm=Math.max(40,Math.min(220,Number($('metronomeBpm')?.value)||72)),beats=Math.max(1,Math.min(4,Number($('metronomeBeat')?.value)||4)),interval=60/bpm;
- const now=ac.currentTime+.10,delay=withCountIn?beats*interval:0,when=now+delay;
- if(withCountIn){for(let i=0;i<beats;i++)scheduleClick(now+i*interval,i===0)}
- for(const key of loaded){const buf=trackBuffers[key];if(offset>=buf.duration)continue;const sourceNode=ac.createBufferSource();sourceNode.buffer=buf;sourceNode.connect(player.gains[key]);if($('playerLoopEnabled').checked){sourceNode.loop=true;sourceNode.loopStart=loop.a;sourceNode.loopEnd=loop.b}sourceNode.start(when,offset);player.sources.push(sourceNode)}
- player.offset=offset;player.startedAt=when;player.playing=true;const myGeneration=player.generation;
- clearInterval(player.timer);player.timer=setInterval(()=>{
-  if(!player.playing||myGeneration!==player.generation)return;
-  const pos=playerPosition();if(!$('playerLoopEnabled').checked&&pos>=player.duration-.03){stopPlayback(false);player.offset=0;setPlayerStatus('Reprodução concluída.',false);return}
-  updatePlayerUI();const target=expectedMidiAt(pos,currentTrainingMode);$('expectedNote').textContent=target===null?'Nota esperada: trecho sem nota validada':`Nota esperada: ${midiName(target)} · ${currentTrainingMode==='silvane'?'Voz principal':'Segunda voz'}`;
- },60);
- updatePlayerUI();setPlayerStatus(withCountIn?'Contagem inicial; as faixas entrarão juntas.':'Reproduzindo faixas sincronizadas.',true);
-}
-function stopPlayback(reset=true){if(player.playing){player.offset=playerPosition();player.playing=false}stopPlayerSources();clearInterval(player.timer);player.timer=null;if(reset)player.offset=0;updatePlayerUI();}
-function pausePlayback(){if(!player.playing)return;player.offset=playerPosition();player.playing=false;stopPlayerSources();clearInterval(player.timer);player.timer=null;updatePlayerUI();setPlayerStatus('Playback pausado. Toque em reproduzir para continuar do mesmo ponto.')}
-function seekPlayback(value){const wasPlaying=player.playing;const pos=player.duration*(Number(value)/1000);if(wasPlaying){player.playing=false;stopPlayerSources();clearInterval(player.timer)}player.offset=Math.max(0,Math.min(player.duration,pos));updatePlayerUI();if(wasPlaying)startPlayback(false)}
-const trackBytes={instrument:0,lead:0,harmony:0};
-async function loadTrack(key,file){if(!file)return;const totalWithoutCurrent=TRACKS.reduce((sum,k)=>sum+(k===key?0:trackBytes[k]),0);if(file.size>80*1024*1024||totalWithoutCurrent+file.size>140*1024*1024){setPlayerStatus('Limite local de memória: até 80 MB por faixa e 140 MB somados. Prefira MP3 ou WAV compacto.');return}stopPlayback(true);try{$('audioEngineState').textContent='Decodificando '+trackNames[key]+'…';const ac=ensurePlayerGraph();if(ac.state==='suspended')await ac.resume();const raw=await file.arrayBuffer();const buffer=await ac.decodeAudioData(raw.slice(0));trackBuffers[key]=buffer;trackBytes[key]=file.size;$('track'+cap(key)+'Name').textContent=`${file.name} · ${fmtTime(buffer.duration)} · ${buffer.numberOfChannels} canal(is)`;player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));$('playerLoopEnd').value=player.duration.toFixed(1);$('playerSeek').value='0';player.offset=0;updatePlayerUI();setPlayerStatus(`${trackNames[key]} carregado. O arquivo está na memória deste aparelho durante esta sessão.`,true)}catch(e){trackBuffers[key]=null;setPlayerStatus(`Não foi possível decodificar ${file.name}: ${e.message}. Tente MP3 ou WAV compatível.`)}finally{$('audioEngineState').textContent='Motor de áudio pronto'}}
-window.loadAVTrackFromUrl=async function(key,url,name){
- if(!TRACKS.includes(key)||!url)throw new Error('Endereço da faixa não informado.');
- stopPlayback(true);$('audioEngineState').textContent='Carregando '+trackNames[key]+'…';
- try{
-  const ac=ensurePlayerGraph();if(ac.state==='suspended')await ac.resume();
-  const response=await fetch(url,{mode:'cors',cache:'no-store'});
-  if(!response.ok)throw new Error('HTTP '+response.status+' ao buscar '+url);
-  const raw=await response.arrayBuffer();if(!raw.byteLength)throw new Error('O servidor retornou um arquivo vazio.');
-  if(raw.byteLength>80*1024*1024)throw new Error('Faixa acima de 80 MB.');
-  const buffer=await ac.decodeAudioData(raw.slice(0));trackBuffers[key]=buffer;trackBytes[key]=raw.byteLength;
-  $('track'+cap(key)+'Name').textContent=`${name||trackNames[key]} · ${fmtTime(buffer.duration)} · ${buffer.numberOfChannels} canal(is)`;
-  player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));
-  $('playerLoopEnd').value=player.duration.toFixed(1);$('playerSeek').value='0';player.offset=0;updatePlayerUI();
-  setPlayerStatus(`${trackNames[key]} carregado do TV Box.`,true);return true;
- }catch(e){trackBuffers[key]=null;trackBytes[key]=0;$('track'+cap(key)+'Name').textContent='Falha ao carregar faixa';if(key==='instrument')updateRecordAvailability();setPlayerStatus(`Falha ao carregar ${trackNames[key]}: ${e.message}`);throw e}
- finally{$('audioEngineState').textContent='Motor de áudio pronto'}
-};
-const AV_AUDIO_API=AV_AUDIO_SERVER_BASE+'/api/audio';let serverAudioFiles=[];
-function audioFilename(value){try{return decodeURIComponent(new URL(String(value),location.href).pathname.split('/').pop()||'')}catch{return String(value||'').split('/').pop()}}
-async function fetchServerAudioList(){
- const status=$('serverAudioStatus'),picker=$('serverAudioPicker'),select=$('serverAudioSelect');
- status.textContent='Consultando arquivos MP3 existentes no TV Box…';picker.style.display='flex';
- try{
-  const response=await fetch(AV_AUDIO_API,{method:'GET',mode:'cors',cache:'no-store'});
-  if(!response.ok)throw new Error('HTTP '+response.status);
-  const data=await response.json();if(!data.success||!Array.isArray(data.files))throw new Error(data.error||'Resposta inesperada da biblioteca de áudio.');
-  serverAudioFiles=data.files.filter(f=>f&&/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
-  select.replaceChildren();
-  if(!serverAudioFiles.length){select.add(new Option('Nenhum MP3 encontrado no servidor',''));status.textContent='O servidor respondeu, mas não há MP3 na pasta de uploads.';return serverAudioFiles}
-  serverAudioFiles.forEach(f=>{const mb=(Number(f.bytes||0)/1048576).toFixed(1);select.add(new Option(`${f.name} · ${mb} MB`,f.name))});
-  status.textContent=`Conexão com o TV Box confirmada: ${serverAudioFiles.length} arquivo(s) MP3 encontrado(s).`;
-  return serverAudioFiles;
- }catch(e){select.replaceChildren(new Option('Não foi possível consultar o servidor',''));status.textContent='Falha ao consultar a biblioteca do TV Box: '+e.message+'. Verifique o Tailscale Funnel, CORS e se a API está online. Use Atualizar lista para tentar novamente.';return []}
-}
-async function loadSelectedServerInstrument(){
- const filename=$('serverAudioSelect').value;if(!filename){$('serverAudioStatus').textContent='Selecione um arquivo MP3 da lista.';return}
- const url=AV_AUDIO_API+'/'+encodeURIComponent(filename);
- $('loadServerAudioBtn').disabled=true;
- try{await window.loadAVTrackFromUrl('instrument',url,filename);if(activeSong){try{localStorage.setItem('av3:serverPlayback:'+activeSong.id,filename)}catch{}}
-  $('serverAudioStatus').textContent='Instrumental carregado. O botão Gravar com playback já pode ser utilizado.';updateRecordAvailability();
- }catch(e){$('serverAudioStatus').textContent='Não foi possível preparar esse MP3: '+e.message}
- finally{$('loadServerAudioBtn').disabled=false}
-}
-$('loadServerAudioBtn').addEventListener('click',loadSelectedServerInstrument);
-$('refreshServerAudioBtn').addEventListener('click',async()=>{await fetchServerAudioList();});
-$('openServerLibraryBtn').addEventListener('click',async()=>{const picker=$('serverAudioPicker');picker.style.display='flex';$('serverAudioStatus').textContent='Abrindo biblioteca do TV Box…';await fetchServerAudioList();picker.scrollIntoView({behavior:'smooth',block:'center'});});
-function setTrackVolume(key,value){const v=Math.max(0,Math.min(1,Number(value)||0));const g=player.gains[key],slider=$('track'+cap(key)+'Volume');if(slider)slider.value=String(v);if(g&&ctx)g.gain.setTargetAtTime(v,ctx.currentTime,.025);$('track'+cap(key)+'Pct').textContent=Math.round(v*100)+'%'}
-window.clearAVTracks=function(){stopPlayback(true);TRACKS.forEach(key=>{trackBuffers[key]=null;trackBytes[key]=0;const el=$('track'+cap(key)+'Name');if(el)el.textContent=key==='instrument'?'Nenhum instrumental carregado':key==='lead'?'Nenhuma referência principal carregada':'Nenhuma referência de segunda voz'});player.duration=0;player.offset=0;updatePlayerUI();updateRecordAvailability?.()};
-function expectedMidiAt(time,mode){let events=[];try{events=JSON.parse(localStorage.getItem('estrelinha_events')||'[]')}catch{}return window.EstrelinhaCore?.expectedMidiAt(time,mode,events)??null}
-function setTrainingMode(mode){currentTrainingMode=mode;player.mode=mode;activeTargetMidi=null;const labels={silvane:['Treinar voz principal','Acompanhe a melodia principal. Trabalhe um trecho por vez.','Voz principal — melodia'],marla:['Treinar segunda voz','Ouça a voz principal e aprenda a linha harmônica.','Segunda voz — harmonia'],duet:['Cantar juntas','Una as duas linhas. O playback e as referências usam o mesmo relógio.','Ensaio em conjunto']};const d=labels[mode];$('playbackTitle').textContent=d[0];$('trainingModeText').textContent=d[2];$('teacherGuidance').textContent=(window.__AV_SONG_TITLE||'Música selecionada')+': '+d[1];$('singer').value=mode==='silvane'?'Voz principal':mode==='marla'?'Segunda voz':'Ensaio conjunto';if(mode==='silvane'){setTrackVolume('instrument',$('trackInstrumentVolume').value);setTrackVolume('lead',Math.max(.55,Number($('trackLeadVolume').value)));setTrackVolume('harmony',0)}else if(mode==='marla'){setTrackVolume('instrument',$('trackInstrumentVolume').value);setTrackVolume('lead',Math.max(.35,Number($('trackLeadVolume').value)));setTrackVolume('harmony',Math.max(.7,Number($('trackHarmonyVolume').value)))}else{setTrackVolume('instrument',$('trackInstrumentVolume').value);setTrackVolume('lead',.08);setTrackVolume('harmony',.08)}const target=expectedMidiAt(playerPosition(),mode);$('expectedNote').textContent=target===null?'Nota esperada: cadastre e valide a melodia no mapa musical':'Nota esperada: '+midiName(target);}
-TRACKS.forEach(key=>{$('track'+cap(key)+'File').addEventListener('change',e=>loadTrack(key,e.target.files?.[0]));$('track'+cap(key)+'Volume').addEventListener('input',e=>setTrackVolume(key,e.target.value))});
-$('playerPlay').addEventListener('click',()=>startPlayback(false));$('playerCountIn').addEventListener('click',()=>startPlayback(true));$('playerPause').addEventListener('click',pausePlayback);$('playerStop').addEventListener('click',()=>{stopPlayback(true);setPlayerStatus('Playback reiniciado para o início.')});$('playerSeek').addEventListener('change',e=>seekPlayback(e.target.value));
-function restartForLoopEdit(){if(!player.playing)return;const pos=playerPosition();player.playing=false;stopPlayerSources();clearInterval(player.timer);player.timer=null;player.offset=pos;startPlayback(false)}
-$('playerLoopEnabled').addEventListener('change',()=>{if($('playerLoopEnabled').checked){try{validateLoop();setPlayerStatus('Repetição do trecho ativada.',true)}catch(e){$('playerLoopEnabled').checked=false;setPlayerStatus(e.message);return}}else setPlayerStatus('Repetição do trecho desativada.');restartForLoopEdit()});
-$('playerLoopStart').addEventListener('change',()=>{if($('playerLoopEnabled').checked){try{validateLoop();restartForLoopEdit()}catch(e){setPlayerStatus(e.message)}}});$('playerLoopEnd').addEventListener('change',()=>{if($('playerLoopEnabled').checked){try{validateLoop();restartForLoopEdit()}catch(e){setPlayerStatus(e.message)}}});
-document.querySelectorAll('[data-training-mode]').forEach(b=>b.addEventListener('click',()=>{setTrainingMode(b.dataset.trainingMode);document.querySelector('[data-tab="live"]').click()}));
+<div class="app-container hidden" id="mainMenu">
+  <div class="header">
+    <div class="estrelinha-avatar">⭐</div>
+    <h1>Olá, <span id="userName">Cantora</span>!</h1>
+    <p>Música atual: <strong id="currentSong">Estrelinha</strong></p>
+  </div>
+  
+  <div class="guidance-box" id="estrelinhaGuidance">
+    "Escolha uma aula abaixo para começarmos o treinamento."
+  </div>
 
-// Setup note selects
-const tonic=$('tonic'),manual=$('manualLead'),chordRoot=$('chordRoot');for(let i=0;i<12;i++){tonic.add(new Option(names[i],String(i)));chordRoot.add(new Option(names[i],String(i)))}
-for(let m=48;m<=84;m++){manual.add(new Option(midiLabel(m),String(m)));$('lessonNote').add(new Option(midiLabel(m),String(m)))}tonic.value='0';manual.value='60';chordRoot.value='0';$('lessonNote').value='60';
-// Chart
-const liveCanvas=$('liveChart'),lctx=liveCanvas.getContext('2d'),fileCanvas=$('fileChart'),fctx=fileCanvas.getContext('2d');
-function drawChart(canvas,c,data){let w=canvas.width,h=canvas.height;c.clearRect(0,0,w,h);c.fillStyle='#0b1625';c.fillRect(0,0,w,h);c.font='12px system-ui';c.fillStyle='#8fa4bd';const min=48,max=84;for(let n=min;n<=max;n+=3){let y=h-(n-min)/(max-min)*h;c.strokeStyle=n%12===0?'#30465e':'#1e3045';c.beginPath();c.moveTo(42,y);c.lineTo(w-8,y);c.stroke();if(n%12===0)c.fillText(midiName(n),6,y-3)}for(let i=0;i<=8;i++){let x=42+(w-50)*i/8;c.strokeStyle='#1a2a3d';c.beginPath();c.moveTo(x,0);c.lineTo(x,h);c.stroke()}c.strokeStyle='#62d7e8';c.lineWidth=2.4;c.beginPath();let started=false;data.forEach((p,i)=>{if(!p||!Number.isFinite(p.midi)){started=false;return}let x=42+(w-50)*i/Math.max(1,data.length-1),y=h-(p.midi-min)/(max-min)*h;if(!started){c.moveTo(x,y);started=true}else c.lineTo(x,y)});c.stroke()}
-function drawLive(){drawChart(liveCanvas,lctx,history.slice(-100).map(p=>p&&p.midi>=48&&p.midi<=84?p:null))}
-// Estimador YIN: útil para uma voz isolada e sustentada; pode confundir harmônicos e instrumentos.
-function yin(buffer,sampleRate){let size=buffer.length,rms=0;for(let i=0;i<size;i++)rms+=buffer[i]*buffer[i];rms=Math.sqrt(rms/size);if(rms<.008)return null;let minTau=Math.floor(sampleRate/1000),maxTau=Math.min(Math.floor(sampleRate/65),Math.floor(size/2)),diff=new Float32Array(maxTau+1),cmnd=new Float32Array(maxTau+1);for(let tau=minTau;tau<=maxTau;tau++){let sum=0;for(let i=0;i<size-maxTau;i++){let d=buffer[i]-buffer[i+tau];sum+=d*d}diff[tau]=sum}cmnd[0]=1;let running=0;for(let tau=1;tau<=maxTau;tau++){running+=diff[tau];cmnd[tau]=running?diff[tau]*tau/running:1}let chosen=-1;for(let tau=minTau+1;tau<maxTau;tau++){if(cmnd[tau]<.16&&cmnd[tau]<=cmnd[tau-1]&&cmnd[tau]<cmnd[tau+1]){chosen=tau;while(chosen+1<maxTau&&cmnd[chosen+1]<cmnd[chosen])chosen++;break}}if(chosen<0){let best=1;for(let tau=minTau;tau<=maxTau;tau++)if(cmnd[tau]<best){best=cmnd[tau];chosen=tau}if(best>.32)return null}let x0=chosen>minTau?cmnd[chosen-1]:cmnd[chosen],x1=cmnd[chosen],x2=chosen<maxTau?cmnd[chosen+1]:cmnd[chosen],den=2*(2*x1-x2-x0),shift=den?(x2-x0)/den:0,tau=chosen+Math.max(-.5,Math.min(.5,shift)),f=sampleRate/tau;if(f<65||f>1000)return null;return{freq:f,clarity:1-cmnd[chosen],rms}}
-function liveLoop(){if(!analyser)return;const raw=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(raw);const p=yin(raw,ctx.sampleRate);if(p&&p.clarity>.65){const ni=noteInfo(p.freq);latest={...ni,clarity:p.clarity,time:Date.now()};lastValid=Date.now();let timedTarget=player.playing?expectedMidiAt(playerPosition(),currentTrainingMode):null;activeTargetMidi=timedTarget;let targetMidiNow=timedTarget;let compare=targetMidiNow!==null?Math.round((freqMidi(p.freq)-targetMidiNow)*100):ni.cents,ok=Math.abs(compare)<=25;history.push({midi:ni.midi+ni.cents/100,cents:ni.cents,targetCents:targetMidiNow!==null?compare:null,time:Date.now()});if(history.length>180)history.shift();$('note').textContent=ni.name;$('freq').textContent=p.freq.toFixed(1)+' Hz';$('cents').textContent=(compare>0?'+':'')+compare+' cents';$('cents').className='cents '+(ok?'goodtxt':Math.abs(compare)<=40?'warntxt':'badtxt');$('pitchStatus').textContent=targetMidiNow!==null?(ok?'Próxima da nota-alvo '+midiName(targetMidiNow):compare<0?'Abaixo da nota-alvo '+midiName(targetMidiNow):'Acima da nota-alvo '+midiName(targetMidiNow)):(ok?'Próxima do centro da nota':'Ajuste a altura da voz com suavidade');$('meterDot').style.left=(50+Math.max(-50,Math.min(50,compare))*.9)+'%';$('signal').textContent='Sinal '+Math.round(p.rms*100)+'% · clareza '+Math.round(p.clarity*100)+'%';$('useDetected').disabled=false;if(recording)csvRows.push([((Date.now()-recStart)/1000).toFixed(2),$('singer').value,ni.name,ni.freq.toFixed(2),ni.cents,compare,p.clarity.toFixed(2)])}else{history.push(null);if(history.length>180)history.shift();if(Date.now()-lastValid>1000){$('note').textContent='—';$('freq').textContent='Sem nota estável';$('cents').textContent='— cents';$('pitchStatus').textContent='Sustente uma vogal; afaste a base do alto-falante';$('signal').textContent='Sinal baixo ou indefinido'}}drawLive();updateStats();raf=setTimeout(()=>requestAnimationFrame(liveLoop),75)}
-async function startMic(){try{
- if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error('Este navegador não disponibiliza acesso ao microfone. Abra o endereço HTTPS no Chrome ou Safari atualizado.');
- stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});
- audioContext();if(ctx.state==='suspended')await ctx.resume();
- source=ctx.createMediaStreamSource(stream);analyser=ctx.createAnalyser();analyser.fftSize=4096;analyser.smoothingTimeConstant=0;source.connect(analyser);
- $('micState').textContent='Microfone ativo';$('micQuickStatus').textContent='Microfone ativo — cante uma nota sustentada';$('micQuickStatus').classList.add('active');
- $('startMic').disabled=true;$('stopMic').disabled=false;$('micQuickStart').disabled=true;$('micQuickStop').disabled=false;updateRecordAvailability();
- history=[];csvRows=[['tempo_s','cantora','nota','frequencia_Hz','desvio_cents','desvio_nota_alvo_cents','clareza']];liveLoop()
- }catch(e){let msg=e.name==='NotAllowedError'?'Permissão negada. Nas configurações do navegador, permita o microfone para este site e tente novamente.':e.name==='NotFoundError'?'Nenhum microfone foi encontrado no aparelho.':e.message;
- $('micQuickStatus').textContent=msg;$('micQuickStatus').classList.remove('active');alert('Não foi possível ativar o microfone. '+msg+' Verifique também se o site está aberto em HTTPS.')}}
+  <div class="main-actions">
+    <button class="action-btn silvane" data-mode="silvane">
+      <strong>🎤 TREINAR SILVANE</strong>
+      <span>Aprender e avaliar a melodia da voz principal.</span>
+    </button>
+    <button class="action-btn marla" data-mode="marla">
+      <strong>🎶 TREINAR MARLA</strong>
+      <span>Aprender e isolar a segunda voz (harmonia).</span>
+    </button>
+    <button class="action-btn juntas" data-mode="duet">
+      <strong>♫ CANTAR JUNTAS</strong>
+      <span>Playback completo com as duas vozes alinhadas.</span>
+    </button>
+  </div>
+</div>
 
-function updateRecordAvailability(){const ready=!!trackBuffers.instrument&&!recording;$('recordBtn').disabled=!ready;if(!trackBuffers.instrument)$('recordState').textContent='Escolha um playback na biblioteca do servidor para habilitar a gravação.';else if(!stream&&!recording)$('recordState').textContent='Playback carregado. Clique em Gravar com playback e autorize o microfone.'}
-function stopMic(){clearTimeout(raf);if(mediaRecorder&&mediaRecorder.state==='recording')stopRecording();if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;analyser=null;source=null;$('micState').textContent='Microfone desligado';$('micQuickStatus').textContent='Microfone desligado';$('micQuickStatus').classList.remove('active');$('startMic').disabled=false;$('stopMic').disabled=true;$('micQuickStart').disabled=false;$('micQuickStop').disabled=true;$('recordBtn').disabled=true}
-function updateStats(){let a=history.filter(p=>p&&p.midi),targeted=a.filter(p=>Number.isFinite(p.targetCents)),c=targeted.length?targeted.map(p=>Math.abs(p.targetCents)):a.map(p=>Math.abs(p.cents));if(!a.length)return;$('statAccuracy').textContent=Math.round(c.filter(v=>v<=25).length/c.length*100)+'%';$('statCents').textContent=(c.reduce((x,y)=>x+y,0)/c.length).toFixed(0)+'¢';let ms=a.map(p=>p.midi);$('statLow').textContent=midiName(Math.round(Math.min(...ms)));$('statHigh').textContent=midiName(Math.round(Math.max(...ms)));let avg=c.reduce((x,y)=>x+y,0)/c.length;$('sessionAdvice').textContent=avg<=20?'Boa aproximação do centro das notas nesta amostra; ouça também os finais das frases.':avg<=35?'Há desvios perceptíveis; repitam as frases em andamento mais lento.':'A amostra oscilou; trabalhem nota por nota, sem aumentar a força vocal.'}
-async function startRecording(){
- if(!stream){$('recordState').textContent='Ligue o microfone antes de iniciar a gravação.';return}
- if(!trackBuffers.instrument){$('recordState').textContent='O instrumental ainda não está carregado. Aguarde o carregamento automático ou escolha um MP3 na lista do TV Box.';setPlayerStatus('Gravação bloqueada: falta o playback instrumental.');return}
- try{
-  const ac=ensurePlayerGraph();if(ac.state==='suspended')await ac.resume();
-  validateLoop();
-  recordChunks=[];
-  // A gravação recebe o mix do playback e o microfone, sem devolver o microfone aos alto-falantes.
-  recordMixDestination=ac.createMediaStreamDestination();
-  // Mixagem de gravação independente: o playback recebe atenuação moderada
-  // e a voz passa por filtro + compressor + ganho de compensação.
-  recordPlaybackGain=ac.createGain();
-  recordPlaybackGain.gain.value=.72;
-  player.compressor.connect(recordPlaybackGain);
-  recordPlaybackGain.connect(recordMixDestination);
-  // Reutiliza a mesma fonte que alimenta o afinador. Em alguns Androids,
-  // criar uma segunda MediaStreamAudioSourceNode para o mesmo stream pode
-  // produzir uma trilha silenciosa no MediaRecorder.
-  const micTrack=stream.getAudioTracks()[0];
-  if(!micTrack||micTrack.readyState!=='live'||!micTrack.enabled||micTrack.muted)throw new Error('O microfone não está entregando áudio. Desligue e ligue o microfone novamente e permita o acesso no navegador.');
-  // Não exigir voz no exato instante do clique: a cantora pode começar a cantar
-  // depois da contagem. Validamos a faixa do microfone, não o volume instantâneo.
-  recordMicSource=source;
-  recordMicFilter=ac.createBiquadFilter();
-  recordMicFilter.type='highpass';
-  recordMicFilter.frequency.value=85;
-  recordMicFilter.Q.value=.707;
-  recordMicCompressor=ac.createDynamicsCompressor();
-  recordMicCompressor.threshold.value=-27;
-  recordMicCompressor.knee.value=18;
-  recordMicCompressor.ratio.value=3.5;
-  recordMicCompressor.attack.value=.008;
-  recordMicCompressor.release.value=.22;
-  recordMicGain=ac.createGain();
-  recordMicGain.gain.value=1.65;
-  recordMicSource.connect(recordMicFilter);
-  recordMicFilter.connect(recordMicCompressor);
-  recordMicCompressor.connect(recordMicGain);
-  recordMicGain.connect(recordMixDestination);
-  const mimeCandidates=['audio/webm;codecs=opus','audio/webm','audio/mp4'];
-  const mimeType=mimeCandidates.find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t));
-  mediaRecorder=new MediaRecorder(recordMixDestination.stream,mimeType?{mimeType}:undefined);
-  mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size)recordChunks.push(e.data)};
-  mediaRecorder.onerror=e=>{console.error('Erro no MediaRecorder:',e.error||e);$('recordState').textContent='Falha durante a gravação. Verifique a permissão do microfone e tente novamente.'};
-  mediaRecorder.onstop=()=>{
-   const type=mediaRecorder.mimeType||'audio/webm';
-   const blob=new Blob(recordChunks,{type}),url=URL.createObjectURL(blob),a=document.createElement('a');
-   a.href=url;a.download='ensaio_mix_'+new Date().toISOString().replace(/[:.]/g,'-')+(type.includes('mp4')?'.mp4':'.webm');a.click();
-   setTimeout(()=>URL.revokeObjectURL(url),10000);
-   try{
-    recordMicGain?.disconnect();recordMicCompressor?.disconnect();recordMicFilter?.disconnect();
-    recordPlaybackGain?.disconnect();recordMixDestination?.stream.getTracks().forEach(t=>t.stop());
-   }catch{}
-   // Não desconectar recordMicSource: é a fonte original do afinador ao vivo.
-   recordMicSource=recordMicGain=recordMicFilter=recordMicCompressor=recordPlaybackGain=recordMixDestination=null;
-   $('recordState').textContent='Gravação finalizada e baixada: voz + playback no mesmo arquivo.';
-   $('recordSyncBadge').textContent='Ensaio salvo neste aparelho';
-  };
-  mediaRecorder.start(250);recording=true;recStart=Date.now();
-  $('recordBtn').disabled=true;$('stopRecord').disabled=false;$('recordSyncBadge').textContent='Gravando voz + playback';
-  $('recordState').textContent='Preparando início sincronizado…';
-  await startPlayback(false);
-  if(!player.playing){if(mediaRecorder.state==='recording')mediaRecorder.stop();recording=false;return}
-  $('recordState').textContent='Gravando voz + playback. Cante normalmente; a gravação já está em andamento.';
- }catch(e){
-  try{if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();}catch{}
-  recording=false;updateRecordAvailability();$('stopRecord').disabled=true;
-  $('recordSyncBadge').textContent='Não iniciado';$('recordState').textContent='Não foi possível iniciar: '+e.message;
- }
-}
-function stopRecording(){
- if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();
- recording=false;stopPlayback(false);
- updateRecordAvailability();$('stopRecord').disabled=true;$('downloadCsv').disabled=!csvRows.length;
- $('recordState').textContent='Finalizando o arquivo de áudio…';
-}
-function downloadCsv(rows,name){let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(';')).join('\n'),blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
-// Harmonia diatônica e verificação de compatibilidade com as notas do acorde escolhidas.
-const major=[0,2,4,5,7,9,11],minor=[0,2,3,5,7,8,10];function scalePitch(root,degree,octave){let s=$('scale').value==='major'?major:minor;let oct=Math.floor(degree/7),d=((degree%7)+7)%7;return 60+root+s[d]+12*(octave+oct)}
-function harmonyFromMidi(midi){let root=+tonic.value,scale=$('scale').value==='major'?major:minor,best={dist:999,degree:0,base:60};for(let oct=-3;oct<=4;oct++)for(let d=0;d<7;d++){let cand=60+root+scale[d]+12*oct,dist=Math.abs(cand-midi);if(dist<best.dist)best={dist,degree:d+7*oct,base:cand}}let step=+$('interval').value*($('direction').value==='1'?1:-1),target=scalePitch(root,best.degree+step,0);return{target,base:best.base,dist:best.dist}}
-function chordPcs(){let root=+chordRoot.value,q=$('chordQuality').value,ints=q==='minor'?[0,3,7]:q==='7'?[0,4,7,10]:q==='maj7'?[0,4,7,11]:q==='dim'?[0,3,6]:[0,4,7];return ints.map(n=>(root+n)%12)}
-let leadMidi=60,targetMidi=64;
-function calcHarmony(setActive=true){leadMidi=+manual.value;let r=harmonyFromMidi(leadMidi);targetMidi=r.target;if(setActive)activeTargetMidi=targetMidi;$('leadDisplay').textContent=midiName(leadMidi);$('targetDisplay').textContent=midiName(targetMidi);let pcs=chordPcs(),fit=pcs.includes(targetMidi%12);$('chordFit').textContent=fit?'Nota do acorde':'Nota da escala';$('chordFit').className=fit?'goodtxt':'warntxt';let intName=$('interval').value==='2'?'terça':'sexta',dir=$('direction').value==='1'?'acima':'abaixo';$('harmonyExplain').textContent=`A nota candidata é ${midiName(targetMidi)} (${intName} diatônica ${dir} de ${midiName(leadMidi)}). ${fit?'Ela pertence ao acorde escolhido.':'Ela não é uma das notas básicas do acorde escolhido; pode funcionar como passagem ou tensão, mas precisa ser testada com o tecladista.'} Toquem o acorde e cantem as duas notas juntas. Se soar estranho ou desconfortável, testem a outra direção ou outro intervalo.`;drawPiano()}
-function drawPiano(){let el=$('pianoKeys');el.innerHTML='';for(let m=60;m<=71;m++){let b=document.createElement('button');b.className='key '+([1,3,6,8,10].includes(m%12)?'black':'');if(m===leadMidi||m===targetMidi)b.classList.add('sel');b.textContent=midiName(m);b.addEventListener('click',()=>playMidi(m));el.appendChild(b)}}
-// Exercício de ouvido com notas
-$('playLessonNote').addEventListener('click',()=>playMidi(+$('lessonNote').value,2));$('playLessonLong').addEventListener('click',()=>playMidi(+$('lessonNote').value,4,.0,.12));$('playFiveTone').addEventListener('click',()=>{let n=+$('lessonNote').value,seq=[0,2,4,5,7,5,4,2,0];seq.forEach((v,i)=>playMidi(n+v,.48,i*.52,.11))});$('playArpeggio').addEventListener('click',()=>{let n=+$('lessonNote').value,seq=[0,4,7,4,0];seq.forEach((v,i)=>playMidi(n+v,.65,i*.7,.11))});
-// Aba harmonia
-$('useDetected').addEventListener('click',()=>{if(latest){manual.value=String(latest.midi);calcHarmony()}});$('calcHarmony').addEventListener('click',()=>calcHarmony());$('playLead').addEventListener('click',()=>playMidi(leadMidi));$('playTarget').addEventListener('click',()=>playMidi(targetMidi));$('playPair').addEventListener('click',playPair);['tonic','scale','manualLead','interval','direction','chordQuality','chordRoot'].forEach(id=>$(id).addEventListener('change',()=>calcHarmony()));
-// Análise de arquivo
-let fileRows=[];$('audioFile').addEventListener('change',e=>{let f=e.target.files[0];$('fileName').textContent=f?`${f.name} · ${(f.size/1048576).toFixed(1)} MB`:'Nenhum arquivo';$('analyzeFile').disabled=!f;$('fileProgress').textContent=''});
-$('analyzeFile').addEventListener('click',async()=>{let f=$('audioFile').files[0];if(!f)return;$('analyzeFile').disabled=true;$('fileProgress').textContent='Lendo áudio...';try{let ac=new(window.AudioContext||window.webkitAudioContext)(),ab=await f.arrayBuffer(),buf=await ac.decodeAudioData(ab),sr=buf.sampleRate,ch=buf.numberOfChannels,d=buf.getChannelData(0),d2=ch>1?buf.getChannelData(1):null,mono=new Float32Array(d.length);for(let i=0;i<d.length;i++)mono[i]=d2?(d[i]+d2[i])*.5:d[i];let rows=[['tempo_s','nota','frequencia_Hz','desvio_cents','clareza']],points=[],valid=[],size=2048,hop=2048;for(let pos=0;pos+size<mono.length;pos+=hop){let frame=mono.slice(pos,pos+size),p=yin(frame,sr);if(p&&p.clarity>.65){let ni=noteInfo(p.freq),time=pos/sr;points.push({midi:ni.midi+ni.cents/100,time});valid.push(ni);rows.push([time.toFixed(2),ni.name,ni.freq.toFixed(2),ni.cents,p.clarity.toFixed(2)])}else points.push(null);if(points.length%80===0){$('fileProgress').textContent=`Analisando ${Math.min(100,Math.round(pos/mono.length*100))}%`;await new Promise(r=>setTimeout(r,0))}}fileRows=rows;drawChart(fileCanvas,fctx,points);if(valid.length){let ms=valid.map(v=>v.midi),lo=Math.min(...ms),hi=Math.max(...ms),stable=valid.filter(v=>Math.abs(v.cents)<=25).length/valid.length*100;$('fileMin').textContent=midiName(lo);$('fileMax').textContent=midiName(hi);$('fileRange').textContent=(hi-lo)+' semitons';$('fileStable').textContent=Math.round(stable)+'%';$('fileReport').textContent=`Detectadas ${valid.length} janelas com frequência fundamental provável. Região observada: ${midiName(lo)} a ${midiName(hi)}. Isto não define toda a extensão vocal nem avalia interpretação. Vibrato, instrumentos e harmônicos podem alterar a detecção.`;$('downloadFileCsv').disabled=false}else $('fileReport').textContent='Não foram detectadas notas estáveis. Tente uma gravação mais limpa e individual.';$('fileProgress').textContent='Análise concluída.';await ac.close()}catch(err){$('fileProgress').textContent='Erro: '+err.message}finally{$('analyzeFile').disabled=false}});
-// Mapa de música e ficha banda
-function getSongMap(){return [...$('songTable').tBodies[0].rows].map(r=>({part:r.cells[0].querySelector('input')?.value||r.cells[0].textContent,...Object.fromEntries([...r.querySelectorAll('input')].map(i=>[i.dataset.k,i.value]))}))}
-function saveSongMap(){localStorage.setItem('estrelinha_songmap',JSON.stringify(getSongMap()));$('mapStatus').textContent='Mapa salvo neste navegador.'}
-function addSongRow(){let r=$('songTable').tBodies[0].insertRow();let part=r.insertCell();let inp=document.createElement('input');inp.placeholder='nome do trecho';inp.value='Trecho novo';part.appendChild(inp);['chord','lead','friend','cue'].forEach(k=>{let c=r.insertCell(),i=document.createElement('input');i.dataset.k=k;c.appendChild(i)});let c=r.insertCell();c.className='no-print';c.innerHTML='<button class="warn delrow">×</button>';}
-$('addSongRow').addEventListener('click',addSongRow);$('saveSongMap').addEventListener('click',saveSongMap);$('songTable').addEventListener('click',e=>{if(e.target.classList.contains('delrow'))e.target.closest('tr').remove()});$('exportSongCsv').addEventListener('click',()=>{let rows=[['parte','acorde','nota_silvane','nota_Segunda voz','entrada'],...getSongMap().map(x=>[x.part,x.chord,x.lead,x.friend,x.cue])];downloadCsv(rows,'mapa_musical.csv')});
-$('saveBand').addEventListener('click',()=>{let d={key:$('bandKey').value,bpm:$('bandBpm').value,meter:$('bandMeter').value,notes:$('bandNotes').value};localStorage.setItem('estrelinha_band',JSON.stringify(d));$('bandStatus').textContent='Ficha da banda salva neste aparelho.'});
-// Metrônomo simples para contagem do ensaio
-let metroTimer=null,metroBeat=0;function metroTick(){let ac=audioContext(),t=ac.currentTime,osc=ac.createOscillator(),gain=ac.createGain(),beats=Math.max(2,Math.min(4,+$('metronomeBeat').value||4));osc.type='sine';osc.frequency.value=metroBeat%beats===0?1150:780;gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(metroBeat%beats===0?.22:.13,t+.006);gain.gain.exponentialRampToValueAtTime(.0001,t+.065);osc.connect(gain);gain.connect(ac.destination);osc.start(t);osc.stop(t+.075);metroBeat++;$('metroCount').textContent='Tempo '+(((metroBeat-1)%beats)+1)+' / '+beats}
-$('metroStart').addEventListener('click',()=>{let bpm=Math.max(40,Math.min(220,+$('metronomeBpm').value||72));$('metronomeBpm').value=bpm;clearInterval(metroTimer);metroBeat=0;metroTick();metroTimer=setInterval(metroTick,60000/bpm);$('metroStart').disabled=true;$('metroStop').disabled=false});$('metroStop').addEventListener('click',()=>{clearInterval(metroTimer);metroTimer=null;$('metroStart').disabled=false;$('metroStop').disabled=true;$('metroCount').textContent='Parado'});
-// Checklist e calendário de ensaio — progresso persistido
-const checkItems=['A segunda voz consegue repetir a melodia principal no ritmo correto.','A voz principal consegue cantar a melodia sem playback.','A tonalidade foi confirmada com teclado/violão.','A banda anotou a sequência de acordes.','A segunda voz aprendeu a primeira nota de apoio isoladamente.','A segunda voz mantém a nota enquanto A voz principal canta outra.','A segunda voz foi testada sobre cada acorde do trecho escolhido.','As entradas e respirações foram combinadas.','O refrão foi cantado junto sem uma voz cobrir a outra.','O final, a última nota e o corte foram ensaiados.','Foi feita uma gravação completa para escuta crítica.','As duas conseguem cantar a versão de palco sem depender de instruções durante a música.'];
-function loadChecks(){try{return JSON.parse(localStorage.getItem('estrelinha_checks')||'{}')}catch{return{}}}function renderChecks(){let state=loadChecks(),box=$('checklist');box.innerHTML='';checkItems.forEach((txt,i)=>{let div=document.createElement('div');div.className='checkrow';let cb=document.createElement('input');cb.type='checkbox';cb.checked=!!state[i];cb.id='chk'+i;cb.addEventListener('change',()=>{let s=loadChecks();s[i]=cb.checked;localStorage.setItem('estrelinha_checks',JSON.stringify(s));updateProgress()});let lab=document.createElement('label');lab.htmlFor=cb.id;lab.textContent=txt;div.append(cb,lab);box.appendChild(div)});updateProgress()}
-function updateProgress(){let s=loadChecks(),n=checkItems.filter((_,i)=>s[i]).length,p=Math.round(n/checkItems.length*100);$('checkCount').textContent=n+'/'+checkItems.length;$('checkBar').style.width=p+'%';$('doneCount').textContent=n+'/'+checkItems.length;$('overallBar').style.width=p+'%';$('percentDone').textContent=p+'%';$('savedState').textContent='Progresso salvo · '+p+'%'}$('resetChecks').addEventListener('click',()=>{if(confirm('Zerar todas as etapas marcadas?')){localStorage.removeItem('estrelinha_checks');renderChecks()}});
-const days=[['Etapa 1','Diagnóstico','Grave cada voz separadamente; reconheça a melodia e verifique a região confortável.'],['Etapa 2','Ouvido e imitação','A segunda voz repete frases curtas da melodia principal e treina notas isoladas.'],['Etapa 3','Tom e acordes','Confirme tonalidade e sequência de acordes com a banda; preencha o mapa musical.'],['Etapa 4','Primeiras harmonias','Experimente opções em frases curtas; mantenha somente as notas que combinarem com o acorde.'],['Etapa 5','Refrão','Treine a segunda voz por frase; grave e ajuste entradas.'],['Etapa 6','Estrofes e transições','Defina entradas, pausas, respirações e finais de frase.'],['Etapa 7','Banda em conjunto','Ensaie com a banda em volume moderado; mantenha as vozes audíveis.'],['Etapa 8','Ensaio completo','Cante a música inteira; corrija pontos críticos e o final.'],['Etapa 9','Simulação','Faça uma passagem completa com microfones, posições e sinais.'],['Etapa 10','Revisão final','Faça ensaio curto, aquecimento leve, hidratação e descanso vocal.']];
-function renderCalendar(){let root=$('calendarTasks');root.innerHTML='';days.forEach((d,i)=>{let div=document.createElement('div');div.className='checkrow';let cb=document.createElement('input');cb.type='checkbox';cb.id='day'+i;let st=JSON.parse(localStorage.getItem('estrelinha_days')||'{}');cb.checked=!!st[i];cb.addEventListener('change',()=>{let x=JSON.parse(localStorage.getItem('estrelinha_days')||'{}');x[i]=cb.checked;localStorage.setItem('estrelinha_days',JSON.stringify(x));let count=days.filter((_,j)=>x[j]).length;$('planProgress').textContent=count+'/'+days.length+' dias concluídos.'});let lab=document.createElement('label');lab.htmlFor=cb.id;lab.innerHTML='<b>'+d[0]+' · '+d[1]+'</b><br><span class="small muted">'+d[2]+'</span>';div.append(cb,lab);root.appendChild(div)})}renderChecks();renderCalendar();window.addEventListener('storage',()=>{renderChecks();renderCalendar();try{let m=JSON.parse(localStorage.getItem('estrelinha_songmap')||'null');if(m&&m.length){let body=$('songTable').tBodies[0];body.innerHTML='';m.forEach(x=>{let r=body.insertRow(),c=r.insertCell();c.textContent=x.part;['chord','lead','friend','cue'].forEach(k=>{let q=r.insertCell(),i=document.createElement('input');i.dataset.k=k;i.value=x[k]||'';q.appendChild(i)});let a=r.insertCell();a.className='no-print';a.innerHTML='<button class="warn delrow">×</button>'})}}catch(e){}});
-// Restaura dados locais, se existirem
-try{let m=JSON.parse(localStorage.getItem('estrelinha_songmap')||'null');if(m&&m.length){let body=$('songTable').tBodies[0];body.innerHTML='';m.forEach(x=>{let r=body.insertRow();let c=r.insertCell();c.textContent=x.part;['chord','lead','friend','cue'].forEach(k=>{let q=r.insertCell(),i=document.createElement('input');i.dataset.k=k;i.value=x[k]||'';q.appendChild(i)});let a=r.insertCell();a.className='no-print';a.innerHTML='<button class="warn delrow">×</button>'})}let b=JSON.parse(localStorage.getItem('estrelinha_band')||'null');if(b){$('bandKey').value=b.key||'';$('bandBpm').value=b.bpm||'';$('bandMeter').value=b.meter||'';$('bandNotes').value=b.notes||''}}catch(e){}
+<div class="app-container hidden" id="trainingRoom">
+  <div class="header">
+    <div class="estrelinha-avatar" style="width:80px; height:80px; font-size:40px;">⭐</div>
+    <h2 id="roomTitle">Treinamento</h2>
+    <p id="roomSubtitle">Carregando faixas...</p>
+  </div>
 
-// Mapa de eventos musicais: somente notas conferidas entram na avaliação temporal.
-function createMusicalEventRow(ev={}){const body=$('musicalEventTable').tBodies[0],r=body.insertRow();const fields=[['section',ev.section||''],['start',ev.start??0],['duration',ev.duration??1],['leadMidi',ev.leadMidi??''],['harmonyMidi',ev.harmonyMidi??''],['syllable',ev.syllable||''],['chord',ev.chord||'']];fields.forEach(([k,v],idx)=>{const c=r.insertCell(),i=document.createElement('input');i.dataset.field=k;i.value=v;if(['start','duration','leadMidi','harmonyMidi'].includes(k))i.type='number';if(k==='start'||k==='duration'){i.step='0.01';i.min='0'}if(k==='leadMidi'||k==='harmonyMidi'){i.step='1';i.min='24';i.max='96'}if(k==='section')i.placeholder='Refrão / frase 1';if(k==='syllable')i.placeholder='sílaba / palavra';if(k==='chord')i.placeholder='acorde conferido';c.appendChild(i)});const verified=r.insertCell(),cb=document.createElement('input');cb.type='checkbox';cb.dataset.field='verified';cb.checked=!!ev.verified;verified.appendChild(cb);const act=r.insertCell();act.className='no-print';const del=document.createElement('button');del.type='button';del.className='warn';del.textContent='×';del.setAttribute('aria-label','Remover evento');del.addEventListener('click',()=>r.remove());act.appendChild(del)}
-function readMusicalEvents(){return [...$('musicalEventTable').tBodies[0].rows].map(r=>{const o={};r.querySelectorAll('[data-field]').forEach(i=>{const k=i.dataset.field;o[k]=i.type==='checkbox'?i.checked:(i.type==='number'?(i.value===''?null:Number(i.value)):i.value.trim())});return o}).filter(e=>e.section||e.start!==null||e.leadMidi!==null||e.harmonyMidi!==null)}
-function renderMusicalEvents(events){const body=$('musicalEventTable').tBodies[0];body.replaceChildren();events.forEach(e=>createMusicalEventRow(e));updateMusicalEventStatus()}
-window.renderEstrelinhaEvents=renderMusicalEvents;
-function updateMusicalEventStatus(){const events=readMusicalEvents(),valid=events.filter(e=>e.verified&&Number.isFinite(e.start)&&Number.isFinite(e.duration)&&e.start>=0&&e.duration>0&&(Number.isInteger(e.leadMidi)&&e.leadMidi>=24&&e.leadMidi<=96||Number.isInteger(e.harmonyMidi)&&e.harmonyMidi>=24&&e.harmonyMidi<=96));$('musicalEventStatus').textContent=`${events.length} evento(s) cadastrados · ${valid.length} evento(s) conferidos e elegíveis para avaliação.`}
-function saveMusicalEvents(){const events=readMusicalEvents();localStorage.setItem('estrelinha_events',JSON.stringify(events));updateMusicalEventStatus();setPlayerStatus('Mapa musical salvo neste aparelho. Ele não foi publicado para outras contas.',true)}
-$('addMusicalEvent').addEventListener('click',()=>createMusicalEventRow());$('musicalEventTable').addEventListener('input',updateMusicalEventStatus);$('musicalEventTable').addEventListener('change',updateMusicalEventStatus);$('saveMusicalEvents').addEventListener('click',saveMusicalEvents);
-$('exportMusicalEvents').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({schemaVersion:1,songId:'estrelinha',title:window.__AV_SONG_TITLE||'Música selecionada',events:readMusicalEvents()},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mapa-musical.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000)});
-$('importMusicalEvents').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{const data=JSON.parse(await f.text());const events=Array.isArray(data)?data:data.events;if(!Array.isArray(events))throw new Error('JSON não contém uma lista events.');renderMusicalEvents(events);saveMusicalEvents();}catch(err){$('musicalEventStatus').textContent='Falha ao importar: '+err.message}finally{e.target.value=''}});
-try{const stored=JSON.parse(localStorage.getItem('estrelinha_events')||'[]');if(Array.isArray(stored))renderMusicalEvents(stored)}catch{}
-$('publishMusicalEvents').addEventListener('click',async()=>{try{const events=readMusicalEvents();if(!events.length)throw new Error('Cadastre os eventos musicais antes de publicar.');if(events.some(e=>!e.verified||!Number.isFinite(e.start)||!Number.isFinite(e.duration)||e.start<0||e.duration<=0||!(Number.isInteger(e.leadMidi)&&e.leadMidi>=24&&e.leadMidi<=96||Number.isInteger(e.harmonyMidi)&&e.harmonyMidi>=24&&e.harmonyMidi<=96)))throw new Error('Todos os eventos precisam ter início, duração, pelo menos uma nota válida e confirmação musical.');if(!window.estrelinhaLibrary)throw new Error('A integração da biblioteca Firebase ainda não foi inicializada.');await window.estrelinhaLibrary.publish(events);localStorage.setItem('estrelinha_events',JSON.stringify(events));$('libraryCloudStatus').textContent='Mapa da música publicado na nuvem.';$('musicalEventStatus').textContent=`${events.length} eventos publicados e marcados como conferidos.`}catch(e){$('libraryCloudStatus').textContent='Não foi possível publicar: '+e.message;$('musicalEventStatus').textContent='Publicação bloqueada: '+e.message}});
-$('loadMusicalEvents').addEventListener('click',async()=>{try{if(!window.estrelinhaLibrary)throw new Error('A integração da biblioteca Firebase ainda não foi inicializada.');const events=await window.estrelinhaLibrary.load();renderMusicalEvents(events);localStorage.setItem('estrelinha_events',JSON.stringify(events));$('libraryCloudStatus').textContent='Mapa da música carregado da nuvem.'}catch(e){$('libraryCloudStatus').textContent='Não foi possível carregar: '+e.message}});
+  <div class="training-room">
+    <div class="pitch-area" id="pitchArea">
+      <div style="font-size:12px; color:#b2c1d8; margin-bottom:5px;">NOTA ESPERADA</div>
+      <div class="target-note" id="expectedNote">—</div>
+      <div class="sung-note" id="sungNote">Aguardando voz...</div>
+    </div>
 
-// Botões e estado inicial
-$('startMic').addEventListener('click',startMic);$('stopMic').addEventListener('click',stopMic);
-$('micQuickStart').addEventListener('click',()=>{document.querySelector('[data-tab="live"]').click();startMic()});
-$('micQuickStop').addEventListener('click',stopMic);$('recordBtn').addEventListener('click',async()=>{if(!trackBuffers.instrument){$('recordState').textContent='Escolha primeiro o playback na biblioteca do servidor.';return}if(!stream)await startMic();if(stream)await startRecording();});$('stopRecord').addEventListener('click',stopRecording);$('downloadCsv').addEventListener('click',()=>downloadCsv(csvRows,'analise_ao_vivo.csv'));$('downloadFileCsv').addEventListener('click',()=>downloadCsv(fileRows,'analise_gravacao.csv'));$('lessonNote').addEventListener('change',()=>{});calcHarmony(false);drawLive();drawChart(fileCanvas,fctx,[]);window.addEventListener('beforeunload',()=>{if(stream)stream.getTracks().forEach(t=>t.stop());clearInterval(metroTimer)});
-})();
-</script>
+    <div style="text-align:center; color:var(--muted); font-size:14px; font-variant-numeric: tabular-nums;" id="timeDisplay">00:00 / 00:00</div>
+    
+    <div class="playback-controls">
+      <button id="btnBack">← Voltar</button>
+      <button id="btnPlay" class="primary" disabled>▶ Iniciar</button>
+      <button id="btnStop" disabled>■ Parar</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
-import {auth,db} from './firebase-config.js';
-import {onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,deleteUser,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,sendPasswordResetEmail,signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
-import {doc,getDoc,getDocs,collection,setDoc,updateDoc,serverTimestamp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-const $=id=>document.getElementById(id),gate=$('authGate'),main=$('appMain'),msg=$('authMessage');
-let currentUser=null,activeSong=null,assignedSongs=[],isAdmin=false,hydrating=false,saveTimer=null,registering=false;
-const CLOUD_KEYS=['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events'];
-function say(t){if(msg)msg.textContent=t}
-function setContext(uid,songId,songTitle=''){window.__AV_USER_UID=uid||'anon';window.__AV_SONG_ID=songId||'none';window.__AV_SONG_TITLE=songTitle||'Música selecionada';try{sessionStorage.setItem('av3-context',JSON.stringify({uid:window.__AV_USER_UID,songId:window.__AV_SONG_ID,title:window.__AV_SONG_TITLE}))}catch{}}
-function localPayload(){const o={};CLOUD_KEYS.forEach(k=>{const v=localStorage.getItem(k);if(v!==null)o[k]=v});return o}
-function applyPayload(o){if(!o)return;CLOUD_KEYS.forEach(k=>{if(typeof o[k]==='string')localStorage.setItem(k,o[k])})}
-async function syncCloud(){if(!currentUser||!activeSong||hydrating||isAdmin)return;clearTimeout(saveTimer);saveTimer=setTimeout(async()=>{try{$('cloudState').textContent='Sincronizando…';await setDoc(doc(db,'usuarios',currentUser.uid,'musicas',activeSong.id,'progresso','app'),{...localPayload(),updatedAt:serverTimestamp()},{merge:true});$('cloudState').textContent='Progresso sincronizado'}catch(e){$('cloudState').textContent='Erro ao sincronizar';console.error('Firestore:',e)}},650)}
-const originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;
-Storage.prototype.setItem=function(k,v){originalSet.call(this,k,v);if(this===localStorage&&CLOUD_KEYS.includes(String(k)))syncCloud()};
-Storage.prototype.removeItem=function(k){originalRemove.call(this,k);if(this===localStorage&&CLOUD_KEYS.includes(String(k)))syncCloud()};
-function authError(e){const map={'auth/invalid-credential':'E-mail ou senha incorretos.','auth/user-not-found':'Conta não encontrada.','auth/wrong-password':'Senha incorreta.','auth/email-already-in-use':'Este e-mail já possui cadastro.','auth/weak-password':'A senha deve ter pelo menos 6 caracteres.','auth/unauthorized-domain':'Adicione este domínio aos domínios autorizados do Firebase Authentication.','auth/operation-not-allowed':'Ative este método de login no Firebase Authentication.','auth/network-request-failed':'Falha de conexão. Verifique a internet.'};return map[e.code]||('Não foi possível autenticar: '+(e.message||e.code||'erro desconhecido'))}
-function showLibrary(songs){const sel=$('studentSongSelect');sel.replaceChildren();songs.forEach(song=>{const op=new Option(song.titulo||song.id,song.id);sel.add(op)});sel.disabled=!songs.length;if(!songs.length){sel.add(new Option('Nenhuma música cadastrada/liberada',''));$('libraryCloudStatus').textContent=isAdmin?'Biblioteca vazia':'Sem músicas atribuídas';$('currentSongInfo').textContent=isAdmin?'Você está como administrador. Cadastre a primeira música em Administração e depois publique para as alunas.':'Peça ao administrador um convite com pelo menos uma música.';if(isAdmin){const link=document.createElement('a');link.href='/admin.html';link.textContent='Abrir administração e cadastrar a primeira música';link.style.cssText='display:inline-flex;margin-top:8px;color:#8ce9e1;font-weight:800';$('currentSongInfo').append(document.createElement('br'),link)}return}const requested=new URLSearchParams(location.search).get('musica');let selected=songs.find(x=>x.id===requested)||songs.find(x=>x.id===localStorage.getItem('av3:lastSong:'+currentUser.uid))||songs[0];sel.value=selected.id;loadSong(selected)}
-async function loadSong(song){if(!song||!currentUser)return;activeSong=song;setContext(currentUser.uid,song.id,song.titulo);window.clearAVTracks?.();localStorage.setItem('av3:lastSong:'+currentUser.uid,song.id);$('teacherSongTitle').textContent=song.titulo||'Treino vocal';$('currentSongInfo').textContent=[song.artista,song.tonalidade?'Tom: '+song.tonalidade:'Tom não informado',song.bpm?song.bpm+' BPM':''].filter(Boolean).join(' · ')||'Música liberada para treino';$('libraryCloudStatus').textContent='Música selecionada';$('trainingModeText').textContent='Escolha uma das aulas. Playback e referências desta música são carregados da biblioteca.';hydrating=true;try{const progress=await getDoc(doc(db,'usuarios',currentUser.uid,'musicas',song.id,'progresso','app'));if(progress.exists())applyPayload(progress.data());const lib=await getDoc(doc(db,'bibliotecaMusical',song.id));if(lib.exists()&&Array.isArray(lib.data().events))localStorage.setItem('estrelinha_events',JSON.stringify(lib.data().events));else localStorage.setItem('estrelinha_events','[]');}catch(e){console.warn('Não foi possível carregar progresso/mapa:',e.message)}finally{hydrating=false}
- try{
-  const t=song.trackUrls||{},p=song.trackPaths||{};
-  const savedLocal=(()=>{try{return localStorage.getItem('av3:serverPlayback:'+song.id)||''}catch{return ''}})();
-  const storedInstrument=t.instrument||song.playbackUrl||'';
-  const storedPath=p.instrument||song.playbackPath||'';
-  let instrument=window.resolveStoredAudioUrl(storedInstrument,storedPath);
-  $('playerStatus').textContent='Carregando o playback cadastrado e consultando a biblioteca do TV Box…';
-  let loadedInstrument=false;
-  if(instrument){try{await window.loadAVTrackFromUrl('instrument',instrument,song.titulo+' · playback cadastrado');loadedInstrument=true}catch(e){console.warn('URL cadastrada falhou; tentando biblioteca do TV Box:',e.message)}}
-  const lead=window.resolveStoredAudioUrl(t.lead||song.leadUrl,p.lead||song.leadPath);
-  const harmony=window.resolveStoredAudioUrl(t.harmony||song.harmonyUrl,p.harmony||song.harmonyPath);
-  for(const [key,url,label] of [['lead',lead,'Voz principal de referência'],['harmony',harmony,'Segunda voz de referência']]){
-   if(url){try{await window.loadAVTrackFromUrl(key,url,label)}catch(e){console.warn('Faixa de referência não carregada:',key,e.message)}}
-  }
-  const files=await fetchServerAudioList();
-  const select=$('serverAudioSelect');
-  let candidate='';
-  const known=audioFilename(storedInstrument||storedPath);
-  if(known&&files.some(f=>f.name===known))candidate=known;
-  if(!candidate&&savedLocal&&files.some(f=>f.name===savedLocal))candidate=savedLocal;
-  if(!candidate){
-   const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'');
-   const title=normalize(song.titulo);
-   const matches=files.filter(f=>title&&normalize(f.name).includes(title));
-   if(matches.length===1)candidate=matches[0].name;
-  }
-  if(!loadedInstrument&&candidate){select.value=candidate;await loadSelectedServerInstrument();loadedInstrument=!!trackBuffers.instrument}
-  else if(!loadedInstrument&&files.length===1){select.value=files[0].name;await loadSelectedServerInstrument();loadedInstrument=!!trackBuffers.instrument}
-  else if(!loadedInstrument&&files.length>1){$('playerStatus').textContent='Encontramos vários MP3 no TV Box. Selecione o instrumental correto na lista abaixo; não vamos escolher um arquivo aleatório.';$('serverAudioStatus').textContent='Selecione o arquivo correspondente ao playback desta música.'}
-  else if(loadedInstrument){$('playerStatus').textContent='Playback da música carregado e pronto para ensaio.';$('recordState').textContent='Playback pronto · ligue o microfone e grave sem reenviar o áudio.'}
-  else if(!files.length){$('playerStatus').textContent='Nenhum playback foi localizado. Confira se o MP3 foi enviado ao TV Box no painel Administração.';$('recordState').textContent='Aguardando playback cadastrado no servidor.'}
-  updateRecordAvailability();
- }catch(e){
-  console.warn('Faixas da música:',e.message);
-  $('playerStatus').textContent='Não foi possível carregar o playback do servidor: '+e.message;
-  $('recordState').textContent='Falha ao preparar playback. Consulte a mensagem acima.';
- }
+import { auth, db } from './firebase-config.js';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
- document.getElementById('checklist')?.replaceChildren();document.getElementById('calendarTasks')?.replaceChildren();window.dispatchEvent(new Event('storage'));}
-async function activateInviteForUser(user,code,name=''){
- const normalized=(code||'').trim().toUpperCase();if(!normalized)throw new Error('Informe o ID do convite enviado pelo administrador.');
- const inviteRef=doc(db,'convites',normalized),inv=await getDoc(inviteRef);if(!inv.exists())throw new Error('ID do convite não encontrado ou sem permissão.');const v=inv.data();
- if(v.status!=='ativo'||!v.expiraEm||v.expiraEm.toDate()<=new Date())throw new Error('Convite expirado ou já utilizado.');
- const email=(user.email||'').toLowerCase();if(v.email&&v.email.toLowerCase()!==email)throw new Error('Este convite foi emitido para outro e-mail.');
- const ids=Array.isArray(v.musicaIds)?v.musicaIds:[];if(!ids.length)throw new Error('Este convite não possui músicas liberadas.');
- await updateDoc(inviteRef,{status:'usado',uid:user.uid,usadoEm:serverTimestamp()});
- await setDoc(doc(db,'usuarios',user.uid,'perfil','dados'),{nome:name||v.nome||user.displayName||'Cantora',email,role:'aluna',inviteCode:normalized,musicaIds:ids,createdAt:serverTimestamp()});
- return ids;
+const $ = id => document.getElementById(id);
+
+// --- ESTADO GLOBAL ---
+let audioCtx = null;
+let tracks = { instrument: null, lead: null, harmony: null };
+let sources = [];
+let gains = {};
+let isPlaying = false;
+let startTime = 0;
+let offset = 0;
+let duration = 0;
+let animationFrameId = null;
+let currentMode = null;
+let mapEvents = []; 
+
+// --- AUTENTICAÇÃO ---
+$('loginBtn').addEventListener('click', async () => {
+  try {
+    await signInWithEmailAndPassword(auth, $('emailInput').value, $('passInput').value);
+  } catch(e) {
+    $('authMsg').textContent = "Erro ao logar. Verifique credenciais.";
+  }
+});
+
+$('logoutBtn').addEventListener('click', () => signOut(auth));
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    $('authScreen').classList.add('hidden');
+    $('mainMenu').classList.remove('hidden');
+    $('logoutBtn').classList.remove('hidden');
+    
+    const isAdmin = (user.email === 'andersonsieklicki@gmail.com');
+    if (isAdmin) $('adminLink').classList.remove('hidden');
+    
+    // Na Fase 3 o Firestore trará os links de áudio. Para a Fase 1/2, usamos mocks ou caminhos locais definidos no Admin.
+    $('userName').textContent = user.displayName || user.email.split('@')[0];
+    
+    // Pré-carrega o mapa da música Estrelinha
+    try {
+      const mapSnap = await getDoc(doc(db, 'bibliotecaMusical', 'estrelinha'));
+      if(mapSnap.exists() && mapSnap.data().events) mapEvents = mapSnap.data().events;
+    } catch(e) {}
+
+  } else {
+    $('authScreen').classList.remove('hidden');
+    $('mainMenu').classList.add('hidden');
+    $('logoutBtn').classList.add('hidden');
+    $('adminLink').classList.add('hidden');
+  }
+});
+
+// --- MOTOR DE ÁUDIO ---
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    gains.instrument = audioCtx.createGain();
+    gains.lead = audioCtx.createGain();
+    gains.harmony = audioCtx.createGain();
+    const compressor = audioCtx.createDynamicsCompressor();
+    
+    gains.instrument.connect(compressor);
+    gains.lead.connect(compressor);
+    gains.harmony.connect(compressor);
+    compressor.connect(audioCtx.destination);
+  }
 }
-async function enter(user){if(registering)return;currentUser=user;gate.style.display='none';main.classList.remove('appLocked');$('savedState').textContent='Conta: '+(user.email||user.displayName||'cantora');$('cloudState').textContent='Validando permissões…';
- try{const adminSnap=await getDoc(doc(db,'admins',user.uid));isAdmin=(String(user.email||'').toLowerCase()==='andersonsieklicki@gmail.com'&&user.emailVerified===true)||(adminSnap.exists()&&adminSnap.data().ativo===true);let songs=[];if(isAdmin){$('adminLink').classList.remove('hidden');const snap=await getDocs(collection(db,'musicas'));songs=snap.docs.map(d=>({id:d.id,...d.data()}));}else{$('adminLink').classList.add('hidden');let profile=await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));if(!profile.exists()){const code=$('inviteCodeInput').value.trim()||new URLSearchParams(location.search).get('convite')||'';try{await activateInviteForUser(user,code,$('registerName').value.trim());profile=await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));}catch(invErr){await signOut(auth);gate.style.display='grid';main.classList.add('appLocked');say(invErr.message||'Conta sem perfil autorizado. Solicite um convite individual.');return}}const ids=Array.isArray(profile.data().musicaIds)?profile.data().musicaIds:[];if(!ids.length)throw new Error('Seu perfil ainda não tem músicas atribuídas.');const results=await Promise.all(ids.map(id=>getDoc(doc(db,'musicas',id))));songs=results.filter(x=>x.exists()&&x.data().publicada===true).map(x=>({id:x.id,...x.data()}));}
- assignedSongs=songs;showLibrary(songs);$('cloudState').textContent='Biblioteca carregada';window.__AV_IS_ADMIN=isAdmin;window.dispatchEvent(new Event('av3-auth-state'));
- }catch(e){console.error('Acesso:',e);await signOut(auth);gate.style.display='grid';main.classList.add('appLocked');say('Não foi possível validar seu acesso: '+e.message)}}
-// A troca da música atualiza o namespace e hidrata outro progresso. Não mistura músicas.
-$('studentSongSelect').addEventListener('change',()=>{const s=assignedSongs.find(x=>x.id===$('studentSongSelect').value);if(s)loadSong(s)});
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();if(registering)return;$('emailLoginBtn').disabled=true;try{await signInWithEmailAndPassword(auth,$('loginEmail').value.trim(),$('loginPassword').value)}catch(err){say(authError(err))}finally{$('emailLoginBtn').disabled=false}});
-$('registerBtn').addEventListener('click',async()=>{const fields=$('registerFields');if(fields.classList.contains('hidden')){fields.classList.remove('hidden');$('inviteCodeInput').required=true;$('registerBtn').textContent='Confirmar cadastro com convite';say('Informe seu nome, e-mail, senha e o ID individual enviado pelo administrador.');return}const email=$('loginEmail').value.trim().toLowerCase(),password=$('loginPassword').value,name=$('registerName').value.trim(),code=$('inviteCodeInput').value.trim().toUpperCase();if(!name||!email||password.length<6||!code){say('Preencha nome, e-mail, senha com pelo menos 6 caracteres e ID do convite.');return}registering=true;$('registerBtn').disabled=true;try{const credential=await createUserWithEmailAndPassword(auth,email,password);try{await activateInviteForUser(credential.user,code,name);registering=false;await enter(credential.user);say('Cadastro concluído. Sua biblioteca já está liberada.')}catch(inviteError){try{await deleteUser(credential.user)}catch{}throw inviteError}}catch(err){registering=false;say(authError(err));if(auth.currentUser)await signOut(auth)}finally{$('registerBtn').disabled=false}});
-$('googleLoginBtn').addEventListener('click',async()=>{const btn=$('googleLoginBtn'),provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});btn.disabled=true;say('Abrindo autenticação Google…');try{await signInWithPopup(auth,provider)}catch(e){if(['auth/popup-blocked','auth/cancelled-popup-request','auth/popup-closed-by-user'].includes(e.code)){try{await signInWithRedirect(auth,provider)}catch(err){say(authError(err));btn.disabled=false}}else{say(authError(e));btn.disabled=false}}});
-getRedirectResult(auth).catch(e=>{console.error('Retorno Google:',e);say(authError(e))});
-$('resetPasswordBtn').addEventListener('click',async()=>{const email=$('loginEmail').value.trim();if(!email){say('Digite seu e-mail para receber o link de redefinição.');return}try{await sendPasswordResetEmail(auth,email);say('E-mail de redefinição enviado. Verifique sua caixa de entrada.')}catch(e){say(authError(e))}});
-$('logoutBtn').addEventListener('click',async()=>{try{await signOut(auth)}catch(e){alert(authError(e))}});
-window.estrelinhaLibrary={async publish(events){if(!currentUser||!isAdmin||!activeSong)throw new Error('Somente administrador autenticado pode publicar o mapa.');await setDoc(doc(db,'bibliotecaMusical',activeSong.id),{schemaVersion:1,songId:activeSong.id,title:activeSong.titulo,events,updatedAt:serverTimestamp(),updatedBy:currentUser.uid},{merge:true})},async load(){if(!currentUser||!activeSong)throw new Error('Selecione uma música.');const snap=await getDoc(doc(db,'bibliotecaMusical',activeSong.id));if(!snap.exists())throw new Error('Ainda não há mapa musical publicado para esta música.');return snap.data().events||[]}};
-$('studentSongSelect').addEventListener('change',()=>{$('playerStatus').textContent='Música alterada. Faixas, mapa e progresso foram isolados por música.'});
-try{await getRedirectResult(auth)}catch(e){say(authError(e))}
-const codeFromUrl=new URLSearchParams(location.search).get('convite');if(codeFromUrl){$('registerFields').classList.remove('hidden');$('inviteCodeInput').value=codeFromUrl.toUpperCase();$('registerBtn').textContent='Confirmar cadastro com convite';}
-onAuthStateChanged(auth,user=>{if(registering)return;if(user)enter(user);else{currentUser=null;activeSong=null;isAdmin=false;setContext('anon','none');$('adminLink').classList.add('hidden');main.classList.add('appLocked');gate.style.display='grid';$('savedState').textContent='Aguardando login';$('cloudState').textContent='Nuvem não conectada'}});
-</script>
 
-<script>
-(()=>{const installBtn=document.getElementById('installApp');let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(installBtn)installBtn.hidden=false});installBtn?.addEventListener('click',async()=>{if(!deferredPrompt){alert('Use o menu do navegador e escolha Instalar aplicativo ou Adicionar à tela inicial.');return}deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.hidden=true});window.addEventListener('appinstalled',()=>{if(installBtn)installBtn.hidden=true});if('serviceWorker'in navigator&&/^https?:$/.test(location.protocol))window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(err=>console.warn('PWA indisponível:',err)));})();
-</script>
+async function fetchAudio(url) {
+  const res = await fetch(url);
+  const arrayBuffer = await res.arrayBuffer();
+  return await audioCtx.decodeAudioData(arrayBuffer);
+}
 
-<script>
-(()=>{
-'use strict';
-const $=id=>document.getElementById(id);
-function initBankLayout(){
- const main=$('appMain'); if(!main||$('avBottomNav'))return;
- const hero=main.querySelector(':scope > .hero');
- const top=main.querySelector(':scope > .topline');
- const home=document.createElement('section');home.id='avScreenHome';home.className='av-screen';
- const music=document.createElement('section');music.id='avScreenMusic';music.className='av-screen hidden';
- const train=document.createElement('section');train.id='avScreenTrain';train.className='av-screen hidden';
- const progress=document.createElement('section');progress.id='avScreenProgress';progress.className='av-screen hidden';
- const pages=[home,music,train,progress];
- if(top)top.after(...pages);else hero.after(...pages);
- const move=(id,parent)=>{const el=$(id);if(el)parent.append(el)};
- const teacher=main.querySelector('.teacherHero'), actions=main.querySelector('.teacherActions'), guidance=$('teacherGuidance');
- if(teacher)home.append(teacher);
- const wizard=document.createElement('div');wizard.className='av-wizard';wizard.id='avWizard';
- wizard.innerHTML=`
- <div class="av-wizard-head"><div><h2>Seu treino, por etapas</h2><p>Escolha a música, defina o objetivo e comece.</p></div><span class="tag">GUIADO</span></div>
- <div class="av-stepper"><span class="done" id="avStep1Bar"></span><span id="avStep2Bar"></span><span id="avStep3Bar"></span><span id="avStep4Bar"></span></div>
- <div class="av-step"><div class="av-step-number">1</div><div class="av-step-body"><h3>Escolha a música</h3><p>A música define o playback, as notas de referência e seu histórico.</p><div class="av-selected-song" id="avHomeSongName">Nenhuma música selecionada</div><button class="av-step-button primary" id="avChooseSong" type="button">🎵 Abrir minha biblioteca</button></div></div>
- <div class="av-step"><div class="av-step-number">2</div><div class="av-step-body"><h3>O que você deseja treinar?</h3><p>Escolha a modalidade da sessão.</p><div id="avPurposeMount"></div></div></div>
- <div class="av-step"><div class="av-step-number">3</div><div class="av-step-body"><h3>Qual habilidade será trabalhada?</h3><p>O foco define o que o professor vai observar e orientar.</p><select id="avFocus" class="av-focus"><option value="pitch">Afinação e precisão das notas</option><option value="rhythm">Ritmo, tempo e entradas</option><option value="breath">Respiração, apoio e dicção</option><option value="harmony">Independência da segunda voz</option><option value="blend">Equilíbrio e encaixe das vozes</option></select><div id="avFocusInfo" class="av-objective-info"></div></div></div>
- <button id="avStartSession" type="button" class="av-start">COMEÇAR MEU TREINO</button>
- <p class="tiny muted" id="avWizardStatus" style="text-align:center;margin:8px 0 0">Passo 1 de 4 · selecione uma música.</p>`;
- home.append(wizard);
- if(actions){$('avPurposeMount').append(actions)}
- if(guidance){guidance.classList.add('hidden');home.append(guidance)}
- const legacyHome=$('tab-home');if(legacyHome)home.append(legacyHome);
- // Screen Música
- move('songPicker',music);move('playbackPanel',music);
- const playerTitle=document.createElement('div');playerTitle.className='av-page-title';playerTitle.innerHTML='<div><h2>Biblioteca e sala de ensaio</h2><p>Selecione, ouça e ajuste as faixas desta música.</p></div><span class="tag">PASSO 1</span>';music.prepend(playerTitle);
- // Screen Treino, com um módulo por vez.
- const trainTitle=document.createElement('div');trainTitle.className='av-page-title';trainTitle.innerHTML='<div><h2>Área de treinamento</h2><p>Abra somente a ferramenta necessária para esta sessão.</p></div><span class="tag">PASSOS 2–3</span>';train.append(trainTitle);
- const moduleGrid=document.createElement('div');moduleGrid.className='av-module-grid';moduleGrid.id='avModuleGrid';
- const moduleItems=[['lesson','📘','Aprender do zero','Exercícios guiados e técnica básica'],['live','🎙️','Afinador ao vivo','Precisão, frequência e desvio em cents'],['harmony','🎶','Segunda voz','Harmonia e independência vocal'],['band','🎸','Guia da banda','Tom, acordes, entradas e final']];
- moduleItems.forEach(([id,icon,title,desc])=>{const b=document.createElement('button');b.className='av-module';b.dataset.avModule=id;b.innerHTML=`<strong>${icon} ${title}</strong><span>${desc}</span>`;moduleGrid.append(b)});train.append(moduleGrid);
- const trainContent=document.createElement('div');trainContent.className='av-section-content';trainContent.id='avTrainContent';train.append(trainContent);
- ['tab-lesson','tab-live','tab-harmony','tab-band'].forEach(id=>move(id,trainContent));
- // Screen Evolução, um painel por vez.
- const progTitle=document.createElement('div');progTitle.className='av-page-title';progTitle.innerHTML='<div><h2>Minha evolução</h2><p>Revise gravações, referências e etapas concluídas.</p></div><span class="tag">PROGRESSO</span>';progress.append(progTitle);
- const progressGrid=document.createElement('div');progressGrid.className='av-progress-grid';progressGrid.id='avProgressGrid';
- const progressItems=[['recordings','▶','Gravações','Ouça suas sessões'],['songmap','🎼','Mapa musical','Notas e trechos validados'],['plan','📅','Plano de ensaio','Organize sua rotina'],['check','✓','Avaliação','Acompanhe o que já domina']];
- progressItems.forEach(([id,icon,title,desc])=>{const b=document.createElement('button');b.className='av-progress-action';b.dataset.avProgress=id;b.innerHTML=`<strong>${icon} ${title}</strong><span>${desc}</span>`;progressGrid.append(b)});progress.append(progressGrid);
- const progressContent=document.createElement('div');progressContent.className='av-section-content';progressContent.id='avProgressContent';progress.append(progressContent);
- ['tab-recordings','tab-songmap','tab-plan','tab-check'].forEach(id=>move(id,progressContent));
- // Statuses are kept, but the interface no longer shows the long horizontal navigation.
- const legacy=$('toolsNavigation');if(legacy)legacy.hidden=true;
- const bottom=document.createElement('nav');bottom.className='av-bottom-nav no-print';bottom.id='avBottomNav';bottom.setAttribute('aria-label','Navegação principal');
- const navItems=[['home','⌂','Início'],['music','♫','Músicas'],['train','◎','Treinar'],['progress','▤','Evolução']];
- navItems.forEach(([id,icon,label])=>{const b=document.createElement('button');b.type='button';b.dataset.avPage=id;b.innerHTML=`<span class="av-icon">${icon}</span><span>${label}</span>`;bottom.append(b)});document.body.append(bottom);
- let activePage='home',activeModule='live',activeProgress='check',selectedMode='silvane';
- const goalCopy={
-  silvane:{focus:'pitch',title:'Voz principal',purpose:'Estabilizar a melodia original, acertar as notas e cantar com emissão confortável.',items:['Altura das notas em relação à referência validada','Estabilidade da nota sustentada','Ritmo, respiração e articulação da letra']},
-  marla:{focus:'harmony',title:'Segunda voz',purpose:'Aprender a linha harmônica sem abandonar a própria nota ao ouvir a voz principal.',items:['Entrada e saída nos trechos combinados','Independência em relação à melodia principal','Afinação da nota harmônica de referência']},
-  duet:{focus:'blend',title:'Cantar juntas',purpose:'Unir as vozes com entradas alinhadas, volume equilibrado e final combinado.',items:['Sincronia de entradas e finais','Equilíbrio de volume entre as vozes','Afinação e estabilidade no conjunto']}
- };
- const focusCopy={pitch:['Afinação e precisão','O afinador mostra a frequência, a nota estimada e o desvio em cents. A comparação com a melodia só ocorre quando existe um mapa de notas validado.'],rhythm:['Ritmo e entradas','Trabalhe o pulso, o início das frases e os finais. O metrônomo ajuda a manter o tempo.'],breath:['Respiração, apoio e dicção','Observe respirações, clareza das palavras e emissão confortável. Interrompa se houver dor ou rouquidão.'],harmony:['Independência da segunda voz','A segunda cantora aprende sua linha separadamente e depois sustenta as notas próprias enquanto a principal canta.'],blend:['Equilíbrio e encaixe das vozes','Compare as gravações, entradas, volume e término das frases. Use gravações separadas para avaliar cada cantora com mais precisão.']};
- function updateWizard(){const song=$('studentSongSelect')?.selectedOptions?.[0]?.textContent||'Nenhuma música selecionada';$('avHomeSongName').textContent=song;$('avFocus').value=goalCopy[selectedMode].focus;$('avFocusInfo').innerHTML='<b>'+focusCopy[$('avFocus').value][0]+'</b>'+focusCopy[$('avFocus').value][1];document.querySelectorAll('[data-training-mode]').forEach(b=>b.classList.toggle('selected',b.dataset.trainingMode===selectedMode));const hasSong=$('studentSongSelect')?.value;['avStep1Bar','avStep2Bar','avStep3Bar','avStep4Bar'].forEach((id,i)=>$(id).classList.toggle('done',i===0?!!hasSong:i===1?!!selectedMode:i===2?!!$('avFocus').value:false));$('avWizardStatus').textContent=hasSong?'Passos 1–3 preparados · seu treino está pronto.':'Passo 1 de 4 · selecione uma música.';}
- function legacyGo(id){const b=document.querySelector('#toolsNavigation [data-tab="'+id+'"]');if(b)b.click();else{document.querySelectorAll('.tabcontent').forEach(x=>x.classList.toggle('hidden',x.id!=='tab-'+id));}}
- function showPage(page){activePage=page;pages.forEach(x=>x.classList.toggle('hidden',x.id!=='avScreen'+page[0].toUpperCase()+page.slice(1)));bottom.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avPage===page));if(page==='home')legacyGo('home');if(page==='music')legacyGo('home');if(page==='train'){legacyGo(activeModule);moduleGrid.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avModule===activeModule));}if(page==='progress'){legacyGo(activeProgress);progressGrid.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avProgress===activeProgress));}window.scrollTo({top:0,behavior:'smooth'});}
- function showTrainingModule(id){activeModule=id;showPage('train');legacyGo(id);moduleGrid.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avModule===id));}
- function showProgressModule(id){activeProgress=id;showPage('progress');legacyGo(id);progressGrid.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.avProgress===id));}
- // Goal buttons are the three existing lesson choices.
- document.querySelectorAll('[data-training-mode]').forEach(b=>{b.addEventListener('click',()=>{selectedMode=b.dataset.trainingMode;updateWizard();},true)});
- bottom.addEventListener('click',e=>{const b=e.target.closest('[data-av-page]');if(b)showPage(b.dataset.avPage)});
- $('avChooseSong').addEventListener('click',()=>showPage('music'));
- $('avFocus').addEventListener('change',updateWizard);
- $('avStartSession').addEventListener('click',()=>{if(!$('studentSongSelect')?.value){$('avWizardStatus').textContent='Primeiro selecione uma música na biblioteca.';showPage('music');return;}const old=document.querySelector('[data-training-mode="'+selectedMode+'"]');if(old)old.click();const next=selectedMode==='marla'?'harmony':selectedMode==='duet'?'live':'live';showTrainingModule(next);$('avWizardStatus').textContent='Sessão iniciada · '+goalCopy[selectedMode].title;});
- moduleGrid.addEventListener('click',e=>{const b=e.target.closest('[data-av-module]');if(b)showTrainingModule(b.dataset.avModule)});
- progressGrid.addEventListener('click',e=>{const b=e.target.closest('[data-av-progress]');if(b)showProgressModule(b.dataset.avProgress)});
- $('studentSongSelect')?.addEventListener('change',updateWizard);
- window.addEventListener('av3-auth-state',()=>{updateWizard();showPage('home')});
- updateWizard();showPage('home');
- }
- if(document.readyState==='complete')initBankLayout();else window.addEventListener('load',initBankLayout,{once:true});
-})();
-</script>
+// Simulador de carregamento de faixas (Na fase 3 conectaremos aos URLs do TV Box/Storage)
+async function loadSongForMode(mode) {
+  $('mainMenu').classList.add('hidden');
+  $('trainingRoom').classList.remove('hidden');
+  
+  currentMode = mode;
+  $('roomTitle').textContent = mode === 'silvane' ? 'Voz Principal (Silvane)' : mode === 'marla' ? 'Segunda Voz (Marla)' : 'Dueto';
+  $('estrelinhaGuidance').textContent = mode === 'silvane' ? '"Silvane, acompanhe esta melodia."' : mode === 'marla' ? '"Marla, agora é sua vez de entrar."' : '"Agora vamos cantar juntas!"';
+  $('roomSubtitle').textContent = 'Preparando motor de áudio...';
+  
+  initAudio();
+  if(audioCtx.state === 'suspended') await audioCtx.resume();
+  
+  try {
+    // AQUI: Conectar aos arquivos hospedados. Exemplo estrutural.
+    // tracks.instrument = await fetchAudio('url_do_playback.mp3');
+    // tracks.lead = await fetchAudio('url_da_voz_silvane.mp3');
+    // tracks.harmony = await fetchAudio('url_da_voz_marla.mp3');
+    
+    // Mock de duração para interface funcional
+    duration = 180; 
+    
+    // Configuração de Volume por Modo
+    gains.instrument.gain.value = 0.8;
+    gains.lead.gain.value = (mode === 'silvane' || mode === 'duet') ? 0.6 : 0.1;
+    gains.harmony.gain.value = (mode === 'marla' || mode === 'duet') ? 0.8 : 0.0;
 
-</body></html>
+    $('roomSubtitle').textContent = 'Tudo pronto. Clique em Iniciar.';
+    $('btnPlay').disabled = false;
+  } catch (e) {
+    $('roomSubtitle').textContent = 'Erro ao carregar faixas de áudio.';
+  }
+}
+
+function stopAudio() {
+  sources.forEach(s => s.stop());
+  sources = [];
+  isPlaying = false;
+  offset = 0;
+  cancelAnimationFrame(animationFrameId);
+  $('btnPlay').disabled = false;
+  $('btnStop').disabled = true;
+  $('expectedNote').textContent = "—";
+}
+
+function playAudio() {
+  if(isPlaying) return;
+  
+  sources = [];
+  startTime = audioCtx.currentTime;
+  
+  // Para cada buffer carregado, criamos um Source e conectamos ao seu Gain
+  Object.keys(tracks).forEach(key => {
+    if (tracks[key]) {
+      const source = audioCtx.createBufferSource();
+      source.buffer = tracks[key];
+      source.connect(gains[key]);
+      source.start(0, offset);
+      sources.push(source);
+    }
+  });
+  
+  isPlaying = true;
+  $('btnPlay').disabled = true;
+  $('btnStop').disabled = false;
+  
+  updateEngine();
+}
+
+// Loop de atualização Visual e Pitch
+function updateEngine() {
+  if (!isPlaying) return;
+  const currentTime = audioCtx.currentTime - startTime + offset;
+  
+  if (currentTime >= duration) {
+    stopAudio();
+    return;
+  }
+  
+  const m = Math.floor(currentTime / 60).toString().padStart(2, '0');
+  const s = Math.floor(currentTime % 60).toString().padStart(2, '0');
+  const dm = Math.floor(duration / 60).toString().padStart(2, '0');
+  const ds = Math.floor(duration % 60).toString().padStart(2, '0');
+  $('timeDisplay').textContent = `${m}:${s} / ${dm}:${ds}`;
+  
+  // Busca a nota esperada no mapa musical
+  const activeEvent = mapEvents.find(e => currentTime >= e.start && currentTime <= (e.start + e.duration) && e.verified);
+  if (activeEvent) {
+    const midiNote = currentMode === 'marla' ? activeEvent.harmonyMidi : activeEvent.leadMidi;
+    $('expectedNote').textContent = midiToName(midiNote);
+  } else {
+    $('expectedNote').textContent = "—";
+  }
+  
+  animationFrameId = requestAnimationFrame(updateEngine);
+}
+
+// Utilitários
+const noteNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+function midiToName(midi) {
+  if(!midi) return "—";
+  return noteNames[midi % 12] + (Math.floor(midi / 12) - 1);
+}
+
+// Navegação
+document.querySelectorAll('.action-btn').forEach(btn => {
+  btn.addEventListener('click', () => loadSongForMode(btn.dataset.mode));
+});
+$('btnPlay').addEventListener('click', playAudio);
+$('btnStop').addEventListener('click', stopAudio);
+$('btnBack').addEventListener('click', () => {
+  stopAudio();
+  $('trainingRoom').classList.add('hidden');
+  $('mainMenu').classList.remove('hidden');
+  $('btnPlay').disabled = true;
+});
+</script>
+</body>
+</html>
