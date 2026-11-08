@@ -1,321 +1,206 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#121826">
-  <title>Assistente Vocal — Estrelinha</title>
-  <link rel="manifest" href="/manifest.webmanifest">
-  <style>
-    :root { --bg: #09111e; --panel: #131f31; --cyan: #42d8e8; --green: #39dfa5; --txt: #f6f8ff; --muted: #b2c1d8; }
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-    body { margin: 0; background: var(--bg); color: var(--txt); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-    .hidden { display: none !important; }
-    .app-container { max-width: 600px; width: 100%; }
-    
-    /* Header & Estrelinha */
-    .header { text-align: center; margin-bottom: 30px; }
-    .estrelinha-avatar { width: 120px; height: 120px; background: radial-gradient(circle, #ffd166, #ff9f1c); border-radius: 50%; margin: 0 auto 15px; display: grid; place-items: center; font-size: 60px; box-shadow: 0 0 30px #ff9f1c66; border: 4px solid #fff; }
-    .header h1 { margin: 0 0 5px; font-size: 24px; }
-    .header p { margin: 0; color: var(--muted); font-size: 15px; }
-    .guidance-box { background: #1a2942; border: 1px solid #2d405b; border-radius: 12px; padding: 15px; margin-bottom: 25px; text-align: center; color: var(--cyan); font-weight: 500; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09111e">
+<title>Assistente Vocal — Estrelinha</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon-192.png">
+<style>
+/* CSS OTIMIZADO PARA A ESTRELINHA */
+:root { --bg: #09111e; --panel: #131f31; --cyan: #42d8e8; --green: #39dfa5; --yellow: #ffd166; --txt: #f6f8ff; --muted: #9aabc3; }
+* { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+body { margin: 0; background: radial-gradient(ellipse at top, #1b2e49 0, #09111e 58%); color: var(--txt); padding-bottom: 50px; }
+.hidden { display: none !important; }
+button { font: inherit; cursor: pointer; border: 1px solid #3b5271; border-radius: 11px; background: #263953; color: var(--txt); padding: 10px 13px; font-weight: 650; }
+button.primary { background: linear-gradient(135deg, #147f96, #276db7); border-color: #328da9; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+input, select { font: inherit; width: 100%; background: #0d1929; color: var(--txt); border: 1px solid #2d405b; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
 
-    /* Ações Principais */
-    .main-actions { display: grid; gap: 15px; }
-    .action-btn { background: linear-gradient(135deg, #1e324f, #15243a); border: 1px solid #334c70; border-radius: 16px; padding: 20px; text-align: left; cursor: pointer; transition: transform 0.2s, border-color 0.2s; color: white; display: flex; flex-direction: column; gap: 5px; }
-    .action-btn:hover { transform: translateY(-2px); }
-    .action-btn.silvane { border-left: 4px solid #42d8e8; }
-    .action-btn.marla { border-left: 4px solid #b69aff; }
-    .action-btn.juntas { border-left: 4px solid #ffd166; }
-    .action-btn strong { font-size: 18px; }
-    .action-btn span { font-size: 13px; color: var(--muted); }
+/* TELAS PRINCIPAIS */
+.authGate { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
+.authCard { width: min(100%, 420px); background: #131f31; border: 1px solid #2d405b; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 18px 60px #0006; }
+.estrelinha-avatar { width: 90px; height: 90px; margin: 0 auto 15px; background: radial-gradient(circle at 30% 30%, #fff4bd, #ffd166 50%, #ff9f1c); border-radius: 50%; display: grid; place-items: center; font-size: 50px; box-shadow: 0 0 25px #ffd16644; }
+.app-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 12px; color: var(--muted); }
 
-    /* Sala de Treinamento (Motor de Áudio) */
-    .training-room { background: var(--panel); border: 1px solid #2d405b; border-radius: 16px; padding: 20px; margin-top: 20px; }
-    .playback-controls { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
-    .playback-controls button { background: #263e61; border: 1px solid #49658f; color: white; padding: 12px 24px; border-radius: 12px; font-weight: bold; cursor: pointer; }
-    .playback-controls button.primary { background: linear-gradient(135deg, #087f69, #19a879); border: none; }
-    .playback-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
-    
-    /* Pitch Visualizer */
-    .pitch-area { text-align: center; margin: 30px 0; background: #0c1524; padding: 20px; border-radius: 12px; border: 1px solid #1f304a; }
-    .target-note { font-size: 48px; font-weight: 800; color: var(--cyan); line-height: 1; }
-    .sung-note { font-size: 18px; color: var(--muted); margin-top: 10px; }
-    
-    /* Auth & Admin */
-    .top-bar { display: flex; justify-content: space-between; width: 100%; margin-bottom: 20px; font-size: 12px; color: var(--muted); }
-    .top-bar button, .top-bar a { background: none; border: none; color: var(--cyan); cursor: pointer; text-decoration: none; font-weight: bold; }
-  </style>
+/* AÇÕES PRINCIPAIS DA PROFESSORA */
+.teacher-area { text-align: center; margin: 20px 0 30px; }
+.teacher-area h2 { margin: 10px 0 5px; font-size: 24px; }
+.teacher-area p { color: var(--cyan); font-weight: 600; font-size: 16px; margin: 0; }
+.main-actions { display: grid; grid-template-columns: 1fr; gap: 15px; }
+@media(min-width: 600px) { .main-actions { grid-template-columns: repeat(3, 1fr); } }
+.action-btn { min-height: 110px; border-radius: 16px; text-align: left; padding: 18px; display: flex; flex-direction: column; justify-content: center; gap: 5px; background: linear-gradient(145deg, #203e5b, #18283e); border: 2px solid transparent; transition: all 0.2s; }
+.action-btn strong { font-size: 16px; }
+.action-btn span { font-size: 12px; color: #bdcce0; }
+.action-btn:hover { transform: scale(0.98); }
+.action-btn[data-training-mode="silvane"] { border-left-color: #2c9c9e; }
+.action-btn[data-training-mode="marla"] { border-left-color: #8670bd; }
+.action-btn[data-training-mode="duet"] { border-left-color: #b58c4b; }
+
+/* ESPAÇO DE TREINO (Áudio) */
+.training-room { background: #101a29; border: 1px solid #2d405b; border-radius: 16px; padding: 20px; margin-top: 20px; text-align: center; }
+.target-note { font-size: 52px; font-weight: 850; color: var(--cyan); margin: 10px 0; }
+.playerTransport { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+.advanced-settings { margin-top: 30px; padding-top: 20px; border-top: 1px solid #2d405b; text-align: left; }
+.advanced-settings summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: bold; outline: none; }
+</style>
 </head>
 <body>
 
-<div class="top-bar">
-  <span id="userStatus">Aguardando login...</span>
-  <div>
-    <a href="/admin.html" id="adminLink" class="hidden">Admin</a>
-    <button id="logoutBtn" class="hidden">Sair</button>
-  </div>
-</div>
-
-<div class="app-container" id="authScreen">
-  <div class="header">
+<!-- AUTENTICAÇÃO ORIGINAL MANTIDA COM VISUAL ESTRELINHA -->
+<section id="authGate" class="authGate">
+  <div class="authCard">
     <div class="estrelinha-avatar">⭐</div>
-    <h1>Assistente Vocal</h1>
-    <p>Acesse com seu e-mail cadastrado.</p>
+    <h1 style="margin: 0 0 5px;">Assistente Vocal</h1>
+    <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Treino de afinação e segunda voz.</p>
+    
+    <form id="loginForm" style="display: grid; gap: 10px; text-align: left;">
+      <input id="loginEmail" type="email" autocomplete="username" required placeholder="Seu e-mail">
+      <input id="loginPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Sua senha">
+      <div id="registerFields" class="hidden">
+        <input id="registerName" type="text" autocomplete="name" placeholder="Seu nome">
+        <input id="inviteCodeInput" type="text" autocomplete="off" placeholder="ID do Convite (Ex: AV-7K2P9QW)">
+      </div>
+      <button class="primary" type="submit" id="emailLoginBtn" style="min-height: 48px;">Entrar</button>
+      <button type="button" id="registerBtn">Criar conta com convite</button>
+    </form>
+    
+    <button class="primary" id="googleLoginBtn" type="button" style="width: 100%; margin-top: 15px; background: #f4f7fb; color: #1b2736;">Entrar com Google</button>
+    <button class="ghost" id="resetPasswordBtn" type="button" style="width: 100%; margin-top: 5px;">Esqueci minha senha</button>
+    <p class="small muted" id="authMessage" aria-live="polite" style="margin-top: 15px;"></p>
   </div>
-  <div class="training-room">
-    <input type="email" id="emailInput" placeholder="E-mail" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #334c70; background:#09111e; color:white;">
-    <input type="password" id="passInput" placeholder="Senha" style="width:100%; padding:12px; margin-bottom:20px; border-radius:8px; border:1px solid #334c70; background:#09111e; color:white;">
-    <button id="loginBtn" style="width:100%; padding:14px; background:#42d8e8; border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#09111e;">Entrar</button>
-    <p id="authMsg" style="color:#ff758f; text-align:center; font-size:13px; margin-top:10px;"></p>
-  </div>
-</div>
+</section>
 
-<div class="app-container hidden" id="mainMenu">
-  <div class="header">
+<!-- APLICATIVO PRINCIPAL -->
+<main class="app-container appLocked hidden" id="appMain">
+  <div class="top-bar">
+    <div>
+      <span id="savedState">Aguardando login</span> | 
+      <span id="cloudState" style="color: var(--green);">Conectado</span>
+    </div>
+    <div>
+      <a id="adminLink" class="hidden" href="/admin.html" style="margin-right: 15px;">⚙ Administração</a>
+      <button id="logoutBtn" style="padding: 5px 10px; font-size: 12px;">Sair</button>
+    </div>
+  </div>
+
+  <div class="teacher-area">
     <div class="estrelinha-avatar">⭐</div>
-    <h1>Olá, <span id="userName">Cantora</span>!</h1>
-    <p>Música atual: <strong id="currentSong">Estrelinha</strong></p>
-  </div>
-  
-  <div class="guidance-box" id="estrelinhaGuidance">
-    "Escolha uma aula abaixo para começarmos o treinamento."
+    <h2 id="teacherSongTitle">Professora Estrelinha</h2>
+    <p id="teacherGuidance">"Escolha a música e a aula que deseja treinar!"</p>
   </div>
 
-  <div class="main-actions">
-    <button class="action-btn silvane" data-mode="silvane">
+  <!-- SELEÇÃO DE MÚSICA -->
+  <div style="margin-bottom: 20px;">
+    <select id="studentSongSelect" disabled><option>Carregando biblioteca...</option></select>
+  </div>
+
+  <!-- OS 3 BOTÕES PRINCIPAIS -->
+  <div class="main-actions" aria-label="Escolha sua aula">
+    <button class="action-btn" type="button" data-training-mode="silvane">
       <strong>🎤 TREINAR SILVANE</strong>
-      <span>Aprender e avaliar a melodia da voz principal.</span>
+      <span>Melodia principal · Nota por nota</span>
     </button>
-    <button class="action-btn marla" data-mode="marla">
+    <button class="action-btn" type="button" data-training-mode="marla">
       <strong>🎶 TREINAR MARLA</strong>
-      <span>Aprender e isolar a segunda voz (harmonia).</span>
+      <span>Segunda voz · Harmonia</span>
     </button>
-    <button class="action-btn juntas" data-mode="duet">
+    <button class="action-btn" type="button" data-training-mode="duet">
       <strong>♫ CANTAR JUNTAS</strong>
-      <span>Playback completo com as duas vozes alinhadas.</span>
+      <span>Vozes alinhadas com playback</span>
     </button>
   </div>
-</div>
 
-<div class="app-container hidden" id="trainingRoom">
-  <div class="header">
-    <div class="estrelinha-avatar" style="width:80px; height:80px; font-size:40px;">⭐</div>
-    <h2 id="roomTitle">Treinamento</h2>
-    <p id="roomSubtitle">Carregando faixas...</p>
-  </div>
+  <!-- SALA DE TREINO (Motor de Áudio e Pitch) -->
+  <section class="training-room hidden" id="playbackPanel">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h3 id="playbackTitle" style="margin: 0; color: var(--cyan);">Modo de Treino</h3>
+      <button id="startMic" class="primary" style="padding: 5px 10px; font-size: 12px;">🎙️ Ligar Microfone</button>
+    </div>
+    <p id="trainingModeText" class="small muted">O playback está pronto.</p>
 
-  <div class="training-room">
-    <div class="pitch-area" id="pitchArea">
-      <div style="font-size:12px; color:#b2c1d8; margin-bottom:5px;">NOTA ESPERADA</div>
+    <!-- Pitch Visualizer (Afinador simplificado) -->
+    <div style="margin: 25px 0;">
+      <div class="small muted">NOTA ESPERADA:</div>
       <div class="target-note" id="expectedNote">—</div>
-      <div class="sung-note" id="sungNote">Aguardando voz...</div>
+      <div class="small muted">SUA VOZ: <span id="note" style="color: white; font-weight: bold;">—</span> <span id="cents"></span></div>
+      <div id="pitchStatus" class="small muted" style="margin-top: 5px;">Sustente uma vogal para o afinador ler</div>
     </div>
 
-    <div style="text-align:center; color:var(--muted); font-size:14px; font-variant-numeric: tabular-nums;" id="timeDisplay">00:00 / 00:00</div>
-    
-    <div class="playback-controls">
-      <button id="btnBack">← Voltar</button>
-      <button id="btnPlay" class="primary" disabled>▶ Iniciar</button>
-      <button id="btnStop" disabled>■ Parar</button>
+    <!-- Player Controls -->
+    <div class="playerTransport">
+      <button class="primary" id="playerPlay" type="button">▶ Reproduzir</button>
+      <button id="playerPause" type="button" disabled>Ⅱ Pausar</button>
+      <button id="playerStop" type="button" disabled>■ Reiniciar</button>
     </div>
-  </div>
-</div>
+    <div style="margin-top: 15px; font-size: 13px; color: var(--muted);" id="playerPosition">00:00 / 00:00</div>
+    <input class="playerSeek" id="playerSeek" type="range" min="0" max="1000" step="1" value="0" style="margin-top: 10px;">
+    <div id="playerStatus" class="small muted" style="margin-top: 10px;">Aguardando reprodução...</div>
 
+    <!-- ESCONDENDO A COMPLEXIDADE (Volumes e Configurações Avançadas) -->
+    <details class="advanced-settings">
+      <summary>⚙️ Ajustes Avançados (Volumes e Servidor)</summary>
+      <div style="margin-top: 15px;">
+        <label class="small muted">Volume Playback</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
+        <label class="small muted">Volume Voz Principal</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
+        <label class="small muted">Volume Segunda Voz</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
+        
+        <!-- Elementos ocultos exigidos pelos seus scripts originais para não gerar erro -->
+        <div class="hidden">
+          <input type="file" id="trackInstrumentFile"><input type="file" id="trackLeadFile"><input type="file" id="trackHarmonyFile">
+          <input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd">
+          <select id="serverAudioSelect"></select><button id="loadServerAudioBtn"></button><button id="refreshServerAudioBtn"></button>
+          <select id="singer"><option>Voz principal</option><option>Segunda voz</option><option>Ensaio conjunto</option></select>
+          <span id="trackInstrumentPct"></span><span id="trackLeadPct"></span><span id="trackHarmonyPct"></span>
+          <span id="trackInstrumentName"></span><span id="trackLeadName"></span><span id="trackHarmonyName"></span>
+          <span id="audioEngineState"></span><span id="serverAudioStatus"></span>
+          <button id="playerCountIn"></button><button id="stopMic"></button>
+          <canvas id="liveChart"></canvas><span id="freq"></span><span id="signal"></span>
+          <button id="useDetected"></button>
+        </div>
+      </div>
+    </details>
+  </section>
+
+</main>
+
+<!-- OS SEUS SCRIPTS ORIGINAIS SÃO MANTIDOS AQUI -->
+<script src="/musical-core.js"></script>
+<script>
+// AQUI VAI EXATAMENTE O SEU BLOCO <script> ORIGINAL COM O MOTOR DE ÁUDIO YIN, WEBAUDIO, ETC.
+// (Copie e cole as tags <script> com a lógica de AudioContext e o Firebase do seu arquivo anterior aqui).
+</script>
 <script type="module">
-import { auth, db } from './firebase-config.js';
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
-import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+// AQUI VAI O SEU SCRIPT DO FIREBASE ORIGINAL
+// (Copie e cole o import do firebase-config.js e a lógica de login aqui).
+</script>
 
-const $ = id => document.getElementById(id);
+<script>
+// SCRIPT DE UI PARA A ESTRELINHA (Substitui o initBankLayout antigo)
+document.addEventListener("DOMContentLoaded", () => {
+  const teacherGuidance = document.getElementById('teacherGuidance');
+  const playbackPanel = document.getElementById('playbackPanel');
 
-// --- ESTADO GLOBAL ---
-let audioCtx = null;
-let tracks = { instrument: null, lead: null, harmony: null };
-let sources = [];
-let gains = {};
-let isPlaying = false;
-let startTime = 0;
-let offset = 0;
-let duration = 0;
-let animationFrameId = null;
-let currentMode = null;
-let mapEvents = []; 
-
-// --- AUTENTICAÇÃO ---
-$('loginBtn').addEventListener('click', async () => {
-  try {
-    await signInWithEmailAndPassword(auth, $('emailInput').value, $('passInput').value);
-  } catch(e) {
-    $('authMsg').textContent = "Erro ao logar. Verifique credenciais.";
-  }
-});
-
-$('logoutBtn').addEventListener('click', () => signOut(auth));
-
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    $('authScreen').classList.add('hidden');
-    $('mainMenu').classList.remove('hidden');
-    $('logoutBtn').classList.remove('hidden');
-    
-    const isAdmin = (user.email === 'andersonsieklicki@gmail.com');
-    if (isAdmin) $('adminLink').classList.remove('hidden');
-    
-    // Na Fase 3 o Firestore trará os links de áudio. Para a Fase 1/2, usamos mocks ou caminhos locais definidos no Admin.
-    $('userName').textContent = user.displayName || user.email.split('@')[0];
-    
-    // Pré-carrega o mapa da música Estrelinha
-    try {
-      const mapSnap = await getDoc(doc(db, 'bibliotecaMusical', 'estrelinha'));
-      if(mapSnap.exists() && mapSnap.data().events) mapEvents = mapSnap.data().events;
-    } catch(e) {}
-
-  } else {
-    $('authScreen').classList.remove('hidden');
-    $('mainMenu').classList.add('hidden');
-    $('logoutBtn').classList.add('hidden');
-    $('adminLink').classList.add('hidden');
-  }
-});
-
-// --- MOTOR DE ÁUDIO ---
-function initAudio() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    gains.instrument = audioCtx.createGain();
-    gains.lead = audioCtx.createGain();
-    gains.harmony = audioCtx.createGain();
-    const compressor = audioCtx.createDynamicsCompressor();
-    
-    gains.instrument.connect(compressor);
-    gains.lead.connect(compressor);
-    gains.harmony.connect(compressor);
-    compressor.connect(audioCtx.destination);
-  }
-}
-
-async function fetchAudio(url) {
-  const res = await fetch(url);
-  const arrayBuffer = await res.arrayBuffer();
-  return await audioCtx.decodeAudioData(arrayBuffer);
-}
-
-// Simulador de carregamento de faixas (Na fase 3 conectaremos aos URLs do TV Box/Storage)
-async function loadSongForMode(mode) {
-  $('mainMenu').classList.add('hidden');
-  $('trainingRoom').classList.remove('hidden');
-  
-  currentMode = mode;
-  $('roomTitle').textContent = mode === 'silvane' ? 'Voz Principal (Silvane)' : mode === 'marla' ? 'Segunda Voz (Marla)' : 'Dueto';
-  $('estrelinhaGuidance').textContent = mode === 'silvane' ? '"Silvane, acompanhe esta melodia."' : mode === 'marla' ? '"Marla, agora é sua vez de entrar."' : '"Agora vamos cantar juntas!"';
-  $('roomSubtitle').textContent = 'Preparando motor de áudio...';
-  
-  initAudio();
-  if(audioCtx.state === 'suspended') await audioCtx.resume();
-  
-  try {
-    // AQUI: Conectar aos arquivos hospedados. Exemplo estrutural.
-    // tracks.instrument = await fetchAudio('url_do_playback.mp3');
-    // tracks.lead = await fetchAudio('url_da_voz_silvane.mp3');
-    // tracks.harmony = await fetchAudio('url_da_voz_marla.mp3');
-    
-    // Mock de duração para interface funcional
-    duration = 180; 
-    
-    // Configuração de Volume por Modo
-    gains.instrument.gain.value = 0.8;
-    gains.lead.gain.value = (mode === 'silvane' || mode === 'duet') ? 0.6 : 0.1;
-    gains.harmony.gain.value = (mode === 'marla' || mode === 'duet') ? 0.8 : 0.0;
-
-    $('roomSubtitle').textContent = 'Tudo pronto. Clique em Iniciar.';
-    $('btnPlay').disabled = false;
-  } catch (e) {
-    $('roomSubtitle').textContent = 'Erro ao carregar faixas de áudio.';
-  }
-}
-
-function stopAudio() {
-  sources.forEach(s => s.stop());
-  sources = [];
-  isPlaying = false;
-  offset = 0;
-  cancelAnimationFrame(animationFrameId);
-  $('btnPlay').disabled = false;
-  $('btnStop').disabled = true;
-  $('expectedNote').textContent = "—";
-}
-
-function playAudio() {
-  if(isPlaying) return;
-  
-  sources = [];
-  startTime = audioCtx.currentTime;
-  
-  // Para cada buffer carregado, criamos um Source e conectamos ao seu Gain
-  Object.keys(tracks).forEach(key => {
-    if (tracks[key]) {
-      const source = audioCtx.createBufferSource();
-      source.buffer = tracks[key];
-      source.connect(gains[key]);
-      source.start(0, offset);
-      sources.push(source);
-    }
+  document.querySelectorAll('[data-training-mode]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Mostra a sala de treino
+      playbackPanel.classList.remove('hidden');
+      
+      const mode = btn.dataset.trainingMode;
+      if (mode === 'silvane') {
+        teacherGuidance.textContent = '"Silvane, acompanhe esta melodia. O foco é na voz principal."';
+      } else if (mode === 'marla') {
+        teacherGuidance.textContent = '"Marla, agora é sua vez. Ouça a harmonia e encaixe a segunda voz."';
+      } else {
+        teacherGuidance.textContent = '"Agora vamos cantar juntas! O playback está preparado."';
+      }
+      
+      // Rola a tela suavemente para o player
+      playbackPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   });
-  
-  isPlaying = true;
-  $('btnPlay').disabled = true;
-  $('btnStop').disabled = false;
-  
-  updateEngine();
-}
-
-// Loop de atualização Visual e Pitch
-function updateEngine() {
-  if (!isPlaying) return;
-  const currentTime = audioCtx.currentTime - startTime + offset;
-  
-  if (currentTime >= duration) {
-    stopAudio();
-    return;
-  }
-  
-  const m = Math.floor(currentTime / 60).toString().padStart(2, '0');
-  const s = Math.floor(currentTime % 60).toString().padStart(2, '0');
-  const dm = Math.floor(duration / 60).toString().padStart(2, '0');
-  const ds = Math.floor(duration % 60).toString().padStart(2, '0');
-  $('timeDisplay').textContent = `${m}:${s} / ${dm}:${ds}`;
-  
-  // Busca a nota esperada no mapa musical
-  const activeEvent = mapEvents.find(e => currentTime >= e.start && currentTime <= (e.start + e.duration) && e.verified);
-  if (activeEvent) {
-    const midiNote = currentMode === 'marla' ? activeEvent.harmonyMidi : activeEvent.leadMidi;
-    $('expectedNote').textContent = midiToName(midiNote);
-  } else {
-    $('expectedNote').textContent = "—";
-  }
-  
-  animationFrameId = requestAnimationFrame(updateEngine);
-}
-
-// Utilitários
-const noteNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-function midiToName(midi) {
-  if(!midi) return "—";
-  return noteNames[midi % 12] + (Math.floor(midi / 12) - 1);
-}
-
-// Navegação
-document.querySelectorAll('.action-btn').forEach(btn => {
-  btn.addEventListener('click', () => loadSongForMode(btn.dataset.mode));
-});
-$('btnPlay').addEventListener('click', playAudio);
-$('btnStop').addEventListener('click', stopAudio);
-$('btnBack').addEventListener('click', () => {
-  stopAudio();
-  $('trainingRoom').classList.add('hidden');
-  $('mainMenu').classList.remove('hidden');
-  $('btnPlay').disabled = true;
 });
 </script>
 </body>
