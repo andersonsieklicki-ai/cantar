@@ -188,7 +188,8 @@ function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}
 function freqMidi(f){return 69+12*Math.log2(f/440)}
 function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*100);return{midi:n,name:midiName(n),cents,freq:f}}
 
-let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest=null;
+// CORREÇÃO: Variável lastValid adicionada!
+let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest=null, lastValid=0;
 let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
 
@@ -444,6 +445,7 @@ function liveLoop(){
     const raw=new Float32Array(analyser.fftSize);
     analyser.getFloatTimeDomainData(raw);
     const p=yin(raw,ctx.sampleRate);
+    
     if(p && p.clarity>0.65){
         const ni=noteInfo(p.freq);
         $('note').textContent = ni.name;
@@ -643,7 +645,7 @@ $('syncRemoteBtn').addEventListener('click', async () => {
     
     $('playerStatus').textContent = 'Agendando play simultâneo...';
     try {
-        // Agenda o play exato para daqui a 5 segundos (5000ms) para dar tempo de ping entre celulares
+        // Agenda o play exato para daqui a 5 segundos (5000ms)
         const triggerTime = Date.now() + 5000;
         await setDoc(doc(db, 'sessoes_treino', activeSong.id), {
             action: 'play_record',
