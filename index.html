@@ -167,28 +167,44 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
     </details>
   </section>
 
+  <!-- LIXEIRA DE ELEMENTOS DOM (Apenas o que não for usado acima) -->
+  <div id="legacy-ui" class="hidden">
+    <button id="installApp"></button><span id="installHelp"></span>
+    <span id="micState"></span><span id="audioEngineState"></span>
+    <input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span>
+    <input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span>
+    <input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span>
+    <button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd">
+    <div id="serverAudioPicker"></div>
+    <button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span>
+    <button id="micQuickStart"></button><button id="micQuickStop"></button>
+    <select id="singer"><option>Segunda voz</option><option>Voz principal</option><option>Ensaio individual</option></select>
+    <span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span>
+    <span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span>
+    <span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span>
+    <select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select>
+    <button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button>
+    <span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div>
+    <input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span>
+    <button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span>
+    <input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span>
+    <div id="calendarTasks"></div><span id="planProgress"></span>
+    <input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span>
+    <div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span>
+    <select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button>
+  </div>
 </main>
 
-<script type="module">
-// ============================================================================
-// 1. IMPORTAÇÕES FIREBASE
-// ============================================================================
-import { auth, db } from './firebase-config.js';
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, sendPasswordResetEmail, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
-import { doc, getDoc, getDocs, collection, setDoc, updateDoc, serverTimestamp, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+<script>
+(()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
+</script>
 
-const $ = id => document.getElementById(id);
-const gate = $('authGate'), main = $('appMain'), msg = $('authMessage');
+<script>
+// --- MOTOR DE ÁUDIO E YIN (EMBUTIDO) ---
+(()=>{'use strict';
+const $=id=>document.getElementById(id), names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}function midiLabel(m){return names[((m%12)+12)%12]+' '+(Math.floor(m/12)-1)}function freqMidi(f){return 69+12*Math.log2(f/440)}function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*100);return{midi:n,name:midiName(n),cents,freq:f}}
 
-// ============================================================================
-// 2. LÓGICA DE ÁUDIO (WEBAUDIO, YIN, GRAVAÇÃO E TV BOX)
-// ============================================================================
-const names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}
-function freqMidi(f){return 69+12*Math.log2(f/440)}
-function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*100);return{midi:n,name:midiName(n),cents,freq:f}}
-
-// CORREÇÃO: Variável lastValid adicionada!
 let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest=null, lastValid=0;
 let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
@@ -388,7 +404,7 @@ $('loadServerAudioBtn').addEventListener('click', async ()=>{
     $('loadServerAudioBtn').disabled=true;
     try {
         await loadAVTrackFromUrl('instrument',url,filename);
-        if(activeSong) localStorage.setItem('av3:serverPlayback:'+activeSong.id,filename);
+        if(window.activeSong) localStorage.setItem('av3:serverPlayback:'+window.activeSong.id,filename);
     } finally {
         $('loadServerAudioBtn').disabled=false;
     }
@@ -554,11 +570,92 @@ $('recordBtn').addEventListener('click', () => {
     else startRecording();
 });
 
+// Acessível globalmente para o Firebase
+window.appCurrentTrainingMode = (val) => {
+    if(val!==undefined) currentTrainingMode = val;
+    return currentTrainingMode;
+};
+window.appStartRecording = startRecording;
+window.appPlayer = player;
+window.appTrackBuffers = trackBuffers;
+window.appCtx = () => ctx;
+})();
+</script>
+<script type="module">
 // ============================================================================
 // 3. FIREBASE AUTH & FIREBASE SYNC (DUETO REMOTO)
 // ============================================================================
+import { auth, db } from './firebase-config.js';
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, sendPasswordResetEmail, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import { doc, getDoc, getDocs, collection, setDoc, updateDoc, serverTimestamp, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+
+const $ = id => document.getElementById(id);
+const gate = $('authGate'), main = $('appMain'), msg = $('authMessage');
+
 let currentUser=null, activeSong=null, assignedSongs=[], isAdmin=false;
 let syncUnsubscribe = null;
+let registering = false;
+
+function say(t){if(msg)msg.textContent=t}
+function setContext(uid,songId,songTitle=''){
+    window.__AV_USER_UID=uid||'anon';
+    window.__AV_SONG_ID=songId||'none';
+    window.__AV_SONG_TITLE=songTitle||'Música selecionada';
+}
+function authError(e){
+    const map={'auth/invalid-credential':'E-mail ou senha incorretos.','auth/user-not-found':'Conta não encontrada.','auth/wrong-password':'Senha incorreta.','auth/email-already-in-use':'Este e-mail já possui cadastro.','auth/weak-password':'A senha deve ter pelo menos 6 caracteres.'};
+    return map[e.code]||('Não foi possível autenticar: '+(e.message||e.code||'erro desconhecido'));
+}
+
+async function activateInviteForUser(user,code,name=''){
+    const normalized=(code||'').trim().toUpperCase();
+    if(!normalized)throw new Error('Informe o ID do convite.');
+    const inviteRef=doc(db,'convites',normalized),inv=await getDoc(inviteRef);
+    if(!inv.exists())throw new Error('ID do convite não encontrado.');
+    const v=inv.data();
+    if(v.status!=='ativo'||!v.expiraEm||v.expiraEm.toDate()<=new Date())throw new Error('Convite expirado ou usado.');
+    const email=(user.email||'').toLowerCase();
+    if(v.email&&v.email.toLowerCase()!==email)throw new Error('Convite para outro e-mail.');
+    const ids=Array.isArray(v.musicaIds)?v.musicaIds:[];
+    if(!ids.length)throw new Error('Convite sem músicas.');
+    await updateDoc(inviteRef,{status:'usado',uid:user.uid,usadoEm:serverTimestamp()});
+    await setDoc(doc(db,'usuarios',user.uid,'perfil','dados'),{nome:name||v.nome||user.displayName||'Cantora',email,role:'aluna',inviteCode:normalized,musicaIds:ids,createdAt:serverTimestamp()});
+    return ids;
+}
+
+async function loadSong(song){
+    activeSong = song;
+    window.activeSong = song;
+    $('teacherSongTitle').textContent = song.titulo || 'Treino Vocal';
+    
+    // LISTENER PARA O SINCRONISMO REMOTO
+    if(syncUnsubscribe) syncUnsubscribe();
+    syncUnsubscribe = onSnapshot(doc(db, 'sessoes_treino', song.id), (snap) => {
+        if (!snap.exists()) return;
+        const data = snap.data();
+        if (data.action === 'play_record' && data.triggerTime) {
+            const delay = data.triggerTime - Date.now();
+            if (delay > 0 && delay < 10000) {
+                $('playerStatus').textContent = `Dueto Sincronizado! Começando em ${Math.ceil(delay/1000)}s...`;
+                $('playerStatus').style.color = "var(--green)";
+                setTimeout(() => {
+                    // Dispara a gravação local no momento exato agendado pelo Firebase!
+                    window.appStartRecording();
+                }, delay);
+            }
+        }
+    });
+
+    // Busca biblioteca do TV box
+    if (window.fetchServerAudioList) {
+        const files = await window.fetchServerAudioList();
+        const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
+        if(savedLocal && files.some(f => f.name === savedLocal)){
+            $('serverAudioSelect').value = savedLocal;
+            $('loadServerAudioBtn').click();
+        }
+    }
+}
 
 async function enter(user){
     currentUser=user;
@@ -579,7 +676,17 @@ async function enter(user){
         } else {
             $('adminLink').classList.add('hidden');
             let profile = await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));
-            if(!profile.exists()) throw new Error('Conta sem perfil autorizado. Solicite um convite.');
+            if(!profile.exists()){
+                const code=$('inviteCodeInput').value.trim()||new URLSearchParams(location.search).get('convite')||'';
+                try{
+                    await activateInviteForUser(user,code,$('registerName').value.trim());
+                    profile=await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));
+                }catch(invErr){
+                    await signOut(auth); gate.style.display='grid'; main.classList.add('appLocked');
+                    say(invErr.message||'Conta sem perfil autorizado. Solicite convite.');
+                    return;
+                }
+            }
             const ids = profile.data().musicaIds || [];
             if(!ids.length) throw new Error('Seu perfil não tem músicas atribuídas.');
             const results = await Promise.all(ids.map(id=>getDoc(doc(db,'musicas',id))));
@@ -596,7 +703,7 @@ async function enter(user){
         }
         songs.forEach(s => sel.add(new Option(s.titulo||s.id, s.id)));
         sel.disabled = false;
-        loadSong(songs[0]); // Auto load first song
+        loadSong(songs[0]);
         
         $('cloudState').textContent='Conectado';
     } catch(e) {
@@ -607,45 +714,106 @@ async function enter(user){
     }
 }
 
-async function loadSong(song){
-    activeSong = song;
-    $('teacherSongTitle').textContent = song.titulo || 'Treino Vocal';
-    
-    // LISTENER PARA O SINCRONISMO REMOTO
-    if(syncUnsubscribe) syncUnsubscribe();
-    syncUnsubscribe = onSnapshot(doc(db, 'sessoes_treino', song.id), (snap) => {
-        if (!snap.exists()) return;
-        const data = snap.data();
-        if (data.action === 'play_record' && data.triggerTime) {
-            const delay = data.triggerTime - Date.now();
-            if (delay > 0 && delay < 10000) {
-                $('playerStatus').textContent = `Dueto Sincronizado! Começando em ${Math.ceil(delay/1000)}s...`;
-                $('playerStatus').style.color = "var(--green)";
-                setTimeout(() => {
-                    if(!recording) startRecording(); // Dispara a gravação local no momento exato!
-                }, delay);
-            }
-        }
-    });
+// EVENT LISTENERS DE LOGIN ADICIONADOS AQUI (CORREÇÃO DO BUG DO BOTAO "MORTO")
 
-    // Busca biblioteca do TV box
-    const files = await fetchServerAudioList();
-    const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
-    if(savedLocal && files.some(f => f.name === savedLocal)){
-        $('serverAudioSelect').value = savedLocal;
-        $('loadServerAudioBtn').click(); // Auto-carrega se já foi definido antes
+$('loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    if(registering) return;
+    $('emailLoginBtn').disabled = true;
+    try { 
+        await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); 
+    } catch(err) { 
+        say(authError(err)); 
+    } finally {
+        $('emailLoginBtn').disabled = false;
     }
-}
+});
 
-// Botão Sincronizar Dueto Remoto (Firebase)
+$('registerBtn').addEventListener('click', async () => {
+    const fields = $('registerFields');
+    if (fields.classList.contains('hidden')) {
+        fields.classList.remove('hidden');
+        $('inviteCodeInput').required = true;
+        $('registerBtn').textContent = 'Confirmar cadastro com convite';
+        say('Informe seu nome, e-mail, senha e o ID do convite.');
+        return;
+    }
+    const email = $('loginEmail').value.trim().toLowerCase();
+    const password = $('loginPassword').value;
+    const name = $('registerName').value.trim();
+    const code = $('inviteCodeInput').value.trim().toUpperCase();
+    if (!name || !email || password.length < 6 || !code) {
+        say('Preencha nome, e-mail, senha (mínimo 6) e ID do convite.');
+        return;
+    }
+    registering = true;
+    $('registerBtn').disabled = true;
+    try {
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+        try {
+            await activateInviteForUser(credential.user, code, name);
+            registering = false;
+            await enter(credential.user);
+            say('Cadastro concluído.');
+        } catch(inviteError) {
+            try { await deleteUser(credential.user) } catch(e) {}
+            throw inviteError;
+        }
+    } catch(err) {
+        registering = false;
+        say(authError(err));
+        if (auth.currentUser) await signOut(auth);
+    } finally {
+        $('registerBtn').disabled = false;
+    }
+});
+
+$('googleLoginBtn').addEventListener('click', async () => {
+    const btn = $('googleLoginBtn');
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    btn.disabled = true;
+    say('Abrindo autenticação Google…');
+    try {
+        await signInWithPopup(auth, provider);
+    } catch(e) {
+        if (['auth/popup-blocked', 'auth/cancelled-popup-request', 'auth/popup-closed-by-user'].includes(e.code)) {
+            try {
+                await signInWithRedirect(auth, provider);
+            } catch(err) {
+                say(authError(err)); 
+                btn.disabled = false;
+            }
+        } else {
+            say(authError(e)); 
+            btn.disabled = false;
+        }
+    }
+});
+
+$('resetPasswordBtn').addEventListener('click', async () => {
+    const email = $('loginEmail').value.trim();
+    if(!email) {
+        say('Digite seu e-mail para receber o link de redefinição.');
+        return;
+    }
+    try {
+        await sendPasswordResetEmail(auth, email);
+        say('E-mail de redefinição enviado. Verifique sua caixa de entrada.');
+    } catch(e) {
+        say(authError(e));
+    }
+});
+
+$('logoutBtn').addEventListener('click', () => signOut(auth));
+
 $('syncRemoteBtn').addEventListener('click', async () => {
     if(!activeSong) return;
-    if(!stream) { alert("Ligue o microfone primeiro!"); return; }
-    if(!trackBuffers.instrument) { alert("Carregue o playback do TV Box antes de sincronizar!"); return; }
+    if(!window.appCtx || window.appCtx() === null) { alert("Ligue o microfone primeiro!"); return; }
+    if(!window.appTrackBuffers || !window.appTrackBuffers.instrument) { alert("Carregue o playback do TV Box antes de sincronizar!"); return; }
     
     $('playerStatus').textContent = 'Agendando play simultâneo...';
     try {
-        // Agenda o play exato para daqui a 5 segundos (5000ms)
         const triggerTime = Date.now() + 5000;
         await setDoc(doc(db, 'sessoes_treino', activeSong.id), {
             action: 'play_record',
@@ -663,15 +831,16 @@ $('studentSongSelect').addEventListener('change', () => {
     if(s) loadSong(s);
 });
 
-$('loginForm').addEventListener('submit', async e => {
-    e.preventDefault();
-    try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); }
-    catch(err) { $('authMessage').textContent = "Credenciais inválidas."; }
-});
-
-$('logoutBtn').addEventListener('click', () => signOut(auth));
+try { await getRedirectResult(auth) } catch(e) { say(authError(e)) }
+const codeFromUrl = new URLSearchParams(location.search).get('convite');
+if(codeFromUrl) {
+    $('registerFields').classList.remove('hidden');
+    $('inviteCodeInput').value = codeFromUrl.toUpperCase();
+    $('registerBtn').textContent = 'Confirmar cadastro com convite';
+}
 
 onAuthStateChanged(auth, user => {
+    if(registering) return;
     if(user) enter(user);
     else {
         currentUser=null; activeSong=null;
@@ -685,7 +854,8 @@ document.querySelectorAll('[data-training-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
         $('playbackPanel').classList.remove('hidden');
         const mode = btn.dataset.trainingMode;
-        currentTrainingMode = mode;
+        if(window.appCurrentTrainingMode) window.appCurrentTrainingMode(mode);
+        
         if(mode === 'silvane') {
             $('teacherGuidance').textContent = '"Silvane, acompanhe esta melodia. O foco é na voz principal."';
             $('trackLeadVolume').value = 0.6; $('trackHarmonyVolume').value = 0.0;
@@ -697,8 +867,8 @@ document.querySelectorAll('[data-training-mode]').forEach(btn => {
             $('trackLeadVolume').value = 0.1; $('trackHarmonyVolume').value = 0.1;
         }
         
-        if(player.gains['lead'] && ctx) player.gains['lead'].gain.value = Number($('trackLeadVolume').value);
-        if(player.gains['harmony'] && ctx) player.gains['harmony'].gain.value = Number($('trackHarmonyVolume').value);
+        if(window.appPlayer && window.appPlayer.gains['lead'] && window.appCtx()) window.appPlayer.gains['lead'].gain.value = Number($('trackLeadVolume').value);
+        if(window.appPlayer && window.appPlayer.gains['harmony'] && window.appCtx()) window.appPlayer.gains['harmony'].gain.value = Number($('trackHarmonyVolume').value);
         
         $('playbackPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
