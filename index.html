@@ -9,15 +9,16 @@
 <link rel="icon" href="/icons/icon-192.png">
 <style>
 /* CSS DA ESTRELINHA */
-:root { --bg: #09111e; --panel: #131f31; --cyan: #42d8e8; --green: #39dfa5; --yellow: #ffd166; --txt: #f6f8ff; --muted: #9aabc3; }
+:root { --bg: #09111e; --panel: #131f31; --cyan: #42d8e8; --green: #39dfa5; --yellow: #ffd166; --red: #ff758f; --txt: #f6f8ff; --muted: #9aabc3; }
 * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
 body { margin: 0; background: radial-gradient(ellipse at top, #1b2e49 0, #09111e 58%); color: var(--txt); padding-bottom: 50px; }
 .hidden { display: none !important; }
-button { font: inherit; cursor: pointer; border: 1px solid #3b5271; border-radius: 11px; background: #263953; color: var(--txt); padding: 10px 13px; font-weight: 650; }
+button { font: inherit; cursor: pointer; border: 1px solid #3b5271; border-radius: 11px; background: #263953; color: var(--txt); padding: 10px 13px; font-weight: 650; transition: transform 0.1s; }
+button:active { transform: scale(0.97); }
 button.primary { background: linear-gradient(135deg, #147f96, #276db7); border-color: #328da9; }
 button.good { background: linear-gradient(135deg, #087f69, #19a879); border-color: #087f69; }
 button.warn { background: linear-gradient(135deg, #a64160, #d65c70); border-color: #99585e; }
-button:disabled { opacity: 0.45; cursor: not-allowed; }
+button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 input, select { font: inherit; width: 100%; background: #0d1929; color: var(--txt); border: 1px solid #2d405b; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
 
 /* LAYOUT */
@@ -33,7 +34,7 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
 /* BOTOES AULAS */
 .main-actions { display: grid; grid-template-columns: 1fr; gap: 15px; }
 @media(min-width: 600px) { .main-actions { grid-template-columns: repeat(3, 1fr); } }
-.action-btn { min-height: 110px; border-radius: 16px; text-align: left; padding: 18px; display: flex; flex-direction: column; justify-content: center; gap: 5px; background: linear-gradient(145deg, #203e5b, #18283e); border: 2px solid transparent; transition: all 0.2s; }
+.action-btn { min-height: 110px; border-radius: 16px; text-align: left; padding: 18px; display: flex; flex-direction: column; justify-content: center; gap: 5px; background: linear-gradient(145deg, #203e5b, #18283e); border: 2px solid transparent; transition: all 0.2s; cursor: pointer; }
 .action-btn strong { font-size: 16px; }
 .action-btn span { font-size: 12px; color: #bdcce0; }
 .action-btn:hover { transform: scale(0.98); }
@@ -47,25 +48,25 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
 .playerTransport { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
 .advanced-settings { margin-top: 30px; padding-top: 20px; border-top: 1px solid #2d405b; text-align: left; }
 .advanced-settings summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: bold; outline: none; }
+
+/* CÍRCULO DO SCORE */
+.score-circle { width: 120px; height: 120px; margin: 20px auto; border-radius: 50%; border: 6px solid var(--green); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color 0.3s; background: #0c1524; }
+.score-circle span.value { font-size: 32px; font-weight: 800; color: white; line-height: 1; margin-bottom: 2px; }
+.score-circle span.label { font-size: 10px; color: var(--muted); font-weight: bold; letter-spacing: 1px; }
 </style>
 </head>
 <body>
 
 <section id="authGate" class="authGate">
-  
-  <!-- MODAL DE LINK MÁGICO (Visível apenas se houver ?convite= na URL) -->
   <div class="authCard hidden" id="magicLinkModal">
     <div class="estrelinha-avatar">⭐</div>
     <h1 style="margin: 0 0 5px;">Bem-vinda!</h1>
     <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Você recebeu um acesso exclusivo para o estúdio.</p>
-    
     <input id="magicName" type="text" placeholder="Qual é o seu nome? (Ex: Marla)" style="margin-bottom: 20px; font-size: 16px; text-align: center;">
-    
     <button class="primary" id="magicEnterBtn" style="width: 100%; min-height: 50px; font-size: 16px;">Entrar no Estúdio</button>
     <p class="small muted" id="magicMsg" style="margin-top: 15px; color: var(--yellow);"></p>
   </div>
 
-  <!-- TELA DE LOGIN PADRÃO (Para o Admin) -->
   <div class="authCard" id="standardLogin">
     <div class="estrelinha-avatar">⭐</div>
     <h1 style="margin: 0 0 5px;">Assistente Vocal</h1>
@@ -78,7 +79,6 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
     <button class="primary" id="googleLoginBtn" type="button" style="width: 100%; margin-top: 15px; background: #f4f7fb; color: #1b2736;">Entrar com Google</button>
     <p class="small muted" id="authMessage" style="margin-top: 15px;"></p>
   </div>
-
 </section>
 
 <main class="app-container appLocked hidden" id="appMain">
@@ -86,7 +86,6 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
     <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
       <span>👤 <span id="savedState">Cantora</span></span>
       <span id="cloudState" style="color: var(--green);">Conectado</span>
-      <!-- INDICADOR DE QUEM ESTÁ ONLINE -->
       <div id="presenceIndicator" style="display: flex; gap: 8px; margin-left: 10px; background: #0c1524; padding: 5px 10px; border-radius: 8px; border: 1px solid #2d405b;">
         <span style="color:var(--muted);">Procurando parceiras...</span>
       </div>
@@ -133,11 +132,22 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
     
     <div id="micQuickStatus" class="small muted">O microfone está desligado.</div>
 
-    <div style="margin: 25px 0;">
-      <div class="small muted">NOTA ESPERADA:</div>
-      <div class="target-note" id="expectedNote">—</div>
-      <div class="small muted">SUA VOZ: <span id="note" style="color: white; font-weight: bold; font-size: 18px;">—</span> <span id="cents"></span></div>
-      <div id="pitchStatus" class="small muted" style="margin-top: 5px;">Sustente uma vogal para o afinador ler</div>
+    <!-- AREA DO AFINADOR E PONTUAÇÃO (SCORE) -->
+    <div style="margin: 25px 0; display: grid; grid-template-columns: 1fr; gap: 20px;">
+      
+      <div>
+        <div class="score-circle" id="scoreCircle">
+          <span class="value" id="liveScore">100%</span>
+          <span class="label">PRECISÃO</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="small muted">NOTA ESPERADA:</div>
+        <div class="target-note" id="expectedNote">—</div>
+        <div class="small muted">SUA VOZ: <span id="note" style="color: white; font-weight: bold; font-size: 18px;">—</span> <span id="cents"></span></div>
+        <div id="pitchStatus" class="small muted" style="margin-top: 5px;">Sustente uma vogal para o afinador ler</div>
+      </div>
     </div>
 
     <!-- CONTROLES DO PLAYER E GRAVAÇÃO REMOTA -->
@@ -154,7 +164,7 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
     <div style="margin-top: 15px; font-size: 13px; color: var(--muted);" id="playerPosition">00:00 / 00:00</div>
     <input class="playerSeek" id="playerSeek" type="range" min="0" max="1000" step="1" value="0" style="margin-top: 10px;">
     
-    <div id="playerStatus" class="small muted" style="margin-top: 10px; color: var(--yellow);">Aguardando reprodução...</div>
+    <div id="playerStatus" class="small muted" style="margin-top: 10px; color: var(--yellow);">Verificando áudio no servidor...</div>
 
     <details class="advanced-settings">
       <summary>⚙️ Ajustes Avançados e Servidor TV Box</summary>
@@ -200,6 +210,10 @@ let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest
 let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
 
+// VARIÁVEIS DE PONTUAÇÃO (SCORE)
+let evalFrames = 0;
+let scoreSum = 0;
+
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
 
 const TRACKS=['instrument','lead','harmony']; const trackBuffers={instrument:null,lead:null,harmony:null};
@@ -236,9 +250,15 @@ function updatePlayerUI(){
 }
 function stopPlayerSources(){ player.generation++; for(const item of player.sources){ try{item.stop()}catch{} try{item.disconnect()}catch{} } player.sources=[]; }
 
+function resetScoreUI() {
+    evalFrames = 0; scoreSum = 0;
+    $('liveScore').textContent = '100%';
+    $('scoreCircle').style.borderColor = 'var(--green)';
+}
+
 async function startPlayback(){
     const loaded=TRACKS.filter(k=>trackBuffers[k]);
-    if(!loaded.length){ $('playerStatus').textContent='Carregue o playback do TV Box primeiro.'; return;}
+    if(!loaded.length){ $('playerStatus').textContent='Aguardando áudio do TV Box.'; return;}
     
     const ac=ensurePlayerGraph();
     if(ac.state==='suspended') await ac.resume();
@@ -256,6 +276,9 @@ async function startPlayback(){
     
     player.offset=offset; player.startedAt=when; player.playing=true; const myGeneration=player.generation;
     
+    // Zera o placar no inicio da música
+    resetScoreUI();
+    
     clearInterval(player.timer);
     player.timer=setInterval(()=>{
         if(!player.playing||myGeneration!==player.generation) return;
@@ -268,8 +291,10 @@ async function startPlayback(){
         if (active) {
             const target = currentTrainingMode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
             $('expectedNote').textContent = midiName(target);
+            window.activeTargetMidi = target; // Passa pro detector YIN
         } else {
             $('expectedNote').textContent = '—';
+            window.activeTargetMidi = null;
         }
     }, 60);
     
@@ -279,11 +304,14 @@ async function startPlayback(){
 function stopPlayback(reset=true){
     if(player.playing){ player.offset=playerPosition(); player.playing=false; }
     stopPlayerSources(); clearInterval(player.timer); player.timer=null;
-    if(reset) player.offset=0; updatePlayerUI();
+    if(reset) { player.offset=0; resetScoreUI(); }
+    window.activeTargetMidi = null;
+    updatePlayerUI();
 }
 function pausePlayback(){
     if(!player.playing) return; player.offset=playerPosition(); player.playing=false;
     stopPlayerSources(); clearInterval(player.timer); player.timer=null; updatePlayerUI(); $('playerStatus').textContent='Pausado.';
+    window.activeTargetMidi = null;
 }
 function seekPlayback(value){
     const wasPlaying=player.playing; const pos=player.duration*(Number(value)/1000);
@@ -293,7 +321,7 @@ function seekPlayback(value){
 }
 
 async function loadAVTrackFromUrl(key,url,name){
-    stopPlayback(true); $('playerStatus').textContent='Carregando áudio do TV Box... aguarde.';
+    stopPlayback(true); $('playerStatus').textContent='Baixando playback do servidor...';
     try {
         const ac=ensurePlayerGraph(); if(ac.state==='suspended') await ac.resume();
         const response=await fetch(url,{mode:'cors',cache:'no-store'});
@@ -303,7 +331,7 @@ async function loadAVTrackFromUrl(key,url,name){
         $('playerSeek').value='0'; player.offset=0; updatePlayerUI();
         $('playerStatus').textContent=`Áudio carregado com sucesso!`; $('recordBtn').disabled = false;
         return true;
-    } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha ao carregar: ${e.message}`; throw e; }
+    } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha ao carregar áudio: ${e.message}`; throw e; }
 }
 
 async function fetchServerAudioList(){
@@ -320,6 +348,7 @@ async function fetchServerAudioList(){
         select.replaceChildren(new Option('Erro de Conexão - Tailscale online?','')); status.textContent='Falha ao conectar com o backend do TV Box.'; return [];
     }
 }
+window.fetchServerAudioList = fetchServerAudioList;
 
 $('loadServerAudioBtn').addEventListener('click', async ()=>{
     const filename=$('serverAudioSelect').value; if(!filename) return;
@@ -355,12 +384,41 @@ function yin(buffer,sampleRate){
 
 function liveLoop(){
     if(!analyser) return; const raw=new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(raw); const p=yin(raw,ctx.sampleRate);
+    
+    // SISTEMA DE PONTUAÇÃO E FEEDBACK VISUAL
+    let targetMidiNow = window.activeTargetMidi || null;
+
     if(p && p.clarity>0.65){
         const ni=noteInfo(p.freq); $('note').textContent = ni.name; $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
         $('pitchStatus').textContent = 'Analisando voz...'; lastValid=Date.now();
+        
+        // Avaliação de Score só ocorre se tiver alvo
+        if(player.playing && targetMidiNow !== null) {
+            evalFrames++;
+            let centsDiff = Math.abs(Math.round((freqMidi(p.freq) - targetMidiNow) * 100));
+            if (centsDiff <= 30) scoreSum += 100;      // Na mosca (Verde)
+            else if (centsDiff <= 60) scoreSum += 50;  // Quase (Amarelo)
+            else scoreSum += 10;                       // Desafinou (Vermelho)
+        }
     } else {
         if(Date.now()-lastValid>1000){ $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Sustente uma vogal para o afinador ler'; }
+        
+        // Penalidade por não cantar quando deveria
+        if(player.playing && targetMidiNow !== null) {
+            evalFrames++;
+            scoreSum += 0;
+        }
     }
+
+    // Atualiza a Bolinha de Score
+    if(evalFrames > 0) {
+        let currentScore = Math.round(scoreSum / evalFrames);
+        $('liveScore').textContent = currentScore + '%';
+        if(currentScore >= 80) $('scoreCircle').style.borderColor = 'var(--green)';
+        else if(currentScore >= 60) $('scoreCircle').style.borderColor = 'var(--yellow)';
+        else $('scoreCircle').style.borderColor = 'var(--red)';
+    }
+
     raf=setTimeout(()=>requestAnimationFrame(liveLoop),75);
 }
 
@@ -371,7 +429,8 @@ async function startMic(){
         audioContext(); if(ctx.state==='suspended') await ctx.resume();
         source = ctx.createMediaStreamSource(stream); analyser = ctx.createAnalyser(); analyser.fftSize=4096; analyser.smoothingTimeConstant=0;
         source.connect(analyser); $('micQuickStatus').textContent = 'Microfone ligado e ouvindo!'; $('micQuickStatus').style.color = 'var(--green)';
-        $('startMic').disabled=true; $('stopMic').disabled=false; liveLoop();
+        $('startMic').disabled=true; $('stopMic').disabled=false; 
+        resetScoreUI(); liveLoop();
     }catch(e){ $('micQuickStatus').textContent = 'Erro no mic: ' + e.message; $('micQuickStatus').style.color = 'var(--yellow)'; }
 }
 
@@ -427,7 +486,7 @@ window.appStartRecording = startRecording; window.appPlayer = player; window.app
 
 <script type="module">
 // ============================================================================
-// 3. FIREBASE AUTH, MAGICK LINK E STATUS ONLINE
+// 3. FIREBASE AUTH E CARREGAMENTO AUTOMÁTICO
 // ============================================================================
 import { auth, db } from './firebase-config.js';
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
@@ -439,7 +498,6 @@ const gate = $('authGate'), main = $('appMain');
 let currentUser=null, activeSong=null, assignedSongs=[], isAdmin=false;
 let syncUnsubscribe = null, presenceUnsubscribe = null;
 
-// LÓGICA DO LINK MÁGICO (Oculta o login padrão)
 const urlParams = new URLSearchParams(location.search);
 const fastCode = urlParams.get('convite');
 if(fastCode) {
@@ -455,7 +513,6 @@ $('magicEnterBtn').addEventListener('click', async () => {
     $('magicMsg').textContent = 'Preparando seu estúdio...';
     $('magicMsg').style.color = 'var(--cyan)';
     
-    // Gera credenciais automáticas com base no ID para que o Auth nativo funcione transparente
     const dummyEmail = fastCode.toLowerCase() + '@estrelinha.app';
     const dummyPass = fastCode.toUpperCase() + '1234';
     
@@ -487,7 +544,6 @@ async function activateInviteForUser(user,code,name=''){
     await setDoc(doc(db,'usuarios',user.uid,'perfil','dados'),{nome:name, email:user.email, role:'aluna', inviteCode:normalized, musicaIds:ids, createdAt:serverTimestamp()});
 }
 
-// STATUS ONLINE (RADAR)
 async function updatePresence(isOnline) {
     if (!currentUser) return;
     try {
@@ -496,7 +552,7 @@ async function updatePresence(isOnline) {
             online: isOnline,
             lastSeen: serverTimestamp()
         }, { merge: true });
-    } catch(e) { console.warn("Erro ao atualizar status (Verifique regras do Firestore)", e); }
+    } catch(e) { console.warn("Erro ao atualizar status", e); }
 }
 
 window.addEventListener('beforeunload', () => updatePresence(false));
@@ -523,9 +579,8 @@ async function enter(user){
             if(!profile.exists()) throw new Error('Perfil não encontrado. Peça um novo link.');
             
             $('savedState').textContent = profile.data().nome || 'Cantora';
-            updatePresence(true); // Marca como online
+            updatePresence(true); 
             
-            // Ativa o ouvinte para ver as parceiras online
             if(presenceUnsubscribe) presenceUnsubscribe();
             presenceUnsubscribe = onSnapshot(collection(db, 'status'), (snap) => {
                 const indicator = $('presenceIndicator'); indicator.innerHTML = '';
@@ -563,7 +618,6 @@ async function loadSong(song){
     window.activeSong = song;
     $('teacherSongTitle').textContent = song.titulo || 'Treino Vocal';
     
-    // LISTENER PARA O SINCRONISMO REMOTO
     if(syncUnsubscribe) syncUnsubscribe();
     syncUnsubscribe = onSnapshot(doc(db, 'sessoes_treino', song.id), (snap) => {
         if (!snap.exists()) return;
@@ -581,14 +635,21 @@ async function loadSong(song){
     if (window.fetchServerAudioList) {
         const files = await window.fetchServerAudioList();
         const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
-        if(savedLocal && files.some(f => f.name === savedLocal)){
-            $('serverAudioSelect').value = savedLocal;
+        
+        let fileToAutoLoad = null;
+        if (savedLocal && files.some(f => f.name === savedLocal)) {
+            fileToAutoLoad = savedLocal;
+        } else if (files.length > 0) {
+            fileToAutoLoad = files[0].name;
+        }
+
+        if (fileToAutoLoad) {
+            $('serverAudioSelect').value = fileToAutoLoad;
             $('loadServerAudioBtn').click();
         }
     }
 }
 
-// Eventos de Autenticação Padrão (Admin/Google)
 $('loginForm').addEventListener('submit', async e => {
     e.preventDefault();
     try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); }
@@ -601,14 +662,14 @@ $('googleLoginBtn').addEventListener('click', async () => {
 });
 
 $('logoutBtn').addEventListener('click', () => {
-    updatePresence(false); // Fica offline antes de sair
+    updatePresence(false);
     signOut(auth);
 });
 
 $('syncRemoteBtn').addEventListener('click', async () => {
     if(!window.activeSong) return;
     if(!window.appCtx || window.appCtx() === null) { alert("Ligue o microfone primeiro!"); return; }
-    if(!window.appTrackBuffers || !window.appTrackBuffers.instrument) { alert("Carregue o playback do TV Box antes de sincronizar!"); return; }
+    if(!window.appTrackBuffers || !window.appTrackBuffers.instrument) { alert("Aguarde carregar o playback antes de sincronizar!"); return; }
     
     $('playerStatus').textContent = 'Agendando play simultâneo...';
     try {
