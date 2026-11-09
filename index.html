@@ -8,15 +8,15 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/icons/icon-192.png">
 <style>
-/* CSS DA ESTRELINHA E IMAGEM DE FUNDO */
+/* CSS DA ESTRELINHA E IMAGEM DE FUNDO SIL & MARLA */
 :root { --panel: rgba(19, 31, 49, 0.90); --cyan: #42d8e8; --green: #39dfa5; --yellow: #ffd166; --red: #ff758f; --txt: #f6f8ff; --muted: #9aabc3; }
 * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
 
 body { 
   margin: 0; 
   background-color: #09111e;
-  /* A imagem deve estar na mesma pasta do index.html no Vercel */
-  background-image: linear-gradient(rgba(9, 17, 30, 0.88), rgba(9, 17, 30, 0.98)), url('/marilia-mendonca-canta-com-di-paullo-e-paulino2.webp');
+  /* Imagem Sil & Marla com uma camada escura suave para garantir leitura do painel */
+  background-image: linear-gradient(rgba(9, 17, 30, 0.75), rgba(9, 17, 30, 0.95)), url('1001384647.png');
   background-position: center top;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -127,8 +127,8 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
 
   <div class="main-actions" aria-label="Escolha sua aula">
     <button class="action-btn" type="button" data-training-mode="silvane">
-      <strong>🎤 VOZ PRINCIPAL</strong>
-      <span>Silvane · Treino da melodia base</span>
+      <strong>🎤 TREINAR SIL</strong>
+      <span>Sil · Treino da melodia base</span>
     </button>
     <button class="action-btn" type="button" data-training-mode="marla">
       <strong>🎶 SEGUNDA VOZ</strong>
@@ -200,7 +200,7 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
       <div style="margin-top: 20px;">
         <strong style="color: var(--cyan); font-size: 13px; display: block; margin-bottom: 10px;">🔊 MESA DE SOM (Volumes)</strong>
         <label class="small muted">Volume Playback (Banda)</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
-        <label class="small muted">Volume Voz Principal (Silvane)</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
+        <label class="small muted">Volume Voz Principal (Sil)</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
         <label class="small muted">Volume Segunda Voz (Marla/Anderson)</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
       </div>
     </details>
@@ -380,7 +380,7 @@ async function fetchServerAudioList(){
         if(!response.ok) throw new Error('Erro de conexão');
         const data=await response.json(); const files=data.files.filter(f=>/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
         select.replaceChildren();
-        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado.'; } 
+        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado na pasta uploads do MXQ Pro.'; } 
         else { files.forEach(f=>{ select.add(new Option(`${f.name} (${(Number(f.bytes||0)/1048576).toFixed(1)} MB)`,f.name)); }); status.textContent=`Encontrados ${files.length} arquivos.`; }
         return files;
     } catch(e) {
@@ -673,7 +673,6 @@ async function loadSong(song){
         }
     });
 
-    // AUTO-LOAD RESOLVIDO: Ele aciona o clique do botão de forma garantida se o áudio existir.
     if (window.fetchServerAudioList) {
         try {
             const files = await window.fetchServerAudioList();
@@ -688,7 +687,7 @@ async function loadSong(song){
 
             if (fileToAutoLoad) {
                 $('serverAudioSelect').value = fileToAutoLoad;
-                $('loadServerAudioBtn').click(); // Simula o clique exato que funciona manualmente
+                $('loadServerAudioBtn').click(); 
             }
         } catch(e) {
             console.warn("Falha no Auto-Load do áudio:", e);
@@ -749,7 +748,7 @@ document.querySelectorAll('[data-training-mode]').forEach(btn => {
         if(window.appCurrentTrainingMode) window.appCurrentTrainingMode(mode);
         
         if(mode === 'silvane') {
-            $('teacherGuidance').textContent = '"Silvane, acompanhe esta melodia."';
+            $('teacherGuidance').textContent = '"Sil, acompanhe esta melodia."';
             $('trackLeadVolume').value = 0.6; $('trackHarmonyVolume').value = 0.0;
         } else if (mode === 'marla') {
             $('teacherGuidance').textContent = '"Marla (ou Anderson), agora é a sua vez de entrar na harmonia."';
