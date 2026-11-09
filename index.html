@@ -8,14 +8,18 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/icons/icon-192.png">
 <style>
-/* CSS DA ESTRELINHA */
+/* CSS DA ESTRELINHA E IMAGEM DE FUNDO */
 :root { --panel: rgba(19, 31, 49, 0.90); --cyan: #42d8e8; --green: #39dfa5; --yellow: #ffd166; --red: #ff758f; --txt: #f6f8ff; --muted: #9aabc3; }
 * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
 
-/* IMAGEM DE FUNDO COM CAMADA ESCURA */
 body { 
   margin: 0; 
-  background: linear-gradient(rgba(9, 17, 30, 0.85), rgba(9, 17, 30, 0.95)), url('marilia-mendonca-canta-com-di-paullo-e-paulino2.webp') no-repeat center center fixed;
+  background-color: #09111e;
+  /* A imagem deve estar na mesma pasta do index.html no Vercel */
+  background-image: linear-gradient(rgba(9, 17, 30, 0.88), rgba(9, 17, 30, 0.98)), url('/marilia-mendonca-canta-com-di-paullo-e-paulino2.webp');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
   color: var(--txt); 
   padding-bottom: 50px; 
@@ -77,7 +81,7 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
     <div class="estrelinha-avatar">⭐</div>
     <h1 style="margin: 0 0 5px;">Bem-vinda!</h1>
     <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Você recebeu um acesso exclusivo para o estúdio.</p>
-    <input id="magicName" type="text" placeholder="Qual é o seu nome? (Ex: Marla)" style="margin-bottom: 20px; font-size: 16px; text-align: center;">
+    <input id="magicName" type="text" placeholder="Qual é o seu nome?" style="margin-bottom: 20px; font-size: 16px; text-align: center;">
     <button class="primary" id="magicEnterBtn" style="width: 100%; min-height: 50px; font-size: 16px;">Entrar no Estúdio</button>
     <p class="small muted" id="magicMsg" style="margin-top: 15px; color: var(--yellow);"></p>
   </div>
@@ -85,7 +89,7 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
   <div class="authCard" id="standardLogin">
     <div class="estrelinha-avatar">⭐</div>
     <h1 style="margin: 0 0 5px;">Assistente Vocal</h1>
-    <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Treino de afinação e segunda voz.</p>
+    <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Treino de afinação e dueto remoto.</p>
     <form id="loginForm" style="display: grid; gap: 10px; text-align: left;">
       <input id="loginEmail" type="email" required placeholder="Seu e-mail">
       <input id="loginPassword" type="password" required placeholder="Sua senha">
@@ -99,10 +103,10 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
 <main class="app-container appLocked hidden" id="appMain">
   <div class="top-bar">
     <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-      <span>👤 <span id="savedState">Cantora</span></span>
+      <span>👤 <span id="savedState">Cantor(a)</span></span>
       <span id="cloudState" style="color: var(--green);">Conectado</span>
       <div id="presenceIndicator" style="display: flex; gap: 8px; margin-left: 10px; background: rgba(12, 21, 36, 0.8); padding: 5px 10px; border-radius: 8px; border: 1px solid #2d405b; backdrop-filter: blur(5px);">
-        <span style="color:var(--muted);">Procurando parceiras...</span>
+        <span style="color:var(--muted);">Procurando parceiros...</span>
       </div>
     </div>
     <div>
@@ -123,16 +127,16 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
 
   <div class="main-actions" aria-label="Escolha sua aula">
     <button class="action-btn" type="button" data-training-mode="silvane">
-      <strong>🎤 TREINAR SILVANE</strong>
-      <span>Melodia principal · Nota por nota</span>
+      <strong>🎤 VOZ PRINCIPAL</strong>
+      <span>Silvane · Treino da melodia base</span>
     </button>
     <button class="action-btn" type="button" data-training-mode="marla">
-      <strong>🎶 TREINAR MARLA</strong>
-      <span>Segunda voz · Harmonia</span>
+      <strong>🎶 SEGUNDA VOZ</strong>
+      <span>Marla / Anderson · Treino de harmonia</span>
     </button>
     <button class="action-btn" type="button" data-training-mode="duet">
-      <strong>♫ CANTAR JUNTAS</strong>
-      <span>Vozes alinhadas com playback</span>
+      <strong>♫ CANTAR EM DUETO</strong>
+      <span>Vozes alinhadas sincronizadas</span>
     </button>
   </div>
 
@@ -197,7 +201,7 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
         <strong style="color: var(--cyan); font-size: 13px; display: block; margin-bottom: 10px;">🔊 MESA DE SOM (Volumes)</strong>
         <label class="small muted">Volume Playback (Banda)</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
         <label class="small muted">Volume Voz Principal (Silvane)</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
-        <label class="small muted">Volume Segunda Voz (Marla)</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
+        <label class="small muted">Volume Segunda Voz (Marla/Anderson)</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
       </div>
     </details>
   </section>
@@ -224,7 +228,6 @@ let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest
 let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
 
-// VARIÁVEIS DO SCORE
 let evalFrames = 0; let scoreSum = 0;
 
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
@@ -297,12 +300,11 @@ async function startPlayback(){
         if(!player.playing||myGeneration!==player.generation) return;
         const pos=playerPosition();
         
-        // FINAL DA MÚSICA - Exibe o Score Final
         if(pos>=player.duration-0.03){ 
             let finalScore = evalFrames > 0 ? Math.round(scoreSum / evalFrames) : 0;
             stopPlayback(true); 
             $('playerStatus').textContent=`Música Concluída! Precisão Final: ${finalScore}%`; 
-            $('liveScore').textContent = finalScore + '%'; // Mantém o score na tela
+            $('liveScore').textContent = finalScore + '%'; 
             $('karaokeCue').textContent = 'FIM';
             $('karaokeCue').className = 'karaoke-cue';
             return; 
@@ -310,7 +312,6 @@ async function startPlayback(){
         
         updatePlayerUI();
         
-        // LÓGICA DE KARAOKÊ E SCORE
         let events = []; try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
         
         const active = events.find(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
@@ -379,7 +380,7 @@ async function fetchServerAudioList(){
         if(!response.ok) throw new Error('Erro de conexão');
         const data=await response.json(); const files=data.files.filter(f=>/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
         select.replaceChildren();
-        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado na pasta uploads do MXQ Pro.'; } 
+        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado.'; } 
         else { files.forEach(f=>{ select.add(new Option(`${f.name} (${(Number(f.bytes||0)/1048576).toFixed(1)} MB)`,f.name)); }); status.textContent=`Encontrados ${files.length} arquivos.`; }
         return files;
     } catch(e) {
@@ -413,8 +414,7 @@ $('playerSeek').addEventListener('change', e=>seekPlayback(e.target.value));
 
 function yin(buffer,sampleRate){
     let size=buffer.length,rms=0; for(let i=0;i<size;i++) rms+=buffer[i]*buffer[i]; rms=Math.sqrt(rms/size); 
-    // CORREÇÃO DA SENSIBILIDADE DO MICROFONE!
-    if(rms<0.003) return null; // Antes era 0.008, agora detecta vozes mais baixas
+    if(rms<0.003) return null;
     
     let minTau=Math.floor(sampleRate/1000), maxTau=Math.min(Math.floor(sampleRate/65),Math.floor(size/2)), diff=new Float32Array(maxTau+1), cmnd=new Float32Array(maxTau+1);
     for(let tau=minTau;tau<=maxTau;tau++){ let sum=0; for(let i=0;i<size-maxTau;i++){ let d=buffer[i]-buffer[i+tau]; sum+=d*d; } diff[tau]=sum; }
@@ -431,7 +431,7 @@ function liveLoop(){
 
     if(p && p.clarity>0.65){
         const ni=noteInfo(p.freq); $('note').textContent = ni.name; $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
-        $('pitchStatus').textContent = 'Afinando voz...'; lastValid=Date.now();
+        $('pitchStatus').textContent = 'Analisando voz...'; lastValid=Date.now();
         
         if(player.playing && targetMidiNow !== null) {
             evalFrames++;
@@ -441,15 +441,13 @@ function liveLoop(){
             else scoreSum += 10;
         }
     } else {
-        if(Date.now()-lastValid>1000){ $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Cante para o afinador ler'; }
+        if(Date.now()-lastValid>1000){ $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Sustente uma vogal para o afinador ler'; }
         
-        // Penalidade por não cantar quando deveria
         if(player.playing && targetMidiNow !== null) {
             evalFrames++; scoreSum += 0;
         }
     }
 
-    // ATUALIZAÇÃO VISUAL DO SCORE
     if(evalFrames > 0) {
         let currentScore = Math.round(scoreSum / evalFrames);
         $('liveScore').textContent = currentScore + '%';
@@ -675,6 +673,7 @@ async function loadSong(song){
         }
     });
 
+    // AUTO-LOAD RESOLVIDO: Ele aciona o clique do botão de forma garantida se o áudio existir.
     if (window.fetchServerAudioList) {
         try {
             const files = await window.fetchServerAudioList();
@@ -689,21 +688,11 @@ async function loadSong(song){
 
             if (fileToAutoLoad) {
                 $('serverAudioSelect').value = fileToAutoLoad;
-                $('playerStatus').textContent='Baixando playback do servidor...';
-                const url = 'https://mxqpro-h313-1.tail8b8cce.ts.net:8443/api/audio/' + encodeURIComponent(fileToAutoLoad);
-                
-                if(window.appTrackBuffers) {
-                    const res = await fetch(url,{mode:'cors',cache:'no-store'});
-                    if(res.ok) {
-                        const raw = await res.arrayBuffer();
-                        const ac = window.appCtx();
-                        window.appTrackBuffers['instrument'] = await ac.decodeAudioData(raw);
-                        $('playerStatus').textContent=`Áudio carregado com sucesso!`; 
-                        $('recordBtn').disabled = false;
-                    }
-                }
+                $('loadServerAudioBtn').click(); // Simula o clique exato que funciona manualmente
             }
-        } catch(e) { console.warn("Falha no Auto-Load do áudio:", e); }
+        } catch(e) {
+            console.warn("Falha no Auto-Load do áudio:", e);
+        }
     }
 }
 
@@ -763,10 +752,10 @@ document.querySelectorAll('[data-training-mode]').forEach(btn => {
             $('teacherGuidance').textContent = '"Silvane, acompanhe esta melodia."';
             $('trackLeadVolume').value = 0.6; $('trackHarmonyVolume').value = 0.0;
         } else if (mode === 'marla') {
-            $('teacherGuidance').textContent = '"Marla, agora é sua vez de entrar."';
+            $('teacherGuidance').textContent = '"Marla (ou Anderson), agora é a sua vez de entrar na harmonia."';
             $('trackLeadVolume').value = 0.2; $('trackHarmonyVolume').value = 0.8;
         } else {
-            $('teacherGuidance').textContent = '"Vamos cantar juntas! Playback pronto."';
+            $('teacherGuidance').textContent = '"Vamos cantar em dueto! Playback pronto."';
             $('trackLeadVolume').value = 0.1; $('trackHarmonyVolume').value = 0.1;
         }
         
