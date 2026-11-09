@@ -15,7 +15,6 @@
 body { 
   margin: 0; 
   background-color: #09111e;
-  /* Imagem Sil & Marla com uma camada escura suave para garantir leitura do painel */
   background-image: linear-gradient(rgba(9, 17, 30, 0.75), rgba(9, 17, 30, 0.95)), url('1001384647.png');
   background-position: center top;
   background-repeat: no-repeat;
@@ -37,8 +36,6 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
 /* LAYOUT TELA DE LOGIN */
 .authGate { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
 .authCard { width: min(100%, 420px); background: var(--panel); border: 1px solid #2d405b; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 18px 60px rgba(0,0,0,0.6); backdrop-filter: blur(8px); }
-
-/* ESTRELINHA */
 .estrelinha-avatar { width: 90px; height: 90px; margin: 0 auto 15px; background: radial-gradient(circle at 30% 30%, #fff4bd, #ffd166 50%, #ff9f1c); border-radius: 50%; display: grid; place-items: center; font-size: 50px; box-shadow: 0 0 25px #ffd16644; }
 
 .app-container { max-width: 800px; margin: 0 auto; padding: 20px; }
@@ -106,7 +103,7 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
       <span>👤 <span id="savedState">Cantor(a)</span></span>
       <span id="cloudState" style="color: var(--green);">Conectado</span>
       <div id="presenceIndicator" style="display: flex; gap: 8px; margin-left: 10px; background: rgba(12, 21, 36, 0.8); padding: 5px 10px; border-radius: 8px; border: 1px solid #2d405b; backdrop-filter: blur(5px);">
-        <span style="color:var(--muted);">Procurando parceiros...</span>
+        <span style="color:var(--muted);">🔴 Aguardando parceira...</span>
       </div>
     </div>
     <div>
@@ -202,6 +199,10 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
         <label class="small muted">Volume Playback (Banda)</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
         <label class="small muted">Volume Voz Principal (Sil)</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
         <label class="small muted">Volume Segunda Voz (Marla/Anderson)</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
+        
+        <strong style="color: var(--cyan); font-size: 13px; display: block; margin-top: 15px; margin-bottom: 10px;">🎙️ SENSIBILIDADE DO MICROFONE (Fones Bluetooth)</strong>
+        <label class="small muted">Aumente se o afinador não estiver lendo sua voz.</label>
+        <input type="range" id="micGainSlider" min="1" max="6" step="0.5" value="1.5">
       </div>
     </details>
   </section>
@@ -227,6 +228,7 @@ function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*10
 let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest=null, lastValid=0;
 let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
+let manualMicInputGain=null; // Nó de Ganho Extra para Fones Bluetooth
 
 let evalFrames = 0; let scoreSum = 0;
 
@@ -408,13 +410,19 @@ TRACKS.forEach(key=>{
     });
 });
 
+$('micGainSlider').addEventListener('input', e => {
+    if(manualMicInputGain && ctx) manualMicInputGain.gain.value = Number(e.target.value);
+});
+
 $('playerPlay').addEventListener('click', ()=>startPlayback()); $('playerPause').addEventListener('click', pausePlayback);
 $('playerStop').addEventListener('click', ()=>{stopPlayback(true); $('playerStatus').textContent='Reiniciado.'});
 $('playerSeek').addEventListener('change', e=>seekPlayback(e.target.value));
 
 function yin(buffer,sampleRate){
     let size=buffer.length,rms=0; for(let i=0;i<size;i++) rms+=buffer[i]*buffer[i]; rms=Math.sqrt(rms/size); 
-    if(rms<0.003) return null;
+    
+    // HIPER-SENSIBILIDADE PARA BLUETOOTH E FONES FRACOS
+    if(rms<0.0015) return null; 
     
     let minTau=Math.floor(sampleRate/1000), maxTau=Math.min(Math.floor(sampleRate/65),Math.floor(size/2)), diff=new Float32Array(maxTau+1), cmnd=new Float32Array(maxTau+1);
     for(let tau=minTau;tau<=maxTau;tau++){ let sum=0; for(let i=0;i<size-maxTau;i++){ let d=buffer[i]-buffer[i+tau]; sum+=d*d; } diff[tau]=sum; }
@@ -468,8 +476,18 @@ async function startMic(){
         if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) throw new Error('Microfone não suportado no navegador.');
         stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});
         audioContext(); if(ctx.state==='suspended') await ctx.resume();
-        source = ctx.createMediaStreamSource(stream); analyser = ctx.createAnalyser(); analyser.fftSize=4096; analyser.smoothingTimeConstant=0;
-        source.connect(analyser); $('micQuickStatus').textContent = 'Microfone ligado e ouvindo!'; $('micQuickStatus').style.color = 'var(--green)';
+        
+        source = ctx.createMediaStreamSource(stream); 
+        
+        // AMPLIFICADOR DE MICROFONE (Para contornar fones Bluetooth fracos)
+        manualMicInputGain = ctx.createGain();
+        manualMicInputGain.gain.value = Number($('micGainSlider').value || 1.5);
+        source.connect(manualMicInputGain);
+
+        analyser = ctx.createAnalyser(); analyser.fftSize=4096; analyser.smoothingTimeConstant=0;
+        manualMicInputGain.connect(analyser); 
+        
+        $('micQuickStatus').textContent = 'Microfone ligado e ouvindo!'; $('micQuickStatus').style.color = 'var(--green)';
         $('startMic').disabled=true; $('stopMic').disabled=false; 
         resetScoreUI(); liveLoop();
     }catch(e){ $('micQuickStatus').textContent = 'Erro no mic: ' + e.message; $('micQuickStatus').style.color = 'var(--yellow)'; }
@@ -477,7 +495,7 @@ async function startMic(){
 
 function stopMic(){
     clearTimeout(raf); if(mediaRecorder && mediaRecorder.state==='recording') stopRecording();
-    if(stream) stream.getTracks().forEach(t=>t.stop()); stream=null; analyser=null; source=null;
+    if(stream) stream.getTracks().forEach(t=>t.stop()); stream=null; analyser=null; source=null; manualMicInputGain=null;
     $('micQuickStatus').textContent='Microfone desligado.'; $('micQuickStatus').style.color = 'var(--muted)';
     $('startMic').disabled=false; $('stopMic').disabled=true; $('note').textContent = '—'; $('cents').textContent = '';
 }
@@ -493,9 +511,10 @@ async function startRecording() {
         recordPlaybackGain = ac.createGain(); recordPlaybackGain.gain.value=0.72;
         player.compressor.connect(recordPlaybackGain); recordPlaybackGain.connect(recordMixDestination);
         
-        recordMicSource = source; recordMicFilter = ac.createBiquadFilter(); recordMicFilter.type='highpass'; recordMicFilter.frequency.value=85;
+        // Usa o sinal amplificado se o fone Bluetooth for fraco
+        recordMicFilter = ac.createBiquadFilter(); recordMicFilter.type='highpass'; recordMicFilter.frequency.value=85;
         recordMicGain = ac.createGain(); recordMicGain.gain.value=1.65;
-        recordMicSource.connect(recordMicFilter); recordMicFilter.connect(recordMicGain); recordMicGain.connect(recordMixDestination);
+        manualMicInputGain.connect(recordMicFilter); recordMicFilter.connect(recordMicGain); recordMicGain.connect(recordMixDestination);
         
         const mimeType = ['audio/webm;codecs=opus','audio/webm','audio/mp4'].find(t=>MediaRecorder.isTypeSupported(t)) || '';
         mediaRecorder = new MediaRecorder(recordMixDestination.stream, mimeType?{mimeType}:undefined);
@@ -622,16 +641,21 @@ async function enter(user){
             $('savedState').textContent = profile.data().nome || 'Cantora';
             updatePresence(true); 
             
+            // ATENÇÃO PARA O RADAR: Isso só funciona se Anderson e Silvane/Marla estiverem usando logins diferentes!
             if(presenceUnsubscribe) presenceUnsubscribe();
             presenceUnsubscribe = onSnapshot(collection(db, 'status'), (snap) => {
-                const indicator = $('presenceIndicator'); indicator.innerHTML = '';
+                const indicator = $('presenceIndicator'); 
+                let html = '';
+                let found = false;
                 snap.forEach(d => {
                     const data = d.data();
                     if (d.id !== currentUser.uid && data.online) {
-                        indicator.innerHTML += `<span style="color:var(--green); font-weight:bold;">🟢 ${data.nome} Online</span>`;
+                        html += `<span style="color:var(--green); font-weight:bold;">🟢 ${data.nome}</span> `;
+                        found = true;
                     }
                 });
-                if(indicator.innerHTML === '') indicator.innerHTML = `<span style="color:var(--muted);">🔴 Parceiras offline</span>`;
+                if(found) indicator.innerHTML = html;
+                else indicator.innerHTML = `<span style="color:var(--muted);">🔴 Aguardando parceira...</span>`;
             });
 
             const ids = profile.data().musicaIds || [];
