@@ -36,7 +36,7 @@ input, select { font: inherit; width: 100%; background: rgba(0,0,0,0.4); color: 
 input:focus, select:focus { border-color: var(--cyan); }
 .ghost { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); border-radius: 12px; }
 
-/* CARTÕES DE VIDRO (GLASSMORPHISM) */
+/* CARTÕES DE VIDRO */
 .bank-card { background: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--card-border); border-radius: 24px; padding: 24px; margin-bottom: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
 
 /* TELA DE LOGIN */
@@ -46,7 +46,7 @@ input:focus, select:focus { border-color: var(--cyan); }
 .btn-primary { background: linear-gradient(135deg, #00b4db, #0083b0); color: white; border-radius: 14px; padding: 16px; font-weight: bold; width: 100%; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 180, 219, 0.3); }
 .btn-secondary { background: rgba(255,255,255,0.1); color: white; border-radius: 14px; padding: 16px; font-weight: bold; width: 100%; font-size: 16px; margin-top: 12px; }
 
-/* HEADER DO APP (Estilo Banco) */
+/* HEADER DO APP */
 .app-container { max-width: 600px; margin: 0 auto; padding: 20px 15px; }
 .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
 .user-profile { display: flex; align-items: center; gap: 12px; }
@@ -62,7 +62,7 @@ input:focus, select:focus { border-color: var(--cyan); }
 .balance-value { font-size: 54px; font-weight: 800; color: white; line-height: 1; text-shadow: 0 4px 20px rgba(0, 229, 255, 0.3); margin-bottom: 15px; }
 .balance-info { font-size: 14px; color: var(--cyan); background: rgba(0, 229, 255, 0.1); padding: 8px 16px; border-radius: 20px; display: inline-block; font-weight: 600; border: 1px solid rgba(0,229,255,0.2); }
 
-/* AÇÕES RÁPIDAS (Ícones Redondos) */
+/* AÇÕES RÁPIDAS */
 .quick-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
 .action-item { display: flex; flex-direction: column; align-items: center; gap: 8px; background: transparent; cursor: pointer; transition: transform 0.1s; }
 .action-item:active { transform: scale(0.92); }
@@ -75,8 +75,6 @@ input:focus, select:focus { border-color: var(--cyan); }
 /* SALA DE TREINO / KARAOKÊ */
 .karaoke-display { background: rgba(0,0,0,0.5); border-radius: 16px; padding: 25px 15px; text-align: center; min-height: 120px; display: flex; flex-direction: column; justify-content: center; margin-bottom: 20px; border: 1px solid rgba(0,0,0,0.8); box-shadow: inset 0 5px 15px rgba(0,0,0,0.5); }
 .k-cue { font-size: 12px; color: var(--yellow); text-transform: uppercase; font-weight: bold; letter-spacing: 2px; margin-bottom: 10px; }
-
-/* MÁGICA DO KARAOKÊ PROFISSIONAL (Gradient Fill) */
 .k-line { font-size: 24px; font-weight: 800; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; line-height: 1.4; }
 .k-word { color: rgba(255,255,255,0.4); transition: transform 0.1s ease; }
 .k-word.past { color: var(--green); text-shadow: 0 0 10px rgba(0, 230, 118, 0.4); }
@@ -93,10 +91,8 @@ input:focus, select:focus { border-color: var(--cyan); }
 .btn-record { background: rgba(255, 23, 68, 0.2); color: var(--red); border: 1px solid rgba(255, 23, 68, 0.4); border-radius: 12px; padding: 14px; font-weight: bold; width: 100%; font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-record.recording { background: var(--red); color: white; animation: pulse 1.5s infinite; border-color: transparent; }
 .btn-sync { background: rgba(0, 230, 118, 0.2); color: var(--green); border: 1px solid rgba(0, 230, 118, 0.4); border-radius: 12px; padding: 14px; font-weight: bold; width: 100%; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(255, 23, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0); } }
 
-/* SYNC & CALIBRAÇÃO OVERLAYS */
 .sync-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(4, 9, 18, 0.95); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(10px); }
 .sync-overlay.visible { opacity: 1; pointer-events: all; }
 .sync-overlay h1 { font-size: 100px; color: var(--cyan); margin: 0; text-shadow: 0 0 40px var(--cyan); line-height: 1; }
@@ -107,7 +103,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 </head>
 <body>
 
-<!-- OVERLAYS: SINCRONISMO E CALIBRAÇÃO -->
 <div class="sync-overlay" id="syncOverlay">
     <p style="color: var(--muted); margin-bottom: 10px; font-weight: bold; letter-spacing: 2px;">DUETO REMOTO</p>
     <h1 id="syncCount">4</h1>
@@ -131,7 +126,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     <button class="btn-primary" id="magicEnterBtn">Entrar no Estúdio</button>
     <p class="small muted" id="magicMsg" style="margin-top: 15px;"></p>
   </div>
-
   <div class="bank-card authCard" id="standardLogin">
     <div class="brand-logo">⭐</div>
     <h1 style="margin: 0 0 5px; font-size: 22px;">Gestão Vocal</h1>
@@ -147,7 +141,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 </section>
 
 <main class="app-container appLocked hidden" id="appMain">
-  
   <header class="app-header">
     <div class="user-profile">
         <div class="user-avatar">🎙️</div>
@@ -159,12 +152,10 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     <button id="logoutBtn" class="btn-logout" aria-label="Sair">🚪</button>
   </header>
 
-  <!-- CARTÃO DE SALDO (PONTUAÇÃO GERAL E MÚSICA) -->
   <div class="bank-card balance-card">
     <div class="balance-label" id="teacherSongTitle">Carregando música...</div>
     <div class="balance-value" id="liveScore">100<span style="font-size: 30px; opacity: 0.5;">%</span></div>
     <div class="balance-info" id="pitchStatus">Aguardando início</div>
-    
     <div style="margin-top: 20px;">
         <select id="studentSongSelect" disabled style="margin: 0; font-size: 13px; padding: 10px; background: rgba(255,255,255,0.05); text-align: center; border-radius: 20px;"><option>Buscando biblioteca...</option></select>
     </div>
@@ -185,7 +176,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     </div>
   </div>
 
-  <!-- PAINEL DO PLAYER -->
   <div class="bank-card hidden" id="playbackPanel">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h3 id="playbackTitle" style="margin: 0; font-size: 16px;">Modo de Treino</h3>
@@ -194,12 +184,10 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
             <button id="toggleMicBtn" style="background: rgba(0, 229, 255, 0.15); color: var(--cyan); border: 1px solid rgba(0, 229, 255, 0.3); padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">LIGAR MIC</button>
         </div>
     </div>
-
     <div style="text-align: right; margin-bottom: 5px;">
         <button id="toggleLyricsBtn" class="ghost" style="padding: 5px 10px; font-size: 11px;">🎵 Ocultar Letra</button>
     </div>
 
-    <!-- TELA KARAOKE -->
     <div class="karaoke-display" id="karaokeContainer">
         <div id="karaokeCue" class="k-cue">AGUARDANDO</div>
         <div id="karaokeLine" class="k-line">...</div>
@@ -214,45 +202,38 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         <button class="btn-round play" id="playerPlay">▶</button>
         <button class="btn-round" id="playerPause" disabled>Ⅱ</button>
     </div>
-
     <input type="range" class="time-bar" id="playerSeek" min="0" max="1000" value="0">
     <div class="time-text">
         <span id="posText">00:00</span>
         <span id="durText">00:00</span>
     </div>
-
-    <div id="playerStatus" style="text-align: center; font-size: 12px; color: var(--yellow); margin: 15px 0 20px; font-weight: 600;">Verificando áudio no servidor...</div>
+    <div id="playerStatus" style="text-align: center; font-size: 12px; color: var(--yellow); margin: 15px 0 20px; font-weight: 600;">Aguardando seleção...</div>
 
     <button class="btn-record" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
     <button class="btn-sync" id="syncRemoteBtn">🌍 Iniciar Dueto Remoto</button>
 
-    <!-- CONFIGURAÇÕES (Ajustes de Servidor e TV Box) -->
     <details>
       <summary>Ajustes de Áudio e Servidor</summary>
-      
       <div style="padding-top: 10px;">
-        <label class="small muted">Volume Playback (Banda)</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
+        <label class="small muted">Volume Playback</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
         <label class="small muted">Volume Sil</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
         <label class="small muted">Volume Marla</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
-        <label class="small muted">Sensibilidade do Microfone (Auto-ajustada via Calibração)</label><input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
+        <label class="small muted">Sensibilidade Mic</label><input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
         
         <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
-            <label class="small muted">Arquivo do Servidor (TV Box)</label>
+            <label class="small muted">Arquivo TV Box</label>
             <div style="display: flex; gap: 8px;">
                 <select id="serverAudioSelect" style="flex:1; margin:0;"></select>
                 <button id="refreshServerAudioBtn" style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 0 15px;">🔄</button>
             </div>
             <button id="loadServerAudioBtn" style="width: 100%; background: var(--cyan); color: black; border-radius: 12px; padding: 12px; margin-top: 8px; font-weight: bold;">Forçar Carregamento</button>
-            <div id="serverAudioStatus" class="small muted" style="margin-top: 8px;">Conecte-se via Tailscale.</div>
         </div>
       </div>
     </details>
-
   </div>
   
-  <!-- LIXEIRA DOM -->
   <div id="legacy-ui" class="hidden">
-    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button><a id="adminLink"></a>
+    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button>
   </div>
 </main>
 
@@ -268,13 +249,11 @@ const demoEstrelinhaMap = [
     { start: 5.7, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
     { start: 7.0, duration: 2.0, leadMidi: 65, harmonyMidi: 69, syllable: "fora", verified: true }
 ];
-let existingEvents = [];
-try { existingEvents = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e){}
+let existingEvents = []; try { existingEvents = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e){}
 if (existingEvents.length === 0) { localStorage.setItem('estrelinha_events', JSON.stringify(demoEstrelinhaMap)); }
 </script>
 
 <script>
-// --- MOTOR CENTRAL (WEBAUDIO, KARAOKÊ E YIN) ---
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -321,6 +300,26 @@ function playerPosition(){
     return Math.min(Math.max(0,player.offset+(ctx.currentTime-player.startedAt)), player.duration);
 }
 
+// CORREÇÃO: Função Restaurada!
+function updatePlayerUI(){
+    const pos = playerPosition(), dur = player.duration||0;
+    if($('posText')) $('posText').textContent = fmtTime(pos);
+    if($('durText')) $('durText').textContent = fmtTime(dur);
+    if($('playerSeek')) $('playerSeek').value = dur ? String(Math.round(pos/dur*1000)) : 0;
+    
+    if($('playerPlay')) {
+        $('playerPlay').disabled = player.playing;
+        if(player.playing) {
+            $('playerPlay').classList.remove('play');
+            $('playerPlay').innerHTML = '▶';
+        } else {
+            $('playerPlay').classList.add('play');
+        }
+    }
+    if($('playerPause')) $('playerPause').disabled = !player.playing; 
+    if($('playerStop')) $('playerStop').disabled = !player.playing && player.offset===0;
+}
+
 function resetUI() {
     evalFrames = 0; scoreSum = 0; silenceFrames = 0;
     $('liveScore').textContent = '100';
@@ -355,13 +354,10 @@ async function startPlayback(){
     }
     
     player.offset=offset; player.startedAt=when; player.playing=true; 
-    
     if(offset === 0) resetUI();
     
-    $('playerPlay').classList.remove('play'); $('playerPlay').innerHTML = '▶'; $('playerPlay').disabled = true;
-    $('playerPause').disabled = false; $('playerStop').disabled = false;
+    updatePlayerUI();
     $('playerStatus').textContent = 'Reproduzindo...';
-    
     if(!raf) engineLoop();
 }
 
@@ -369,8 +365,7 @@ function stopPlayback(reset=true){
     if(player.playing){ player.offset=playerPosition(); player.playing=false; }
     stopPlayerSources(); 
     if(reset) { player.offset=0; resetUI(); }
-    $('playerPlay').classList.add('play'); $('playerPlay').disabled = false;
-    $('playerPause').disabled = true; $('playerStop').disabled = player.offset===0;
+    updatePlayerUI();
 }
 
 $('playerPlay').addEventListener('click', startPlayback);
@@ -380,7 +375,7 @@ $('playerSeek').addEventListener('change', e => {
     const wasPlaying=player.playing; 
     player.offset = player.duration * (Number(e.target.value)/1000);
     if(wasPlaying) { stopPlayback(false); startPlayback(); }
-    else { $('posText').textContent = fmtTime(player.offset); }
+    else { updatePlayerUI(); }
 });
 
 function yin(buffer,sampleRate){
@@ -395,25 +390,19 @@ function yin(buffer,sampleRate){
     if(f<65||f>1000) return null; return {freq:f, clarity:1-cmnd[chosen], rms};
 }
 
-// O SUPER LOOP (Engine visual e de áudio 60fps)
 function engineLoop() {
     let targetMidiNow = null;
     
-    // 1. ATUALIZA PLAYER E KARAOKÊ
     if (player.playing) {
         const pos = playerPosition();
         $('posText').textContent = fmtTime(pos);
-        $('durText').textContent = fmtTime(player.duration);
         $('playerSeek').value = player.duration ? String(Math.round(pos/player.duration*1000)) : 0;
         
         if(pos >= player.duration - 0.05){ 
-            stopPlayback(true); 
-            $('playerStatus').textContent = `Concluído!`; 
-            $('karaokeCue').textContent = 'FIM DA MÚSICA';
-            $('karaokeLine').innerHTML = '';
+            stopPlayback(true); $('playerStatus').textContent = `Concluído!`; 
+            $('karaokeCue').textContent = 'FIM DA MÚSICA'; $('karaokeLine').innerHTML = '';
         } else {
             let events = []; try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
-            
             const activeIdx = events.findIndex(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
             const active = activeIdx !== -1 ? events[activeIdx] : null;
             
@@ -428,61 +417,39 @@ function engineLoop() {
                 let lineHtml = '';
                 for(let i = Math.max(0, activeIdx - 2); i < Math.min(events.length, activeIdx + 3); i++) {
                     const ev = events[i];
-                    if (i < activeIdx) {
-                        lineHtml += `<span class="k-word past">${ev.syllable}</span>`;
-                    } else if (i === activeIdx) {
-                        lineHtml += `<span class="k-word active" style="--fill-pct: ${progress}%">${ev.syllable}</span>`;
-                    } else {
-                        lineHtml += `<span class="k-word">${ev.syllable}</span>`;
-                    }
+                    if (i < activeIdx) { lineHtml += `<span class="k-word past">${ev.syllable}</span>`; } 
+                    else if (i === activeIdx) { lineHtml += `<span class="k-word active" style="--fill-pct: ${progress}%">${ev.syllable}</span>`; } 
+                    else { lineHtml += `<span class="k-word">${ev.syllable}</span>`; }
                 }
-                
-                $('karaokeCue').textContent = '🎤 NO RITMO!';
-                $('karaokeLine').innerHTML = lineHtml;
-                
+                $('karaokeCue').textContent = '🎤 NO RITMO!'; $('karaokeLine').innerHTML = lineHtml;
             } else {
-                $('expectedNote').textContent = '—';
-                window.activeTargetMidi = null;
+                $('expectedNote').textContent = '—'; window.activeTargetMidi = null;
                 const nextEvIdx = events.findIndex(e => e.verified && Number(e.start) > pos);
                 if (nextEvIdx !== -1) {
-                    const nxt = events[nextEvIdx];
-                    const timeToStart = nxt.start - pos;
+                    const nxt = events[nextEvIdx]; const timeToStart = nxt.start - pos;
                     if (timeToStart <= 4) {
                         $('karaokeCue').textContent = `Entra em ${Math.ceil(timeToStart)}...`;
-                        
                         let lineHtml = '';
-                        for(let i = nextEvIdx; i < Math.min(events.length, nextEvIdx + 4); i++) {
-                            lineHtml += `<span class="k-word">${events[i].syllable}</span>`;
-                        }
+                        for(let i = nextEvIdx; i < Math.min(events.length, nextEvIdx + 4); i++) lineHtml += `<span class="k-word">${events[i].syllable}</span>`;
                         $('karaokeLine').innerHTML = lineHtml;
-                    } else {
-                        $('karaokeCue').textContent = 'Aguarde';
-                        $('karaokeLine').innerHTML = '...';
-                    }
-                } else {
-                    $('karaokeCue').textContent = 'Aguarde';
-                    $('karaokeLine').innerHTML = '...';
-                }
+                    } else { $('karaokeCue').textContent = 'Aguarde'; $('karaokeLine').innerHTML = '...'; }
+                } else { $('karaokeCue').textContent = 'Aguarde'; $('karaokeLine').innerHTML = '...'; }
             }
         }
     }
 
-    // 2. ATUALIZA O AFINADOR (Se mic estiver ligado)
     if (analyser && window.appIsMicActive) {
         const raw = new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(raw); 
         const p = yin(raw, ctx.sampleRate);
         
         if (p && p.clarity > 0.65) {
             const ni = noteInfo(p.freq); 
-            $('note').textContent = ni.name; 
-            $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
-            $('pitchStatus').textContent = 'Lendo...'; 
-            lastValid = Date.now();
+            $('note').textContent = ni.name; $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
+            $('pitchStatus').textContent = 'Lendo...'; lastValid = Date.now();
             
             if (player.playing && window.activeTargetMidi !== null) {
                 evalFrames++;
-                let sungMidi = freqMidi(p.freq);
-                let normalizedSung = sungMidi;
+                let sungMidi = freqMidi(p.freq); let normalizedSung = sungMidi;
                 while(normalizedSung < window.activeTargetMidi - 6) normalizedSung += 12;
                 while(normalizedSung > window.activeTargetMidi + 6) normalizedSung -= 12;
                 let centsDiff = Math.abs(Math.round((normalizedSung - window.activeTargetMidi) * 100));
@@ -493,12 +460,9 @@ function engineLoop() {
                 silenceFrames = 0;
             }
         } else {
-            if (Date.now() - lastValid > 800) { 
-                $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Aguardando voz'; 
-            }
+            if (Date.now() - lastValid > 800) { $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Aguardando voz'; }
             if (player.playing && window.activeTargetMidi !== null) {
-                silenceFrames++;
-                if (silenceFrames > 5) { evalFrames++; scoreSum += 0; } 
+                silenceFrames++; if (silenceFrames > 5) { evalFrames++; scoreSum += 0; } 
             }
         }
         
@@ -510,14 +474,9 @@ function engineLoop() {
         }
     }
 
-    if (player.playing || (analyser && window.appIsMicActive)) {
-        raf = requestAnimationFrame(engineLoop);
-    } else {
-        raf = 0; 
-    }
+    if (player.playing || (analyser && window.appIsMicActive)) { raf = requestAnimationFrame(engineLoop); } else { raf = 0; }
 }
 
-// TOGGLE DO MICROFONE 
 $('toggleMicBtn').addEventListener('click', async () => {
     if(!window.appIsMicActive) {
         try{
@@ -554,7 +513,6 @@ $('toggleMicBtn').addEventListener('click', async () => {
     }
 });
 
-// CALIBRAÇÃO INTELIGENTE
 $('btnCalibrate').addEventListener('click', async () => {
     if(!stream) { alert("Ligue o microfone primeiro!"); return; }
     const overlay = $('calibOverlay'); const statusEl = $('calibStatus'); const countEl = $('calibCount');
@@ -599,7 +557,7 @@ $('btnCalibrate').addEventListener('click', async () => {
     }, 1000);
 });
 
-// CARREGAR DO SERVIDOR - RESTAURADO CÓDIGO CLÁSSICO FUNCIONAL SEM LIMITES DE TEMPO!
+// CARREGAR DO SERVIDOR - Restabelecido código original funcional
 async function loadAVTrackFromUrl(key,url,name){
     stopPlayback(true); $('playerStatus').textContent='Baixando playback do servidor...';
     try {
@@ -608,7 +566,9 @@ async function loadAVTrackFromUrl(key,url,name){
         if(!response.ok) throw new Error('HTTP '+response.status);
         const raw=await response.arrayBuffer(); const buffer=await ac.decodeAudioData(raw);
         trackBuffers[key]=buffer; player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));
-        updatePlayerUI(); $('durText').textContent = fmtTime(player.duration);
+        
+        updatePlayerUI(); 
+        
         $('playerStatus').textContent=`Áudio carregado com sucesso!`; $('recordBtn').disabled = false;
         return true;
     } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha ao carregar áudio: ${e.message}`; throw e; }
@@ -649,7 +609,6 @@ TRACKS.forEach(key=>{
 
 $('micGainSlider').addEventListener('input', e => { if(manualMicInputGain && ctx) manualMicInputGain.gain.value = Number(e.target.value); });
 
-// GRAVAÇÃO LOCAL
 async function startRecording() {
     if(!stream) { $('playerStatus').textContent = 'Ligue o microfone.'; return; }
     if(!trackBuffers.instrument) { $('playerStatus').textContent = 'Carregue o playback.'; return; }
@@ -695,7 +654,7 @@ window.appStartRecording = startRecording; window.appCtx = () => ctx; window.app
 
 <script type="module">
 // ============================================================================
-// 3. FIREBASE AUTH, STATUS E SINCRONISMO (DUETO REMOTO)
+// 3. FIREBASE AUTH E CARREGAMENTO AUTOMÁTICO
 // ============================================================================
 import { auth, db } from './firebase-config.js';
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
@@ -812,17 +771,14 @@ async function loadSong(song){
     });
 
     if (window.fetchServerAudioList) {
-        try {
-            const files = await window.fetchServerAudioList();
+        window.fetchServerAudioList().then(files => {
             const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
             let fileToAutoLoad = (savedLocal && files.some(f => f.name === savedLocal)) ? savedLocal : (files.length > 0 ? files[0].name : null);
             if (fileToAutoLoad) {
                 $('serverAudioSelect').value = fileToAutoLoad;
                 $('loadServerAudioBtn').click(); 
             }
-        } catch(e) {
-            console.warn("Falha no Auto-Load do áudio:", e);
-        }
+        }).catch(()=>{});
     }
 }
 
