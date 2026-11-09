@@ -15,7 +15,6 @@
 /* IMAGEM DE FUNDO COM CAMADA ESCURA */
 body { 
   margin: 0; 
-  /* TROQUE A URL ABAIXO PELO CAMINHO DA SUA IMAGEM (ex: /images/marilia.webp) */
   background: linear-gradient(rgba(9, 17, 30, 0.85), rgba(9, 17, 30, 0.95)), url('marilia-mendonca-canta-com-di-paullo-e-paulino2.webp') no-repeat center center fixed;
   background-size: cover;
   color: var(--txt); 
@@ -62,23 +61,23 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
 .advanced-settings { margin-top: 30px; padding-top: 20px; border-top: 1px solid #2d405b; text-align: left; }
 .advanced-settings summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: bold; outline: none; }
 
-/* CÍRCULO DO SCORE */
+/* CÍRCULO DO SCORE E KARAOKE CUE */
 .score-circle { width: 100px; height: 100px; margin: 0 auto; border-radius: 50%; border: 6px solid var(--green); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color 0.3s; background: rgba(12, 21, 36, 0.8); }
 .score-circle span.value { font-size: 24px; font-weight: 800; color: white; line-height: 1; margin-bottom: 2px; }
 .score-circle span.label { font-size: 10px; color: var(--muted); font-weight: bold; letter-spacing: 1px; }
+
+.karaoke-cue { font-size: 20px; font-weight: 800; color: var(--yellow); min-height: 30px; margin-top: 10px; transition: all 0.2s; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+.karaoke-cue.active { color: var(--green); transform: scale(1.1); }
 </style>
 </head>
 <body>
 
 <section id="authGate" class="authGate">
-  
   <div class="authCard hidden" id="magicLinkModal">
     <div class="estrelinha-avatar">⭐</div>
     <h1 style="margin: 0 0 5px;">Bem-vinda!</h1>
     <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Você recebeu um acesso exclusivo para o estúdio.</p>
-    
     <input id="magicName" type="text" placeholder="Qual é o seu nome? (Ex: Marla)" style="margin-bottom: 20px; font-size: 16px; text-align: center;">
-    
     <button class="primary" id="magicEnterBtn" style="width: 100%; min-height: 50px; font-size: 16px;">Entrar no Estúdio</button>
     <p class="small muted" id="magicMsg" style="margin-top: 15px; color: var(--yellow);"></p>
   </div>
@@ -95,7 +94,6 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
     <button class="primary" id="googleLoginBtn" type="button" style="width: 100%; margin-top: 15px; background: rgba(244, 247, 251, 0.9); color: #1b2736;">Entrar com Google</button>
     <p class="small muted" id="authMessage" style="margin-top: 15px;"></p>
   </div>
-
 </section>
 
 <main class="app-container appLocked hidden" id="appMain">
@@ -158,10 +156,11 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
       </div>
 
       <div>
+        <div id="karaokeCue" class="karaoke-cue">—</div>
         <div class="small muted">NOTA ESPERADA:</div>
         <div class="target-note" id="expectedNote">—</div>
         <div class="small muted">SUA VOZ: <span id="note" style="color: white; font-weight: bold; font-size: 18px;">—</span> <span id="cents"></span></div>
-        <div id="pitchStatus" class="small muted" style="margin-top: 5px;">Sustente uma vogal para o afinador ler</div>
+        <div id="pitchStatus" class="small muted" style="margin-top: 5px;">Ligue o microfone e cante</div>
       </div>
     </div>
 
@@ -179,7 +178,7 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
     <div style="margin-top: 15px; font-size: 13px; color: var(--muted);" id="playerPosition">00:00 / 00:00</div>
     <input class="playerSeek" id="playerSeek" type="range" min="0" max="1000" step="1" value="0" style="margin-top: 10px;">
     
-    <div id="playerStatus" class="small muted" style="margin-top: 10px; color: var(--yellow);">Verificando áudio no servidor...</div>
+    <div id="playerStatus" class="small muted" style="margin-top: 10px; color: var(--yellow); font-weight: bold;">Verificando áudio no servidor...</div>
 
     <details class="advanced-settings">
       <summary>⚙️ Ajustes Avançados e Servidor TV Box</summary>
@@ -214,7 +213,7 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
 </script>
 
 <script>
-// --- MOTOR DE ÁUDIO, PONTUAÇÃO E YIN (EMBUTIDO) ---
+// --- MOTOR DE ÁUDIO, PONTUAÇÃO, KARAOKÊ E YIN (EMBUTIDO) ---
 (()=>{'use strict';
 const $=id=>document.getElementById(id), names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}
@@ -225,6 +224,7 @@ let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest
 let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
 
+// VARIÁVEIS DO SCORE
 let evalFrames = 0; let scoreSum = 0;
 
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
@@ -267,6 +267,8 @@ function resetScoreUI() {
     evalFrames = 0; scoreSum = 0;
     $('liveScore').textContent = '100%';
     $('scoreCircle').style.borderColor = 'var(--green)';
+    $('karaokeCue').textContent = '—';
+    $('karaokeCue').className = 'karaoke-cue';
 }
 
 async function startPlayback(){
@@ -294,18 +296,44 @@ async function startPlayback(){
     player.timer=setInterval(()=>{
         if(!player.playing||myGeneration!==player.generation) return;
         const pos=playerPosition();
-        if(pos>=player.duration-0.03){ stopPlayback(false); player.offset=0; $('playerStatus').textContent='Concluído.'; return; }
+        
+        // FINAL DA MÚSICA - Exibe o Score Final
+        if(pos>=player.duration-0.03){ 
+            let finalScore = evalFrames > 0 ? Math.round(scoreSum / evalFrames) : 0;
+            stopPlayback(true); 
+            $('playerStatus').textContent=`Música Concluída! Precisão Final: ${finalScore}%`; 
+            $('liveScore').textContent = finalScore + '%'; // Mantém o score na tela
+            $('karaokeCue').textContent = 'FIM';
+            $('karaokeCue').className = 'karaoke-cue';
+            return; 
+        }
+        
         updatePlayerUI();
         
+        // LÓGICA DE KARAOKÊ E SCORE
         let events = []; try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
+        
         const active = events.find(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
+        const upcoming = events.find(e => e.verified && Number(e.start) > pos);
+        
         if (active) {
+            $('karaokeCue').textContent = '🎤 CANTANDO!';
+            $('karaokeCue').className = 'karaoke-cue active';
             const target = currentTrainingMode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
             $('expectedNote').textContent = midiName(target);
             window.activeTargetMidi = target;
         } else {
-            $('expectedNote').textContent = '—';
             window.activeTargetMidi = null;
+            $('expectedNote').textContent = '—';
+            
+            if (upcoming && (upcoming.start - pos) <= 4) {
+                let sec = Math.ceil(upcoming.start - pos);
+                $('karaokeCue').textContent = 'Entra em ' + sec + '...';
+                $('karaokeCue').className = 'karaoke-cue';
+            } else {
+                $('karaokeCue').textContent = 'Aguarde...';
+                $('karaokeCue').className = 'karaoke-cue';
+            }
         }
     }, 60);
     
@@ -384,7 +412,10 @@ $('playerStop').addEventListener('click', ()=>{stopPlayback(true); $('playerStat
 $('playerSeek').addEventListener('change', e=>seekPlayback(e.target.value));
 
 function yin(buffer,sampleRate){
-    let size=buffer.length,rms=0; for(let i=0;i<size;i++) rms+=buffer[i]*buffer[i]; rms=Math.sqrt(rms/size); if(rms<0.008) return null;
+    let size=buffer.length,rms=0; for(let i=0;i<size;i++) rms+=buffer[i]*buffer[i]; rms=Math.sqrt(rms/size); 
+    // CORREÇÃO DA SENSIBILIDADE DO MICROFONE!
+    if(rms<0.003) return null; // Antes era 0.008, agora detecta vozes mais baixas
+    
     let minTau=Math.floor(sampleRate/1000), maxTau=Math.min(Math.floor(sampleRate/65),Math.floor(size/2)), diff=new Float32Array(maxTau+1), cmnd=new Float32Array(maxTau+1);
     for(let tau=minTau;tau<=maxTau;tau++){ let sum=0; for(let i=0;i<size-maxTau;i++){ let d=buffer[i]-buffer[i+tau]; sum+=d*d; } diff[tau]=sum; }
     cmnd[0]=1; let running=0; for(let tau=1;tau<=maxTau;tau++){ running+=diff[tau]; cmnd[tau]=running?diff[tau]*tau/running:1; }
@@ -400,22 +431,25 @@ function liveLoop(){
 
     if(p && p.clarity>0.65){
         const ni=noteInfo(p.freq); $('note').textContent = ni.name; $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
-        $('pitchStatus').textContent = 'Analisando voz...'; lastValid=Date.now();
+        $('pitchStatus').textContent = 'Afinando voz...'; lastValid=Date.now();
         
         if(player.playing && targetMidiNow !== null) {
             evalFrames++;
             let centsDiff = Math.abs(Math.round((freqMidi(p.freq) - targetMidiNow) * 100));
-            if (centsDiff <= 30) scoreSum += 100;
-            else if (centsDiff <= 60) scoreSum += 50;
+            if (centsDiff <= 40) scoreSum += 100;
+            else if (centsDiff <= 80) scoreSum += 50;
             else scoreSum += 10;
         }
     } else {
-        if(Date.now()-lastValid>1000){ $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Sustente uma vogal para o afinador ler'; }
+        if(Date.now()-lastValid>1000){ $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Cante para o afinador ler'; }
+        
+        // Penalidade por não cantar quando deveria
         if(player.playing && targetMidiNow !== null) {
             evalFrames++; scoreSum += 0;
         }
     }
 
+    // ATUALIZAÇÃO VISUAL DO SCORE
     if(evalFrames > 0) {
         let currentScore = Math.round(scoreSum / evalFrames);
         $('liveScore').textContent = currentScore + '%';
@@ -655,12 +689,9 @@ async function loadSong(song){
 
             if (fileToAutoLoad) {
                 $('serverAudioSelect').value = fileToAutoLoad;
-                
-                // Dispara o carregamento do MP3 encontrado
                 $('playerStatus').textContent='Baixando playback do servidor...';
                 const url = 'https://mxqpro-h313-1.tail8b8cce.ts.net:8443/api/audio/' + encodeURIComponent(fileToAutoLoad);
                 
-                // Usando a função global para evitar conflito de escopo
                 if(window.appTrackBuffers) {
                     const res = await fetch(url,{mode:'cors',cache:'no-store'});
                     if(res.ok) {
@@ -672,9 +703,7 @@ async function loadSong(song){
                     }
                 }
             }
-        } catch(e) {
-            console.warn("Falha no Auto-Load do áudio:", e);
-        }
+        } catch(e) { console.warn("Falha no Auto-Load do áudio:", e); }
     }
 }
 
