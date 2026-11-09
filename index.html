@@ -8,7 +8,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/icons/icon-192.png">
 <style>
-/* CSS OTIMIZADO PARA A ESTRELINHA */
+/* CSS DA ESTRELINHA */
 :root { --bg: #09111e; --panel: #131f31; --cyan: #42d8e8; --green: #39dfa5; --yellow: #ffd166; --txt: #f6f8ff; --muted: #9aabc3; }
 * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
 body { margin: 0; background: radial-gradient(ellipse at top, #1b2e49 0, #09111e 58%); color: var(--txt); padding-bottom: 50px; }
@@ -20,17 +20,17 @@ button.warn { background: linear-gradient(135deg, #a64160, #d65c70); border-colo
 button:disabled { opacity: 0.45; cursor: not-allowed; }
 input, select { font: inherit; width: 100%; background: #0d1929; color: var(--txt); border: 1px solid #2d405b; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
 
-/* TELAS PRINCIPAIS */
+/* LAYOUT */
 .authGate { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
 .authCard { width: min(100%, 420px); background: #131f31; border: 1px solid #2d405b; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 18px 60px #0006; }
 .estrelinha-avatar { width: 90px; height: 90px; margin: 0 auto 15px; background: radial-gradient(circle at 30% 30%, #fff4bd, #ffd166 50%, #ff9f1c); border-radius: 50%; display: grid; place-items: center; font-size: 50px; box-shadow: 0 0 25px #ffd16644; }
 .app-container { max-width: 800px; margin: 0 auto; padding: 20px; }
 .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 12px; color: var(--muted); }
-
-/* AÇÕES PRINCIPAIS DA PROFESSORA */
 .teacher-area { text-align: center; margin: 20px 0 30px; }
 .teacher-area h2 { margin: 10px 0 5px; font-size: 24px; }
 .teacher-area p { color: var(--cyan); font-weight: 600; font-size: 16px; margin: 0; }
+
+/* BOTOES AULAS */
 .main-actions { display: grid; grid-template-columns: 1fr; gap: 15px; }
 @media(min-width: 600px) { .main-actions { grid-template-columns: repeat(3, 1fr); } }
 .action-btn { min-height: 110px; border-radius: 16px; text-align: left; padding: 18px; display: flex; flex-direction: column; justify-content: center; gap: 5px; background: linear-gradient(145deg, #203e5b, #18283e); border: 2px solid transparent; transition: all 0.2s; }
@@ -41,7 +41,7 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
 .action-btn[data-training-mode="marla"] { border-left-color: #8670bd; }
 .action-btn[data-training-mode="duet"] { border-left-color: #b58c4b; }
 
-/* ESPAÇO DE TREINO (Áudio) */
+/* PLAYER E PITCH */
 .training-room { background: #101a29; border: 1px solid #2d405b; border-radius: 16px; padding: 20px; margin-top: 20px; text-align: center; }
 .target-note { font-size: 52px; font-weight: 850; color: var(--cyan); margin: 10px 0; }
 .playerTransport { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
@@ -94,8 +94,6 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
 
   <div style="margin-bottom: 20px;">
     <select id="studentSongSelect" disabled><option>Carregando biblioteca...</option></select>
-    <p id="currentSongInfo" class="hidden"></p>
-    <span id="libraryCloudStatus" class="hidden"></span>
   </div>
 
   <div class="main-actions" aria-label="Escolha sua aula">
@@ -121,8 +119,8 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
         <button id="stopMic" style="padding: 5px 10px; font-size: 12px;" disabled>Parar Mic</button>
       </div>
     </div>
-    <p id="trainingModeText" class="small muted">O playback está pronto.</p>
-    <div id="micQuickStatus" class="small muted"></div>
+    
+    <div id="micQuickStatus" class="small muted">O microfone está desligado.</div>
 
     <div style="margin: 25px 0;">
       <div class="small muted">NOTA ESPERADA:</div>
@@ -131,25 +129,25 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
       <div id="pitchStatus" class="small muted" style="margin-top: 5px;">Sustente uma vogal para o afinador ler</div>
     </div>
 
-    <!-- BOTÕES DE GRAVAÇÃO REMOTA E PLAY -->
+    <!-- CONTROLES DO PLAYER E GRAVAÇÃO REMOTA -->
     <div class="playerTransport">
       <button class="primary" id="playerPlay" type="button">▶ Ouvir e Treinar</button>
       <button id="playerPause" type="button" disabled>Ⅱ Pausar</button>
       <button id="playerStop" type="button" disabled>■ Reiniciar</button>
     </div>
-    <div class="playerTransport" style="margin-top: 10px; border-top: 1px solid #2d405b; padding-top: 15px;">
-        <button class="warn" id="recordBtn" disabled>🔴 Gravar Ensaio</button>
-        <button class="good" id="syncRemoteBtn" type="button" onclick="alert('Funcionalidade em desenvolvimento: O Firebase enviará um sinal de play simultâneo para os dois celulares.')">🌍 Sincronizar Dueto Remoto</button>
+    <div class="playerTransport" style="margin-top: 15px; border-top: 1px solid #2d405b; padding-top: 15px;">
+        <button class="warn" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
+        <button class="good" id="syncRemoteBtn" type="button">🌍 Sincronizar Dueto Remoto</button>
     </div>
 
     <div style="margin-top: 15px; font-size: 13px; color: var(--muted);" id="playerPosition">00:00 / 00:00</div>
     <input class="playerSeek" id="playerSeek" type="range" min="0" max="1000" step="1" value="0" style="margin-top: 10px;">
-    <div id="playerStatus" class="small muted" style="margin-top: 10px;">Aguardando reprodução...</div>
+    
+    <div id="playerStatus" class="small muted" style="margin-top: 10px; color: var(--yellow);">Aguardando reprodução...</div>
 
     <details class="advanced-settings">
       <summary>⚙️ Ajustes Avançados e Servidor TV Box</summary>
       
-      <!-- CONTROLES DO TV BOX RESTAURADOS AQUI -->
       <div style="margin-top: 20px; padding: 15px; background: #0c1524; border-radius: 12px; border: 1px solid #2d405b;">
         <strong style="color: var(--cyan); font-size: 13px; display: block; margin-bottom: 10px;">📥 CARREGAR PLAYBACK DO TV BOX</strong>
         <div style="display: flex; gap: 10px;">
@@ -157,7 +155,7 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
             <button id="refreshServerAudioBtn" style="padding: 12px; background: transparent;">🔄</button>
         </div>
         <button id="loadServerAudioBtn" class="primary" style="width: 100%; margin-top: 10px;">Carregar Playback Selecionado</button>
-        <div id="serverAudioStatus" class="small muted" style="margin-top: 10px;">Conecte-se ao TV Box via Tailscale/Rede Local.</div>
+        <div id="serverAudioStatus" class="small muted" style="margin-top: 10px;">Conecte-se ao TV Box via Tailscale.</div>
       </div>
 
       <div style="margin-top: 20px;">
@@ -169,205 +167,539 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
     </details>
   </section>
 
-  <!-- LIXEIRA DE ELEMENTOS DOM (Apenas o que não for usado acima) -->
-  <div id="legacy-ui" class="hidden">
-    <button id="installApp"></button><span id="installHelp"></span>
-    <span id="micState"></span><span id="audioEngineState"></span>
-    <input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span>
-    <input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span>
-    <input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span>
-    <button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd">
-    <div id="serverAudioPicker"></div>
-    <button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span>
-    <button id="micQuickStart"></button><button id="micQuickStop"></button>
-    <select id="singer"><option>Segunda voz</option><option>Voz principal</option><option>Ensaio individual</option></select>
-    <span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span>
-    <span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span>
-    <span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span>
-    <select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select>
-    <button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button>
-    <span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div>
-    <input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span>
-    <button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span>
-    <input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span>
-    <div id="calendarTasks"></div><span id="planProgress"></span>
-    <input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span>
-    <div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span>
-    <select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button>
-  </div>
 </main>
 
-<script>
-(()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
-</script>
+<script type="module">
+// ============================================================================
+// 1. IMPORTAÇÕES FIREBASE
+// ============================================================================
+import { auth, db } from './firebase-config.js';
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, sendPasswordResetEmail, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import { doc, getDoc, getDocs, collection, setDoc, updateDoc, serverTimestamp, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
-<script>
-// --- MOTOR DE ÁUDIO E YIN (EMBUTIDO) ---
-(()=>{'use strict';
-const $=id=>document.getElementById(id), names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}function midiLabel(m){return names[((m%12)+12)%12]+' '+(Math.floor(m/12)-1)}function freqMidi(f){return 69+12*Math.log2(f/440)}function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*100);return{midi:n,name:midiName(n),cents,freq:f}}
-let ctx=null,stream=null,analyser=null,source=null,raf=0,history=[],latest=null,activeTargetMidi=null,recording=false,mediaRecorder=null,recordChunks=[],csvRows=[],lastValid=0,recStart=0;
-function audioContext(){if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}
-function playMidi(midi,duration=1.8,when=0,volume=.14){let ac=audioContext(),t=ac.currentTime+when,osc=ac.createOscillator(),gain=ac.createGain();osc.type='triangle';osc.frequency.value=440*Math.pow(2,(midi-69)/12);gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(volume,t+.04);gain.gain.setTargetAtTime(.0001,t+duration-.15,.09);osc.connect(gain);gain.connect(ac.destination);osc.start(t);osc.stop(t+duration)}
+const $ = id => document.getElementById(id);
+const gate = $('authGate'), main = $('appMain'), msg = $('authMessage');
+
+// ============================================================================
+// 2. LÓGICA DE ÁUDIO (WEBAUDIO, YIN, GRAVAÇÃO E TV BOX)
+// ============================================================================
+const names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}
+function freqMidi(f){return 69+12*Math.log2(f/440)}
+function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*100);return{midi:n,name:midiName(n),cents,freq:f}}
+
+let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest=null;
+let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
+let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
+
+function audioContext(){
+    if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)();
+    if(ctx.state==='suspended') ctx.resume();
+    return ctx;
+}
+
 const TRACKS=['instrument','lead','harmony'];
 const trackBuffers={instrument:null,lead:null,harmony:null};
-const trackNames={instrument:'Playback instrumental',lead:'Voz principal',harmony:'Segunda voz'};
+const trackNames={instrument:'Playback',lead:'Principal',harmony:'Segunda voz'};
 const AV_AUDIO_SERVER_BASE='https://mxqpro-h313-1.tail8b8cce.ts.net:8443';
-function resolveStoredAudioUrl(url,path){const raw=String(url||'').trim();if(raw){try{return new URL(raw,location.href).href}catch{}}const stored=String(path||'').trim();if(!stored)return '';const filename=stored.split('/').filter(Boolean).pop();return filename?AV_AUDIO_SERVER_BASE+'/api/audio/'+encodeURIComponent(filename):'';}
-window.resolveStoredAudioUrl=resolveStoredAudioUrl;
+const AV_AUDIO_API = AV_AUDIO_SERVER_BASE+'/api/audio';
+
 const player={sources:[],gains:{},master:null,compressor:null,playing:false,offset:0,startedAt:0,duration:0,timer:null,generation:0,mode:'silvane'};
 let currentTrainingMode='silvane';
 
-function ensurePlayerGraph(){const ac=audioContext();if(!player.master){player.master=ac.createGain();player.master.gain.value=.72;player.compressor=ac.createDynamicsCompressor();player.compressor.threshold.value=-5;player.compressor.knee.value=5;player.compressor.ratio.value=8;player.compressor.attack.value=.003;player.compressor.release.value=.18;player.master.connect(player.compressor);player.compressor.connect(ac.destination);}TRACKS.forEach(key=>{if(!player.gains[key]){const g=ac.createGain();g.gain.value=Number($('track'+cap(key)+'Volume')?.value||.5);g.connect(player.master);player.gains[key]=g}});return ac;}
+function ensurePlayerGraph(){
+    const ac=audioContext();
+    if(!player.master){
+        player.master=ac.createGain(); player.master.gain.value=0.72;
+        player.compressor=ac.createDynamicsCompressor();
+        player.compressor.threshold.value=-5; player.compressor.knee.value=5; player.compressor.ratio.value=8; player.compressor.attack.value=.003; player.compressor.release.value=.18;
+        player.master.connect(player.compressor); player.compressor.connect(ac.destination);
+    }
+    TRACKS.forEach(key=>{
+        if(!player.gains[key]){
+            const g=ac.createGain();
+            g.gain.value=Number($('track'+cap(key)+'Volume')?.value||0.5);
+            g.connect(player.master);
+            player.gains[key]=g;
+        }
+    });
+    return ac;
+}
+
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 function fmtTime(sec){if(!Number.isFinite(sec)||sec<0)sec=0;let m=Math.floor(sec/60),s=Math.floor(sec%60);return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
-function playerPosition(){if(!player.playing||!ctx)return player.offset;let raw=Math.max(0,player.offset+(ctx.currentTime-player.startedAt));if($('playerLoopEnabled').checked){const a=Number($('playerLoopStart').value)||0,b=Number($('playerLoopEnd').value)||player.duration;if(b>a&&raw>=b)return a+((raw-a)%(b-a))}return Math.min(raw,player.duration)}
-function updatePlayerUI(){const pos=playerPosition(),dur=player.duration||0;$('playerPosition').textContent=fmtTime(pos)+' / '+fmtTime(dur);$('playerSeek').value=dur?String(Math.round(pos/dur*1000)):0;$('playerPlay').disabled=player.playing;$('playerPause').disabled=!player.playing;$('playerStop').disabled=!player.playing&&player.offset===0;$('audioEngineState').textContent=player.playing?'Playback em execução':'Motor de áudio pronto';}
-function setPlayerStatus(message,active=false){$('playerStatus').textContent=message;$('playerStatus').classList.toggle('active',!!active)}
-function stopPlayerSources(){player.generation++;for(const item of player.sources){try{item.stop()}catch{}try{item.disconnect()}catch{}}player.sources=[]}
-function scheduleClick(when,accent=false){const ac=ensurePlayerGraph(),o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=accent?1050:760;g.gain.setValueAtTime(.0001,when);g.gain.exponentialRampToValueAtTime(accent?.16:.10,when+.006);g.gain.exponentialRampToValueAtTime(.0001,when+.085);o.connect(g);g.connect(player.master);o.start(when);o.stop(when+.09)}
-function validateLoop(){const a=Number($('playerLoopStart').value)||0,b=Number($('playerLoopEnd').value)||player.duration;if(!$('playerLoopEnabled').checked)return{a:0,b:player.duration};if(!(b>a&&a>=0&&b<=player.duration)){throw new Error('O fim do trecho precisa ser maior que o início e não pode ultrapassar a duração do áudio.')}return{a,b}}
-async function startPlayback(withCountIn=false){const loaded=TRACKS.filter(k=>trackBuffers[k]);if(!loaded.length){setPlayerStatus('Carregue pelo menos uma faixa de áudio do TV Box.');return}const ac=ensurePlayerGraph();if(ac.state==='suspended')await ac.resume();player.duration=Math.max(...loaded.map(k=>trackBuffers[k].duration));let offset=Math.min(player.offset,player.duration);let loop={a:0,b:player.duration};try{loop=validateLoop();if($('playerLoopEnabled').checked&&(offset<loop.a||offset>=loop.b))offset=loop.a}catch(e){setPlayerStatus(e.message);return}stopPlayerSources();player.offset=offset;const bpm=Math.max(40,Math.min(220,Number($('metronomeBpm')?.value)||72)),beats=Math.max(1,Math.min(4,Number($('metronomeBeat')?.value)||4)),interval=60/bpm;const now=ac.currentTime+.10,delay=withCountIn?beats*interval:0,when=now+delay;if(withCountIn){for(let i=0;i<beats;i++)scheduleClick(now+i*interval,i===0)}for(const key of loaded){const buf=trackBuffers[key];if(offset>=buf.duration)continue;const sourceNode=ac.createBufferSource();sourceNode.buffer=buf;sourceNode.connect(player.gains[key]);if($('playerLoopEnabled').checked){sourceNode.loop=true;sourceNode.loopStart=loop.a;sourceNode.loopEnd=loop.b}sourceNode.start(when,offset);player.sources.push(sourceNode)}player.offset=offset;player.startedAt=when;player.playing=true;const myGeneration=player.generation;clearInterval(player.timer);player.timer=setInterval(()=>{if(!player.playing||myGeneration!==player.generation)return;const pos=playerPosition();if(!$('playerLoopEnabled').checked&&pos>=player.duration-.03){stopPlayback(false);player.offset=0;setPlayerStatus('Reprodução concluída.',false);return}updatePlayerUI();const target=expectedMidiAt(pos,currentTrainingMode);$('expectedNote').textContent=target===null?'...':`${midiName(target)}`;},60);updatePlayerUI();setPlayerStatus(withCountIn?'Contagem inicial.':'Reproduzindo...',true);}
-function stopPlayback(reset=true){if(player.playing){player.offset=playerPosition();player.playing=false}stopPlayerSources();clearInterval(player.timer);player.timer=null;if(reset)player.offset=0;updatePlayerUI();}
-function pausePlayback(){if(!player.playing)return;player.offset=playerPosition();player.playing=false;stopPlayerSources();clearInterval(player.timer);player.timer=null;updatePlayerUI();setPlayerStatus('Playback pausado.')}
-function seekPlayback(value){const wasPlaying=player.playing;const pos=player.duration*(Number(value)/1000);if(wasPlaying){player.playing=false;stopPlayerSources();clearInterval(player.timer)}player.offset=Math.max(0,Math.min(player.duration,pos));updatePlayerUI();if(wasPlaying)startPlayback(false)}
-const trackBytes={instrument:0,lead:0,harmony:0};
-async function loadTrack(key,file){if(!file)return;const totalWithoutCurrent=TRACKS.reduce((sum,k)=>sum+(k===key?0:trackBytes[k]),0);if(file.size>80*1024*1024||totalWithoutCurrent+file.size>140*1024*1024){setPlayerStatus('Limite de memória.');return}stopPlayback(true);try{$('audioEngineState').textContent='Decodificando '+trackNames[key]+'…';const ac=ensurePlayerGraph();if(ac.state==='suspended')await ac.resume();const raw=await file.arrayBuffer();const buffer=await ac.decodeAudioData(raw.slice(0));trackBuffers[key]=buffer;trackBytes[key]=file.size;$('track'+cap(key)+'Name').textContent=`${file.name}`;player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));$('playerLoopEnd').value=player.duration.toFixed(1);$('playerSeek').value='0';player.offset=0;updatePlayerUI();setPlayerStatus(`${trackNames[key]} carregado.`,true)}catch(e){trackBuffers[key]=null;setPlayerStatus(`Erro: ${e.message}`)}finally{$('audioEngineState').textContent='Motor de áudio pronto'}}
-window.loadAVTrackFromUrl=async function(key,url,name){if(!TRACKS.includes(key)||!url)throw new Error('Endereço da faixa não informado.');stopPlayback(true);$('audioEngineState').textContent='Carregando '+trackNames[key]+'…';try{const ac=ensurePlayerGraph();if(ac.state==='suspended')await ac.resume();const response=await fetch(url,{mode:'cors',cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status+' ao buscar '+url);const raw=await response.arrayBuffer();if(!raw.byteLength)throw new Error('O servidor retornou um arquivo vazio.');if(raw.byteLength>80*1024*1024)throw new Error('Faixa acima de 80 MB.');const buffer=await ac.decodeAudioData(raw.slice(0));trackBuffers[key]=buffer;trackBytes[key]=raw.byteLength;$('track'+cap(key)+'Name').textContent=`${name||trackNames[key]}`;player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));$('playerLoopEnd').value=player.duration.toFixed(1);$('playerSeek').value='0';player.offset=0;updatePlayerUI();setPlayerStatus(`Áudio carregado do servidor.`,true);return true;}catch(e){trackBuffers[key]=null;trackBytes[key]=0;$('track'+cap(key)+'Name').textContent='Falha';setPlayerStatus(`Falha: ${e.message}`);throw e}finally{$('audioEngineState').textContent='Motor de áudio pronto'}};
-const AV_AUDIO_API=AV_AUDIO_SERVER_BASE+'/api/audio';let serverAudioFiles=[];
-function audioFilename(value){try{return decodeURIComponent(new URL(String(value),location.href).pathname.split('/').pop()||'')}catch{return String(value||'').split('/').pop()}}
-async function fetchServerAudioList(){const status=$('serverAudioStatus'),select=$('serverAudioSelect');status.textContent='Consultando TV Box…';try{const response=await fetch(AV_AUDIO_API,{method:'GET',mode:'cors',cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const data=await response.json();if(!data.success||!Array.isArray(data.files))throw new Error(data.error||'Erro API');serverAudioFiles=data.files.filter(f=>f&&/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));select.replaceChildren();if(!serverAudioFiles.length){select.add(new Option('Nenhum MP3 no servidor',''));status.textContent='Nenhum MP3 encontrado.';return serverAudioFiles}serverAudioFiles.forEach(f=>{const mb=(Number(f.bytes||0)/1048576).toFixed(1);select.add(new Option(`${f.name} (${mb} MB)`,f.name))});status.textContent=`${serverAudioFiles.length} arquivos encontrados.`;return serverAudioFiles;}catch(e){select.replaceChildren(new Option('Erro de Conexão',''));status.textContent='Falha ao conectar com TV Box (Tailscale online?).';return []}}
-async function loadSelectedServerInstrument(){const filename=$('serverAudioSelect').value;if(!filename){$('serverAudioStatus').textContent='Selecione um MP3.';return}const url=AV_AUDIO_API+'/'+encodeURIComponent(filename);$('loadServerAudioBtn').disabled=true;try{await window.loadAVTrackFromUrl('instrument',url,filename);if(activeSong){try{localStorage.setItem('av3:serverPlayback:'+activeSong.id,filename)}catch{}}$('serverAudioStatus').textContent='Playback carregado!';updateRecordAvailability();}catch(e){$('serverAudioStatus').textContent='Erro: '+e.message}finally{$('loadServerAudioBtn').disabled=false}}
-$('loadServerAudioBtn').addEventListener('click',loadSelectedServerInstrument);$('refreshServerAudioBtn').addEventListener('click',async()=>{await fetchServerAudioList();});
-function setTrackVolume(key,value){const v=Math.max(0,Math.min(1,Number(value)||0));const g=player.gains[key],slider=$('track'+cap(key)+'Volume');if(slider)slider.value=String(v);if(g&&ctx)g.gain.setTargetAtTime(v,ctx.currentTime,.025);$('track'+cap(key)+'Pct').textContent=Math.round(v*100)+'%'}
-window.clearAVTracks=function(){stopPlayback(true);TRACKS.forEach(key=>{trackBuffers[key]=null;trackBytes[key]=0;const el=$('track'+cap(key)+'Name');if(el)el.textContent=''});player.duration=0;player.offset=0;updatePlayerUI();};
-
-function expectedMidiAt(time, mode) {
-  let events = [];
-  try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
-  if (!events || !events.length) return null;
-  const active = events.find(e => e.verified && time >= Number(e.start) && time <= (Number(e.start) + Number(e.duration)));
-  if (!active) return null;
-  return mode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
+function playerPosition(){
+    if(!player.playing||!ctx) return player.offset;
+    return Math.min(Math.max(0,player.offset+(ctx.currentTime-player.startedAt)), player.duration);
 }
 
-function setTrainingMode(mode){currentTrainingMode=mode;player.mode=mode;activeTargetMidi=null;const labels={silvane:['Treinar voz principal','Acompanhe a melodia principal. Trabalhe um trecho por vez.','Voz principal — melodia'],marla:['Treinar segunda voz','Ouça a voz principal e aprenda a linha harmônica.','Segunda voz — harmonia'],duet:['Cantar juntas','Una as duas linhas. O playback e as referências usam o mesmo relógio.','Ensaio em conjunto']};const d=labels[mode];$('playbackTitle').textContent=d[0];$('trainingModeText').textContent=d[2];$('teacherGuidance').textContent=(window.__AV_SONG_TITLE||'Música selecionada')+': '+d[1];$('singer').value=mode==='silvane'?'Voz principal':mode==='marla'?'Segunda voz':'Ensaio conjunto';if(mode==='silvane'){setTrackVolume('instrument',$('trackInstrumentVolume').value);setTrackVolume('lead',Math.max(.55,Number($('trackLeadVolume').value)));setTrackVolume('harmony',0)}else if(mode==='marla'){setTrackVolume('instrument',$('trackInstrumentVolume').value);setTrackVolume('lead',Math.max(.35,Number($('trackLeadVolume').value)));setTrackVolume('harmony',Math.max(.7,Number($('trackHarmonyVolume').value)))}else{setTrackVolume('instrument',$('trackInstrumentVolume').value);setTrackVolume('lead',.08);setTrackVolume('harmony',.08)}const target=expectedMidiAt(playerPosition(),mode);$('expectedNote').textContent=target===null?'—':`${midiName(target)}`;}
-TRACKS.forEach(key=>{$('track'+cap(key)+'File').addEventListener('change',e=>loadTrack(key,e.target.files?.[0]));$('track'+cap(key)+'Volume').addEventListener('input',e=>setTrackVolume(key,e.target.value))});
-$('playerPlay').addEventListener('click',()=>startPlayback(false));$('playerCountIn').addEventListener('click',()=>startPlayback(true));$('playerPause').addEventListener('click',pausePlayback);$('playerStop').addEventListener('click',()=>{stopPlayback(true);setPlayerStatus('Playback reiniciado para o início.')});$('playerSeek').addEventListener('change',e=>seekPlayback(e.target.value));
-function restartForLoopEdit(){if(!player.playing)return;const pos=playerPosition();player.playing=false;stopPlayerSources();clearInterval(player.timer);player.timer=null;player.offset=pos;startPlayback(false)}
-$('playerLoopEnabled').addEventListener('change',()=>{if($('playerLoopEnabled').checked){try{validateLoop();setPlayerStatus('Repetição do trecho ativada.',true)}catch(e){$('playerLoopEnabled').checked=false;setPlayerStatus(e.message);return}}else setPlayerStatus('Repetição do trecho desativada.');restartForLoopEdit()});
-$('playerLoopStart').addEventListener('change',()=>{if($('playerLoopEnabled').checked){try{validateLoop();restartForLoopEdit()}catch(e){setPlayerStatus(e.message)}}});$('playerLoopEnd').addEventListener('change',()=>{if($('playerLoopEnabled').checked){try{validateLoop();restartForLoopEdit()}catch(e){setPlayerStatus(e.message)}}});
-function yin(buffer,sampleRate){let size=buffer.length,rms=0;for(let i=0;i<size;i++)rms+=buffer[i]*buffer[i];rms=Math.sqrt(rms/size);if(rms<.008)return null;let minTau=Math.floor(sampleRate/1000),maxTau=Math.min(Math.floor(sampleRate/65),Math.floor(size/2)),diff=new Float32Array(maxTau+1),cmnd=new Float32Array(maxTau+1);for(let tau=minTau;tau<=maxTau;tau++){let sum=0;for(let i=0;i<size-maxTau;i++){let d=buffer[i]-buffer[i+tau];sum+=d*d}diff[tau]=sum}cmnd[0]=1;let running=0;for(let tau=1;tau<=maxTau;tau++){running+=diff[tau];cmnd[tau]=running?diff[tau]*tau/running:1}let chosen=-1;for(let tau=minTau+1;tau<maxTau;tau++){if(cmnd[tau]<.16&&cmnd[tau]<=cmnd[tau-1]&&cmnd[tau]<cmnd[tau+1]){chosen=tau;while(chosen+1<maxTau&&cmnd[chosen+1]<cmnd[chosen])chosen++;break}}if(chosen<0){let best=1;for(let tau=minTau;tau<=maxTau;tau++)if(cmnd[tau]<best){best=cmnd[tau];chosen=tau}if(best>.32)return null}let x0=chosen>minTau?cmnd[chosen-1]:cmnd[chosen],x1=cmnd[chosen],x2=chosen<maxTau?cmnd[chosen+1]:cmnd[chosen],den=2*(2*x1-x2-x0),shift=den?(x2-x0)/den:0,tau=chosen+Math.max(-.5,Math.min(.5,shift)),f=sampleRate/tau;if(f<65||f>1000)return null;return{freq:f,clarity:1-cmnd[chosen],rms}}
-function liveLoop(){if(!analyser)return;const raw=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(raw);const p=yin(raw,ctx.sampleRate);if(p&&p.clarity>.65){const ni=noteInfo(p.freq);latest={...ni,clarity:p.clarity,time:Date.now()};lastValid=Date.now();let timedTarget=player.playing?expectedMidiAt(playerPosition(),currentTrainingMode):null;activeTargetMidi=timedTarget;let targetMidiNow=timedTarget;let compare=targetMidiNow!==null?Math.round((freqMidi(p.freq)-targetMidiNow)*100):ni.cents,ok=Math.abs(compare)<=25;history.push({midi:ni.midi+ni.cents/100,cents:ni.cents,targetCents:targetMidiNow!==null?compare:null,time:Date.now()});if(history.length>180)history.shift();$('note').textContent=ni.name;$('cents').textContent=(compare>0?'+':'')+compare+' cents';$('pitchStatus').textContent=targetMidiNow!==null?(ok?'Próxima da nota-alvo '+midiName(targetMidiNow):compare<0?'Abaixo da nota-alvo '+midiName(targetMidiNow):'Acima da nota-alvo '+midiName(targetMidiNow)):(ok?'Próxima do centro da nota');}else{history.push(null);if(history.length>180)history.shift();if(Date.now()-lastValid>1000){$('note').textContent='—';$('cents').textContent='';$('pitchStatus').textContent='Sustente uma vogal para o afinador ler';}}raf=setTimeout(()=>requestAnimationFrame(liveLoop),75)}
-async function startMic(){try{if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error('Microfone não disponível.');stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});audioContext();if(ctx.state==='suspended')await ctx.resume();source=ctx.createMediaStreamSource(stream);analyser=ctx.createAnalyser();analyser.fftSize=4096;analyser.smoothingTimeConstant=0;source.connect(analyser);$('micQuickStatus').textContent='Microfone ligado. Cante para afinar.';$('startMic').disabled=true;$('stopMic').disabled=false;updateRecordAvailability();history=[];liveLoop()}catch(e){$('micQuickStatus').textContent='Erro no microfone: '+e.message;}}
-function updateRecordAvailability(){const ready=!!trackBuffers.instrument&&!recording;$('recordBtn').disabled=!ready;}
-function stopMic(){clearTimeout(raf);if(mediaRecorder&&mediaRecorder.state==='recording')stopRecording();if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;analyser=null;source=null;$('micQuickStatus').textContent='Microfone desligado.';$('startMic').disabled=false;$('stopMic').disabled=true;$('recordBtn').disabled=true}
-$('startMic').addEventListener('click',startMic);$('stopMic').addEventListener('click',stopMic);
-})();
-</script>
-<script type="module">
-// --- O SEU FIREBASE AUTH EXATAMENTE COMO ESTAVA ANTES ---
-import {auth,db} from './firebase-config.js';
-import {onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,deleteUser,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,sendPasswordResetEmail,signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
-import {doc,getDoc,getDocs,collection,setDoc,updateDoc,serverTimestamp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-const $=id=>document.getElementById(id),gate=$('authGate'),main=$('appMain'),msg=$('authMessage');
-let currentUser=null,activeSong=null,assignedSongs=[],isAdmin=false,hydrating=false,saveTimer=null,registering=false;
-const CLOUD_KEYS=['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events'];
-function say(t){if(msg)msg.textContent=t}
-function setContext(uid,songId,songTitle=''){window.__AV_USER_UID=uid||'anon';window.__AV_SONG_ID=songId||'none';window.__AV_SONG_TITLE=songTitle||'Música selecionada';try{sessionStorage.setItem('av3-context',JSON.stringify({uid:window.__AV_USER_UID,songId:window.__AV_SONG_ID,title:window.__AV_SONG_TITLE}))}catch{}}
-function localPayload(){const o={};CLOUD_KEYS.forEach(k=>{const v=localStorage.getItem(k);if(v!==null)o[k]=v});return o}
-function applyPayload(o){if(!o)return;CLOUD_KEYS.forEach(k=>{if(typeof o[k]==='string')localStorage.setItem(k,o[k])})}
-async function syncCloud(){if(!currentUser||!activeSong||hydrating||isAdmin)return;clearTimeout(saveTimer);saveTimer=setTimeout(async()=>{try{$('cloudState').textContent='Sincronizando…';await setDoc(doc(db,'usuarios',currentUser.uid,'musicas',activeSong.id,'progresso','app'),{...localPayload(),updatedAt:serverTimestamp()},{merge:true});$('cloudState').textContent='Conectado'}catch(e){$('cloudState').textContent='Erro ao sincronizar';console.error('Firestore:',e)}},650)}
-const originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;
-Storage.prototype.setItem=function(k,v){originalSet.call(this,k,v);if(this===localStorage&&CLOUD_KEYS.includes(String(k)))syncCloud()};
-Storage.prototype.removeItem=function(k){originalRemove.call(this,k);if(this===localStorage&&CLOUD_KEYS.includes(String(k)))syncCloud()};
-function authError(e){const map={'auth/invalid-credential':'E-mail ou senha incorretos.','auth/user-not-found':'Conta não encontrada.','auth/wrong-password':'Senha incorreta.','auth/email-already-in-use':'Este e-mail já possui cadastro.','auth/weak-password':'A senha deve ter pelo menos 6 caracteres.','auth/unauthorized-domain':'Adicione este domínio aos domínios autorizados do Firebase Authentication.','auth/operation-not-allowed':'Ative este método de login no Firebase Authentication.','auth/network-request-failed':'Falha de conexão. Verifique a internet.'};return map[e.code]||('Não foi possível autenticar: '+(e.message||e.code||'erro desconhecido'))}
-function showLibrary(songs){const sel=$('studentSongSelect');sel.replaceChildren();songs.forEach(song=>{const op=new Option(song.titulo||song.id,song.id);sel.add(op)});sel.disabled=!songs.length;if(!songs.length){sel.add(new Option('Nenhuma música cadastrada/liberada',''));$('libraryCloudStatus').textContent=isAdmin?'Biblioteca vazia':'Sem músicas atribuídas';$('currentSongInfo').textContent=isAdmin?'Você está como administrador. Cadastre a primeira música em Administração e depois publique para as alunas.':'Peça ao administrador um convite com pelo menos uma música.';if(isAdmin){const link=document.createElement('a');link.href='/admin.html';link.textContent='Abrir administração e cadastrar a primeira música';link.style.cssText='display:inline-flex;margin-top:8px;color:#8ce9e1;font-weight:800';$('currentSongInfo').append(document.createElement('br'),link)}return}const requested=new URLSearchParams(location.search).get('musica');let selected=songs.find(x=>x.id===requested)||songs.find(x=>x.id===localStorage.getItem('av3:lastSong:'+currentUser.uid))||songs[0];sel.value=selected.id;loadSong(selected)}
-async function loadSong(song){if(!song||!currentUser)return;activeSong=song;setContext(currentUser.uid,song.id,song.titulo);window.clearAVTracks?.();localStorage.setItem('av3:lastSong:'+currentUser.uid,song.id);$('teacherSongTitle').textContent=song.titulo||'Treino vocal';$('currentSongInfo').textContent=[song.artista,song.tonalidade?'Tom: '+song.tonalidade:'Tom não informado',song.bpm?song.bpm+' BPM':''].filter(Boolean).join(' · ')||'Música liberada para treino';$('libraryCloudStatus').textContent='Música selecionada';$('trainingModeText').textContent='Escolha uma das aulas. Playback e referências desta música são carregados da biblioteca.';hydrating=true;try{const progress=await getDoc(doc(db,'usuarios',currentUser.uid,'musicas',song.id,'progresso','app'));if(progress.exists())applyPayload(progress.data());const lib=await getDoc(doc(db,'bibliotecaMusical',song.id));if(lib.exists()&&Array.isArray(lib.data().events))localStorage.setItem('estrelinha_events',JSON.stringify(lib.data().events));else localStorage.setItem('estrelinha_events','[]');}catch(e){console.warn('Não foi possível carregar progresso/mapa:',e.message)}finally{hydrating=false}
- try{
-  const t=song.trackUrls||{},p=song.trackPaths||{};
-  const savedLocal=(()=>{try{return localStorage.getItem('av3:serverPlayback:'+song.id)||''}catch{return ''}})();
-  const storedInstrument=t.instrument||song.playbackUrl||'';
-  const storedPath=p.instrument||song.playbackPath||'';
-  let instrument=window.resolveStoredAudioUrl(storedInstrument,storedPath);
-  $('playerStatus').textContent='Carregando o playback cadastrado e consultando a biblioteca do TV Box…';
-  let loadedInstrument=false;
-  if(instrument){try{await window.loadAVTrackFromUrl('instrument',instrument,song.titulo+' · playback cadastrado');loadedInstrument=true}catch(e){console.warn('URL cadastrada falhou; tentando biblioteca do TV Box:',e.message)}}
-  const lead=window.resolveStoredAudioUrl(t.lead||song.leadUrl,p.lead||song.leadPath);
-  const harmony=window.resolveStoredAudioUrl(t.harmony||song.harmonyUrl,p.harmony||song.harmonyPath);
-  for(const [key,url,label] of [['lead',lead,'Voz principal de referência'],['harmony',harmony,'Segunda voz de referência']]){
-   if(url){try{await window.loadAVTrackFromUrl(key,url,label)}catch(e){console.warn('Faixa de referência não carregada:',key,e.message)}}
-  }
-  const files=await window.fetchServerAudioList?.() || [];
-  const select=$('serverAudioSelect');
-  let candidate='';
-  const known=window.audioFilename?.(storedInstrument||storedPath);
-  if(known&&files.some(f=>f.name===known))candidate=known;
-  if(!candidate&&savedLocal&&files.some(f=>f.name===savedLocal))candidate=savedLocal;
-  if(!candidate){
-   const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'');
-   const title=normalize(song.titulo);
-   const matches=files.filter(f=>title&&normalize(f.name).includes(title));
-   if(matches.length===1)candidate=matches[0].name;
-  }
-  if(!loadedInstrument&&candidate){select.value=candidate;await window.loadSelectedServerInstrument?.();loadedInstrument=true}
-  else if(!loadedInstrument&&files.length===1){select.value=files[0].name;await window.loadSelectedServerInstrument?.();loadedInstrument=true}
-  else if(!loadedInstrument&&files.length>1){$('playerStatus').textContent='Vários MP3 no TV Box. Abra os Ajustes Avançados abaixo para carregar o correto.';}
-  else if(loadedInstrument){$('playerStatus').textContent='Playback da música carregado e pronto para ensaio.';}
-  else if(!files.length){$('playerStatus').textContent='Nenhum playback no TV Box.';}
- }catch(e){
-  $('playerStatus').textContent='Não foi possível carregar o playback do servidor: '+e.message;
- }
- window.dispatchEvent(new Event('storage'));}
-async function activateInviteForUser(user,code,name=''){
- const normalized=(code||'').trim().toUpperCase();if(!normalized)throw new Error('Informe o ID do convite enviado pelo administrador.');
- const inviteRef=doc(db,'convites',normalized),inv=await getDoc(inviteRef);if(!inv.exists())throw new Error('ID do convite não encontrado ou sem permissão.');const v=inv.data();
- if(v.status!=='ativo'||!v.expiraEm||v.expiraEm.toDate()<=new Date())throw new Error('Convite expirado ou já utilizado.');
- const email=(user.email||'').toLowerCase();if(v.email&&v.email.toLowerCase()!==email)throw new Error('Este convite foi emitido para outro e-mail.');
- const ids=Array.isArray(v.musicaIds)?v.musicaIds:[];if(!ids.length)throw new Error('Este convite não possui músicas liberadas.');
- await updateDoc(inviteRef,{status:'usado',uid:user.uid,usadoEm:serverTimestamp()});
- await setDoc(doc(db,'usuarios',user.uid,'perfil','dados'),{nome:name||v.nome||user.displayName||'Cantora',email,role:'aluna',inviteCode:normalized,musicaIds:ids,createdAt:serverTimestamp()});
- return ids;
+function updatePlayerUI(){
+    const pos=playerPosition(), dur=player.duration||0;
+    $('playerPosition').textContent=fmtTime(pos)+' / '+fmtTime(dur);
+    $('playerSeek').value=dur?String(Math.round(pos/dur*1000)):0;
+    $('playerPlay').disabled=player.playing;
+    $('playerPause').disabled=!player.playing;
+    $('playerStop').disabled=!player.playing&&player.offset===0;
 }
-async function enter(user){if(registering)return;currentUser=user;gate.style.display='none';main.classList.remove('appLocked');main.classList.remove('hidden');$('savedState').textContent=(user.email||user.displayName||'cantora');$('cloudState').textContent='Validando…';
- try{const adminSnap=await getDoc(doc(db,'admins',user.uid));isAdmin=(String(user.email||'').toLowerCase()==='andersonsieklicki@gmail.com'&&user.emailVerified===true)||(adminSnap.exists()&&adminSnap.data().ativo===true);let songs=[];if(isAdmin){$('adminLink').classList.remove('hidden');const snap=await getDocs(collection(db,'musicas'));songs=snap.docs.map(d=>({id:d.id,...d.data()}));}else{$('adminLink').classList.add('hidden');let profile=await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));if(!profile.exists()){const code=$('inviteCodeInput').value.trim()||new URLSearchParams(location.search).get('convite')||'';try{await activateInviteForUser(user,code,$('registerName').value.trim());profile=await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));}catch(invErr){await signOut(auth);gate.style.display='grid';main.classList.add('appLocked');say(invErr.message||'Conta sem perfil autorizado. Solicite um convite individual.');return}}const ids=Array.isArray(profile.data().musicaIds)?profile.data().musicaIds:[];if(!ids.length)throw new Error('Seu perfil ainda não tem músicas atribuídas.');const results=await Promise.all(ids.map(id=>getDoc(doc(db,'musicas',id))));songs=results.filter(x=>x.exists()&&x.data().publicada===true).map(x=>({id:x.id,...x.data()}));}
- assignedSongs=songs;showLibrary(songs);$('cloudState').textContent='Conectado';window.__AV_IS_ADMIN=isAdmin;window.dispatchEvent(new Event('av3-auth-state'));
- }catch(e){console.error('Acesso:',e);await signOut(auth);gate.style.display='grid';main.classList.add('appLocked');say('Não foi possível validar seu acesso: '+e.message)}}
-$('studentSongSelect').addEventListener('change',()=>{const s=assignedSongs.find(x=>x.id===$('studentSongSelect').value);if(s)loadSong(s)});
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();if(registering)return;$('emailLoginBtn').disabled=true;try{await signInWithEmailAndPassword(auth,$('loginEmail').value.trim(),$('loginPassword').value)}catch(err){say(authError(err))}finally{$('emailLoginBtn').disabled=false}});
-$('registerBtn').addEventListener('click',async()=>{const fields=$('registerFields');if(fields.classList.contains('hidden')){fields.classList.remove('hidden');$('inviteCodeInput').required=true;$('registerBtn').textContent='Confirmar cadastro com convite';say('Informe seu nome, e-mail, senha e o ID individual enviado pelo administrador.');return}const email=$('loginEmail').value.trim().toLowerCase(),password=$('loginPassword').value,name=$('registerName').value.trim(),code=$('inviteCodeInput').value.trim().toUpperCase();if(!name||!email||password.length<6||!code){say('Preencha nome, e-mail, senha (mínimo 6) e ID do convite.');return}registering=true;$('registerBtn').disabled=true;try{const credential=await createUserWithEmailAndPassword(auth,email,password);try{await activateInviteForUser(credential.user,code,name);registering=false;await enter(credential.user);say('Cadastro concluído. Sua biblioteca já está liberada.')}catch(inviteError){try{await deleteUser(credential.user)}catch{}throw inviteError}}catch(err){registering=false;say(authError(err));if(auth.currentUser)await signOut(auth)}finally{$('registerBtn').disabled=false}});
-$('googleLoginBtn').addEventListener('click',async()=>{const btn=$('googleLoginBtn'),provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});btn.disabled=true;say('Abrindo autenticação Google…');try{await signInWithPopup(auth,provider)}catch(e){if(['auth/popup-blocked','auth/cancelled-popup-request','auth/popup-closed-by-user'].includes(e.code)){try{await signInWithRedirect(auth,provider)}catch(err){say(authError(err));btn.disabled=false}}else{say(authError(e));btn.disabled=false}}});
-getRedirectResult(auth).catch(e=>{console.error('Retorno Google:',e);say(authError(e))});
-$('resetPasswordBtn').addEventListener('click',async()=>{const email=$('loginEmail').value.trim();if(!email){say('Digite seu e-mail para receber o link de redefinição.');return}try{await sendPasswordResetEmail(auth,email);say('E-mail de redefinição enviado. Verifique sua caixa de entrada.')}catch(e){say(authError(e))}});
-$('logoutBtn').addEventListener('click',async()=>{try{await signOut(auth)}catch(e){alert(authError(e))}});
-try{await getRedirectResult(auth)}catch(e){say(authError(e))}
-const codeFromUrl=new URLSearchParams(location.search).get('convite');if(codeFromUrl){$('registerFields').classList.remove('hidden');$('inviteCodeInput').value=codeFromUrl.toUpperCase();$('registerBtn').textContent='Confirmar cadastro com convite';}
-onAuthStateChanged(auth,user=>{if(registering)return;if(user)enter(user);else{currentUser=null;activeSong=null;isAdmin=false;setContext('anon','none');$('adminLink').classList.add('hidden');main.classList.add('appLocked');main.classList.add('hidden');gate.style.display='grid';$('savedState').textContent='Aguardando login';$('cloudState').textContent='Desconectado'}});
-</script>
 
-<script>
-// CONTROLE DOS BOTÕES DA ESTRELINHA
-document.addEventListener("DOMContentLoaded", () => {
-  const teacherGuidance = document.getElementById('teacherGuidance');
-  const playbackPanel = document.getElementById('playbackPanel');
-  
-  // Ao clicar em um dos botões, ele também dispara a função original que carrega o mode
-  document.querySelectorAll('[data-training-mode]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      playbackPanel.classList.remove('hidden');
-      const mode = btn.dataset.trainingMode;
-      
-      if (mode === 'silvane') {
-        teacherGuidance.textContent = '"Silvane, acompanhe esta melodia. O foco é na voz principal."';
-      } else if (mode === 'marla') {
-        teacherGuidance.textContent = '"Marla, agora é sua vez. Ouça a harmonia e encaixe a segunda voz."';
-      } else {
-        teacherGuidance.textContent = '"Agora vamos cantar juntas! O playback está preparado."';
-      }
-      
-      playbackPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+function stopPlayerSources(){
+    player.generation++;
+    for(const item of player.sources){
+        try{item.stop()}catch{}
+        try{item.disconnect()}catch{}
+    }
+    player.sources=[];
+}
+
+async function startPlayback(){
+    const loaded=TRACKS.filter(k=>trackBuffers[k]);
+    if(!loaded.length){ $('playerStatus').textContent='Carregue o playback do TV Box primeiro.'; return;}
+    
+    const ac=ensurePlayerGraph();
+    if(ac.state==='suspended') await ac.resume();
+    
+    player.duration=Math.max(...loaded.map(k=>trackBuffers[k].duration));
+    let offset=Math.min(player.offset,player.duration);
+    
+    stopPlayerSources();
+    player.offset=offset;
+    const when = ac.currentTime + 0.10;
+    
+    for(const key of loaded){
+        const buf=trackBuffers[key];
+        if(offset>=buf.duration) continue;
+        const sourceNode=ac.createBufferSource();
+        sourceNode.buffer=buf;
+        sourceNode.connect(player.gains[key]);
+        sourceNode.start(when,offset);
+        player.sources.push(sourceNode);
+    }
+    
+    player.offset=offset; player.startedAt=when; player.playing=true;
+    const myGeneration=player.generation;
+    
+    clearInterval(player.timer);
+    player.timer=setInterval(()=>{
+        if(!player.playing||myGeneration!==player.generation) return;
+        const pos=playerPosition();
+        if(pos>=player.duration-0.03){
+            stopPlayback(false); player.offset=0;
+            $('playerStatus').textContent='Concluído.';
+            return;
+        }
+        updatePlayerUI();
+        
+        let events = [];
+        try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
+        const active = events.find(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
+        
+        if (active) {
+            const target = currentTrainingMode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
+            $('expectedNote').textContent = midiName(target);
+        } else {
+            $('expectedNote').textContent = '—';
+        }
+    }, 60);
+    
+    updatePlayerUI();
+    $('playerStatus').textContent='Reproduzindo...';
+}
+
+function stopPlayback(reset=true){
+    if(player.playing){ player.offset=playerPosition(); player.playing=false; }
+    stopPlayerSources();
+    clearInterval(player.timer); player.timer=null;
+    if(reset) player.offset=0;
+    updatePlayerUI();
+}
+
+function pausePlayback(){
+    if(!player.playing) return;
+    player.offset=playerPosition(); player.playing=false;
+    stopPlayerSources(); clearInterval(player.timer); player.timer=null;
+    updatePlayerUI(); $('playerStatus').textContent='Pausado.';
+}
+
+function seekPlayback(value){
+    const wasPlaying=player.playing;
+    const pos=player.duration*(Number(value)/1000);
+    if(wasPlaying){ player.playing=false; stopPlayerSources(); clearInterval(player.timer); }
+    player.offset=Math.max(0,Math.min(player.duration,pos));
+    updatePlayerUI();
+    if(wasPlaying) startPlayback();
+}
+
+async function loadAVTrackFromUrl(key,url,name){
+    stopPlayback(true);
+    $('playerStatus').textContent='Carregando áudio do TV Box... aguarde.';
+    try {
+        const ac=ensurePlayerGraph();
+        if(ac.state==='suspended') await ac.resume();
+        const response=await fetch(url,{mode:'cors',cache:'no-store'});
+        if(!response.ok) throw new Error('HTTP '+response.status);
+        const raw=await response.arrayBuffer();
+        const buffer=await ac.decodeAudioData(raw);
+        trackBuffers[key]=buffer;
+        player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));
+        $('playerSeek').value='0'; player.offset=0; updatePlayerUI();
+        $('playerStatus').textContent=`Áudio carregado com sucesso!`;
+        $('recordBtn').disabled = false;
+        return true;
+    } catch(e) {
+        trackBuffers[key]=null;
+        $('playerStatus').textContent=`Falha ao carregar: ${e.message}`;
+        throw e;
+    }
+}
+
+async function fetchServerAudioList(){
+    const status=$('serverAudioStatus'), select=$('serverAudioSelect');
+    status.textContent='Buscando no TV Box...';
+    try {
+        const response=await fetch(AV_AUDIO_API,{method:'GET',mode:'cors',cache:'no-store'});
+        if(!response.ok) throw new Error('Erro de conexão');
+        const data=await response.json();
+        const files=data.files.filter(f=>/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
+        select.replaceChildren();
+        if(!files.length){
+            select.add(new Option('Nenhum MP3 no servidor',''));
+            status.textContent='Nenhum MP3 encontrado na pasta uploads do MXQ Pro.';
+        } else {
+            files.forEach(f=>{
+                const mb=(Number(f.bytes||0)/1048576).toFixed(1);
+                select.add(new Option(`${f.name} (${mb} MB)`,f.name));
+            });
+            status.textContent=`Encontrados ${files.length} arquivos.`;
+        }
+        return files;
+    } catch(e) {
+        select.replaceChildren(new Option('Erro de Conexão - Tailscale online?',''));
+        status.textContent='Falha ao conectar com o backend do TV Box.';
+        return [];
+    }
+}
+
+// Eventos de Áudio e Interface
+$('loadServerAudioBtn').addEventListener('click', async ()=>{
+    const filename=$('serverAudioSelect').value;
+    if(!filename) return;
+    const url=AV_AUDIO_API+'/'+encodeURIComponent(filename);
+    $('loadServerAudioBtn').disabled=true;
+    try {
+        await loadAVTrackFromUrl('instrument',url,filename);
+        if(activeSong) localStorage.setItem('av3:serverPlayback:'+activeSong.id,filename);
+    } finally {
+        $('loadServerAudioBtn').disabled=false;
+    }
+});
+$('refreshServerAudioBtn').addEventListener('click', fetchServerAudioList);
+
+TRACKS.forEach(key=>{
+    $('track'+cap(key)+'Volume').addEventListener('input', e=>{
+        const v=Math.max(0,Math.min(1,Number(e.target.value)||0));
+        const g=player.gains[key];
+        if(g&&ctx) g.gain.setTargetAtTime(v,ctx.currentTime,.025);
     });
-  });
+});
+
+$('playerPlay').addEventListener('click', ()=>startPlayback());
+$('playerPause').addEventListener('click', pausePlayback);
+$('playerStop').addEventListener('click', ()=>{stopPlayback(true); $('playerStatus').textContent='Reiniciado.'});
+$('playerSeek').addEventListener('change', e=>seekPlayback(e.target.value));
+
+// --- YIN (Detector de Notas) ---
+function yin(buffer,sampleRate){
+    let size=buffer.length,rms=0;
+    for(let i=0;i<size;i++) rms+=buffer[i]*buffer[i];
+    rms=Math.sqrt(rms/size);
+    if(rms<0.008) return null;
+    let minTau=Math.floor(sampleRate/1000), maxTau=Math.min(Math.floor(sampleRate/65),Math.floor(size/2)), diff=new Float32Array(maxTau+1), cmnd=new Float32Array(maxTau+1);
+    for(let tau=minTau;tau<=maxTau;tau++){
+        let sum=0;
+        for(let i=0;i<size-maxTau;i++){ let d=buffer[i]-buffer[i+tau]; sum+=d*d; }
+        diff[tau]=sum;
+    }
+    cmnd[0]=1; let running=0;
+    for(let tau=1;tau<=maxTau;tau++){
+        running+=diff[tau]; cmnd[tau]=running?diff[tau]*tau/running:1;
+    }
+    let chosen=-1;
+    for(let tau=minTau+1;tau<maxTau;tau++){
+        if(cmnd[tau]<0.16 && cmnd[tau]<=cmnd[tau-1] && cmnd[tau]<cmnd[tau+1]){
+            chosen=tau; while(chosen+1<maxTau && cmnd[chosen+1]<cmnd[chosen]) chosen++; break;
+        }
+    }
+    if(chosen<0){
+        let best=1;
+        for(let tau=minTau;tau<=maxTau;tau++) if(cmnd[tau]<best){best=cmnd[tau];chosen=tau;}
+        if(best>0.32) return null;
+    }
+    let x0=chosen>minTau?cmnd[chosen-1]:cmnd[chosen], x1=cmnd[chosen], x2=chosen<maxTau?cmnd[chosen+1]:cmnd[chosen], den=2*(2*x1-x2-x0), shift=den?(x2-x0)/den:0, tau=chosen+Math.max(-.5,Math.min(.5,shift)), f=sampleRate/tau;
+    if(f<65||f>1000) return null;
+    return {freq:f, clarity:1-cmnd[chosen], rms};
+}
+
+function liveLoop(){
+    if(!analyser) return;
+    const raw=new Float32Array(analyser.fftSize);
+    analyser.getFloatTimeDomainData(raw);
+    const p=yin(raw,ctx.sampleRate);
+    if(p && p.clarity>0.65){
+        const ni=noteInfo(p.freq);
+        $('note').textContent = ni.name;
+        $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
+        $('pitchStatus').textContent = 'Analisando voz...';
+        lastValid=Date.now();
+    } else {
+        if(Date.now()-lastValid>1000){
+            $('note').textContent = '—';
+            $('cents').textContent = '';
+            $('pitchStatus').textContent = 'Sustente uma vogal para o afinador ler';
+        }
+    }
+    raf=setTimeout(()=>requestAnimationFrame(liveLoop),75);
+}
+
+async function startMic(){
+    try{
+        if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) throw new Error('Microfone não suportado no navegador.');
+        stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});
+        audioContext();
+        if(ctx.state==='suspended') await ctx.resume();
+        source = ctx.createMediaStreamSource(stream);
+        analyser = ctx.createAnalyser(); analyser.fftSize=4096; analyser.smoothingTimeConstant=0;
+        source.connect(analyser);
+        
+        $('micQuickStatus').textContent = 'Microfone ligado e ouvindo!';
+        $('micQuickStatus').style.color = 'var(--green)';
+        $('startMic').disabled=true; $('stopMic').disabled=false;
+        liveLoop();
+    }catch(e){
+        $('micQuickStatus').textContent = 'Erro no mic: ' + e.message;
+        $('micQuickStatus').style.color = 'var(--yellow)';
+    }
+}
+
+function stopMic(){
+    clearTimeout(raf);
+    if(mediaRecorder && mediaRecorder.state==='recording') stopRecording();
+    if(stream) stream.getTracks().forEach(t=>t.stop());
+    stream=null; analyser=null; source=null;
+    $('micQuickStatus').textContent='Microfone desligado.';
+    $('micQuickStatus').style.color = 'var(--muted)';
+    $('startMic').disabled=false; $('stopMic').disabled=true;
+    $('note').textContent = '—'; $('cents').textContent = '';
+}
+
+$('startMic').addEventListener('click', startMic);
+$('stopMic').addEventListener('click', stopMic);
+
+// --- GRAVAÇÃO LOCAL E MIXAGEM ---
+async function startRecording() {
+    if(!stream) { $('playerStatus').textContent = 'Ligue o microfone primeiro para gravar.'; return; }
+    if(!trackBuffers.instrument) { $('playerStatus').textContent = 'Carregue o playback do TV Box antes de gravar.'; return; }
+    
+    try {
+        const ac=ensurePlayerGraph();
+        if(ac.state==='suspended') await ac.resume();
+        
+        recordChunks=[];
+        recordMixDestination = ac.createMediaStreamDestination();
+        
+        recordPlaybackGain = ac.createGain();
+        recordPlaybackGain.gain.value=0.72;
+        player.compressor.connect(recordPlaybackGain);
+        recordPlaybackGain.connect(recordMixDestination);
+        
+        recordMicSource = source; 
+        recordMicFilter = ac.createBiquadFilter(); recordMicFilter.type='highpass'; recordMicFilter.frequency.value=85;
+        recordMicGain = ac.createGain(); recordMicGain.gain.value=1.65;
+        
+        recordMicSource.connect(recordMicFilter);
+        recordMicFilter.connect(recordMicGain);
+        recordMicGain.connect(recordMixDestination);
+        
+        const mimeType = ['audio/webm;codecs=opus','audio/webm','audio/mp4'].find(t=>MediaRecorder.isTypeSupported(t)) || '';
+        mediaRecorder = new MediaRecorder(recordMixDestination.stream, mimeType?{mimeType}:undefined);
+        mediaRecorder.ondataavailable = e => { if(e.data.size) recordChunks.push(e.data); };
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(recordChunks, {type: mediaRecorder.mimeType||'audio/webm'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href=url; a.download=`ensaio-${currentTrainingMode}-${Date.now()}.webm`; a.click();
+            $('playerStatus').textContent = 'Gravação finalizada e salva no dispositivo!';
+        };
+        
+        mediaRecorder.start(250); recording=true;
+        $('recordBtn').textContent = '🔴 Parar Gravação';
+        $('recordBtn').classList.replace('warn', 'good');
+        
+        startPlayback();
+    } catch(e) {
+        $('playerStatus').textContent = 'Erro ao gravar: ' + e.message;
+        recording = false;
+    }
+}
+
+function stopRecording(){
+    if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
+    recording=false; stopPlayback();
+    $('recordBtn').textContent = '🔴 Gravar Ensaio Local';
+    $('recordBtn').classList.replace('good', 'warn');
+}
+
+$('recordBtn').addEventListener('click', () => {
+    if(recording) stopRecording();
+    else startRecording();
+});
+
+// ============================================================================
+// 3. FIREBASE AUTH & FIREBASE SYNC (DUETO REMOTO)
+// ============================================================================
+let currentUser=null, activeSong=null, assignedSongs=[], isAdmin=false;
+let syncUnsubscribe = null;
+
+async function enter(user){
+    currentUser=user;
+    gate.style.display='none';
+    main.classList.remove('appLocked', 'hidden');
+    $('savedState').textContent=(user.email||user.displayName||'cantora');
+    $('cloudState').textContent='Validando…';
+    
+    try {
+        const adminSnap = await getDoc(doc(db,'admins',user.uid));
+        isAdmin = (String(user.email||'').toLowerCase()==='andersonsieklicki@gmail.com' && user.emailVerified) || (adminSnap.exists() && adminSnap.data().ativo);
+        
+        let songs=[];
+        if(isAdmin){
+            $('adminLink').classList.remove('hidden');
+            const snap = await getDocs(collection(db,'musicas'));
+            songs = snap.docs.map(d=>({id:d.id,...d.data()}));
+        } else {
+            $('adminLink').classList.add('hidden');
+            let profile = await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));
+            if(!profile.exists()) throw new Error('Conta sem perfil autorizado. Solicite um convite.');
+            const ids = profile.data().musicaIds || [];
+            if(!ids.length) throw new Error('Seu perfil não tem músicas atribuídas.');
+            const results = await Promise.all(ids.map(id=>getDoc(doc(db,'musicas',id))));
+            songs = results.filter(x=>x.exists()&&x.data().publicada).map(x=>({id:x.id,...x.data()}));
+        }
+        assignedSongs = songs;
+        
+        const sel = $('studentSongSelect');
+        sel.replaceChildren();
+        if(!songs.length){
+            sel.add(new Option('Nenhuma música encontrada',''));
+            $('cloudState').textContent='Sem músicas';
+            return;
+        }
+        songs.forEach(s => sel.add(new Option(s.titulo||s.id, s.id)));
+        sel.disabled = false;
+        loadSong(songs[0]); // Auto load first song
+        
+        $('cloudState').textContent='Conectado';
+    } catch(e) {
+        await signOut(auth);
+        gate.style.display='grid';
+        main.classList.add('appLocked');
+        $('authMessage').textContent = e.message;
+    }
+}
+
+async function loadSong(song){
+    activeSong = song;
+    $('teacherSongTitle').textContent = song.titulo || 'Treino Vocal';
+    
+    // LISTENER PARA O SINCRONISMO REMOTO
+    if(syncUnsubscribe) syncUnsubscribe();
+    syncUnsubscribe = onSnapshot(doc(db, 'sessoes_treino', song.id), (snap) => {
+        if (!snap.exists()) return;
+        const data = snap.data();
+        if (data.action === 'play_record' && data.triggerTime) {
+            const delay = data.triggerTime - Date.now();
+            if (delay > 0 && delay < 10000) {
+                $('playerStatus').textContent = `Dueto Sincronizado! Começando em ${Math.ceil(delay/1000)}s...`;
+                $('playerStatus').style.color = "var(--green)";
+                setTimeout(() => {
+                    if(!recording) startRecording(); // Dispara a gravação local no momento exato!
+                }, delay);
+            }
+        }
+    });
+
+    // Busca biblioteca do TV box
+    const files = await fetchServerAudioList();
+    const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
+    if(savedLocal && files.some(f => f.name === savedLocal)){
+        $('serverAudioSelect').value = savedLocal;
+        $('loadServerAudioBtn').click(); // Auto-carrega se já foi definido antes
+    }
+}
+
+// Botão Sincronizar Dueto Remoto (Firebase)
+$('syncRemoteBtn').addEventListener('click', async () => {
+    if(!activeSong) return;
+    if(!stream) { alert("Ligue o microfone primeiro!"); return; }
+    if(!trackBuffers.instrument) { alert("Carregue o playback do TV Box antes de sincronizar!"); return; }
+    
+    $('playerStatus').textContent = 'Agendando play simultâneo...';
+    try {
+        // Agenda o play exato para daqui a 5 segundos (5000ms) para dar tempo de ping entre celulares
+        const triggerTime = Date.now() + 5000;
+        await setDoc(doc(db, 'sessoes_treino', activeSong.id), {
+            action: 'play_record',
+            triggerTime: triggerTime,
+            initiatedBy: currentUser.uid,
+            timestamp: serverTimestamp()
+        });
+    } catch (e) {
+        $('playerStatus').textContent = 'Erro ao sincronizar: ' + e.message;
+    }
+});
+
+$('studentSongSelect').addEventListener('change', () => {
+    const s = assignedSongs.find(x => x.id === $('studentSongSelect').value);
+    if(s) loadSong(s);
+});
+
+$('loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); }
+    catch(err) { $('authMessage').textContent = "Credenciais inválidas."; }
+});
+
+$('logoutBtn').addEventListener('click', () => signOut(auth));
+
+onAuthStateChanged(auth, user => {
+    if(user) enter(user);
+    else {
+        currentUser=null; activeSong=null;
+        main.classList.add('appLocked', 'hidden');
+        gate.style.display='grid';
+    }
+});
+
+// UI Modes
+document.querySelectorAll('[data-training-mode]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        $('playbackPanel').classList.remove('hidden');
+        const mode = btn.dataset.trainingMode;
+        currentTrainingMode = mode;
+        if(mode === 'silvane') {
+            $('teacherGuidance').textContent = '"Silvane, acompanhe esta melodia. O foco é na voz principal."';
+            $('trackLeadVolume').value = 0.6; $('trackHarmonyVolume').value = 0.0;
+        } else if (mode === 'marla') {
+            $('teacherGuidance').textContent = '"Marla, agora é sua vez. Ouça a harmonia e encaixe a segunda voz."';
+            $('trackLeadVolume').value = 0.2; $('trackHarmonyVolume').value = 0.8;
+        } else {
+            $('teacherGuidance').textContent = '"Agora vamos cantar juntas! O playback está preparado."';
+            $('trackLeadVolume').value = 0.1; $('trackHarmonyVolume').value = 0.1;
+        }
+        
+        if(player.gains['lead'] && ctx) player.gains['lead'].gain.value = Number($('trackLeadVolume').value);
+        if(player.gains['harmony'] && ctx) player.gains['harmony'].gain.value = Number($('trackHarmonyVolume').value);
+        
+        $('playbackPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 });
 </script>
 </body>
