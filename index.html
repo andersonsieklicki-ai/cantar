@@ -69,7 +69,7 @@ input:focus, select:focus { border-color: var(--cyan); }
 .balance-value { font-size: 54px; font-weight: 800; color: white; line-height: 1; text-shadow: 0 4px 20px rgba(0, 229, 255, 0.4); margin-bottom: 15px; }
 .balance-info { font-size: 14px; color: var(--cyan); background: rgba(0, 229, 255, 0.1); padding: 8px 16px; border-radius: 20px; display: inline-block; font-weight: 600; border: 1px solid rgba(0,229,255,0.2); }
 
-/* AÇÕES RÁPIDAS (Ícones Redondos) */
+/* AÇÕES RÁPIDAS */
 .quick-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
 .action-item { display: flex; flex-direction: column; align-items: center; gap: 8px; background: transparent; cursor: pointer; }
 .action-item:active { transform: scale(0.92); }
@@ -113,7 +113,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 </head>
 <body>
 
-<!-- OVERLAYS: SINCRONISMO E CALIBRAÇÃO -->
 <div class="sync-overlay" id="syncOverlay">
     <p style="color: var(--muted); margin-bottom: 10px; font-weight: bold; letter-spacing: 2px;">DUETO REMOTO</p>
     <h1 id="syncCount">4</h1>
@@ -152,7 +151,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 </section>
 
 <main class="app-container appLocked hidden" id="appMain">
-  
   <header class="app-header">
     <div class="user-profile">
         <div class="user-avatar">🎙️</div>
@@ -164,7 +162,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     <button id="logoutBtn" class="btn-logout" aria-label="Sair">🚪</button>
   </header>
 
-  <!-- CARTÃO DE SALDO (PONTUAÇÃO GERAL E MÚSICA) -->
   <div class="bank-card balance-card">
     <div class="balance-label" id="teacherSongTitle">Carregando música...</div>
     <div class="balance-value" id="liveScore">100<span style="font-size: 30px; opacity: 0.5;">%</span></div>
@@ -189,7 +186,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     </div>
   </div>
 
-  <!-- PAINEL DO PLAYER -->
   <div class="bank-card hidden" id="playbackPanel">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h3 id="playbackTitle" style="margin: 0; font-size: 16px;">Sala de Treino</h3>
@@ -227,7 +223,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     <button class="btn-record" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
     <button class="btn-sync" id="syncRemoteBtn" disabled>🌍 Iniciar Dueto Remoto</button>
 
-    <!-- CONFIGURAÇÕES LIMPAS -->
     <details>
       <summary>⚙️ Ajustes de Áudio</summary>
       <div style="padding-top: 15px;">
@@ -238,55 +233,64 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
       </div>
     </details>
   </div>
-  
-  <div id="legacy-ui" class="hidden">
-    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><button id="stopMicLegacy"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button><a id="adminLink"></a><span id="cloudState"></span>
-  </div>
 </main>
 
 <script>
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
 
-// MAPA COMPLETO DA PRIMEIRA PARTE DA MÚSICA "ESTRELINHA"
+// MAPA COMPLETO DA PRIMEIRA PARTE DA MÚSICA "ESTRELINHA" (AJUSTADO PARA A SINC. PERFEITA DO ÁUDIO)
 const demoEstrelinhaMap = [
-    { start: 21.0, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
-    { start: 23.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
-    { start: 24.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
-    { start: 26.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "e", verified: true },
-    { start: 27.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
-    { start: 29.0, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
-    { start: 30.5, duration: 2.0, leadMidi: 65, harmonyMidi: 69, syllable: "fora", verified: true },
-    { start: 33.0, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "como", verified: true },
-    { start: 35.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "de", verified: true },
-    { start: 36.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "costume", verified: true },
-    { start: 38.5, duration: 1.5, leadMidi: 62, harmonyMidi: 65, syllable: "vamos", verified: true },
-    { start: 41.0, duration: 2.5, leadMidi: 64, harmonyMidi: 67, syllable: "conversar", verified: true },
-    { start: 44.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "Pra", verified: true },
-    { start: 45.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "te", verified: true },
-    { start: 46.5, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "alegrar", verified: true },
-    { start: 49.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "tem", verified: true },
-    { start: 50.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "até", verified: true },
-    { start: 51.5, duration: 2.5, leadMidi: 64, harmonyMidi: 67, syllable: "vagalume", verified: true },
-    { start: 55.5, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "Tem", verified: true },
-    { start: 56.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "dia", verified: true },
-    { start: 57.5, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "que", verified: true },
-    { start: 58.5, duration: 1.0, leadMidi: 65, harmonyMidi: 69, syllable: "vai", verified: true },
-    { start: 59.5, duration: 2.0, leadMidi: 64, harmonyMidi: 67, syllable: "piorar", verified: true },
-    { start: 62.0, duration: 1.5, leadMidi: 62, harmonyMidi: 65, syllable: "Saudade", verified: true },
-    { start: 64.0, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "vai", verified: true },
-    { start: 65.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "apertar", verified: true },
-    { start: 67.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "Até", verified: true },
-    { start: 68.5, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "que", verified: true },
-    { start: 69.5, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "cê", verified: true },
-    { start: 70.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "tá", verified: true },
-    { start: 71.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "indo", verified: true },
-    { start: 72.5, duration: 2.0, leadMidi: 59, harmonyMidi: 62, syllable: "bem", verified: true },
-    { start: 75.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "Faz", verified: true },
-    { start: 76.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "falta", verified: true },
-    { start: 78.0, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
-    { start: 79.5, duration: 0.5, leadMidi: 65, harmonyMidi: 69, syllable: "pra", verified: true },
-    { start: 80.5, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "mim", verified: true },
-    { start: 81.5, duration: 2.0, leadMidi: 64, harmonyMidi: 67, syllable: "também", verified: true }
+    // Intro
+    { start: 0.0, duration: 19.0, leadMidi: 0, harmonyMidi: 0, syllable: "Introdução...", verified: true, isRest: true },
+    { start: 20.0, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
+    { start: 21.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
+    { start: 21.5, duration: 1.5, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
+    
+    { start: 23.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "E", verified: true },
+    { start: 24.0, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
+    { start: 25.0, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
+    { start: 25.5, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "fora", verified: true },
+
+    { start: 27.5, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "como", verified: true },
+    { start: 28.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "de", verified: true },
+    { start: 29.0, duration: 1.5, leadMidi: 60, harmonyMidi: 64, syllable: "costume", verified: true },
+
+    { start: 30.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "vamos", verified: true },
+    { start: 31.5, duration: 2.0, leadMidi: 64, harmonyMidi: 67, syllable: "conversar", verified: true },
+
+    { start: 34.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "Pra", verified: true },
+    { start: 35.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "te", verified: true },
+    { start: 35.5, duration: 1.5, leadMidi: 60, harmonyMidi: 64, syllable: "alegrar", verified: true },
+    
+    { start: 37.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "tem", verified: true },
+    { start: 38.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "até", verified: true },
+    { start: 38.5, duration: 2.5, leadMidi: 64, harmonyMidi: 67, syllable: "vagalume", verified: true },
+    
+    { start: 41.5, duration: 3.0, leadMidi: 0, harmonyMidi: 0, syllable: "...", verified: true, isRest: true }, // Pausa
+
+    { start: 44.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "Tem", verified: true },
+    { start: 45.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "dia", verified: true },
+    { start: 45.5, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "que", verified: true },
+    { start: 46.0, duration: 0.5, leadMidi: 65, harmonyMidi: 69, syllable: "vai", verified: true },
+    { start: 46.5, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "piorar", verified: true },
+    
+    { start: 48.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "Saudade", verified: true },
+    { start: 49.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "vai", verified: true },
+    { start: 50.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "apertar", verified: true },
+
+    { start: 52.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "Até", verified: true },
+    { start: 52.5, duration: 0.3, leadMidi: 64, harmonyMidi: 67, syllable: "que", verified: true },
+    { start: 52.8, duration: 0.3, leadMidi: 64, harmonyMidi: 67, syllable: "cê", verified: true },
+    { start: 53.1, duration: 0.4, leadMidi: 62, harmonyMidi: 65, syllable: "tá", verified: true },
+    { start: 53.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "indo", verified: true },
+    { start: 54.0, duration: 1.5, leadMidi: 59, harmonyMidi: 62, syllable: "bem", verified: true },
+
+    { start: 56.0, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "Faz", verified: true },
+    { start: 56.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "falta", verified: true },
+    { start: 57.0, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
+    { start: 57.5, duration: 0.5, leadMidi: 65, harmonyMidi: 69, syllable: "pra", verified: true },
+    { start: 58.0, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "mim", verified: true },
+    { start: 58.5, duration: 2.0, leadMidi: 64, harmonyMidi: 67, syllable: "também", verified: true }
 ];
 
 localStorage.setItem('estrelinha_events', JSON.stringify(demoEstrelinhaMap));
@@ -297,7 +301,7 @@ localStorage.setItem('estrelinha_events', JSON.stringify(demoEstrelinhaMap));
 const $=id=>document.getElementById(id);
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}
+function midiName(m){return m===0?'—':shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}
 function freqMidi(f){return 69+12*Math.log2(f/440)}
 function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*100);return{midi:n,name:midiName(n),cents,freq:f}}
 
@@ -480,24 +484,33 @@ function engineLoop() {
             
             if (active) {
                 targetMidiNow = currentTrainingMode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
-                if($('expectedNote')) $('expectedNote').textContent = midiName(targetMidiNow);
-                window.activeTargetMidi = targetMidiNow;
                 
-                let progress = ((pos - active.start) / active.duration) * 100;
-                progress = Math.max(0, Math.min(100, progress));
-                
-                let lineHtml = '';
-                let startIndex = Math.max(0, activeIdx - 2);
-                let endIndex = Math.min(events.length, activeIdx + 4);
-                
-                for(let i = startIndex; i < endIndex; i++) {
-                    const ev = events[i];
-                    if (i < activeIdx) { lineHtml += `<span class="k-word past">${ev.syllable}</span>`; } 
-                    else if (i === activeIdx) { lineHtml += `<span class="k-word active" style="--fill-pct: ${progress}%">${ev.syllable}</span>`; } 
-                    else { lineHtml += `<span class="k-word">${ev.syllable}</span>`; }
+                // Tratamento especial para Pausas/Intro (onde Midi é 0)
+                if(targetMidiNow === 0) {
+                    if($('expectedNote')) $('expectedNote').textContent = '—';
+                    if($('karaokeCue')) $('karaokeCue').textContent = '⏳ AGUARDE...'; 
+                    let lineHtml = `<span class="k-word active" style="--fill-pct: 100%; color: var(--cyan);">${active.syllable}</span>`;
+                    if($('karaokeLine')) $('karaokeLine').innerHTML = lineHtml;
+                } else {
+                    if($('expectedNote')) $('expectedNote').textContent = midiName(targetMidiNow);
+                    let progress = ((pos - active.start) / active.duration) * 100;
+                    progress = Math.max(0, Math.min(100, progress));
+                    
+                    let lineHtml = '';
+                    let startIndex = Math.max(0, activeIdx - 2);
+                    let endIndex = Math.min(events.length, activeIdx + 4);
+                    
+                    for(let i = startIndex; i < endIndex; i++) {
+                        const ev = events[i];
+                        if (ev.isRest) continue; // Pula as pausas visuais no render normal
+                        if (i < activeIdx) { lineHtml += `<span class="k-word past">${ev.syllable}</span>`; } 
+                        else if (i === activeIdx) { lineHtml += `<span class="k-word active" style="--fill-pct: ${progress}%">${ev.syllable}</span>`; } 
+                        else { lineHtml += `<span class="k-word">${ev.syllable}</span>`; }
+                    }
+                    if($('karaokeCue')) $('karaokeCue').textContent = '🎤 NO RITMO!'; 
+                    if($('karaokeLine')) $('karaokeLine').innerHTML = lineHtml;
                 }
-                if($('karaokeCue')) $('karaokeCue').textContent = '🎤 NO RITMO!'; 
-                if($('karaokeLine')) $('karaokeLine').innerHTML = lineHtml;
+                window.activeTargetMidi = targetMidiNow;
             } else {
                 if($('expectedNote')) $('expectedNote').textContent = '—'; window.activeTargetMidi = null;
                 const nextEvIdx = events.findIndex(e => e.verified && Number(e.start) > pos);
@@ -506,7 +519,9 @@ function engineLoop() {
                     if (timeToStart <= 4) {
                         if($('karaokeCue')) $('karaokeCue').textContent = `Entra em ${Math.ceil(timeToStart)}...`;
                         let lineHtml = '';
-                        for(let i = nextEvIdx; i < Math.min(events.length, nextEvIdx + 4); i++) lineHtml += `<span class="k-word">${events[i].syllable}</span>`;
+                        for(let i = nextEvIdx; i < Math.min(events.length, nextEvIdx + 4); i++) {
+                            if(!events[i].isRest) lineHtml += `<span class="k-word">${events[i].syllable}</span>`;
+                        }
                         if($('karaokeLine')) $('karaokeLine').innerHTML = lineHtml;
                     } else { 
                         if($('karaokeCue')) $('karaokeCue').textContent = 'Aguarde'; 
@@ -530,7 +545,7 @@ function engineLoop() {
             if($('cents')) $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
             if($('pitchStatus')) $('pitchStatus').textContent = 'Lendo...'; lastValid = Date.now();
             
-            if (player.playing && window.activeTargetMidi !== null) {
+            if (player.playing && window.activeTargetMidi !== null && window.activeTargetMidi > 0) {
                 evalFrames++;
                 let sungMidi = freqMidi(p.freq); let normalizedSung = sungMidi;
                 while(normalizedSung < window.activeTargetMidi - 6) normalizedSung += 12;
@@ -548,7 +563,7 @@ function engineLoop() {
                 if($('cents')) $('cents').textContent = ''; 
                 if($('pitchStatus')) $('pitchStatus').textContent = 'Aguardando voz'; 
             }
-            if (player.playing && window.activeTargetMidi !== null) {
+            if (player.playing && window.activeTargetMidi !== null && window.activeTargetMidi > 0) {
                 silenceFrames++; if (silenceFrames > 5) { evalFrames++; scoreSum += 0; } 
             }
         }
@@ -584,7 +599,7 @@ $('toggleMicBtn').addEventListener('click', async () => {
             $('toggleMicBtn').style.background = 'rgba(255, 23, 68, 0.2)';
             $('toggleMicBtn').style.color = 'var(--red)';
             $('toggleMicBtn').style.borderColor = 'rgba(255, 23, 68, 0.4)';
-            $('btnCalibrate').disabled = false;
+            if($('btnCalibrate')) $('btnCalibrate').disabled = false;
             
             if(!raf) engineLoop();
         }catch(e){ alert('Erro no mic: ' + e.message); }
@@ -597,55 +612,57 @@ $('toggleMicBtn').addEventListener('click', async () => {
         $('toggleMicBtn').style.background = 'rgba(0, 229, 255, 0.15)';
         $('toggleMicBtn').style.color = 'var(--cyan)';
         $('toggleMicBtn').style.borderColor = 'rgba(0, 229, 255, 0.3)';
-        $('btnCalibrate').disabled = true;
+        if($('btnCalibrate')) $('btnCalibrate').disabled = true;
         if($('note')) $('note').textContent = '—'; 
         if($('cents')) $('cents').textContent = '';
     }
 });
 
-$('btnCalibrate').addEventListener('click', async () => {
-    if(!stream) { alert("Ligue o microfone primeiro!"); return; }
-    const overlay = $('calibOverlay'); const statusEl = $('calibStatus'); const countEl = $('calibCount');
-    overlay.classList.add('visible');
-    
-    let countdown = 3; statusEl.textContent = 'Prepare-se...'; countEl.textContent = countdown;
-    
-    let iv = setInterval(() => {
-        countdown--;
-        if(countdown > 0) { countEl.textContent = countdown; } 
-        else {
-            clearInterval(iv);
-            statusEl.textContent = 'Lendo volume (Cante o mais alto possível)...'; countEl.textContent = "🎤";
-            
-            let peakRms = 0;
-            let readInterval = setInterval(() => {
-                if(analyser) {
-                    const raw=new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(raw);
-                    let rms = 0; for(let i=0;i<raw.length;i++) rms += raw[i]*raw[i]; rms = Math.sqrt(rms/raw.length);
-                    if (rms > peakRms) peakRms = rms;
-                }
-            }, 100);
+if($('btnCalibrate')) {
+    $('btnCalibrate').addEventListener('click', async () => {
+        if(!stream) { alert("Ligue o microfone primeiro!"); return; }
+        const overlay = $('calibOverlay'); const statusEl = $('calibStatus'); const countEl = $('calibCount');
+        if(overlay) overlay.classList.add('visible');
+        
+        let countdown = 3; if(statusEl) statusEl.textContent = 'Prepare-se...'; if(countEl) countEl.textContent = countdown;
+        
+        let iv = setInterval(() => {
+            countdown--;
+            if(countdown > 0) { if(countEl) countEl.textContent = countdown; } 
+            else {
+                clearInterval(iv);
+                if(statusEl) statusEl.textContent = 'Lendo volume (Cante o mais alto possível)...'; if(countEl) countEl.textContent = "🎤";
+                
+                let peakRms = 0;
+                let readInterval = setInterval(() => {
+                    if(analyser) {
+                        const raw=new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(raw);
+                        let rms = 0; for(let i=0;i<raw.length;i++) rms += raw[i]*raw[i]; rms = Math.sqrt(rms/raw.length);
+                        if (rms > peakRms) peakRms = rms;
+                    }
+                }, 100);
 
-            setTimeout(() => {
-                clearInterval(readInterval);
-                let idealGain = 1.0;
-                if (peakRms > 0 && peakRms < 0.1) idealGain = 0.2 / peakRms;
-                if (idealGain > 8) idealGain = 8;
-                
-                if($('micGainSlider')) $('micGainSlider').value = idealGain;
-                if(manualMicInputGain) manualMicInputGain.gain.value = idealGain;
-                
-                if (peakRms < 0.05) {
-                    if($('trackInstrumentVolume')) $('trackInstrumentVolume').value = 0.5;
-                    if(player.gains['instrument']) player.gains['instrument'].gain.value = 0.5;
-                }
-                
-                statusEl.textContent = 'Voz Calibrada com Sucesso!';
-                setTimeout(() => { overlay.classList.remove('visible'); }, 2000);
-            }, 2500);
-        }
-    }, 1000);
-});
+                setTimeout(() => {
+                    clearInterval(readInterval);
+                    let idealGain = 1.0;
+                    if (peakRms > 0 && peakRms < 0.1) idealGain = 0.2 / peakRms;
+                    if (idealGain > 8) idealGain = 8;
+                    
+                    if($('micGainSlider')) $('micGainSlider').value = idealGain;
+                    if(manualMicInputGain) manualMicInputGain.gain.value = idealGain;
+                    
+                    if (peakRms < 0.05) {
+                        if($('trackInstrumentVolume')) $('trackInstrumentVolume').value = 0.5;
+                        if(player.gains['instrument']) player.gains['instrument'].gain.value = 0.5;
+                    }
+                    
+                    if(statusEl) statusEl.textContent = 'Voz Calibrada com Sucesso!';
+                    setTimeout(() => { if(overlay) overlay.classList.remove('visible'); }, 2000);
+                }, 2500);
+            }
+        }, 1000);
+    });
+}
 
 TRACKS.forEach(key=>{
     if($('track'+cap(key)+'Volume')) {
@@ -702,7 +719,9 @@ function stopRecording(){
     }
 }
 
-$('recordBtn').addEventListener('click', () => { if(recording) stopRecording(); else startRecording(); });
+if($('recordBtn')) {
+    $('recordBtn').addEventListener('click', () => { if(recording) stopRecording(); else startRecording(); });
+}
 
 window.appCurrentTrainingMode = (val) => { if(val!==undefined) currentTrainingMode = val; return currentTrainingMode; };
 window.appStartRecording = startRecording; window.appCtx = () => ctx; window.appIsMicActive = false;
@@ -728,9 +747,9 @@ if(urlParams.get('convite')) { if($('standardLogin')) $('standardLogin').classLi
 if($('magicEnterBtn')) {
     $('magicEnterBtn').addEventListener('click', async () => {
         const name = $('magicName').value.trim();
-        if (!name) { $('magicMsg').textContent = 'Digite seu nome.'; return; }
+        if (!name) { if($('magicMsg')) $('magicMsg').textContent = 'Digite seu nome.'; return; }
         
-        $('magicEnterBtn').disabled = true; $('magicMsg').textContent = 'Preparando estúdio...'; $('magicMsg').style.color = 'var(--cyan)';
+        $('magicEnterBtn').disabled = true; if($('magicMsg')) { $('magicMsg').textContent = 'Preparando estúdio...'; $('magicMsg').style.color = 'var(--cyan)'; }
         const code = urlParams.get('convite');
         const dummyEmail = code.toLowerCase() + '@estrelinha.app'; const dummyPass = code.toUpperCase() + '1234';
         
@@ -742,7 +761,8 @@ if($('magicEnterBtn')) {
             if (e.code === 'auth/email-already-in-use') {
                 await signInWithEmailAndPassword(auth, dummyEmail, dummyPass); window.history.replaceState({}, document.title, "/");
             } else {
-                $('magicMsg').textContent = "Erro: " + e.message; $('magicMsg').style.color = 'var(--yellow)'; $('magicEnterBtn').disabled = false;
+                if($('magicMsg')) { $('magicMsg').textContent = "Erro: " + e.message; $('magicMsg').style.color = 'var(--yellow)'; }
+                $('magicEnterBtn').disabled = false;
             }
         }
     });
@@ -845,12 +865,12 @@ async function loadSong(song){
 if($('loginForm')) {
     $('loginForm').addEventListener('submit', async e => {
         e.preventDefault();
-        try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); } catch(err) { $('authMessage').textContent = "Credenciais inválidas."; }
+        try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); } catch(err) { if($('authMessage')) $('authMessage').textContent = "Credenciais inválidas."; }
     });
 }
 if($('googleLoginBtn')) {
     $('googleLoginBtn').addEventListener('click', async () => {
-        try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch(e) { $('authMessage').textContent = e.message; }
+        try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch(e) { if($('authMessage')) $('authMessage').textContent = e.message; }
     });
 }
 if($('logoutBtn')) {
@@ -882,7 +902,6 @@ onAuthStateChanged(auth, user => {
     else { currentUser=null; window.activeSong=null; main.classList.add('appLocked', 'hidden'); gate.style.display='grid'; if(presenceUnsubscribe) presenceUnsubscribe(); }
 });
 
-// AQUI ESTÁ O GATILHO PARA BAIXAR DO GITHUB (Agora os botões funcionam)
 document.querySelectorAll('[data-training-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
         if($('playbackPanel')) $('playbackPanel').classList.remove('hidden');
