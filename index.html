@@ -4,260 +4,287 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#09111e">
-<title>Assistente Vocal — Estrelinha</title>
+<title>Estúdio Vocal — Sil & Marla</title>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/icons/icon-192.png">
 <style>
-/* CSS DA ESTRELINHA E IMAGEM DE FUNDO SIL & MARLA */
-:root { --panel: rgba(19, 31, 49, 0.90); --cyan: #42d8e8; --green: #39dfa5; --yellow: #ffd166; --red: #ff758f; --txt: #f6f8ff; --muted: #9aabc3; }
-* { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+/* =======================================================
+   ESTILO APLICATIVO DE BANCO (PREMIUM MOBILE)
+   ======================================================= */
+:root { 
+    --bg-dark: #09111e; 
+    --cyan: #00e5ff; 
+    --green: #00e676; 
+    --yellow: #ffea00; 
+    --red: #ff1744; 
+    --txt: #ffffff; 
+    --muted: #a0abbc;
+    --card-bg: rgba(18, 25, 40, 0.65);
+    --card-border: rgba(255, 255, 255, 0.1);
+}
+
+* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
 body { 
-  margin: 0; 
-  background-color: #09111e;
-  background-image: linear-gradient(rgba(9, 17, 30, 0.75), rgba(9, 17, 30, 0.95)), url('1001384647.png');
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  color: var(--txt); 
-  padding-bottom: 50px; 
+    margin: 0; 
+    background-color: var(--bg-dark);
+    /* IMAGEM DE FUNDO FIXA E ESCURECIDA */
+    background-image: linear-gradient(rgba(4, 9, 18, 0.75), rgba(4, 9, 18, 0.95)), url('1001384647.png');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--txt); 
+    padding-bottom: 60px;
+    -webkit-font-smoothing: antialiased;
 }
 
 .hidden { display: none !important; }
-button { font: inherit; cursor: pointer; border: 1px solid #3b5271; border-radius: 11px; background: rgba(38, 57, 83, 0.9); color: var(--txt); padding: 10px 13px; font-weight: 650; transition: transform 0.1s; }
-button:active { transform: scale(0.97); }
-button.primary { background: linear-gradient(135deg, #147f96, #276db7); border-color: #328da9; }
-button.good { background: linear-gradient(135deg, #087f69, #19a879); border-color: #087f69; }
-button.warn { background: linear-gradient(135deg, #a64160, #d65c70); border-color: #99585e; }
-button.ghost { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); }
-button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); color: var(--txt); border: 1px solid #2d405b; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
 
-/* LAYOUT TELA DE LOGIN */
-.authGate { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
-.authCard { width: min(100%, 420px); background: var(--panel); border: 1px solid #2d405b; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 18px 60px rgba(0,0,0,0.6); backdrop-filter: blur(8px); }
-.estrelinha-avatar { width: 90px; height: 90px; margin: 0 auto 15px; background: radial-gradient(circle at 30% 30%, #fff4bd, #ffd166 50%, #ff9f1c); border-radius: 50%; display: grid; place-items: center; font-size: 50px; box-shadow: 0 0 25px #ffd16644; }
+/* COMPONENTES BASE */
+button { font: inherit; cursor: pointer; transition: transform 0.15s ease, opacity 0.15s ease; outline: none; border: none; }
+button:active { transform: scale(0.95); }
+button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+input, select { font: inherit; width: 100%; background: rgba(0,0,0,0.4); color: var(--txt); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px; margin-bottom: 12px; outline: none; }
+input:focus, select:focus { border-color: var(--cyan); }
 
-.app-container { max-width: 800px; margin: 0 auto; padding: 20px; }
-.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 12px; color: var(--muted); flex-wrap: wrap; gap:10px; }
-.teacher-area { text-align: center; margin: 20px 0 30px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
-.teacher-area h2 { margin: 10px 0 5px; font-size: 24px; }
-.teacher-area p { color: var(--cyan); font-weight: 600; font-size: 16px; margin: 0; }
+/* CARTÕES DE VIDRO (GLASSMORPHISM) */
+.bank-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
 
-/* BOTOES AULAS */
-.main-actions { display: grid; grid-template-columns: 1fr; gap: 15px; }
-@media(min-width: 600px) { .main-actions { grid-template-columns: repeat(3, 1fr); } }
-.action-btn { min-height: 110px; border-radius: 16px; text-align: left; padding: 18px; display: flex; flex-direction: column; justify-content: center; gap: 5px; background: linear-gradient(145deg, rgba(32, 62, 91, 0.9), rgba(24, 40, 62, 0.9)); border: 2px solid transparent; transition: all 0.2s; cursor: pointer; backdrop-filter: blur(5px); }
-.action-btn strong { font-size: 16px; }
-.action-btn span { font-size: 12px; color: #bdcce0; }
-.action-btn:hover { transform: scale(0.98); }
-.action-btn[data-training-mode="silvane"] { border-left-color: #2c9c9e; }
-.action-btn[data-training-mode="marla"] { border-left-color: #8670bd; }
-.action-btn[data-training-mode="duet"] { border-left-color: #b58c4b; }
+/* TELA DE LOGIN */
+.authGate { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.authCard { width: 100%; max-width: 400px; text-align: center; }
+.brand-logo { width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, #ffd166, #ff9f1c); border-radius: 50%; display: grid; place-items: center; font-size: 40px; box-shadow: 0 10px 25px rgba(255, 159, 28, 0.4); }
+.btn-primary { background: linear-gradient(135deg, #00b4db, #0083b0); color: white; border-radius: 14px; padding: 16px; font-weight: bold; width: 100%; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 180, 219, 0.3); }
+.btn-secondary { background: rgba(255,255,255,0.1); color: white; border-radius: 14px; padding: 16px; font-weight: bold; width: 100%; font-size: 16px; margin-top: 12px; }
 
-/* PLAYER E PITCH */
-.training-room { background: var(--panel); border: 1px solid #2d405b; border-radius: 16px; padding: 20px; margin-top: 20px; text-align: center; backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-.target-note { font-size: 52px; font-weight: 850; color: var(--cyan); margin: 10px 0; text-shadow: 0 0 15px rgba(66, 216, 232, 0.3); }
-.playerTransport { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
-.advanced-settings { margin-top: 30px; padding-top: 20px; border-top: 1px solid #2d405b; text-align: left; }
-.advanced-settings summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: bold; outline: none; }
+/* HEADER DO APP (Estilo Banco) */
+.app-container { max-width: 600px; margin: 0 auto; padding: 20px 15px; }
+.app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.user-profile { display: flex; align-items: center; gap: 12px; }
+.user-avatar { width: 45px; height: 45px; background: rgba(255,255,255,0.15); border-radius: 50%; display: grid; place-items: center; font-size: 20px; border: 1px solid var(--card-border); }
+.user-greeting { font-size: 18px; font-weight: bold; margin: 0; }
+.user-status { font-size: 12px; color: var(--green); font-weight: 600; display: flex; align-items: center; gap: 5px; }
+.user-status.offline { color: var(--muted); }
+.user-status::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.btn-logout { background: transparent; color: var(--muted); padding: 8px; font-size: 20px; }
 
-/* CÍRCULO DO SCORE E KARAOKE */
-.score-circle { width: 100px; height: 100px; margin: 0 auto; border-radius: 50%; border: 6px solid var(--green); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color 0.3s; background: rgba(12, 21, 36, 0.8); }
-.score-circle span.value { font-size: 24px; font-weight: 800; color: white; line-height: 1; margin-bottom: 2px; }
-.score-circle span.label { font-size: 10px; color: var(--muted); font-weight: bold; letter-spacing: 1px; }
+/* CARTÃO DE SALDO (Placar/Score) */
+.balance-card { text-align: center; padding: 30px 20px; }
+.balance-label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.balance-value { font-size: 54px; font-weight: 800; color: white; line-height: 1; text-shadow: 0 4px 20px rgba(0, 229, 255, 0.3); margin-bottom: 15px; }
+.balance-info { font-size: 14px; color: var(--cyan); background: rgba(0, 229, 255, 0.1); padding: 8px 16px; border-radius: 20px; display: inline-block; font-weight: 600; border: 1px solid rgba(0,229,255,0.2); }
 
-.karaoke-container { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); border-radius: 12px; padding: 20px; margin: 15px 0; border: 1px solid rgba(66,216,232,0.3); min-height: 100px; transition: all 0.3s ease; }
-.karaoke-cue { font-size: 14px; font-weight: bold; color: var(--cyan); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-.karaoke-line { font-size: 26px; font-weight: 800; color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.9); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; }
-.k-past { color: var(--green); opacity: 0.8; text-shadow: 0 0 10px var(--green); }
-.k-active { color: var(--yellow); font-size: 1.3em; text-shadow: 0 0 20px var(--yellow); transform: scale(1.1); transition: transform 0.1s; }
-.k-upcoming { color: rgba(255,255,255,0.6); }
+/* AÇÕES RÁPIDAS (Ícones Redondos) */
+.quick-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+.action-item { display: flex; flex-direction: column; align-items: center; gap: 8px; background: transparent; cursor: pointer; transition: transform 0.1s; }
+.action-item:active { transform: scale(0.92); }
+.action-icon { width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; font-size: 26px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+.action-item span { font-size: 12px; font-weight: 600; color: var(--txt); text-align: center; }
+.action-sil .action-icon { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.action-marla .action-icon { background: linear-gradient(135deg, #8E2DE2, #4A00E0); }
+.action-duet .action-icon { background: linear-gradient(135deg, #f12711, #f5af19); }
 
-/* OVERLAYS (Sync e Calibração) */
-.sync-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(9, 17, 30, 0.95); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+/* SALA DE TREINO / KARAOKÊ */
+.karaoke-display { background: rgba(0,0,0,0.5); border-radius: 16px; padding: 25px 15px; text-align: center; min-height: 120px; display: flex; flex-direction: column; justify-content: center; margin-bottom: 20px; border: 1px solid rgba(0,0,0,0.8); box-shadow: inset 0 5px 15px rgba(0,0,0,0.5); }
+.k-cue { font-size: 12px; color: var(--yellow); text-transform: uppercase; font-weight: bold; letter-spacing: 2px; margin-bottom: 10px; }
+
+/* MÁGICA DO KARAOKÊ PROFISSIONAL (Gradient Fill) */
+.k-line { font-size: 24px; font-weight: 800; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; line-height: 1.4; }
+.k-word { color: rgba(255,255,255,0.4); transition: transform 0.1s ease; }
+.k-word.past { color: var(--green); text-shadow: 0 0 10px rgba(0, 230, 118, 0.4); }
+.k-word.active {
+    background: linear-gradient(to right, var(--yellow) var(--fill-pct, 0%), rgba(255,255,255,0.4) var(--fill-pct, 0%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: scale(1.15) translateY(-2px);
+}
+
+.controls-row { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+.btn-round { width: 55px; height: 55px; border-radius: 50%; background: rgba(255,255,255,0.1); display: grid; place-items: center; font-size: 20px; color: white; border: 1px solid var(--card-border); }
+.btn-round.play { background: var(--cyan); color: #000; border: none; box-shadow: 0 5px 15px rgba(0,229,255,0.4); }
+
+.time-bar { -webkit-appearance: none; width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; outline: none; margin: 15px 0; }
+.time-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--cyan); border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px var(--cyan); }
+.time-text { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.btn-record { background: rgba(255, 23, 68, 0.2); color: var(--red); border: 1px solid rgba(255, 23, 68, 0.4); border-radius: 12px; padding: 14px; font-weight: bold; width: 100%; font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-record.recording { background: var(--red); color: white; animation: pulse 1.5s infinite; }
+.btn-sync { background: rgba(0, 230, 118, 0.2); color: var(--green); border: 1px solid rgba(0, 230, 118, 0.4); border-radius: 12px; padding: 14px; font-weight: bold; width: 100%; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(255, 23, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0); } }
+
+/* SYNC OVERLAY */
+.sync-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(4, 9, 18, 0.95); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(10px); }
 .sync-overlay.visible { opacity: 1; pointer-events: all; }
-.sync-overlay h1 { font-size: 80px; color: var(--cyan); margin: 0; text-shadow: 0 0 30px var(--cyan); }
-.sync-overlay p { font-size: 18px; color: white; text-align: center; padding: 0 20px; }
+.sync-overlay h1 { font-size: 100px; color: var(--cyan); margin: 0; text-shadow: 0 0 40px var(--cyan); line-height: 1; }
+.sync-overlay p { font-size: 18px; color: white; text-align: center; }
+
+details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-size: 14px; font-weight: bold; border-top: 1px solid var(--card-border); margin-top: 20px; outline: none; }
 </style>
 </head>
 <body>
 
-<!-- OVERLAY DE SINCRONISMO -->
 <div class="sync-overlay" id="syncOverlay">
-    <p>Sincronizando Dueto Remoto</p>
+    <p style="color: var(--muted); margin-bottom: 10px; font-weight: bold; letter-spacing: 2px;">DUETO REMOTO</p>
     <h1 id="syncCount">4</h1>
-    <p style="color: var(--yellow); margin-top:20px;">Prepare-se para cantar!</p>
-</div>
-
-<!-- OVERLAY DE CALIBRAÇÃO -->
-<div class="sync-overlay" id="calibOverlay">
-    <div class="estrelinha-avatar" style="width: 70px; height: 70px; font-size: 35px;">⭐</div>
-    <h2 style="color: var(--cyan); margin-bottom: 10px;">Calibrando sua voz...</h2>
-    <p>Cante a letra <b>"Aaaaa"</b> bem forte até a contagem terminar.</p>
-    <h1 id="calibCount" style="color: var(--yellow); font-size: 100px;">3</h1>
-    <p id="calibStatus" style="color: var(--green); margin-top:20px;"></p>
+    <p style="color: var(--yellow); margin-top:20px; font-size: 22px; font-weight: bold;">Preparem-se!</p>
 </div>
 
 <section id="authGate" class="authGate">
-  <div class="authCard hidden" id="magicLinkModal">
-    <div class="estrelinha-avatar">⭐</div>
-    <h1 style="margin: 0 0 5px;">Bem-vinda!</h1>
-    <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Você recebeu um acesso exclusivo para o estúdio.</p>
-    <input id="magicName" type="text" placeholder="Qual é o seu nome? (Ex: Marla)" style="margin-bottom: 20px; font-size: 16px; text-align: center;">
-    <button class="primary" id="magicEnterBtn" style="width: 100%; min-height: 50px; font-size: 16px;">Entrar no Estúdio</button>
-    <p class="small muted" id="magicMsg" style="margin-top: 15px; color: var(--yellow);"></p>
+  <!-- MÁGICA: LOGIN RÁPIDO (CONVITE) -->
+  <div class="bank-card authCard hidden" id="magicLinkModal">
+    <div class="brand-logo">⭐</div>
+    <h1 style="margin: 0 0 5px; font-size: 22px;">Acesso Exclusivo</h1>
+    <p class="muted" style="margin-bottom: 25px; font-size: 14px;">Você foi convidada para o estúdio.</p>
+    <input id="magicName" type="text" placeholder="Qual é o seu nome?" style="text-align: center; font-size: 16px;">
+    <button class="btn-primary" id="magicEnterBtn">Entrar no Estúdio</button>
+    <p class="small muted" id="magicMsg" style="margin-top: 15px;"></p>
   </div>
 
-  <div class="authCard" id="standardLogin">
-    <div class="estrelinha-avatar">⭐</div>
-    <h1 style="margin: 0 0 5px;">Assistente Vocal</h1>
-    <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Treino de afinação e dueto remoto.</p>
-    <form id="loginForm" style="display: grid; gap: 10px; text-align: left;">
-      <input id="loginEmail" type="email" required placeholder="Seu e-mail">
-      <input id="loginPassword" type="password" required placeholder="Sua senha">
-      <button class="primary" type="submit" id="emailLoginBtn">Entrar</button>
+  <!-- LOGIN PADRÃO (ADMIN) -->
+  <div class="bank-card authCard" id="standardLogin">
+    <div class="brand-logo">⭐</div>
+    <h1 style="margin: 0 0 5px; font-size: 22px;">Gestão Vocal</h1>
+    <p class="muted" style="margin-bottom: 25px; font-size: 14px;">Treino e afinação Sil & Marla.</p>
+    <form id="loginForm">
+      <input id="loginEmail" type="email" required placeholder="E-mail">
+      <input id="loginPassword" type="password" required placeholder="Senha">
+      <button class="btn-primary" type="submit" id="emailLoginBtn">Acessar</button>
     </form>
-    <button class="primary" id="googleLoginBtn" type="button" style="width: 100%; margin-top: 15px; background: rgba(244, 247, 251, 0.9); color: #1b2736;">Entrar com Google</button>
+    <button class="btn-secondary" id="googleLoginBtn" type="button">Entrar com Google</button>
     <p class="small muted" id="authMessage" style="margin-top: 15px;"></p>
   </div>
 </section>
 
 <main class="app-container appLocked hidden" id="appMain">
-  <div class="top-bar">
-    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-      <span>👤 <span id="savedState">Cantor(a)</span></span>
-      <span id="cloudState" style="color: var(--green);">Conectado</span>
-      <div id="presenceIndicator" style="display: flex; gap: 8px; margin-left: 10px; background: rgba(12, 21, 36, 0.8); padding: 5px 10px; border-radius: 8px; border: 1px solid #2d405b; backdrop-filter: blur(5px);">
-        <span style="color:var(--muted);">🔴 Aguardando parceiros...</span>
-      </div>
+  
+  <!-- HEADER TIPO BANCO -->
+  <header class="app-header">
+    <div class="user-profile">
+        <div class="user-avatar">🎙️</div>
+        <div>
+            <h2 class="user-greeting">Olá, <span id="savedState">Cantora</span></h2>
+            <div class="user-status" id="presenceIndicator">Sincronizando...</div>
+        </div>
     </div>
-    <div>
-      <a id="adminLink" class="hidden" href="/admin.html" style="margin-right: 15px; color: var(--cyan); text-decoration: none; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">⚙ Administração</a>
-      <button id="logoutBtn" style="padding: 5px 10px; font-size: 12px; background: rgba(38,57,83,0.6);">Sair</button>
-    </div>
-  </div>
+    <button id="logoutBtn" class="btn-logout" aria-label="Sair">🚪</button>
+  </header>
 
-  <div class="teacher-area">
-    <div class="estrelinha-avatar">⭐</div>
-    <h2 id="teacherSongTitle">Professora Estrelinha</h2>
-    <p id="teacherGuidance">"Escolha a música e a aula que deseja treinar!"</p>
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <select id="studentSongSelect" disabled><option>Carregando biblioteca...</option></select>
-  </div>
-
-  <div class="main-actions" aria-label="Escolha sua aula">
-    <button class="action-btn" type="button" data-training-mode="silvane">
-      <strong>🎤 TREINAR SIL</strong>
-      <span>Sil · Treino da melodia base</span>
-    </button>
-    <button class="action-btn" type="button" data-training-mode="marla">
-      <strong>🎶 SEGUNDA VOZ</strong>
-      <span>Marla / Anderson · Treino de harmonia</span>
-    </button>
-    <button class="action-btn" type="button" data-training-mode="duet">
-      <strong>♫ CANTAR EM DUETO</strong>
-      <span>Vozes alinhadas sincronizadas</span>
-    </button>
-  </div>
-
-  <section class="training-room hidden" id="playbackPanel">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
-      <h3 id="playbackTitle" style="margin: 0; color: var(--cyan);">Modo de Treino</h3>
-      <div style="display: flex; gap: 8px;">
-        <button id="startMic" class="primary" style="padding: 5px 10px; font-size: 12px;">🎙️ Ligar Microfone</button>
-        <button id="btnCalibrate" class="ghost" style="padding: 5px 10px; font-size: 12px;" disabled>🎚️ Calibrar Voz</button>
-        <button id="stopMic" style="padding: 5px 10px; font-size: 12px;" disabled>Parar Mic</button>
-      </div>
-    </div>
+  <!-- CARTÃO DE SALDO (PONTUAÇÃO GERAL E MÚSICA) -->
+  <div class="bank-card balance-card">
+    <div class="balance-label" id="teacherSongTitle">Carregando música...</div>
+    <div class="balance-value" id="liveScore">100<span style="font-size: 30px; opacity: 0.5;">%</span></div>
+    <div class="balance-info" id="pitchStatus">Aguardando início</div>
     
-    <div id="micQuickStatus" class="small muted">O microfone está desligado.</div>
-
-    <div style="text-align: right; margin-bottom: -10px; position: relative; z-index: 10; margin-top: 20px;">
-        <button id="toggleLyricsBtn" class="ghost" style="padding: 5px 10px; font-size: 11px;">🎵 Ocultar Letra</button>
+    <div style="margin-top: 20px;">
+        <select id="studentSongSelect" disabled style="margin: 0; font-size: 13px; padding: 10px; background: rgba(255,255,255,0.05); text-align: center; border-radius: 20px;"><option>Buscando biblioteca...</option></select>
     </div>
-    <div id="karaokeContainer" class="karaoke-container">
-        <div id="karaokeCue" class="karaoke-cue">—</div>
-        <div id="karaokeLine" class="karaoke-line">Aguardando início...</div>
+  </div>
+
+  <!-- AÇÕES RÁPIDAS (BOTOES REDONDOS) -->
+  <div class="quick-actions">
+    <div class="action-item action-sil" data-training-mode="silvane">
+        <div class="action-icon">🎤</div>
+        <span>Voz Principal<br>(Sil)</span>
+    </div>
+    <div class="action-item action-marla" data-training-mode="marla">
+        <div class="action-icon">🎶</div>
+        <span>Segunda Voz<br>(Marla)</span>
+    </div>
+    <div class="action-item action-duet" data-training-mode="duet">
+        <div class="action-icon">🎧</div>
+        <span>Dueto<br>Sincronizado</span>
+    </div>
+  </div>
+
+  <!-- PAINEL DO PLAYER (TELA DETALHADA) -->
+  <div class="bank-card hidden" id="playbackPanel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 id="playbackTitle" style="margin: 0; font-size: 16px;">Modo de Treino</h3>
+        <button id="startMic" style="background: rgba(0, 229, 255, 0.15); color: var(--cyan); border: 1px solid rgba(0, 229, 255, 0.3); padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">LIGAR MIC</button>
     </div>
 
-    <div style="margin: 25px 0; display: grid; grid-template-columns: 1fr; gap: 20px;">
-      <div>
-        <div class="score-circle" id="scoreCircle">
-          <span class="value" id="liveScore">100%</span>
-          <span class="label">PRECISÃO</span>
+    <!-- TELA KARAOKE -->
+    <div class="karaoke-display">
+        <div id="karaokeCue" class="k-cue">AGUARDANDO</div>
+        <div id="karaokeLine" class="k-line">...</div>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 15px; font-size: 11px; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+            <div>ALVO: <span id="expectedNote" style="color: var(--cyan); font-weight: bold;">—</span></div>
+            <div>VOZ: <span id="note" style="color: white; font-weight: bold;">—</span> <span id="cents"></span></div>
         </div>
-      </div>
-
-      <div>
-        <div class="small muted">NOTA ESPERADA:</div>
-        <div class="target-note" id="expectedNote">—</div>
-        <div class="small muted">SUA VOZ: <span id="note" style="color: white; font-weight: bold; font-size: 18px;">—</span> <span id="cents"></span></div>
-        <div id="pitchStatus" class="small muted" style="margin-top: 5px;">Ligue o microfone e cante</div>
-      </div>
     </div>
 
-    <div class="playerTransport">
-      <button class="primary" id="playerPlay" type="button">▶ Ouvir e Treinar</button>
-      <button id="playerPause" type="button" disabled>Ⅱ Pausar</button>
-      <button id="playerStop" type="button" disabled>■ Reiniciar</button>
-    </div>
-    <div class="playerTransport" style="margin-top: 15px; border-top: 1px solid #2d405b; padding-top: 15px;">
-        <button class="warn" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
-        <button class="good" id="syncRemoteBtn" type="button">🌍 Sincronizar Dueto Remoto</button>
+    <!-- PLAYER CONTROLS -->
+    <div class="controls-row">
+        <button class="btn-round" id="playerStop" disabled>■</button>
+        <button class="btn-round play" id="playerPlay">▶</button>
+        <button class="btn-round" id="playerPause" disabled>Ⅱ</button>
     </div>
 
-    <div style="margin-top: 15px; font-size: 13px; color: var(--muted);" id="playerPosition">00:00 / 00:00</div>
-    <input class="playerSeek" id="playerSeek" type="range" min="0" max="1000" step="1" value="0" style="margin-top: 10px;">
-    <div id="playerStatus" class="small muted" style="margin-top: 10px; color: var(--yellow); font-weight: bold;">Verificando áudio no servidor...</div>
+    <input type="range" class="time-bar" id="playerSeek" min="0" max="1000" value="0">
+    <div class="time-text">
+        <span id="posText">00:00</span>
+        <span id="durText">00:00</span>
+    </div>
 
-    <details class="advanced-settings">
-      <summary>⚙️ Ajustes Avançados e Servidor TV Box</summary>
+    <div id="playerStatus" style="text-align: center; font-size: 12px; color: var(--yellow); margin: 15px 0 20px; font-weight: 600;">Verificando áudio no servidor...</div>
+
+    <!-- BOTÕES GRAVAÇÃO -->
+    <button class="btn-record" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
+    <button class="btn-sync" id="syncRemoteBtn">🌍 Iniciar Dueto Remoto</button>
+
+    <!-- CONFIGURAÇÕES (Ocultas por padrão para não poluir) -->
+    <details>
+      <summary>Ajustes de Áudio e Servidor</summary>
       
-      <div style="margin-top: 20px; padding: 15px; background: rgba(12, 21, 36, 0.8); border-radius: 12px; border: 1px solid #2d405b;">
-        <strong style="color: var(--cyan); font-size: 13px; display: block; margin-bottom: 10px;">📥 CARREGAR PLAYBACK DO TV BOX</strong>
-        <div style="display: flex; gap: 10px;">
-            <select id="serverAudioSelect" style="flex: 1; margin: 0;"></select>
-            <button id="refreshServerAudioBtn" style="padding: 12px; background: transparent;">🔄</button>
-        </div>
-        <button id="loadServerAudioBtn" class="primary" style="width: 100%; margin-top: 10px;">Carregar Playback Selecionado</button>
-        <div id="serverAudioStatus" class="small muted" style="margin-top: 10px;">Conecte-se ao TV Box via Tailscale.</div>
-      </div>
-
-      <div style="margin-top: 20px;">
-        <strong style="color: var(--cyan); font-size: 13px; display: block; margin-bottom: 10px;">🔊 MESA DE SOM (Volumes)</strong>
-        <label class="small muted">Volume Playback (Banda)</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
-        <label class="small muted">Volume Voz Principal (Sil)</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
-        <label class="small muted">Volume Segunda Voz (Marla/Anderson)</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
+      <div style="padding-top: 10px;">
+        <label class="small muted">Volume Playback</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
+        <label class="small muted">Volume Sil</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
+        <label class="small muted">Volume Marla</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
+        <label class="small muted">Sensibilidade do Microfone</label><input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
         
-        <strong style="color: var(--cyan); font-size: 13px; display: block; margin-top: 15px; margin-bottom: 10px;">🎙️ SENSIBILIDADE DO MICROFONE</strong>
-        <label class="small muted">Ajustado automaticamente na Calibração.</label>
-        <input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
+        <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+            <label class="small muted">Arquivo do Servidor (TV Box)</label>
+            <div style="display: flex; gap: 8px;">
+                <select id="serverAudioSelect" style="flex:1; margin:0;"></select>
+                <button id="refreshServerAudioBtn" style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 0 15px;">🔄</button>
+            </div>
+            <button id="loadServerAudioBtn" style="width: 100%; background: var(--cyan); color: black; border-radius: 12px; padding: 12px; margin-top: 8px; font-weight: bold;">Forçar Carregamento</button>
+            <div id="serverAudioStatus" class="small muted" style="margin-top: 8px;">Conecte-se via Tailscale.</div>
+        </div>
       </div>
     </details>
-  </section>
 
-  <!-- LIXEIRA DOM -->
+  </div>
+
+  <!-- LIXEIRA DOM (Elementos legados necessários pro JS) -->
   <div id="legacy-ui" class="hidden">
-    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><select id="singer"><option>Segunda voz</option><option>Voz principal</option><option>Ensaio individual</option></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button>
+    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><button id="stopMicLegacy"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button>
   </div>
 </main>
 
 <script>
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
 
-// INJETOR DO MAPA DEMO DA MÚSICA ESTRELINHA (Com tempos exatos para o Karaokê e Pontuação)
+// INJETOR DO MAPA DEMO (Tempos refinados para um fluxo contínuo e bonito do Gradient)
 const demoEstrelinhaMap = [
-    { start: 2.0, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
-    { start: 3.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
-    { start: 4.5, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
-    { start: 5.8, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "e", verified: true },
-    { start: 6.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
-    { start: 7.8, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
-    { start: 9.0, duration: 1.5, leadMidi: 65, harmonyMidi: 69, syllable: "abraçar", verified: true }
+    { start: 2.0, duration: 0.8, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
+    { start: 2.8, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
+    { start: 3.3, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
+    { start: 4.5, duration: 0.4, leadMidi: 60, harmonyMidi: 64, syllable: "e", verified: true },
+    { start: 4.9, duration: 0.8, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
+    { start: 5.7, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
+    { start: 7.0, duration: 2.0, leadMidi: 65, harmonyMidi: 69, syllable: "fora", verified: true }
 ];
 let existingEvents = [];
 try { existingEvents = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e){}
@@ -265,34 +292,24 @@ if (existingEvents.length === 0) { localStorage.setItem('estrelinha_events', JSO
 </script>
 
 <script>
-// --- MOTOR DE ÁUDIO, PONTUAÇÃO INTELIGENTE, KARAOKÊ E CALIBRAÇÃO ---
+// --- MOTOR CENTRAL (WEBAUDIO, KARAOKÊ E YIN UNIFICADOS NO MESMO LOOP) ---
 (()=>{'use strict';
-const $=id=>document.getElementById(id), names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const $=id=>document.getElementById(id);
+const names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}
 function freqMidi(f){return 69+12*Math.log2(f/440)}
 function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*100);return{midi:n,name:midiName(n),cents,freq:f}}
 
-let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest=null, lastValid=0;
-let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
-let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
-let manualMicInputGain=null;
-
-// Variáveis de Pontuação Melhorada
-let evalFrames = 0; let scoreSum = 0; let silenceFrames = 0;
-let isLyricsVisible = true;
-
-$('toggleLyricsBtn').addEventListener('click', () => {
-    isLyricsVisible = !isLyricsVisible;
-    $('karaokeContainer').style.display = isLyricsVisible ? 'flex' : 'none';
-    $('toggleLyricsBtn').textContent = isLyricsVisible ? '🎵 Ocultar Letra' : '🎵 Mostrar Letra';
-});
+let ctx=null, stream=null, analyser=null, source=null, manualMicInputGain=null;
+let raf=0, lastValid=0, evalFrames=0, scoreSum=0;
+let recording=false, mediaRecorder=null, recordChunks=[];
+let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null;
 
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
 
 const TRACKS=['instrument','lead','harmony']; const trackBuffers={instrument:null,lead:null,harmony:null};
-const AV_AUDIO_SERVER_BASE='https://mxqpro-h313-1.tail8b8cce.ts.net:8443';
-const AV_AUDIO_API = AV_AUDIO_SERVER_BASE+'/api/audio';
-const player={sources:[],gains:{},master:null,compressor:null,playing:false,offset:0,startedAt:0,duration:0,timer:null,generation:0,mode:'silvane'};
+const AV_AUDIO_API = 'https://mxqpro-h313-1.tail8b8cce.ts.net:8443/api/audio';
+const player={sources:[], gains:{}, master:null, compressor:null, playing:false, offset:0, startedAt:0, duration:0};
 let currentTrainingMode='silvane';
 
 function ensurePlayerGraph(){
@@ -304,36 +321,35 @@ function ensurePlayerGraph(){
         player.master.connect(player.compressor); player.compressor.connect(ac.destination);
     }
     TRACKS.forEach(key=>{
-        if(!player.gains[key]){ const g=ac.createGain(); g.gain.value=Number($('track'+cap(key)+'Volume')?.value||0.5); g.connect(player.master); player.gains[key]=g; }
+        if(!player.gains[key]){ const g=ac.createGain(); g.gain.value=Number($('track'+(key.charAt(0).toUpperCase()+key.slice(1))+'Volume')?.value||0.5); g.connect(player.master); player.gains[key]=g; }
     });
     return ac;
 }
 
-function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 function fmtTime(sec){if(!Number.isFinite(sec)||sec<0)sec=0;let m=Math.floor(sec/60),s=Math.floor(sec%60);return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
 function playerPosition(){
     if(!player.playing||!ctx) return player.offset;
     return Math.min(Math.max(0,player.offset+(ctx.currentTime-player.startedAt)), player.duration);
 }
-function updatePlayerUI(){
-    const pos=playerPosition(), dur=player.duration||0;
-    $('playerPosition').textContent=fmtTime(pos)+' / '+fmtTime(dur);
-    $('playerSeek').value=dur?String(Math.round(pos/dur*1000)):0;
-    $('playerPlay').disabled=player.playing; $('playerPause').disabled=!player.playing; $('playerStop').disabled=!player.playing&&player.offset===0;
-}
-function stopPlayerSources(){ player.generation++; for(const item of player.sources){ try{item.stop()}catch{} try{item.disconnect()}catch{} } player.sources=[]; }
 
-function resetScoreUI() {
-    evalFrames = 0; scoreSum = 0; silenceFrames = 0;
-    $('liveScore').textContent = '100%';
-    $('scoreCircle').style.borderColor = 'var(--green)';
-    $('karaokeCue').textContent = '—';
-    $('karaokeLine').innerHTML = 'Aguardando início...';
+function resetUI() {
+    evalFrames = 0; scoreSum = 0;
+    $('liveScore').textContent = '100';
+    $('karaokeCue').textContent = 'AGUARDANDO';
+    $('karaokeLine').innerHTML = '...';
+    $('expectedNote').textContent = '—';
+    $('note').textContent = '—';
+    $('cents').textContent = '';
+    $('pitchStatus').textContent = 'Pronto para treinar';
+    $('playerSeek').value = 0;
+    $('posText').textContent = '00:00';
 }
+
+function stopPlayerSources(){ for(const item of player.sources){ try{item.stop()}catch{} try{item.disconnect()}catch{} } player.sources=[]; }
 
 async function startPlayback(){
     const loaded=TRACKS.filter(k=>trackBuffers[k]);
-    if(!loaded.length){ $('playerStatus').textContent='Aguardando áudio do TV Box.'; return;}
+    if(!loaded.length){ $('playerStatus').textContent='Aguarde o download do áudio...'; return;}
     
     const ac=ensurePlayerGraph();
     if(ac.state==='suspended') await ac.resume();
@@ -341,7 +357,7 @@ async function startPlayback(){
     player.duration=Math.max(...loaded.map(k=>trackBuffers[k].duration));
     let offset=Math.min(player.offset,player.duration);
     
-    stopPlayerSources(); player.offset=offset; const when = ac.currentTime + 0.10;
+    stopPlayerSources(); player.offset=offset; const when = ac.currentTime + 0.05;
     
     for(const key of loaded){
         const buf=trackBuffers[key];
@@ -349,126 +365,236 @@ async function startPlayback(){
         const sourceNode=ac.createBufferSource(); sourceNode.buffer=buf; sourceNode.connect(player.gains[key]); sourceNode.start(when,offset); player.sources.push(sourceNode);
     }
     
-    player.offset=offset; player.startedAt=when; player.playing=true; const myGeneration=player.generation;
-    resetScoreUI();
+    player.offset=offset; player.startedAt=when; player.playing=true; 
     
-    clearInterval(player.timer);
-    player.timer=setInterval(()=>{
-        if(!player.playing||myGeneration!==player.generation) return;
-        const pos=playerPosition();
-        
-        if(pos>=player.duration-0.03){ 
-            let finalScore = evalFrames > 0 ? Math.round(scoreSum / evalFrames) : 0;
-            stopPlayback(true); 
-            $('playerStatus').textContent=`Música Concluída! Precisão Final: ${finalScore}%`; 
-            $('liveScore').textContent = finalScore + '%'; 
-            $('karaokeCue').textContent = 'FIM';
-            $('karaokeLine').innerHTML = 'Música concluída.';
-            return; 
-        }
-        
-        updatePlayerUI();
-        
-        let events = []; try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
-        const activeIdx = events.findIndex(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
-        const active = activeIdx !== -1 ? events[activeIdx] : null;
-        const upcoming = events.filter(e => e.verified && Number(e.start) > pos).sort((a,b) => a.start - b.start);
-        
-        let cueHtml = ''; let lineHtml = '';
-        
-        if (active) {
-            cueHtml = '🎤 CANTANDO!';
-            const prev = activeIdx > 0 ? events[activeIdx-1].syllable : '';
-            const curr = active.syllable || '🎤';
-            const next1 = activeIdx + 1 < events.length ? events[activeIdx+1].syllable : '';
-            const next2 = activeIdx + 2 < events.length ? events[activeIdx+2].syllable : '';
-            
-            lineHtml = `<span class="k-past">${prev}</span> <span class="k-active">${curr}</span> <span class="k-upcoming">${next1} ${next2}</span>`;
-            
-            const target = currentTrainingMode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
-            $('expectedNote').textContent = midiName(target);
-            window.activeTargetMidi = target;
-        } else {
-            window.activeTargetMidi = null;
-            $('expectedNote').textContent = '—';
-            
-            if (upcoming.length > 0) {
-                let nxt = upcoming[0];
-                if ((nxt.start - pos) <= 4) {
-                    cueHtml = `Entra em ${Math.ceil(nxt.start - pos)}...`;
-                    lineHtml = `<span class="k-upcoming"><span class="prepare">Prepare-se:</span> ${nxt.syllable || '...'}</span>`;
-                } else {
-                    cueHtml = 'Aguarde...'; lineHtml = '...';
-                }
-            } else {
-                cueHtml = '—'; lineHtml = '...';
-            }
-        }
-        
-        $('karaokeCue').innerHTML = cueHtml;
-        $('karaokeLine').innerHTML = lineHtml;
-        
-    }, 60);
+    if(offset === 0) resetUI();
     
-    updatePlayerUI(); $('playerStatus').textContent='Reproduzindo...';
+    $('playerPlay').classList.remove('play'); $('playerPlay').innerHTML = '▶'; $('playerPlay').disabled = true;
+    $('playerPause').disabled = false; $('playerStop').disabled = false;
+    $('playerStatus').textContent = 'Reproduzindo...';
+    
+    // Inicia o Super Loop unificado (Áudio, Karaokê e YIN) se não estiver rodando
+    if(!raf) engineLoop();
 }
 
 function stopPlayback(reset=true){
     if(player.playing){ player.offset=playerPosition(); player.playing=false; }
-    stopPlayerSources(); clearInterval(player.timer); player.timer=null;
-    if(reset) { player.offset=0; resetScoreUI(); window.activeTargetMidi = null; }
-    updatePlayerUI();
-}
-function pausePlayback(){
-    if(!player.playing) return; player.offset=playerPosition(); player.playing=false;
-    stopPlayerSources(); clearInterval(player.timer); player.timer=null; updatePlayerUI(); $('playerStatus').textContent='Pausado.';
-    window.activeTargetMidi = null;
-}
-function seekPlayback(value){
-    const wasPlaying=player.playing; const pos=player.duration*(Number(value)/1000);
-    if(wasPlaying){ player.playing=false; stopPlayerSources(); clearInterval(player.timer); }
-    player.offset=Math.max(0,Math.min(player.duration,pos)); updatePlayerUI();
-    if(wasPlaying) startPlayback();
+    stopPlayerSources(); 
+    if(reset) { player.offset=0; resetUI(); }
+    $('playerPlay').classList.add('play'); $('playerPlay').disabled = false;
+    $('playerPause').disabled = true; $('playerStop').disabled = player.offset===0;
 }
 
+$('playerPlay').addEventListener('click', startPlayback);
+$('playerPause').addEventListener('click', () => { stopPlayback(false); $('playerStatus').textContent='Pausado.'; });
+$('playerStop').addEventListener('click', () => { stopPlayback(true); $('playerStatus').textContent='Reiniciado.'; });
+$('playerSeek').addEventListener('change', e => {
+    const wasPlaying=player.playing; 
+    player.offset = player.duration * (Number(e.target.value)/1000);
+    if(wasPlaying) { stopPlayback(false); startPlayback(); }
+    else { $('posText').textContent = fmtTime(player.offset); }
+});
+
+// FUNÇÃO YIN (Mais sensível)
+function yin(buffer,sampleRate){
+    let size=buffer.length,rms=0; for(let i=0;i<size;i++) rms+=buffer[i]*buffer[i]; rms=Math.sqrt(rms/size); 
+    if(rms<0.001) return null; 
+    let minTau=Math.floor(sampleRate/1000), maxTau=Math.min(Math.floor(sampleRate/65),Math.floor(size/2)), diff=new Float32Array(maxTau+1), cmnd=new Float32Array(maxTau+1);
+    for(let tau=minTau;tau<=maxTau;tau++){ let sum=0; for(let i=0;i<size-maxTau;i++){ let d=buffer[i]-buffer[i+tau]; sum+=d*d; } diff[tau]=sum; }
+    cmnd[0]=1; let running=0; for(let tau=1;tau<=maxTau;tau++){ running+=diff[tau]; cmnd[tau]=running?diff[tau]*tau/running:1; }
+    let chosen=-1; for(let tau=minTau+1;tau<maxTau;tau++){ if(cmnd[tau]<0.16 && cmnd[tau]<=cmnd[tau-1] && cmnd[tau]<cmnd[tau+1]){ chosen=tau; while(chosen+1<maxTau && cmnd[chosen+1]<cmnd[chosen]) chosen++; break; } }
+    if(chosen<0){ let best=1; for(let tau=minTau;tau<=maxTau;tau++) if(cmnd[tau]<best){best=cmnd[tau];chosen=tau;} if(best>0.32) return null; }
+    let x0=chosen>minTau?cmnd[chosen-1]:cmnd[chosen], x1=cmnd[chosen], x2=chosen<maxTau?cmnd[chosen+1]:cmnd[chosen], den=2*(2*x1-x2-x0), shift=den?(x2-x0)/den:0, tau=chosen+Math.max(-.5,Math.min(.5,shift)), f=sampleRate/tau;
+    if(f<65||f>1000) return null; return {freq:f, clarity:1-cmnd[chosen], rms};
+}
+
+// =======================================================
+// O SUPER LOOP (Engine visual e de áudio 60fps)
+// =======================================================
+function engineLoop() {
+    // 1. ATUALIZA PLAYER E KARAOKÊ (Se estiver tocando)
+    let targetMidiNow = null;
+    
+    if (player.playing) {
+        const pos = playerPosition();
+        $('posText').textContent = fmtTime(pos);
+        $('durText').textContent = fmtTime(player.duration);
+        $('playerSeek').value = player.duration ? String(Math.round(pos/player.duration*1000)) : 0;
+        
+        if(pos >= player.duration - 0.05){ 
+            stopPlayback(true); 
+            $('playerStatus').textContent = `Concluído!`; 
+            $('karaokeCue').textContent = 'FIM DA MÚSICA';
+            $('karaokeLine').innerHTML = '';
+        } else {
+            let events = []; try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
+            
+            const activeIdx = events.findIndex(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
+            const active = activeIdx !== -1 ? events[activeIdx] : null;
+            
+            if (active) {
+                targetMidiNow = currentTrainingMode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
+                $('expectedNote').textContent = midiName(targetMidiNow);
+                
+                // MÁGICA DO GRADIENTE KARAOKÊ
+                let progress = ((pos - active.start) / active.duration) * 100;
+                progress = Math.max(0, Math.min(100, progress));
+                
+                // Monta a janela visual de 5 palavras
+                let lineHtml = '';
+                for(let i = Math.max(0, activeIdx - 2); i < Math.min(events.length, activeIdx + 3); i++) {
+                    const ev = events[i];
+                    if (i < activeIdx) {
+                        lineHtml += `<span class="k-word past">${ev.syllable}</span>`;
+                    } else if (i === activeIdx) {
+                        lineHtml += `<span class="k-word active" style="--fill-pct: ${progress}%">${ev.syllable}</span>`;
+                    } else {
+                        lineHtml += `<span class="k-word">${ev.syllable}</span>`;
+                    }
+                }
+                
+                $('karaokeCue').textContent = '🎤 NO RITMO!';
+                $('karaokeLine').innerHTML = lineHtml;
+                
+            } else {
+                $('expectedNote').textContent = '—';
+                const nextEvIdx = events.findIndex(e => e.verified && Number(e.start) > pos);
+                if (nextEvIdx !== -1) {
+                    const nxt = events[nextEvIdx];
+                    const timeToStart = nxt.start - pos;
+                    if (timeToStart <= 4) {
+                        $('karaokeCue').textContent = `Entra em ${Math.ceil(timeToStart)}...`;
+                        
+                        let lineHtml = '';
+                        for(let i = nextEvIdx; i < Math.min(events.length, nextEvIdx + 4); i++) {
+                            lineHtml += `<span class="k-word">${events[i].syllable}</span>`;
+                        }
+                        $('karaokeLine').innerHTML = lineHtml;
+                    } else {
+                        $('karaokeCue').textContent = 'Aguarde';
+                        $('karaokeLine').innerHTML = '...';
+                    }
+                } else {
+                    $('karaokeCue').textContent = 'Aguarde';
+                    $('karaokeLine').innerHTML = '...';
+                }
+            }
+        }
+    }
+
+    // 2. ATUALIZA O AFINADOR (Se mic estiver ligado)
+    if (analyser) {
+        const raw = new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(raw); 
+        const p = yin(raw, ctx.sampleRate);
+        
+        if (p && p.clarity > 0.65) {
+            const ni = noteInfo(p.freq); 
+            $('note').textContent = ni.name; 
+            $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
+            $('pitchStatus').textContent = 'Lendo...'; 
+            lastValid = Date.now();
+            
+            if (player.playing && targetMidiNow !== null) {
+                evalFrames++;
+                let sungMidi = freqMidi(p.freq);
+                let normalizedSung = sungMidi;
+                while(normalizedSung < targetMidiNow - 6) normalizedSung += 12;
+                while(normalizedSung > targetMidiNow + 6) normalizedSung -= 12;
+                let centsDiff = Math.abs(Math.round((normalizedSung - targetMidiNow) * 100));
+                
+                if (centsDiff <= 50) scoreSum += 100;
+                else if (centsDiff <= 100) scoreSum += 50;
+                else scoreSum += 20;
+            }
+        } else {
+            if (Date.now() - lastValid > 800) { 
+                $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Aguardando voz'; 
+            }
+            if (player.playing && targetMidiNow !== null) {
+                // Filtro de consoante - só pune se ficar mudo por muito tempo
+                if (Date.now() - lastValid > 400) { evalFrames++; scoreSum += 0; }
+            }
+        }
+        
+        if(evalFrames > 0) {
+            let currentScore = Math.round(scoreSum / evalFrames);
+            $('liveScore').textContent = currentScore;
+            $('pitchStatus').textContent = currentScore >= 80 ? 'ÓTIMO!' : currentScore >= 50 ? 'QUASE LÁ' : 'DESAFINOU';
+            $('pitchStatus').style.color = currentScore >= 80 ? 'var(--green)' : currentScore >= 50 ? 'var(--yellow)' : 'var(--red)';
+        }
+    }
+
+    // Continua rodando se algo estiver ativo
+    if (player.playing || analyser) {
+        raf = requestAnimationFrame(engineLoop);
+    } else {
+        raf = 0; // Desliga o motor pra economizar bateria
+    }
+}
+
+// FUNÇÕES DE MICROFONE
+async function startMic(){
+    try{
+        if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) throw new Error('Mic não suportado.');
+        stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});
+        audioContext(); if(ctx.state==='suspended') await ctx.resume();
+        
+        source = ctx.createMediaStreamSource(stream); 
+        manualMicInputGain = ctx.createGain(); manualMicInputGain.gain.value = Number($('micGainSlider').value || 1.5);
+        source.connect(manualMicInputGain);
+        analyser = ctx.createAnalyser(); analyser.fftSize=4096; analyser.smoothingTimeConstant=0;
+        manualMicInputGain.connect(analyser); 
+        
+        $('startMic').style.display = 'none'; $('stopMic').style.display = 'block'; 
+        $('stopMic').disabled = false;
+        window.appIsMicActive = true;
+        
+        if(!raf) engineLoop();
+    }catch(e){ alert('Erro no mic: ' + e.message); }
+}
+
+function stopMic(){
+    if(mediaRecorder && mediaRecorder.state==='recording') stopRecording();
+    if(stream) stream.getTracks().forEach(t=>t.stop()); stream=null; analyser=null; source=null; manualMicInputGain=null;
+    $('startMic').style.display = 'block'; $('stopMic').style.display = 'none';
+    $('startMic').disabled=false; $('note').textContent = '—'; $('cents').textContent = '';
+    window.appIsMicActive = false;
+}
+
+$('startMic').addEventListener('click', startMic); $('stopMic').addEventListener('click', stopMic);
+$('stopMic').style.display = 'none';
+
+// FETCH DO TV BOX E PLAYBACK
 async function loadAVTrackFromUrl(key,url,name){
     stopPlayback(true); $('playerStatus').textContent='Baixando playback do servidor...';
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
-
+        const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 15000);
         const ac=ensurePlayerGraph(); if(ac.state==='suspended') await ac.resume();
         const response=await fetch(url,{mode:'cors',cache:'no-store', signal: controller.signal});
         clearTimeout(timeoutId);
-
         if(!response.ok) throw new Error('HTTP '+response.status);
         const raw=await response.arrayBuffer(); const buffer=await ac.decodeAudioData(raw);
         trackBuffers[key]=buffer; player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));
-        $('playerSeek').value='0'; player.offset=0; updatePlayerUI();
-        $('playerStatus').textContent=`Áudio carregado com sucesso!`; $('recordBtn').disabled = false;
+        updatePlayerUI(); $('durText').textContent = fmtTime(player.duration);
+        $('playerStatus').textContent=`Áudio carregado!`; $('recordBtn').disabled = false;
         return true;
-    } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha ao carregar áudio: ${e.message}`; throw e; }
+    } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha ao carregar áudio.`; throw e; }
 }
 
 async function fetchServerAudioList(){
     const status=$('serverAudioStatus'), select=$('serverAudioSelect'); status.textContent='Buscando no TV Box...';
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000);
-
+        const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 8000);
         const response=await fetch(AV_AUDIO_API,{method:'GET',mode:'cors',cache:'no-store', signal: controller.signal});
         clearTimeout(timeoutId);
-
-        if(!response.ok) throw new Error('Erro de conexão HTTP ' + response.status);
+        if(!response.ok) throw new Error('Erro HTTP');
         const data=await response.json(); const files=data.files.filter(f=>/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
         select.replaceChildren();
-        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado na pasta uploads do MXQ Pro.'; } 
-        else { files.forEach(f=>{ select.add(new Option(`${f.name} (${(Number(f.bytes||0)/1048576).toFixed(1)} MB)`,f.name)); }); status.textContent=`Encontrados ${files.length} arquivos.`; }
+        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Pasta de áudio vazia.'; } 
+        else { files.forEach(f=>{ select.add(new Option(`${f.name}`,f.name)); }); status.textContent=`${files.length} arquivos prontos.`; }
         return files;
     } catch(e) {
-        select.replaceChildren(new Option('Erro - TV Box Offline?','')); 
-        status.textContent='Falha ao conectar. O celular está no Tailscale?'; 
-        return [];
+        select.replaceChildren(new Option('Erro de Conexão - TV Box','')); status.textContent='O celular não achou o MXQ Pro.'; return [];
     }
 }
 window.fetchServerAudioList = fetchServerAudioList;
@@ -479,9 +605,7 @@ $('loadServerAudioBtn').addEventListener('click', async ()=>{
     try {
         await loadAVTrackFromUrl('instrument',url,filename);
         if(window.activeSong) localStorage.setItem('av3:serverPlayback:'+window.activeSong.id,filename);
-    } catch (e) {
-        console.warn(e);
-    } finally { $('loadServerAudioBtn').disabled=false; }
+    } catch (e) { } finally { $('loadServerAudioBtn').disabled=false; }
 });
 $('refreshServerAudioBtn').addEventListener('click', fetchServerAudioList);
 
@@ -492,202 +616,20 @@ TRACKS.forEach(key=>{
     });
 });
 
-$('micGainSlider').addEventListener('input', e => {
-    if(manualMicInputGain && ctx) manualMicInputGain.gain.value = Number(e.target.value);
-});
+$('micGainSlider').addEventListener('input', e => { if(manualMicInputGain && ctx) manualMicInputGain.gain.value = Number(e.target.value); });
 
-$('playerPlay').addEventListener('click', ()=>startPlayback()); $('playerPause').addEventListener('click', pausePlayback);
-$('playerStop').addEventListener('click', ()=>{stopPlayback(true); $('playerStatus').textContent='Reiniciado.'});
-$('playerSeek').addEventListener('change', e=>seekPlayback(e.target.value));
-
-function yin(buffer,sampleRate){
-    let size=buffer.length,rms=0; for(let i=0;i<size;i++) rms+=buffer[i]*buffer[i]; rms=Math.sqrt(rms/size); 
-    
-    if(rms<0.001) return null; // Sensibilidade máxima para fones de ouvido e falas distantes
-    
-    let minTau=Math.floor(sampleRate/1000), maxTau=Math.min(Math.floor(sampleRate/65),Math.floor(size/2)), diff=new Float32Array(maxTau+1), cmnd=new Float32Array(maxTau+1);
-    for(let tau=minTau;tau<=maxTau;tau++){ let sum=0; for(let i=0;i<size-maxTau;i++){ let d=buffer[i]-buffer[i+tau]; sum+=d*d; } diff[tau]=sum; }
-    cmnd[0]=1; let running=0; for(let tau=1;tau<=maxTau;tau++){ running+=diff[tau]; cmnd[tau]=running?diff[tau]*tau/running:1; }
-    let chosen=-1; for(let tau=minTau+1;tau<maxTau;tau++){ if(cmnd[tau]<0.16 && cmnd[tau]<=cmnd[tau-1] && cmnd[tau]<cmnd[tau+1]){ chosen=tau; while(chosen+1<maxTau && cmnd[chosen+1]<cmnd[chosen]) chosen++; break; } }
-    if(chosen<0){ let best=1; for(let tau=minTau;tau<=maxTau;tau++) if(cmnd[tau]<best){best=cmnd[tau];chosen=tau;} if(best>0.32) return null; }
-    let x0=chosen>minTau?cmnd[chosen-1]:cmnd[chosen], x1=cmnd[chosen], x2=chosen<maxTau?cmnd[chosen+1]:cmnd[chosen], den=2*(2*x1-x2-x0), shift=den?(x2-x0)/den:0, tau=chosen+Math.max(-.5,Math.min(.5,shift)), f=sampleRate/tau;
-    if(f<65||f>1000) return null; return {freq:f, clarity:1-cmnd[chosen], rms};
-}
-
-// SISTEMA DE CALIBRAÇÃO INTELIGENTE
-$('btnCalibrate').addEventListener('click', async () => {
-    if(!stream) { alert("Ligue o microfone primeiro!"); return; }
-    const overlay = $('calibOverlay');
-    const statusEl = $('calibStatus');
-    const countEl = $('calibCount');
-    overlay.classList.add('visible');
-    
-    let countdown = 3;
-    statusEl.textContent = 'Prepare-se...';
-    countEl.textContent = countdown;
-    
-    let iv = setInterval(() => {
-        countdown--;
-        if(countdown > 0) {
-            countEl.textContent = countdown;
-        } else {
-            clearInterval(iv);
-            statusEl.textContent = 'Lendo volume (Cante o mais alto possível)...';
-            countEl.textContent = "🎤";
-            
-            // Grava o volume por 2.5 segundos
-            let peakRms = 0;
-            let readInterval = setInterval(() => {
-                if(analyser) {
-                    const raw=new Float32Array(analyser.fftSize); 
-                    analyser.getFloatTimeDomainData(raw);
-                    let rms = 0; for(let i=0;i<raw.length;i++) rms += raw[i]*raw[i]; rms = Math.sqrt(rms/raw.length);
-                    if (rms > peakRms) peakRms = rms;
-                }
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(readInterval);
-                
-                // Calcula o ganho ideal para normalizar o mic
-                let idealGain = 1.0;
-                if (peakRms > 0 && peakRms < 0.1) idealGain = 0.2 / peakRms;
-                if (idealGain > 8) idealGain = 8;
-                
-                $('micGainSlider').value = idealGain;
-                if(manualMicInputGain) manualMicInputGain.gain.value = idealGain;
-                
-                // Abaixa o playback se a voz for muito fraca mesmo com ganho
-                if (peakRms < 0.05) {
-                    $('trackInstrumentVolume').value = 0.5; // Abaixa a banda
-                    if(player.gains['instrument']) player.gains['instrument'].gain.value = 0.5;
-                }
-                
-                statusEl.textContent = 'Voz Calibrada com Sucesso!';
-                setTimeout(() => { overlay.classList.remove('visible'); }, 2000);
-                
-            }, 2500);
-        }
-    }, 1000);
-});
-
-function liveLoop(){
-    if(!analyser) return; const raw=new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(raw); const p=yin(raw,ctx.sampleRate);
-    let targetMidiNow = window.activeTargetMidi || null;
-
-    if(p && p.clarity > 0.6){
-        const ni=noteInfo(p.freq); $('note').textContent = ni.name; $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
-        $('pitchStatus').textContent = 'Analisando voz...'; lastValid=Date.now();
-        
-        if(player.playing && targetMidiNow !== null) {
-            // LÓGICA IGNORAR OITAVAS (PONTUAÇÃO JUSTA)
-            let sungMidi = freqMidi(p.freq);
-            let normalizedSung = sungMidi;
-            while(normalizedSung < targetMidiNow - 6) normalizedSung += 12;
-            while(normalizedSung > targetMidiNow + 6) normalizedSung -= 12;
-            
-            let centsDiff = Math.abs(Math.round((normalizedSung - targetMidiNow) * 100));
-            
-            evalFrames++;
-            if (centsDiff <= 50) scoreSum += 100; // Acertou na mosca, mesmo em outra oitava
-            else if (centsDiff <= 100) scoreSum += 50; // Passou perto
-            else scoreSum += 20; // Pelo menos cantou alguma nota
-            
-            silenceFrames = 0;
-        }
-    } else {
-        if(Date.now()-lastValid>1000){ $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Cante para o afinador ler'; }
-        
-        if(player.playing && targetMidiNow !== null) {
-            silenceFrames++;
-            // Filtro de Consoantes: Só penaliza se ficar mudo por mais de 5 frames (~350ms)
-            if (silenceFrames > 5) {
-                evalFrames++; scoreSum += 0;
-            }
-        }
-    }
-
-    if(evalFrames > 0) {
-        let currentScore = Math.round(scoreSum / evalFrames);
-        $('liveScore').textContent = currentScore + '%';
-        
-        const circle = $('scoreCircle');
-        if(circle) {
-            if(currentScore >= 80) circle.style.borderColor = 'var(--green)';
-            else if(currentScore >= 50) circle.style.borderColor = 'var(--yellow)';
-            else circle.style.borderColor = 'var(--red)';
-        }
-    }
-
-    raf=setTimeout(()=>requestAnimationFrame(liveLoop),75);
-}
-
-async function startMic(){
-    try{
-        if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) throw new Error('Microfone não suportado no navegador.');
-        stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});
-        audioContext(); if(ctx.state==='suspended') await ctx.resume();
-        
-        source = ctx.createMediaStreamSource(stream); 
-        
-        manualMicInputGain = ctx.createGain();
-        manualMicInputGain.gain.value = Number($('micGainSlider').value || 1.5);
-        source.connect(manualMicInputGain);
-
-        analyser = ctx.createAnalyser(); analyser.fftSize=4096; analyser.smoothingTimeConstant=0;
-        manualMicInputGain.connect(analyser); 
-        
-        $('micQuickStatus').textContent = 'Microfone ligado e ouvindo!'; $('micQuickStatus').style.color = 'var(--green)';
-        $('startMic').disabled=true; $('stopMic').disabled=false; $('btnCalibrate').disabled=false;
-        window.appIsMicActive = true;
-        resetScoreUI(); liveLoop();
-    }catch(e){ $('micQuickStatus').textContent = 'Erro no mic: ' + e.message; $('micQuickStatus').style.color = 'var(--yellow)'; }
-}
-
-function stopMic(){
-    clearTimeout(raf); if(mediaRecorder && mediaRecorder.state==='recording') stopRecording();
-    if(stream) stream.getTracks().forEach(t=>t.stop()); stream=null; analyser=null; source=null; manualMicInputGain=null;
-    $('micQuickStatus').textContent='Microfone desligado.'; $('micQuickStatus').style.color = 'var(--muted)';
-    $('startMic').disabled=false; $('stopMic').disabled=true; $('btnCalibrate').disabled=true; $('note').textContent = '—'; $('cents').textContent = '';
-    window.appIsMicActive = false;
-}
-
-$('startMic').addEventListener('click', startMic); $('stopMic').addEventListener('click', stopMic);
-
-function startVisualCountdownAndRecord() {
-    const overlay = $('syncOverlay');
-    const countEl = $('syncCount');
-    overlay.classList.add('visible');
-    
-    let count = 4;
-    countEl.textContent = count;
-    
-    let iv = setInterval(() => {
-        count--;
-        if(count > 0) {
-            countEl.textContent = count;
-        } else {
-            clearInterval(iv);
-            overlay.classList.remove('visible');
-            $('playerStatus').textContent = `Sincronismo Concluído! Gravando...`;
-            $('playerStatus').style.color = "var(--green)";
-            window.appStartRecording();
-        }
-    }, 1000);
-}
-window.startVisualCountdownAndRecord = startVisualCountdownAndRecord;
-
+// GRAVAÇÃO
 async function startRecording() {
-    if(!stream) { $('playerStatus').textContent = 'Ligue o microfone primeiro para gravar.'; return; }
-    if(!trackBuffers.instrument) { $('playerStatus').textContent = 'Carregue o playback do TV Box antes de gravar.'; return; }
+    if(!stream) { $('playerStatus').textContent = 'Ligue o microfone.'; return; }
+    if(!trackBuffers.instrument) { $('playerStatus').textContent = 'Carregue o playback.'; return; }
     try {
         const ac=ensurePlayerGraph(); if(ac.state==='suspended') await ac.resume();
         recordChunks=[]; recordMixDestination = ac.createMediaStreamDestination();
-        recordPlaybackGain = ac.createGain(); recordPlaybackGain.gain.value=0.72;
+        const recordPlaybackGain = ac.createGain(); recordPlaybackGain.gain.value=0.72;
         player.compressor.connect(recordPlaybackGain); recordPlaybackGain.connect(recordMixDestination);
         
-        recordMicFilter = ac.createBiquadFilter(); recordMicFilter.type='highpass'; recordMicFilter.frequency.value=85;
-        recordMicGain = ac.createGain(); recordMicGain.gain.value=1.65;
+        const recordMicFilter = ac.createBiquadFilter(); recordMicFilter.type='highpass'; recordMicFilter.frequency.value=85;
+        const recordMicGain = ac.createGain(); recordMicGain.gain.value=1.65;
         manualMicInputGain.connect(recordMicFilter); recordMicFilter.connect(recordMicGain); recordMicGain.connect(recordMixDestination);
         
         const mimeType = ['audio/webm;codecs=opus','audio/webm','audio/mp4'].find(t=>MediaRecorder.isTypeSupported(t)) || '';
@@ -697,25 +639,24 @@ async function startRecording() {
             const blob = new Blob(recordChunks, {type: mediaRecorder.mimeType||'audio/webm'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href=url; a.download=`ensaio-${currentTrainingMode}-${Date.now()}.webm`; a.click();
-            $('playerStatus').textContent = 'Gravação finalizada e salva no dispositivo!';
+            $('playerStatus').textContent = 'Gravação salva!';
         };
         mediaRecorder.start(250); recording=true;
-        $('recordBtn').textContent = '🔴 Parar Gravação'; $('recordBtn').classList.replace('warn', 'good');
+        $('recordBtn').innerHTML = '🔴 Parar Gravação'; $('recordBtn').classList.add('recording');
         startPlayback();
-    } catch(e) { $('playerStatus').textContent = 'Erro ao gravar: ' + e.message; recording = false; }
+    } catch(e) { $('playerStatus').textContent = 'Erro ao gravar.'; recording = false; }
 }
 
 function stopRecording(){
     if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
     recording=false; stopPlayback();
-    $('recordBtn').textContent = '🔴 Gravar Ensaio Local'; $('recordBtn').classList.replace('good', 'warn');
+    $('recordBtn').innerHTML = '🔴 Gravar Ensaio Local'; $('recordBtn').classList.remove('recording');
 }
 
 $('recordBtn').addEventListener('click', () => { if(recording) stopRecording(); else startRecording(); });
 
 window.appCurrentTrainingMode = (val) => { if(val!==undefined) currentTrainingMode = val; return currentTrainingMode; };
-window.appStartRecording = startRecording; window.appPlayer = player; window.appTrackBuffers = trackBuffers; window.appCtx = () => ctx;
-window.appIsMicActive = false;
+window.appStartRecording = startRecording; window.appCtx = () => ctx; window.appIsMicActive = false;
 })();
 </script>
 
@@ -729,41 +670,29 @@ import { doc, getDoc, getDocs, collection, setDoc, updateDoc, serverTimestamp, o
 
 const $ = id => document.getElementById(id);
 const gate = $('authGate'), main = $('appMain');
-
 let currentUser=null, activeSong=null, assignedSongs=[], isAdmin=false;
-let syncUnsubscribe = null, presenceUnsubscribe = null;
-let lastSessionId = null;
+let syncUnsubscribe = null, presenceUnsubscribe = null, lastSessionId = null;
 
 const urlParams = new URLSearchParams(location.search);
-const fastCode = urlParams.get('convite');
-if(fastCode) {
-    $('standardLogin').classList.add('hidden');
-    $('magicLinkModal').classList.remove('hidden');
-}
+if(urlParams.get('convite')) { $('standardLogin').classList.add('hidden'); $('magicLinkModal').classList.remove('hidden'); }
 
 $('magicEnterBtn').addEventListener('click', async () => {
     const name = $('magicName').value.trim();
-    if (!name) { $('magicMsg').textContent = 'Por favor, digite seu nome.'; return; }
+    if (!name) { $('magicMsg').textContent = 'Digite seu nome.'; return; }
     
-    $('magicEnterBtn').disabled = true;
-    $('magicMsg').textContent = 'Preparando seu estúdio...';
-    $('magicMsg').style.color = 'var(--cyan)';
-    
-    const dummyEmail = fastCode.toLowerCase() + '@estrelinha.app';
-    const dummyPass = fastCode.toUpperCase() + '1234';
+    $('magicEnterBtn').disabled = true; $('magicMsg').textContent = 'Preparando estúdio...'; $('magicMsg').style.color = 'var(--cyan)';
+    const code = urlParams.get('convite');
+    const dummyEmail = code.toLowerCase() + '@estrelinha.app'; const dummyPass = code.toUpperCase() + '1234';
     
     try {
         const credential = await createUserWithEmailAndPassword(auth, dummyEmail, dummyPass);
-        await activateInviteForUser(credential.user, fastCode, name);
+        await activateInviteForUser(credential.user, code, name);
         window.history.replaceState({}, document.title, "/");
     } catch(e) {
         if (e.code === 'auth/email-already-in-use') {
-            await signInWithEmailAndPassword(auth, dummyEmail, dummyPass);
-            window.history.replaceState({}, document.title, "/");
+            await signInWithEmailAndPassword(auth, dummyEmail, dummyPass); window.history.replaceState({}, document.title, "/");
         } else {
-            $('magicMsg').textContent = "Erro: " + (e.message || e.code);
-            $('magicMsg').style.color = 'var(--yellow)';
-            $('magicEnterBtn').disabled = false;
+            $('magicMsg').textContent = "Erro: " + e.message; $('magicMsg').style.color = 'var(--yellow)'; $('magicEnterBtn').disabled = false;
         }
     }
 });
@@ -772,85 +701,53 @@ async function activateInviteForUser(user,code,name=''){
     const normalized=(code||'').trim().toUpperCase();
     const inviteRef=doc(db,'convites',normalized), inv=await getDoc(inviteRef);
     if(!inv.exists()) throw new Error('ID não encontrado.');
-    const v=inv.data();
-    if(v.status!=='ativo') throw new Error('Convite já usado ou expirado.');
-    const ids=Array.isArray(v.musicaIds)?v.musicaIds:[];
-    
+    const v=inv.data(); if(v.status!=='ativo') throw new Error('Convite já usado ou expirado.');
     await updateDoc(inviteRef,{status:'usado', uid:user.uid, usadoEm:serverTimestamp()});
-    await setDoc(doc(db,'usuarios',user.uid,'perfil','dados'),{nome:name, email:user.email, role:'aluna', inviteCode:normalized, musicaIds:ids, createdAt:serverTimestamp()});
+    await setDoc(doc(db,'usuarios',user.uid,'perfil','dados'),{nome:name, email:user.email, role:'aluna', inviteCode:normalized, musicaIds:Array.isArray(v.musicaIds)?v.musicaIds:[], createdAt:serverTimestamp()});
 }
 
 async function updatePresence(isOnline) {
     if (!currentUser) return;
-    try {
-        await setDoc(doc(db, 'status', currentUser.uid), {
-            nome: currentUser.displayName || $('savedState').textContent,
-            online: isOnline,
-            lastSeen: serverTimestamp()
-        }, { merge: true });
-    } catch(e) { console.warn("Erro ao atualizar status", e); }
+    try { await setDoc(doc(db, 'status', currentUser.uid), { nome: currentUser.displayName || $('savedState').textContent, online: isOnline, lastSeen: serverTimestamp() }, { merge: true });
+    } catch(e) {}
 }
-
 window.addEventListener('beforeunload', () => updatePresence(false));
 
 async function enter(user){
-    currentUser=user;
-    gate.style.display='none';
-    main.classList.remove('appLocked', 'hidden');
-    $('cloudState').textContent='Validando…';
-    
+    currentUser=user; gate.style.display='none'; main.classList.remove('appLocked', 'hidden'); $('cloudState').textContent='Validando…';
     try {
         const adminSnap = await getDoc(doc(db,'admins',user.uid));
         isAdmin = (String(user.email||'').toLowerCase()==='andersonsieklicki@gmail.com' && user.emailVerified) || (adminSnap.exists() && adminSnap.data().ativo);
-        
         let songs=[];
         if(isAdmin){
-            $('adminLink').classList.remove('hidden');
-            $('savedState').textContent='Administrador';
-            const snap = await getDocs(collection(db,'musicas'));
-            songs = snap.docs.map(d=>({id:d.id,...d.data()}));
+            $('adminLink').classList.remove('hidden'); $('savedState').textContent='Anderson (Admin)';
+            const snap = await getDocs(collection(db,'musicas')); songs = snap.docs.map(d=>({id:d.id,...d.data()}));
         } else {
             $('adminLink').classList.add('hidden');
             let profile = await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));
-            if(!profile.exists()) throw new Error('Perfil não encontrado. Peça um novo link.');
-            
+            if(!profile.exists()) throw new Error('Perfil não encontrado.');
             $('savedState').textContent = profile.data().nome || 'Cantora';
             updatePresence(true); 
             
             if(presenceUnsubscribe) presenceUnsubscribe();
             presenceUnsubscribe = onSnapshot(collection(db, 'status'), (snap) => {
-                const indicator = $('presenceIndicator'); 
-                let html = '';
-                let found = false;
+                const indicator = $('presenceIndicator'); let html = '', found = false;
                 snap.forEach(d => {
                     const data = d.data();
-                    if (d.id !== currentUser.uid && data.online) {
-                        html += `<span style="color:var(--green); font-weight:bold;">🟢 ${data.nome}</span> `;
-                        found = true;
-                    }
+                    if (d.id !== currentUser.uid && data.online) { html += `<span style="color:var(--green); font-weight:bold;">🟢 ${data.nome}</span> `; found = true; }
                 });
-                if(found) indicator.innerHTML = html;
-                else indicator.innerHTML = `<span style="color:var(--muted);">🔴 Aguardando parceiros...</span>`;
+                indicator.innerHTML = found ? html : `<span style="color:var(--muted);" class="offline">🔴 Offline</span>`;
             });
-
-            const ids = profile.data().musicaIds || [];
-            if(!ids.length) throw new Error('Sem músicas.');
+            const ids = profile.data().musicaIds || []; if(!ids.length) throw new Error('Sem músicas.');
             const results = await Promise.all(ids.map(id=>getDoc(doc(db,'musicas',id))));
             songs = results.filter(x=>x.exists()&&x.data().publicada).map(x=>({id:x.id,...x.data()}));
         }
-        
-        assignedSongs = songs;
-        const sel = $('studentSongSelect'); sel.replaceChildren();
+        assignedSongs = songs; const sel = $('studentSongSelect'); sel.replaceChildren();
         if(!songs.length){ sel.add(new Option('Nenhuma música encontrada','')); return; }
-        
-        songs.forEach(s => sel.add(new Option(s.titulo||s.id, s.id)));
-        sel.disabled = false;
-        loadSong(songs[0]);
-        
-        $('cloudState').textContent='Conectado';
+        songs.forEach(s => sel.add(new Option(s.titulo||s.id, s.id))); sel.disabled = false;
+        loadSong(songs[0]); $('cloudState').textContent='Conectado';
     } catch(e) {
-        await signOut(auth); gate.style.display='grid'; main.classList.add('appLocked');
-        $('authMessage').textContent = e.message;
+        await signOut(auth); gate.style.display='grid'; main.classList.add('appLocked'); $('authMessage').textContent = e.message;
     }
 }
 
@@ -862,16 +759,20 @@ async function loadSong(song){
     syncUnsubscribe = onSnapshot(doc(db, 'sessoes_treino', song.id), (snap) => {
         if (!snap.exists()) return;
         const data = snap.data();
-        
         if (data.action === 'start_sync' && data.sessionId && data.sessionId !== lastSessionId) {
             lastSessionId = data.sessionId;
+            if (!window.appIsMicActive) { alert("A outra pessoa iniciou o Dueto, mas seu MICROFONE ESTÁ DESLIGADO!\nLigue seu microfone e sincronizem novamente."); return; }
             
-            if (!window.appIsMicActive) {
-                alert("A outra pessoa iniciou o Dueto, mas seu MICROFONE ESTÁ DESLIGADO!\n\nLigue seu microfone e peçam para sincronizar novamente.");
-                return;
-            }
-            
-            window.startVisualCountdownAndRecord();
+            const overlay = $('syncOverlay'); const countEl = $('syncCount');
+            overlay.classList.add('visible'); let count = 4; countEl.textContent = count;
+            let iv = setInterval(() => {
+                count--;
+                if(count > 0) countEl.textContent = count;
+                else {
+                    clearInterval(iv); overlay.classList.remove('visible');
+                    window.appStartRecording();
+                }
+            }, 1000);
         }
     });
 
@@ -879,61 +780,33 @@ async function loadSong(song){
         try {
             const files = await window.fetchServerAudioList();
             const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
-            
-            let fileToAutoLoad = null;
-            if (savedLocal && files.some(f => f.name === savedLocal)) {
-                fileToAutoLoad = savedLocal;
-            } else if (files.length > 0) {
-                fileToAutoLoad = files[0].name;
-            }
-
+            let fileToAutoLoad = (savedLocal && files.some(f => f.name === savedLocal)) ? savedLocal : (files.length > 0 ? files[0].name : null);
             if (fileToAutoLoad) {
                 $('serverAudioSelect').value = fileToAutoLoad;
                 $('loadServerAudioBtn').click(); 
             }
-        } catch(e) {
-            console.warn("Falha no Auto-Load do áudio:", e);
-        }
+        } catch(e) {}
     }
 }
 
 $('loginForm').addEventListener('submit', async e => {
     e.preventDefault();
-    try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); }
-    catch(err) { $('authMessage').textContent = "Credenciais inválidas."; }
+    try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); } catch(err) { $('authMessage').textContent = "Credenciais inválidas."; }
 });
-
 $('googleLoginBtn').addEventListener('click', async () => {
-    try { await signInWithPopup(auth, new GoogleAuthProvider()); }
-    catch(e) { $('authMessage').textContent = e.message; }
+    try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch(e) { $('authMessage').textContent = e.message; }
 });
-
-$('logoutBtn').addEventListener('click', () => {
-    updatePresence(false);
-    signOut(auth);
-});
+$('logoutBtn').addEventListener('click', () => { updatePresence(false); signOut(auth); });
 
 $('syncRemoteBtn').addEventListener('click', async () => {
     if(!window.activeSong) return;
-    if(!window.appIsMicActive) { alert("Ligue o SEU microfone primeiro antes de enviar o sinal!"); return; }
-    if(!window.appTrackBuffers || !window.appTrackBuffers.instrument) { alert("Aguarde carregar o playback antes de sincronizar!"); return; }
+    if(!window.appIsMicActive) { alert("Ligue o SEU microfone primeiro!"); return; }
     
-    $('syncRemoteBtn').disabled = true;
-    $('playerStatus').textContent = 'Iniciando dueto em ambos os aparelhos...';
-    
+    $('syncRemoteBtn').disabled = true; $('playerStatus').textContent = 'Sincronizando...';
     try {
-        const sessionId = Math.random().toString(36).substring(2, 10);
-        await setDoc(doc(db, 'sessoes_treino', window.activeSong.id), {
-            action: 'start_sync', 
-            sessionId: sessionId, 
-            initiatedBy: currentUser.uid, 
-            timestamp: serverTimestamp()
-        });
-    } catch (e) { 
-        $('playerStatus').textContent = 'Erro ao enviar sinal: ' + e.message; 
-    } finally {
-        setTimeout(() => $('syncRemoteBtn').disabled = false, 5000);
-    }
+        await setDoc(doc(db, 'sessoes_treino', window.activeSong.id), { action: 'start_sync', sessionId: Math.random().toString(36).substring(2, 10), initiatedBy: currentUser.uid, timestamp: serverTimestamp() });
+    } catch (e) { $('playerStatus').textContent = 'Erro ao sincronizar: ' + e.message; } 
+    finally { setTimeout(() => $('syncRemoteBtn').disabled = false, 5000); }
 });
 
 $('studentSongSelect').addEventListener('change', () => {
@@ -943,34 +816,21 @@ $('studentSongSelect').addEventListener('change', () => {
 
 onAuthStateChanged(auth, user => {
     if(user) enter(user);
-    else {
-        currentUser=null; window.activeSong=null;
-        main.classList.add('appLocked', 'hidden');
-        gate.style.display='grid';
-        if(presenceUnsubscribe) presenceUnsubscribe();
-    }
+    else { currentUser=null; window.activeSong=null; main.classList.add('appLocked', 'hidden'); gate.style.display='grid'; if(presenceUnsubscribe) presenceUnsubscribe(); }
 });
 
-// Controle da UI
 document.querySelectorAll('[data-training-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
         $('playbackPanel').classList.remove('hidden');
         const mode = btn.dataset.trainingMode;
         if(window.appCurrentTrainingMode) window.appCurrentTrainingMode(mode);
         
-        if(mode === 'silvane') {
-            $('teacherGuidance').textContent = '"Sil, acompanhe esta melodia."';
-            $('trackLeadVolume').value = 0.6; $('trackHarmonyVolume').value = 0.0;
-        } else if (mode === 'marla') {
-            $('teacherGuidance').textContent = '"Marla (ou Anderson), agora é a sua vez de entrar na harmonia."';
-            $('trackLeadVolume').value = 0.2; $('trackHarmonyVolume').value = 0.8;
-        } else {
-            $('teacherGuidance').textContent = '"Vamos cantar em dueto! Playback pronto."';
-            $('trackLeadVolume').value = 0.1; $('trackHarmonyVolume').value = 0.1;
-        }
+        $('trackLeadVolume').value = mode === 'silvane' ? 0.6 : mode === 'marla' ? 0.2 : 0.1;
+        $('trackHarmonyVolume').value = mode === 'silvane' ? 0.0 : mode === 'marla' ? 0.8 : 0.1;
         
-        if(window.appPlayer && window.appPlayer.gains['lead'] && window.appCtx()) window.appPlayer.gains['lead'].gain.value = Number($('trackLeadVolume').value);
-        if(window.appPlayer && window.appPlayer.gains['harmony'] && window.appCtx()) window.appPlayer.gains['harmony'].gain.value = Number($('trackHarmonyVolume').value);
+        // Dispara o input handler para atualizar o WebAudio
+        $('trackLeadVolume').dispatchEvent(new Event('input'));
+        $('trackHarmonyVolume').dispatchEvent(new Event('input'));
         
         $('playbackPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
