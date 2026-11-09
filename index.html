@@ -22,7 +22,6 @@
 
 body { 
     margin: 0; background-color: var(--bg-dark);
-    /* DEGRADÊ MÁGICO: Mais transparente no topo para revelar os rostos */
     background-image: linear-gradient(to bottom, rgba(4, 9, 18, 0.1) 0%, rgba(4, 9, 18, 0.6) 35%, rgba(4, 9, 18, 0.95) 100%), url('1001384647.png');
     background-position: center top; background-repeat: no-repeat; background-attachment: fixed; background-size: cover;
     color: var(--txt); padding-bottom: 60px; -webkit-font-smoothing: antialiased;
@@ -38,7 +37,7 @@ input, select { font: inherit; width: 100%; background: rgba(0,0,0,0.5); color: 
 input:focus, select:focus { border-color: var(--cyan); }
 .ghost { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); border-radius: 12px; }
 
-/* CARTÕES DE VIDRO (GLASSMORPHISM) */
+/* CARTÕES DE VIDRO */
 .bank-card { background: var(--card-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--card-border); border-radius: 24px; padding: 24px; margin-bottom: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
 
 /* TELA DE LOGIN */
@@ -48,13 +47,12 @@ input:focus, select:focus { border-color: var(--cyan); }
 .btn-primary { background: linear-gradient(135deg, #00b4db, #0083b0); color: white; border-radius: 14px; padding: 16px; font-weight: bold; width: 100%; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 180, 219, 0.3); }
 .btn-secondary { background: rgba(255,255,255,0.1); color: white; border-radius: 14px; padding: 16px; font-weight: bold; width: 100%; font-size: 16px; margin-top: 12px; }
 
-/* HEADER DO APP (POSICIONAMENTO INTELIGENTE PARA MOSTRAR OS ROSTOS) */
+/* HEADER DO APP */
 .app-container { max-width: 750px; margin: 0 auto; padding: 15px; }
 .app-header { 
     display: flex; justify-content: space-between; align-items: center; 
     background: rgba(12, 18, 30, 0.5); padding: 10px 20px; border-radius: 20px; 
     backdrop-filter: blur(10px); border: 1px solid var(--card-border); 
-    /* AQUI ESTÁ O SEGREDO: Uma margem inferior gigante empurra o resto do app para baixo */
     margin-bottom: clamp(150px, 35vh, 400px); 
     box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
@@ -154,7 +152,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 </section>
 
 <main class="app-container appLocked hidden" id="appMain">
-  
   <header class="app-header">
     <div class="user-profile">
         <div class="user-avatar">🎙️</div>
@@ -227,7 +224,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     <div id="playerStatus" style="text-align: center; font-size: 13px; color: var(--yellow); margin: 15px 0 25px; font-weight: 600;">Selecione uma aula acima para iniciar.</div>
 
     <button class="btn-record" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
-    <button class="btn-sync" id="syncRemoteBtn">🌍 Iniciar Dueto Remoto</button>
+    <button class="btn-sync" id="syncRemoteBtn" disabled>🌍 Iniciar Dueto Remoto</button>
 
     <!-- CONFIGURAÇÕES LIMPAS -->
     <details>
@@ -241,7 +238,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     </details>
   </div>
   
-  <!-- LIXEIRA DOM -->
   <div id="legacy-ui" class="hidden">
     <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><button id="stopMicLegacy"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button><a id="adminLink"></a>
   </div>
@@ -251,13 +247,24 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
 
 const demoEstrelinhaMap = [
-    { start: 2.0, duration: 0.8, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
-    { start: 2.8, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
-    { start: 3.3, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
-    { start: 4.5, duration: 0.4, leadMidi: 60, harmonyMidi: 64, syllable: "e", verified: true },
-    { start: 4.9, duration: 0.8, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
-    { start: 5.7, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
-    { start: 7.0, duration: 2.0, leadMidi: 65, harmonyMidi: 69, syllable: "fora", verified: true }
+    { start: 22.0, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
+    { start: 24.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
+    { start: 25.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
+    { start: 27.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "e", verified: true },
+    { start: 28.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
+    { start: 30.0, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
+    { start: 31.5, duration: 2.0, leadMidi: 65, harmonyMidi: 69, syllable: "fora", verified: true },
+    { start: 34.0, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "como", verified: true },
+    { start: 36.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "de", verified: true },
+    { start: 37.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "costume", verified: true },
+    { start: 39.5, duration: 2.0, leadMidi: 62, harmonyMidi: 65, syllable: "vamos", verified: true },
+    { start: 42.0, duration: 2.5, leadMidi: 64, harmonyMidi: 67, syllable: "conversar", verified: true },
+    { start: 45.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "Pra", verified: true },
+    { start: 46.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "te", verified: true },
+    { start: 47.5, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "alegrar", verified: true },
+    { start: 50.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "tem", verified: true },
+    { start: 51.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "até", verified: true },
+    { start: 52.5, duration: 2.5, leadMidi: 64, harmonyMidi: 67, syllable: "vagalume", verified: true }
 ];
 let existingEvents = []; try { existingEvents = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e){}
 if (existingEvents.length === 0) { localStorage.setItem('estrelinha_events', JSON.stringify(demoEstrelinhaMap)); }
@@ -345,7 +352,7 @@ function resetUI() {
 
 function stopPlayerSources(){ for(const item of player.sources){ try{item.stop()}catch{} try{item.disconnect()}catch{} } player.sources=[]; }
 
-// MÁGICA: CARREGAMENTO DIRETO DO GITHUB SEM TV BOX
+// MÁGICA: CARREGAMENTO DIRETO DO GITHUB
 window.loadAVTrackFromUrl = async function(key, url, name) {
     stopPlayback(true);
     $('playerStatus').textContent = 'Baixando playback do servidor (GitHub)...';
@@ -364,6 +371,7 @@ window.loadAVTrackFromUrl = async function(key, url, name) {
         updatePlayerUI();
         $('playerStatus').textContent = `Áudio carregado com sucesso!`;
         $('recordBtn').disabled = false;
+        $('syncRemoteBtn').disabled = false;
         window.hasDownloaded = true;
         return true;
     } catch(e) {
@@ -655,7 +663,7 @@ window.appStartRecording = startRecording; window.appCtx = () => ctx; window.app
 
 <script type="module">
 // ============================================================================
-// 3. FIREBASE AUTH E CARREGAMENTO AUTOMÁTICO CLÁSSICO (VIA GITHUB)
+// 3. FIREBASE AUTH, STATUS E SINCRONISMO (DUETO REMOTO)
 // ============================================================================
 import { auth, db } from './firebase-config.js';
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
@@ -802,7 +810,6 @@ onAuthStateChanged(auth, user => {
     else { currentUser=null; window.activeSong=null; main.classList.add('appLocked', 'hidden'); gate.style.display='grid'; if(presenceUnsubscribe) presenceUnsubscribe(); }
 });
 
-// AQUI ESTÁ O GATILHO PARA BAIXAR DO GITHUB
 document.querySelectorAll('[data-training-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
         $('playbackPanel').classList.remove('hidden');
@@ -818,7 +825,6 @@ document.querySelectorAll('[data-training-mode]').forEach(btn => {
         $('playbackPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
         
         if (!window.hasDownloaded) {
-            // Dispara a função limpa e direta para baixar o MP3 do GitHub/Vercel
             window.loadAVTrackFromUrl('instrument', 'playback-estrelinha.mp3', 'Estrelinha')
                 .catch(() => { $('playerStatus').textContent = 'Erro. Verifique se o playback-estrelinha.mp3 está no GitHub.'; });
         }
