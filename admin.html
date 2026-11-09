@@ -6,140 +6,106 @@
 <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icons/icon-192.png"><title>Administração | Assistente Vocal</title>
 <style>
 :root{color-scheme:dark;--bg:#081326;--panel:#14223b;--line:#3a5279;--txt:#f6f8ff;--muted:#b2c1d8;--cyan:#42d8e8;--green:#39dfa5;--red:#ff758f;--yellow:#ffd166;--violet:#b69aff}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 8% 0%,#294a75 0,#101d35 35%,#081326 78%);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,select{font:inherit}button{min-height:44px;border:1px solid #49658f;border-radius:12px;padding:10px 14px;color:white;background:linear-gradient(135deg,#263e61,#1b2e4b);font-weight:700;cursor:pointer}button.primary{background:linear-gradient(135deg,#5750d8,#087eae)}button.good{background:linear-gradient(135deg,#087f69,#19a879)}button.warn{background:linear-gradient(135deg,#a64160,#d65c70)}button:disabled{opacity:.5;cursor:not-allowed}input,select{width:100%;min-height:44px;background:#0d1929;color:var(--txt);border:1px solid #435c83;border-radius:10px;padding:10px 12px}label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px}.wrap{max-width:1180px;margin:auto;padding:22px 15px 50px}.hero{display:flex;align-items:center;gap:13px;margin-bottom:18px}.logo{width:50px;height:50px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#07a4b8,#6455d7 62%,#d05d91);font-size:27px}.hero h1{font-size:clamp(23px,4vw,32px);margin:0}.hero p{margin:3px 0;color:var(--muted)}.panel{background:linear-gradient(145deg,rgba(26,43,72,.98),rgba(14,26,47,.98));border:1px solid var(--line);border-radius:18px;padding:17px;margin:0 0 14px;box-shadow:0 14px 34px #02081755}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{min-width:0}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.muted{color:var(--muted)}.small{font-size:12px}.tiny{font-size:11px}.hidden{display:none!important}.badge{border-radius:99px;padding:5px 9px;font-size:11px;font-weight:700;background:#244967;border:1px solid #397aa0}.song{border:1px solid #3b557d;background:linear-gradient(145deg,#1b3150,#12233e);border-radius:15px;padding:14px;margin:10px 0}.song h3{margin:0;font-size:17px}.songGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.fileBox{border:1px dashed #6584b0;border-radius:12px;padding:12px;background:#12243e}.progress{height:8px;border-radius:99px;background:#0a1422;overflow:hidden;margin-top:7px}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#42d8e8,#39dfa5)}.list{display:grid;gap:8px}.check{display:flex;align-items:flex-start;gap:8px;background:#10213a;border:1px solid #334c70;border-radius:10px;padding:8px}.check input{width:18px;min-height:18px;margin-top:2px;accent-color:#42d8e8}.check label{margin:0;font-size:13px;color:var(--txt)}.output{background:#0c1a2b;border:1px solid #3a5279;border-radius:12px;padding:12px;overflow-wrap:anywhere}.output b{color:var(--green)}.auth{max-width:430px;margin:12vh auto;padding:25px}.auth form{display:grid;gap:10px}details.advanced{margin-top:10px;border:1px solid #344d70;border-radius:11px;background:#10213a;padding:10px 12px}details.advanced>summary{cursor:pointer;color:#9feaf2;font-weight:700;font-size:13px;list-style:none}details.advanced>summary::-webkit-details-marker{display:none}details.advanced>summary:before{content:'＋ ';font-weight:900}details.advanced[open]>summary:before{content:'− '}details.advanced .grid{margin-top:12px}.error{color:#ff9caa}.success{color:#80f0c1}@media(max-width:700px){.grid,.songGrid{grid-template-columns:1fr}.wrap{padding:14px 10px 35px}.panel{padding:14px}.row button{flex:1 1 140px}}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 8% 0%,#294a75 0,#101d35 35%,#081326 78%);color:var(--txt);font:15px/1.5 system-ui,-apple-system,sans-serif}button,input,select{font:inherit}button{min-height:44px;border:1px solid #49658f;border-radius:12px;padding:10px 14px;color:white;background:linear-gradient(135deg,#263e61,#1b2e4b);font-weight:700;cursor:pointer}button.primary{background:linear-gradient(135deg,#5750d8,#087eae)}button.good{background:linear-gradient(135deg,#087f69,#19a879)}button:disabled{opacity:.5;cursor:not-allowed}input,select{width:100%;min-height:44px;background:#0d1929;color:var(--txt);border:1px solid #435c83;border-radius:10px;padding:10px 12px}label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px}.wrap{max-width:1180px;margin:auto;padding:22px 15px 50px}.hero{display:flex;align-items:center;gap:13px;margin-bottom:18px}.logo{width:50px;height:50px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#07a4b8,#6455d7 62%,#d05d91);font-size:27px}.hero h1{font-size:clamp(23px,4vw,32px);margin:0}.hero p{margin:3px 0;color:var(--muted)}.panel{background:linear-gradient(145deg,rgba(26,43,72,.98),rgba(14,26,47,.98));border:1px solid var(--line);border-radius:18px;padding:17px;margin:0 0 14px;box-shadow:0 14px 34px #02081755}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.muted{color:var(--muted)}.small{font-size:12px}.hidden{display:none!important}.badge{border-radius:99px;padding:5px 9px;font-size:11px;font-weight:700;background:#244967;border:1px solid #397aa0}.song{border:1px solid #3b557d;background:linear-gradient(145deg,#1b3150,#12233e);border-radius:15px;padding:14px;margin:10px 0}.song h3{margin:0;font-size:17px}.list{display:grid;gap:8px}.check{display:flex;align-items:flex-start;gap:8px;background:#10213a;border:1px solid #334c70;border-radius:10px;padding:8px}.check input{width:18px;min-height:18px;margin-top:2px;accent-color:#42d8e8}.output{background:#0c1a2b;border:1px solid #3a5279;border-radius:12px;padding:12px;overflow-wrap:anywhere}.auth{max-width:430px;margin:12vh auto;padding:25px}.auth form{display:grid;gap:10px}
 </style></head>
 <body>
 <section class="panel auth" id="authPanel">
- <div class="hero"><div class="logo">♫</div><div><h1>Painel administrativo</h1><p>Entre com a conta autorizada do administrador.</p></div></div>
- <button class="primary" id="googleLoginBtn" type="button" style="width:100%;margin:4px 0 12px;background:linear-gradient(135deg,#2563eb,#0f766e)">Entrar com Google</button><div style="text-align:center;color:var(--muted);font-size:12px;margin:4px 0 10px">ou entre com e-mail e senha</div><form id="loginForm"><div><label for="email">E-mail</label><input id="email" type="email" required autocomplete="username"></div><div><label for="password">Senha</label><input id="password" type="password" required autocomplete="current-password"></div><button type="submit">Entrar</button></form>
- <p id="authMessage" class="small muted" aria-live="polite">A administração é restrita a usuários cadastrados em admins/{uid} no Firestore.</p>
+ <div class="hero"><div class="logo">♫</div><div><h1>Administração</h1></div></div>
+ <button class="primary" id="googleLoginBtn" type="button" style="width:100%;margin:4px 0 12px;background:linear-gradient(135deg,#2563eb,#0f766e)">Entrar com Google</button>
+ <p id="authMessage" class="small muted">Restrito ao administrador.</p>
 </section>
+
 <main class="wrap hidden" id="adminApp">
- <header class="hero"><div class="logo">♫</div><div><h1>Assistente Vocal — Administração</h1><p>Biblioteca de músicas, playbacks, alunas e convites individuais.</p></div><div style="margin-left:auto" class="row"><a href="/" style="color:#9feaf2;text-decoration:none;font-weight:700">← Voltar ao treino</a><button id="logoutBtn">Sair</button></div></header>
- <div class="row" style="margin-bottom:14px"><span class="badge">ADMINISTRADOR AUTENTICADO</span><span class="small muted" id="adminIdentity"></span></div>
+ <header class="hero"><div class="logo">♫</div><div><h1>Gestão Vocal</h1><p>Músicas e Convites de Acesso Rápido</p></div><div style="margin-left:auto" class="row"><a href="/" style="color:#9feaf2;text-decoration:none;font-weight:700">← Ir para o app</a><button id="logoutBtn">Sair</button></div></header>
+ 
  <section class="panel">
-  <div class="row between"><div><h2 style="margin:0 0 4px">1. Cadastrar música</h2><p class="small muted">Cada faixa terá seu próprio playback, tonalidade, mapa, progresso e permissões.</p></div></div>
-  <form id="songForm">
-   <div class="field"><label for="songTitle">Nome da música *</label><input id="songTitle" required placeholder="Ex.: Estrelinha"></div>
-   <details class="advanced"><summary>Dados opcionais da música</summary>
-    <div class="grid">
-     <div class="field"><label for="songArtist">Artista / versão</label><input id="songArtist" placeholder="Artista ou versão de referência"></div>
-     <div class="field"><label for="songKey">Tonalidade confirmada</label><input id="songKey" placeholder="Ex.: G, F#m ou ainda não definida"></div>
-     <div class="field"><label for="songBpm">Andamento (BPM)</label><input id="songBpm" type="number" min="30" max="300" placeholder="Ex.: 96"></div>
-     <div class="field"><label for="songNotes">Observações para cantoras e banda</label><input id="songNotes" placeholder="Entradas, dinâmica, observações..."></div>
-    </div>
-   </details>
-   <div class="row" style="margin-top:12px"><button class="primary" type="submit">＋ Criar música</button><span id="songFormStatus" class="small muted"></span></div>
-  </form>
- </section>
- <section class="panel">
-  <div class="row between"><div><h2 style="margin:0">2. Biblioteca e processamento de áudio</h2><p class="small muted">Envie a música original. Os arquivos são enviados ao armazenamento local do TV Box. Envie arquivos MP3 separados: original, instrumental, voz principal e segunda voz. A separação por IA depende de um backend específico e não é executada por esta API de armazenamento.</p></div><button id="refreshSongs">Atualizar biblioteca</button></div>
-  <div class="field" style="margin:12px 0"><label for="boxStorageApiUrl">Servidor de arquivos — TV Box</label><div class="row"><input id="boxStorageApiUrl" type="url" placeholder="https://mxqpro-h313-1.tail8b8cce.ts.net:8443"><button id="testBoxStorage" type="button">Testar conexão</button></div><p id="boxStorageStatus" class="tiny muted">API pública HTTPS do MXQ Pro. As cantoras podem reproduzir os arquivos pelo celular sem instalar Tailscale.</p></div>
-  <p class="tiny muted" style="margin:8px 0">O envio ao TV Box utiliza a mesma autenticação Google do painel. Somente administradores autorizados podem enviar arquivos.</p>
-  <div class="field" style="margin:12px 0"><label for="separationApiUrl">Endereço público da API de separação (backend)</label><input id="separationApiUrl" type="url" placeholder="https://seu-backend.exemplo.com"><p class="tiny muted">Não coloque token secreto neste campo. A API recebe um token de sessão Firebase pelo cabeçalho Authorization.</p></div>
-  <div id="songList" class="list"><p class="muted">Carregando músicas…</p></div>
-  <div class="output small"><b>Limite importante:</b> o processamento pode produzir um playback instrumental e uma faixa vocal combinada. Para treinar voz principal e segunda voz de modo independente, cadastre também duas referências vocais separadas. O resultado de IA precisa ser ouvido e aprovado; não há garantia de qualidade de gravadora.</div>
- </section>
- <section class="panel">
-  <h2 style="margin:0 0 4px">3. Mapa musical e notas de referência</h2>
-  <p class="small muted">Importe ou edite eventos de notas por música. Somente notas marcadas como conferidas entram na avaliação vocal.</p>
-  <div class="field"><label for="eventSongSelect">Música</label><select id="eventSongSelect"><option value="">Selecione uma música</option></select></div>
-  <div class="field" style="margin-top:10px"><label for="eventsJson">Eventos em JSON</label><textarea id="eventsJson" rows="10" spellcheck="false" placeholder='[{"section":"Refrão","start":12.4,"duration":0.8,"leadMidi":60,"harmonyMidi":64,"syllable":"a","chord":"C","verified":true}]'></textarea></div>
-  <div class="row" style="margin-top:10px"><button id="loadEvents">Carregar mapa</button><button class="good" id="saveEvents">Validar e publicar mapa</button><button id="downloadEvents">Baixar JSON</button><label>Importar JSON <input id="importEvents" type="file" accept="application/json,.json"></label></div>
-  <p id="eventStatus" class="small muted" aria-live="polite">O mapa ainda não foi carregado.</p>
- </section>
- <section class="panel">
-  <h2 style="margin:0 0 4px">4. Criar convite individual para uma cantora</h2>
-  <p class="small muted">O convite possui um ID exclusivo, expira em sete dias e só pode ser usado uma vez. A pessoa cria sua própria conta com esse código.</p>
+  <h2 style="margin:0 0 4px">1. Criar Link Mágico para Cantora</h2>
+  <p class="small muted">Este link fará o login automático da pessoa, sem pedir senha.</p>
   <form id="inviteForm">
-   <div class="field"><label for="inviteName">Nome da cantora *</label><input id="inviteName" required placeholder="Digite o nome"></div>
-   <div style="margin-top:12px"><label>Músicas liberadas *</label><div id="inviteMusicList" class="list"><p class="muted small">Cadastre ao menos uma música para convidar.</p></div></div>
-   <details class="advanced"><summary>Opções adicionais (não obrigatórias)</summary>
-    <div class="grid">
-     <div class="field"><label for="inviteEmail">E-mail autorizado</label><input id="inviteEmail" type="email" placeholder="aluna@email.com"></div>
-     <div class="field"><label for="invitePhone">WhatsApp com DDD e país</label><input id="invitePhone" type="tel" placeholder="5546999999999"></div>
-     <div class="field"><label for="inviteDays">Validade do convite</label><select id="inviteDays"><option value="1">24 horas</option><option value="3">3 dias</option><option value="7" selected>7 dias</option><option value="14">14 dias</option><option value="30">30 dias</option></select></div>
-    </div>
-   </details>
-   <div class="row" style="margin-top:12px"><button class="good" type="submit">Criar convite</button><span id="inviteStatus" class="small muted"></span></div>
+   <div class="field" style="margin-bottom: 15px;"><label>Nome (opcional para identificar o convite)</label><input id="inviteName" placeholder="Ex: Marla"></div>
+   <div style="margin-bottom: 15px;"><label>Quais músicas ela pode acessar?</label><div id="inviteMusicList" class="list"></div></div>
+   <div class="row"><button class="good" type="submit">Gerar Link de Acesso</button><span id="inviteStatus" class="small muted"></span></div>
   </form>
-  <div id="inviteOutput" class="output hidden" style="margin-top:12px"><div><b>Convite criado</b></div><p id="inviteCodeResult" style="font-size:20px;font-weight:850;letter-spacing:1px"></p><p class="small" id="inviteUrlResult"></p><div class="row"><button id="copyInvite" type="button">Copiar convite</button><button class="good" id="whatsappInvite" type="button">Enviar pelo WhatsApp</button></div></div>
+  <div id="inviteOutput" class="output hidden" style="margin-top:12px">
+    <div><b>Link gerado com sucesso!</b> Envie isso para a cantora:</div>
+    <p id="inviteUrlResult" style="font-size:15px; color:#42d8e8; margin: 10px 0;"></p>
+    <div class="row"><button id="copyInvite" type="button">Copiar Mensagem</button><button class="good" id="whatsappInvite" type="button">Enviar pelo WhatsApp</button></div>
+  </div>
  </section>
- <section class="panel"><div class="row between"><div><h2 style="margin:0">5. Convites recentes</h2><p class="small muted">Acompanhe se o ID está ativo, expirado ou já utilizado.</p></div><button id="refreshInvites">Atualizar convites</button></div><div id="inviteList" class="list"><p class="muted">Carregando…</p></div></section>
- <p class="tiny muted">Assistente Vocal v3.1 · áudios originais e faixas podem ser salvos no disco do TV Box; cadastros e progresso ficam no Firestore.</p>
+
+ <section class="panel"><div class="row between"><div><h2 style="margin:0">2. Convites Ativos</h2></div><button id="refreshInvites">Atualizar</button></div><div id="inviteList" class="list" style="margin-top: 10px;"></div></section>
 </main>
+
 <script type="module">
 import {auth,db} from './firebase-config.js';
-import {GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
-import {collection,doc,getDoc,getDocs,setDoc,updateDoc,serverTimestamp,Timestamp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-const $=id=>document.getElementById(id);const ADMIN_EMAIL='andersonsieklicki@gmail.com';let adminUser=null,lastInvite=null,songs=[];
-function isAuthorizedAdmin(user){return !!user && (String(user.email||'').toLowerCase()===ADMIN_EMAIL && user.emailVerified===true);}
-function say(id,text,kind='muted'){const el=$(id);el.textContent=text;el.className='small '+kind}
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(err){$('authMessage').textContent='Falha no login: '+(err.message||err.code)}});
-$('googleLoginBtn').addEventListener('click',async()=>{const btn=$('googleLoginBtn');try{$('authMessage').textContent='Abrindo autenticação Google…';btn.disabled=true;const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await signInWithPopup(auth,provider)}catch(err){if(['auth/popup-blocked','auth/cancelled-popup-request','auth/popup-closed-by-user'].includes(err.code)){try{const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await signInWithRedirect(auth,provider);return}catch(redirectErr){err=redirectErr}}$('authMessage').textContent='Falha no login Google: '+(err.message||err.code);btn.disabled=false}});
-getRedirectResult(auth).catch(err=>{$('authMessage').textContent='Falha ao retornar do Google: '+(err.message||err.code)});
-$('logoutBtn').addEventListener('click',()=>signOut(auth));
-onAuthStateChanged(auth,async user=>{if(!user){adminUser=null;$('adminApp').classList.add('hidden');$('authPanel').classList.remove('hidden');return}try{const snap=await getDoc(doc(db,'admins',user.uid));const allowed=isAuthorizedAdmin(user)||(snap.exists()&&snap.data().ativo===true);if(!allowed){await signOut(auth);$('authMessage').textContent='Acesso negado. Somente '+ADMIN_EMAIL+' (com e-mail verificado) ou contas liberadas em admins/{uid} podem administrar.';return}adminUser=user;$('adminIdentity').textContent=user.email||user.uid;$('authPanel').classList.add('hidden');$('adminApp').classList.remove('hidden');await refreshSongs();await refreshInvites()}catch(e){$('authMessage').textContent='Não foi possível validar o administrador: '+e.message}});
-function makeId(prefix){const bytes=new Uint8Array(8);crypto.getRandomValues(bytes);return prefix+'_'+[...bytes].map(x=>x.toString(16).padStart(2,'0')).join('')}
-function codeInvite(){const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';const bytes=new Uint8Array(12);crypto.getRandomValues(bytes);return 'AV-'+[...bytes].map(x=>alphabet[x%alphabet.length]).join('')}
-$('songForm').addEventListener('submit',async e=>{e.preventDefault();if(!adminUser)return;const title=$('songTitle').value.trim();if(!title)return;const id=makeId('mus');const data={titulo:title,artista:$('songArtist').value.trim(),tonalidade:$('songKey').value.trim(),bpm:Number($('songBpm').value)||null,observacoes:$('songNotes').value.trim(),publicada:false,originalUrl:'',originalPath:'',playbackUrl:'',playbackPath:'',vocalUrl:'',vocalPath:'',separationStatus:'sem_audio',createdBy:adminUser.uid,createdAt:serverTimestamp(),updatedAt:serverTimestamp()};try{await setDoc(doc(db,'musicas',id),data);$('songForm').reset();say('songFormStatus','Música cadastrada.','success');await refreshSongs()}catch(err){say('songFormStatus','Erro: '+err.message,'error')}});
-$('refreshSongs').addEventListener('click',refreshSongs);
-function createSongCard(song){
- const card=document.createElement('article');card.className='song';card.dataset.songId=song.id;const title=document.createElement('h3');title.textContent=song.titulo||'Sem título';const meta=document.createElement('p');meta.className='small muted';meta.textContent=[song.artista,song.tonalidade?'Tom '+song.tonalidade:'',song.bpm?song.bpm+' BPM':'',song.separationStatus||''].filter(Boolean).join(' · ');card.append(title,meta);
- const boxes=document.createElement('div');boxes.className='songGrid';
- const makeUpload=(label,kind,current)=>{const box=document.createElement('div');box.className='fileBox';const lab=document.createElement('label');lab.textContent=label;const input=document.createElement('input');input.type='file';input.accept='.mp3,audio/mpeg,audio/mp3';const status=document.createElement('div');status.className='tiny muted';status.textContent=current?'Arquivo cadastrado':'Envie arquivo de áudio';const bar=document.createElement('div');bar.className='progress';const fill=document.createElement('i');bar.append(fill);box.append(lab,input,status,bar);return {box,input,status,fill}};
- const refs=song.trackUrls||{};
- const original=makeUpload('Áudio original (para separação)', 'original',song.originalUrl),instrument=makeUpload('Playback instrumental', 'instrument',refs.instrument||song.playbackUrl),lead=makeUpload('Referência da voz principal', 'lead',refs.lead||song.leadUrl),harmony=makeUpload('Referência da segunda voz', 'harmony',refs.harmony||song.harmonyUrl);
- boxes.append(original.box);const moreTracks=document.createElement('details');moreTracks.className='advanced';const moreSummary=document.createElement('summary');moreSummary.textContent='Outras faixas (opcional): playback e vozes separadas';const extraGrid=document.createElement('div');extraGrid.className='songGrid';[instrument,lead,harmony].forEach(x=>extraGrid.append(x.box));moreTracks.append(moreSummary,extraGrid);card.append(boxes,moreTracks);
- const actions=document.createElement('div');actions.className='row';actions.style.marginTop='12px';const sep=document.createElement('button');sep.className='primary';sep.type='button';sep.dataset.action='separate';sep.textContent='Separar instrumental por IA';const publish=document.createElement('button');publish.type='button';publish.dataset.action='toggle-publish';publish.textContent=song.publicada?'Despublicar':'Publicar para atribuição';const status=document.createElement('span');status.className='tiny muted';status.dataset.status='';status.textContent=(song.playbackUrl||song.playbackPath||song.trackPaths?.instrument)?'Playback disponível':song.originalUrl?'Original enviado — falta separar ou enviar instrumental':'Aguardando áudio';actions.append(sep,publish,status);card.append(actions);
- original.input.addEventListener('change',()=>uploadAudio(song.id,'original',original.input.files[0],original.status,original.fill));instrument.input.addEventListener('change',()=>uploadAudio(song.id,'instrument',instrument.input.files[0],instrument.status,instrument.fill));lead.input.addEventListener('change',()=>uploadAudio(song.id,'lead',lead.input.files[0],lead.status,lead.fill));harmony.input.addEventListener('change',()=>uploadAudio(song.id,'harmony',harmony.input.files[0],harmony.status,harmony.fill));return card}
+import {GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import {collection,doc,getDoc,getDocs,setDoc,serverTimestamp,Timestamp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
-async function refreshSongs(){if(!adminUser)return;const box=$('songList');box.replaceChildren();try{const snap=await getDocs(collection(db,'musicas'));songs=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.titulo||'').localeCompare(b.titulo||''));if(!songs.length){box.textContent='Nenhuma música cadastrada ainda.'}songs.forEach(s=>box.append(createSongCard(s)));renderInviteMusic();renderEventSongOptions()}catch(e){box.textContent='Erro ao carregar biblioteca: '+e.message}}
-async function uploadAudio(songId,kind,file,statusEl,fill){
- if(!file||!adminUser)return;
- if(!/\.mp3$/i.test(file.name)){statusEl.textContent='A API atual aceita somente arquivos MP3.';return}
- if(file.size>100*1024*1024){statusEl.textContent='Arquivo acima do limite de 100 MB.';return}
- const endpoint=$('boxStorageApiUrl').value.trim().replace(/\/$/,'');
- if(!endpoint){statusEl.textContent='Informe o endereço HTTPS do TV Box.';return}
- statusEl.textContent='Validando sua conta Google…';fill.style.width='0%';
- try{
-  const idToken=await adminUser.getIdToken(true);
-  const data=await new Promise((resolve,reject)=>{
-   const xhr=new XMLHttpRequest();xhr.open('POST',endpoint+'/api/upload');
-   xhr.setRequestHeader('Content-Type','audio/mpeg');xhr.setRequestHeader('Authorization','Bearer '+idToken);
-   xhr.upload.addEventListener('progress',e=>{if(e.lengthComputable){const pct=Math.round(e.loaded/e.total*100);fill.style.width=pct+'%';statusEl.textContent='Enviando para o TV Box… '+pct+'%'}});
-   xhr.onerror=()=>reject(new Error('Falha de rede/CORS. Verifique a conexão HTTPS com o MXQ Pro.'));
-   xhr.onload=()=>{let body={};try{body=JSON.parse(xhr.responseText)}catch{}if(xhr.status<200||xhr.status>=300)reject(new Error(body.error||`TV Box respondeu HTTP ${xhr.status}`));else resolve(body)};
-   xhr.send(file);
-  });
-  if(!data.success||!data.file)throw new Error('Resposta de upload inválida: o servidor não retornou o nome do arquivo.');
-  const url=endpoint+'/api/audio/'+encodeURIComponent(data.file),filePath='storage/uploads/'+data.file;
-  fill.style.width='100%';let fields={updatedAt:serverTimestamp(),storageBackend:'box-tv'};
-  if(kind==='original')fields={...fields,originalUrl:url,originalPath:filePath,separationStatus:'original_enviado'};
-  else {fields[`trackUrls.${kind}`]=url;fields[`trackPaths.${kind}`]=filePath;if(kind==='instrument'){fields.playbackUrl=url;fields.playbackPath=filePath;fields.separationStatus='playback_cadastrado'}else fields[`${kind}Url`]=url;}
-  await updateDoc(doc(db,'musicas',songId),fields);
-  statusEl.textContent=`Salvo no MXQ Pro · ${Number(data.bytes||file.size).toLocaleString('pt-BR')} bytes · ${data.file}`;
-  await refreshSongs();
- }catch(e){statusEl.textContent='Falha no envio ao TV Box: '+e.message;console.error('Upload TV Box:',e)}
+const $=id=>document.getElementById(id); let adminUser=null, lastInvite=null, songs=[];
+
+$('googleLoginBtn').addEventListener('click',async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){$('authMessage').textContent=e.message}});
+$('logoutBtn').addEventListener('click',()=>signOut(auth));
+
+onAuthStateChanged(auth,async user=>{
+  if(!user){$('adminApp').classList.add('hidden');$('authPanel').classList.remove('hidden');return;}
+  try{
+    const snap=await getDoc(doc(db,'admins',user.uid));
+    const isMainAdmin = String(user.email).toLowerCase()==='andersonsieklicki@gmail.com';
+    if(!isMainAdmin && (!snap.exists() || !snap.data().ativo)){ await signOut(auth); throw new Error('Acesso negado.'); }
+    adminUser=user; $('authPanel').classList.add('hidden'); $('adminApp').classList.remove('hidden');
+    
+    // Carrega músicas
+    const musSnap = await getDocs(collection(db,'musicas'));
+    songs = musSnap.docs.map(d=>({id:d.id,...d.data()}));
+    
+    const box=$('inviteMusicList'); box.replaceChildren();
+    songs.forEach(s=>{
+      const row=document.createElement('div'); row.className='check';
+      row.innerHTML=`<input type="checkbox" value="${s.id}" id="s_${s.id}" checked><label for="s_${s.id}">${s.titulo}</label>`;
+      box.append(row);
+    });
+    refreshInvites();
+  }catch(e){$('authMessage').textContent=e.message;}
+});
+
+function shortCode(){ return 'AV-' + Math.random().toString(36).substring(2, 8).toUpperCase(); }
+
+$('inviteForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const name=$('inviteName').value.trim();
+  const musicIds=[...$('inviteMusicList').querySelectorAll('input:checked')].map(i=>i.value);
+  if(!musicIds.length){ $('inviteStatus').textContent='Selecione ao menos 1 música.'; return; }
+  
+  const code=shortCode();
+  const expires=new Date(Date.now()+ 30 * 86400000); // 30 dias
+  
+  try{
+    await setDoc(doc(db,'convites',code),{nome:name, musicaIds:musicIds, status:'ativo', criadoPor:adminUser.uid, createdAt:serverTimestamp(), expiraEm:Timestamp.fromDate(expires)});
+    lastInvite={code,name};
+    const url=new URL('/',location.origin); url.searchParams.set('convite',code);
+    $('inviteUrlResult').textContent = url.toString();
+    $('inviteOutput').classList.remove('hidden');
+    $('inviteStatus').textContent='Criado com sucesso!';
+    refreshInvites();
+  }catch(err){ $('inviteStatus').textContent=err.message; }
+});
+
+function inviteText(){
+  const url=new URL('/',location.origin); url.searchParams.set('convite',lastInvite.code);
+  return `Olá! Aqui está o seu link mágico de acesso ao estúdio Estrelinha. É só clicar e colocar seu nome para entrar:\n\n👉 ${url.toString()}`;
 }
 
-$('songList').addEventListener('click',async e=>{const btn=e.target.closest('button[data-action]');if(!btn)return;const card=btn.closest('[data-song-id]'),id=card?.dataset.songId,song=songs.find(s=>s.id===id);if(!song)return;const status=card.querySelector('[data-status]');btn.disabled=true;try{if(btn.dataset.action==='separate')await requestSeparation(song,status);else if(btn.dataset.action==='toggle-publish'){await updateDoc(doc(db,'musicas',id),{publicada:!song.publicada,updatedAt:serverTimestamp()});await refreshSongs()}}catch(err){status.textContent='Erro: '+err.message}finally{btn.disabled=false}});
-async function requestSeparation(song,statusEl){const endpoint=$('separationApiUrl').value.trim().replace(/\/$/,'');if(!endpoint){statusEl.textContent='Configure o endereço público do backend de separação. O upload está salvo, mas o browser não separa as faixas sozinho.';return}if(!song.originalPath||!song.originalUrl){statusEl.textContent='Envie primeiro o arquivo original.';return}if(song.storageBackend==='box-tv'){statusEl.textContent='O original está salvo no TV Box. O worker de separação ainda precisa ser adaptado para ler o armazenamento local do Box; cadastre o instrumental separado enquanto essa integração não é concluída.';return}statusEl.textContent='Enviando para separação no servidor…';const idToken=await adminUser.getIdToken();const response=await fetch(endpoint+'/api/audio/separar',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+idToken},body:JSON.stringify({musicId:song.id,originalPath:song.originalPath,originalUrl:song.originalUrl,outputPrefix:`musicas/${song.id}/separados`})});let data={};try{data=await response.json()}catch{}if(!response.ok)throw new Error(data.error||`API respondeu HTTP ${response.status}`);if(data.status==='processing'){statusEl.textContent='Processamento iniciado. ID: '+(data.jobId||'sem ID')+'. Aguarde o backend concluir e atualize a biblioteca.';await updateDoc(doc(db,'musicas',song.id),{separationStatus:'processando',separationJobId:data.jobId||null,updatedAt:serverTimestamp()});return}if(!data.playbackUrl)throw new Error('A API precisa retornar playbackUrl para o player web. Verifique o contrato descrito em SEPARACAO_AUDIO.md');await updateDoc(doc(db,'musicas',song.id),{playbackUrl:data.playbackUrl||'',playbackPath:data.playbackPath||'',[`trackUrls.instrument`]:data.playbackUrl,[`trackPaths.instrument`]:data.playbackPath||'',vocalUrl:data.vocalUrl||'',vocalPath:data.vocalPath||'',separationStatus:'concluido',separationEngine:data.engine||'backend',separatedAt:serverTimestamp(),updatedAt:serverTimestamp()});statusEl.textContent='Separação concluída. Playback instrumental e voz separados cadastrados.';await refreshSongs()}
-function renderEventSongOptions(){const sel=$('eventSongSelect');if(!sel)return;const previous=sel.value;sel.replaceChildren(new Option('Selecione uma música',''));songs.forEach(s=>sel.add(new Option(s.titulo||s.id,s.id)));if(songs.some(s=>s.id===previous))sel.value=previous;else if(songs.length)sel.value=songs[0].id}
-function validateEvents(events){if(!Array.isArray(events)||!events.length)throw new Error('Informe uma lista não vazia de eventos.');for(const [i,e] of events.entries()){if(!e||typeof e!=='object')throw new Error(`Evento ${i+1} inválido.`);if(!Number.isFinite(Number(e.start))||Number(e.start)<0||!Number.isFinite(Number(e.duration))||Number(e.duration)<=0)throw new Error(`Evento ${i+1}: início e duração precisam ser números válidos.`);if(!(Number.isInteger(e.leadMidi)&&e.leadMidi>=24&&e.leadMidi<=96||Number.isInteger(e.harmonyMidi)&&e.harmonyMidi>=24&&e.harmonyMidi<=96))throw new Error(`Evento ${i+1}: informe leadMidi ou harmonyMidi entre 24 e 96.`);if(e.verified!==true)throw new Error(`Evento ${i+1}: marque verified:true somente após conferir a nota com referência.`)}return events}
-$('loadEvents').addEventListener('click',async()=>{const id=$('eventSongSelect').value;if(!id){say('eventStatus','Selecione uma música.','error');return}try{const snap=await getDoc(doc(db,'bibliotecaMusical',id));const events=snap.exists()&&Array.isArray(snap.data().events)?snap.data().events:[];$('eventsJson').value=JSON.stringify(events,null,2);say('eventStatus',events.length?`${events.length} eventos carregados.`:'Ainda não há eventos cadastrados.','success')}catch(e){say('eventStatus','Falha ao carregar: '+e.message,'error')}});
-$('saveEvents').addEventListener('click',async()=>{const id=$('eventSongSelect').value;if(!id){say('eventStatus','Selecione uma música.','error');return}try{const events=validateEvents(JSON.parse($('eventsJson').value));await setDoc(doc(db,'bibliotecaMusical',id),{schemaVersion:1,songId:id,title:songs.find(s=>s.id===id)?.titulo||id,events,updatedAt:serverTimestamp(),updatedBy:adminUser.uid},{merge:true});say('eventStatus',`${events.length} eventos validados e publicados para esta música.`,'success')}catch(e){say('eventStatus','Publicação bloqueada: '+e.message,'error')}});
-$('downloadEvents').addEventListener('click',()=>{const id=$('eventSongSelect').value||'musica';const blob=new Blob([$('eventsJson').value],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`mapa-${id}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)});
-$('importEvents').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{const raw=JSON.parse(await f.text());$('eventsJson').value=JSON.stringify(Array.isArray(raw)?raw:raw.events||[],null,2);say('eventStatus','JSON importado. Revise e valide antes de publicar.','success')}catch(err){say('eventStatus','JSON inválido: '+err.message,'error')}finally{e.target.value=''}});
-$('boxStorageApiUrl').value=localStorage.getItem('av_box_storage_api')||'https://mxqpro-h313-1.tail8b8cce.ts.net:8443';$('boxStorageApiUrl').addEventListener('change',e=>localStorage.setItem('av_box_storage_api',e.target.value.trim()));
-$('testBoxStorage').addEventListener('click',async()=>{const endpoint=$('boxStorageApiUrl').value.trim().replace(/\/$/,'');if(!endpoint){say('boxStorageStatus','Informe o endereço do TV Box.','error');return}say('boxStorageStatus','Testando API e armazenamento…');try{const r=await fetch(endpoint+'/api/health');const d=await r.json();if(!r.ok||!d.success||!d.storage?.uploadsAvailable)throw new Error(d.error||`HTTP ${r.status}`);say('boxStorageStatus','MXQ Pro conectado. API online e pasta de áudio disponível.','success')}catch(e){say('boxStorageStatus','Não foi possível acessar o MXQ Pro: '+e.message,'error')}});
-$('separationApiUrl').value=localStorage.getItem('av_separation_api')||'';$('separationApiUrl').addEventListener('change',e=>localStorage.setItem('av_separation_api',e.target.value.trim()));
-function renderInviteMusic(){const box=$('inviteMusicList');box.replaceChildren();if(!songs.length){box.textContent='Cadastre uma música antes de criar convites.';return}songs.filter(s=>s.publicada!==false).forEach(s=>{const row=document.createElement('div');row.className='check';const input=document.createElement('input');input.type='checkbox';input.value=s.id;input.id='song-'+s.id;input.checked=true;const label=document.createElement('label');label.htmlFor=input.id;label.textContent=s.titulo+(s.artista?' — '+s.artista:'');row.append(input,label);box.append(row)})}
-$('inviteForm').addEventListener('submit',async e=>{e.preventDefault();if(!adminUser)return;const name=$('inviteName').value.trim(),email=$('inviteEmail').value.trim().toLowerCase(),phone=$('invitePhone').value.replace(/\D/g,''),musicIds=[...$('inviteMusicList').querySelectorAll('input:checked')].map(i=>i.value);if(!musicIds.length){say('inviteStatus','Selecione pelo menos uma música.','error');return}const code=codeInvite(),days=Number($('inviteDays').value)||7,expires=new Date(Date.now()+days*86400000);try{await setDoc(doc(db,'convites',code),{nome:name,email,musicaIds:musicIds,musicasTitulos:musicIds.map(id=>songs.find(s=>s.id===id)?.titulo||id),status:'ativo',criadoPor:adminUser.uid,createdAt:serverTimestamp(),expiraEm:Timestamp.fromDate(expires)});lastInvite={code,name,email,phone,musicaIds:musicIds};const url=new URL('/',location.origin);url.searchParams.set('convite',code);$('inviteCodeResult').textContent=code;$('inviteUrlResult').textContent=url.toString();$('inviteOutput').classList.remove('hidden');say('inviteStatus','Convite criado.','success');await refreshInvites()}catch(err){say('inviteStatus','Não foi possível criar o convite: '+err.message,'error')}});
-function inviteText(){if(!lastInvite)return'';const url=new URL('/',location.origin);url.searchParams.set('convite',lastInvite.code);return `Olá, ${lastInvite.name}! Seu acesso ao Assistente Vocal está liberado.\nID do convite: ${lastInvite.code}\nAcesse: ${url.toString()}\nCrie sua conta com esse código. O convite é individual e tem validade limitada.`}
-$('copyInvite').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(inviteText());$('inviteCodeResult').textContent=lastInvite.code+' · copiado'}catch{prompt('Copie o convite:',inviteText())}});
-$('whatsappInvite').addEventListener('click',()=>{if(!lastInvite)return;const phone=lastInvite.phone;const u=phone?`https://wa.me/${phone}?text=${encodeURIComponent(inviteText())}`:`https://wa.me/?text=${encodeURIComponent(inviteText())}`;window.open(u,'_blank','noopener')});
-$('refreshInvites').addEventListener('click',refreshInvites);async function refreshInvites(){if(!adminUser)return;const box=$('inviteList');box.replaceChildren();try{const snap=await getDocs(collection(db,'convites'));const items=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,30);if(!items.length){box.textContent='Nenhum convite cadastrado.';return}items.forEach(inv=>{const row=document.createElement('div');row.className='song';const t=document.createElement('b');t.textContent=inv.nome+' · '+inv.id;const p=document.createElement('p');p.className='small muted';p.textContent=[inv.email,inv.status,inv.musicasTitulos?.join(', ')].filter(Boolean).join(' · ');row.append(t,p);box.append(row)})}catch(e){box.textContent='Não foi possível carregar convites: '+e.message}}
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+$('copyInvite').addEventListener('click',()=>navigator.clipboard.writeText(inviteText()));
+$('whatsappInvite').addEventListener('click',()=>window.open(`https://wa.me/?text=${encodeURIComponent(inviteText())}`,'_blank'));
+
+async function refreshInvites(){
+  const snap=await getDocs(collection(db,'convites'));
+  const box=$('inviteList'); box.replaceChildren();
+  snap.docs.forEach(d=>{
+    const v=d.data(), row=document.createElement('div'); row.className='song';
+    row.innerHTML=`<b>${v.nome||'Sem nome'} (${d.id})</b><p class="small muted" style="margin:2px 0 0;">Status: ${v.status} · Músicas: ${v.musicaIds.length}</p>`;
+    box.append(row);
+  });
+}
 </script>
 </body></html>
