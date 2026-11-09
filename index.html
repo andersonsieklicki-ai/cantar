@@ -9,12 +9,12 @@
 <link rel="icon" href="/icons/icon-192.png">
 <style>
 /* =======================================================
-   ESTILO APLICATIVO DE BANCO + RESPONSIVO (PREMIUM)
+   ESTILO APLICATIVO DE BANCO + PANORÂMICO (PREMIUM)
    ======================================================= */
 :root { 
     --bg-dark: #09111e; --cyan: #00e5ff; --green: #00e676; --yellow: #ffea00; --red: #ff1744; 
     --txt: #ffffff; --muted: #a0abbc;
-    --card-bg: rgba(12, 18, 30, 0.45); /* Mais transparente para revelar o fundo */
+    --card-bg: rgba(12, 18, 30, 0.45); 
     --card-border: rgba(255, 255, 255, 0.15);
 }
 
@@ -22,8 +22,8 @@
 
 body { 
     margin: 0; background-color: var(--bg-dark);
-    /* TRUQUE DO DEGRADÊ: Transparente no topo (rostos) e escuro embaixo (botões) */
-    background-image: linear-gradient(to bottom, rgba(4, 9, 18, 0.1) 0%, rgba(4, 9, 18, 0.85) 40%, rgba(4, 9, 18, 0.98) 100%), url('1001384647.png');
+    /* DEGRADÊ MÁGICO: Mais transparente no topo para revelar os rostos */
+    background-image: linear-gradient(to bottom, rgba(4, 9, 18, 0.1) 0%, rgba(4, 9, 18, 0.6) 35%, rgba(4, 9, 18, 0.95) 100%), url('1001384647.png');
     background-position: center top; background-repeat: no-repeat; background-attachment: fixed; background-size: cover;
     color: var(--txt); padding-bottom: 60px; -webkit-font-smoothing: antialiased;
 }
@@ -43,18 +43,26 @@ input:focus, select:focus { border-color: var(--cyan); }
 
 /* TELA DE LOGIN */
 .authGate { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.authCard { width: 100%; max-width: 400px; text-align: center; margin-top: 15vh; /* Desce o login no PC */ }
+.authCard { width: 100%; max-width: 400px; text-align: center; margin-top: 15vh; }
 .brand-logo { width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, #ffd166, #ff9f1c); border-radius: 50%; display: grid; place-items: center; font-size: 40px; box-shadow: 0 10px 25px rgba(255, 159, 28, 0.4); }
 .btn-primary { background: linear-gradient(135deg, #00b4db, #0083b0); color: white; border-radius: 14px; padding: 16px; font-weight: bold; width: 100%; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 180, 219, 0.3); }
 .btn-secondary { background: rgba(255,255,255,0.1); color: white; border-radius: 14px; padding: 16px; font-weight: bold; width: 100%; font-size: 16px; margin-top: 12px; }
 
-/* HEADER DO APP */
-.app-container { max-width: 750px; margin: 0 auto; padding: 20px 15px; padding-top: clamp(20px, 15vh, 180px); /* O segredo para mostrar os rostos no PC */ }
-.app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 20px; backdrop-filter: blur(5px); border: 1px solid var(--card-border); }
+/* HEADER DO APP (POSICIONAMENTO INTELIGENTE PARA MOSTRAR OS ROSTOS) */
+.app-container { max-width: 750px; margin: 0 auto; padding: 15px; }
+.app-header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    background: rgba(12, 18, 30, 0.5); padding: 10px 20px; border-radius: 20px; 
+    backdrop-filter: blur(10px); border: 1px solid var(--card-border); 
+    /* AQUI ESTÁ O SEGREDO: Uma margem inferior gigante empurra o resto do app para baixo */
+    margin-bottom: clamp(150px, 35vh, 400px); 
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
 .user-profile { display: flex; align-items: center; gap: 12px; }
 .user-avatar { width: 45px; height: 45px; background: rgba(255,255,255,0.15); border-radius: 50%; display: grid; place-items: center; font-size: 20px; border: 1px solid rgba(255,255,255,0.3); }
 .user-greeting { font-size: 18px; font-weight: bold; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .user-status { font-size: 12px; color: var(--green); font-weight: 600; display: flex; align-items: center; gap: 5px; }
+.user-status.offline { color: var(--muted); }
 .btn-logout { background: transparent; color: var(--muted); padding: 8px; font-size: 20px; }
 
 /* CARTÃO DE SALDO (Placar) */
@@ -66,6 +74,7 @@ input:focus, select:focus { border-color: var(--cyan); }
 /* AÇÕES RÁPIDAS (Ícones Redondos) */
 .quick-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
 .action-item { display: flex; flex-direction: column; align-items: center; gap: 8px; background: transparent; cursor: pointer; }
+.action-item:active { transform: scale(0.92); }
 .action-icon { width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; font-size: 26px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
 .action-item span { font-size: 13px; font-weight: 600; color: var(--txt); text-align: center; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
 .action-sil .action-icon { background: linear-gradient(135deg, #11998e, #38ef7d); }
@@ -75,18 +84,10 @@ input:focus, select:focus { border-color: var(--cyan); }
 /* SALA DE TREINO / KARAOKÊ PROFISSIONAL */
 .karaoke-display { background: rgba(0,0,0,0.85); border-radius: 20px; padding: 30px 15px; text-align: center; min-height: 140px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 20px; border: 1px solid rgba(0, 229, 255, 0.2); box-shadow: inset 0 5px 20px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.5); }
 .k-cue { font-size: 13px; color: var(--yellow); text-transform: uppercase; font-weight: bold; letter-spacing: 2px; margin-bottom: 12px; }
-
-/* Letra ajustável para Mobile e PC */
 .k-line { font-size: clamp(20px, 5vw, 34px); font-weight: 900; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; line-height: 1.5; width: 100%; }
 .k-word { color: rgba(255,255,255,0.35); transition: transform 0.15s ease, color 0.15s ease; display: inline-block; }
 .k-word.past { color: var(--green); text-shadow: 0 0 15px rgba(0, 230, 118, 0.3); }
-.k-word.active { 
-    background: linear-gradient(to right, var(--yellow) var(--fill-pct, 0%), rgba(255,255,255,0.35) var(--fill-pct, 0%)); 
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
-    transform: scale(1.15) translateY(-3px); 
-    text-shadow: none; /* Shadow atrapalha o gradient clip */
-}
+.k-word.active { background: linear-gradient(to right, var(--yellow) var(--fill-pct, 0%), rgba(255,255,255,0.35) var(--fill-pct, 0%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; transform: scale(1.15) translateY(-3px); }
 
 /* PLAYER E CONTROLES */
 .controls-row { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; margin-top: 10px; }
@@ -153,6 +154,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 </section>
 
 <main class="app-container appLocked hidden" id="appMain">
+  
   <header class="app-header">
     <div class="user-profile">
         <div class="user-avatar">🎙️</div>
@@ -222,32 +224,24 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         <span id="posText">00:00</span>
         <span id="durText">00:00</span>
     </div>
-    <div id="playerStatus" style="text-align: center; font-size: 13px; color: var(--yellow); margin: 15px 0 25px; font-weight: 600;">Clique no Treino para baixar a música...</div>
+    <div id="playerStatus" style="text-align: center; font-size: 13px; color: var(--yellow); margin: 15px 0 25px; font-weight: 600;">Selecione uma aula acima para iniciar.</div>
 
     <button class="btn-record" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
     <button class="btn-sync" id="syncRemoteBtn">🌍 Iniciar Dueto Remoto</button>
 
-    <!-- CONFIGURAÇÕES -->
+    <!-- CONFIGURAÇÕES LIMPAS -->
     <details>
-      <summary>⚙️ Ajustes de Áudio e Servidor</summary>
+      <summary>⚙️ Ajustes de Áudio</summary>
       <div style="padding-top: 15px;">
         <label class="small muted">Volume Playback (Banda)</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
-        <label class="small muted">Volume Sil</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
-        <label class="small muted">Volume Marla</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
-        <label class="small muted">Sensibilidade Mic (Ajuste via Calibração)</label><input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
-        
-        <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
-            <label class="small muted">Arquivo TV Box (Conexão Direta)</label>
-            <div style="display: flex; gap: 8px;">
-                <select id="serverAudioSelect" style="flex:1; margin:0;"></select>
-                <button id="refreshServerAudioBtn" style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 0 15px;">🔄</button>
-            </div>
-            <button id="loadServerAudioBtn" style="width: 100%; background: var(--cyan); color: black; border-radius: 12px; padding: 14px; margin-top: 10px; font-weight: bold;">Forçar Carregamento</button>
-        </div>
+        <label class="small muted">Volume Voz Principal (Sil)</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
+        <label class="small muted">Volume Segunda Voz (Marla/Anderson)</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
+        <label class="small muted">Sensibilidade Mic (Ajustada na Calibração)</label><input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
       </div>
     </details>
   </div>
   
+  <!-- LIXEIRA DOM -->
   <div id="legacy-ui" class="hidden">
     <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><button id="stopMicLegacy"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button><a id="adminLink"></a>
   </div>
@@ -283,6 +277,8 @@ let recording=false, mediaRecorder=null, recordChunks=[];
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null;
 
 let isLyricsVisible = true;
+window.hasDownloaded = false;
+
 $('toggleLyricsBtn').addEventListener('click', () => {
     isLyricsVisible = !isLyricsVisible;
     $('karaokeContainer').style.display = isLyricsVisible ? 'flex' : 'none';
@@ -292,10 +288,8 @@ $('toggleLyricsBtn').addEventListener('click', () => {
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
 
 const TRACKS=['instrument','lead','harmony']; const trackBuffers={instrument:null,lead:null,harmony:null};
-const AV_AUDIO_API = 'https://mxqpro-h313-1.tail8b8cce.ts.net:8443/api/audio';
 const player={sources:[], gains:{}, master:null, compressor:null, playing:false, offset:0, startedAt:0, duration:0};
 let currentTrainingMode='silvane';
-let hasDownloaded = false; 
 
 function ensurePlayerGraph(){
     const ac=audioContext();
@@ -350,6 +344,34 @@ function resetUI() {
 }
 
 function stopPlayerSources(){ for(const item of player.sources){ try{item.stop()}catch{} try{item.disconnect()}catch{} } player.sources=[]; }
+
+// MÁGICA: CARREGAMENTO DIRETO DO GITHUB SEM TV BOX
+window.loadAVTrackFromUrl = async function(key, url, name) {
+    stopPlayback(true);
+    $('playerStatus').textContent = 'Baixando playback do servidor (GitHub)...';
+    try {
+        const ac = ensurePlayerGraph();
+        if(ac.state === 'suspended') await ac.resume();
+        
+        const response = await fetch(url);
+        if(!response.ok) throw new Error('HTTP ' + response.status);
+        
+        const raw = await response.arrayBuffer();
+        const buffer = await ac.decodeAudioData(raw);
+        trackBuffers[key] = buffer;
+        player.duration = Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));
+        
+        updatePlayerUI();
+        $('playerStatus').textContent = `Áudio carregado com sucesso!`;
+        $('recordBtn').disabled = false;
+        window.hasDownloaded = true;
+        return true;
+    } catch(e) {
+        trackBuffers[key] = null;
+        $('playerStatus').textContent = `Falha ao carregar áudio. Verifique se o playback-estrelinha.mp3 está no GitHub.`;
+        throw e;
+    }
+}
 
 async function startPlayback(){
     try { const ac = audioContext(); if(ac.state === 'suspended') await ac.resume(); } catch(e){}
@@ -579,50 +601,6 @@ $('btnCalibrate').addEventListener('click', async () => {
     }, 1000);
 });
 
-// CARREGAR DO SERVIDOR
-async function loadAVTrackFromUrl(key,url,name){
-    stopPlayback(true); $('playerStatus').textContent='Baixando playback do servidor...';
-    try {
-        const ac=ensurePlayerGraph(); if(ac.state==='suspended') await ac.resume();
-        const response=await fetch(url,{mode:'cors',cache:'no-store'});
-        if(!response.ok) throw new Error('HTTP '+response.status);
-        const raw=await response.arrayBuffer(); const buffer=await ac.decodeAudioData(raw);
-        trackBuffers[key]=buffer; player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));
-        
-        updatePlayerUI(); 
-        
-        $('playerStatus').textContent=`Áudio carregado com sucesso!`; $('recordBtn').disabled = false;
-        hasDownloaded = true;
-        return true;
-    } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha ao carregar áudio. O MXQ Pro está online?`; throw e; }
-}
-
-async function fetchServerAudioList(){
-    const status=$('serverAudioStatus'), select=$('serverAudioSelect'); status.textContent='Buscando no TV Box...';
-    try {
-        const response=await fetch(AV_AUDIO_API,{method:'GET',mode:'cors',cache:'no-store'});
-        if(!response.ok) throw new Error('Erro de conexão');
-        const data=await response.json(); const files=data.files.filter(f=>/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
-        select.replaceChildren();
-        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado na pasta uploads do MXQ Pro.'; } 
-        else { files.forEach(f=>{ select.add(new Option(`${f.name}`,f.name)); }); status.textContent=`${files.length} arquivos prontos.`; }
-        return files;
-    } catch(e) {
-        select.replaceChildren(new Option('Erro de Conexão - Tailscale online?','')); status.textContent='Falha ao conectar com o backend do TV Box.'; return [];
-    }
-}
-window.fetchServerAudioList = fetchServerAudioList;
-
-$('loadServerAudioBtn').addEventListener('click', async ()=>{
-    const filename=$('serverAudioSelect').value; if(!filename) return;
-    const url=AV_AUDIO_API+'/'+encodeURIComponent(filename); $('loadServerAudioBtn').disabled=true;
-    try {
-        await loadAVTrackFromUrl('instrument',url,filename);
-        if(window.activeSong) localStorage.setItem('av3:serverPlayback:'+window.activeSong.id,filename);
-    } catch (e) { } finally { $('loadServerAudioBtn').disabled=false; }
-});
-$('refreshServerAudioBtn').addEventListener('click', fetchServerAudioList);
-
 TRACKS.forEach(key=>{
     $('track'+cap(key)+'Volume').addEventListener('input', e=>{
         const v=Math.max(0,Math.min(1,Number(e.target.value)||0));
@@ -677,7 +655,7 @@ window.appStartRecording = startRecording; window.appCtx = () => ctx; window.app
 
 <script type="module">
 // ============================================================================
-// 3. FIREBASE AUTH E CARREGAMENTO AUTOMÁTICO CLÁSSICO
+// 3. FIREBASE AUTH E CARREGAMENTO AUTOMÁTICO CLÁSSICO (VIA GITHUB)
 // ============================================================================
 import { auth, db } from './firebase-config.js';
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
@@ -792,16 +770,6 @@ async function loadSong(song){
             }, 1000);
         }
     });
-
-    if (window.fetchServerAudioList) {
-        window.fetchServerAudioList().then(files => {
-            const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
-            let fileToAutoLoad = (savedLocal && files.some(f => f.name === savedLocal)) ? savedLocal : (files.length > 0 ? files[0].name : null);
-            if (fileToAutoLoad) {
-                $('serverAudioSelect').value = fileToAutoLoad;
-            }
-        }).catch(()=>{});
-    }
 }
 
 $('loginForm').addEventListener('submit', async e => {
@@ -834,6 +802,7 @@ onAuthStateChanged(auth, user => {
     else { currentUser=null; window.activeSong=null; main.classList.add('appLocked', 'hidden'); gate.style.display='grid'; if(presenceUnsubscribe) presenceUnsubscribe(); }
 });
 
+// AQUI ESTÁ O GATILHO PARA BAIXAR DO GITHUB
 document.querySelectorAll('[data-training-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
         $('playbackPanel').classList.remove('hidden');
@@ -849,9 +818,9 @@ document.querySelectorAll('[data-training-mode]').forEach(btn => {
         $('playbackPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
         
         if (!window.hasDownloaded) {
-            $('playerStatus').textContent = 'Buscando arquivo no TV Box...';
-            // Chama o clique do botão que faz a requisição normal sem setTimeout destrutivo
-            $('loadServerAudioBtn').click(); 
+            // Dispara a função limpa e direta para baixar o MP3 do GitHub/Vercel
+            window.loadAVTrackFromUrl('instrument', 'playback-estrelinha.mp3', 'Estrelinha')
+                .catch(() => { $('playerStatus').textContent = 'Erro. Verifique se o playback-estrelinha.mp3 está no GitHub.'; });
         }
     });
 });
