@@ -9,32 +9,45 @@
 <link rel="icon" href="/icons/icon-192.png">
 <style>
 /* CSS DA ESTRELINHA */
-:root { --bg: #09111e; --panel: #131f31; --cyan: #42d8e8; --green: #39dfa5; --yellow: #ffd166; --red: #ff758f; --txt: #f6f8ff; --muted: #9aabc3; }
+:root { --panel: rgba(19, 31, 49, 0.90); --cyan: #42d8e8; --green: #39dfa5; --yellow: #ffd166; --red: #ff758f; --txt: #f6f8ff; --muted: #9aabc3; }
 * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-body { margin: 0; background: radial-gradient(ellipse at top, #1b2e49 0, #09111e 58%); color: var(--txt); padding-bottom: 50px; }
+
+/* IMAGEM DE FUNDO COM CAMADA ESCURA */
+body { 
+  margin: 0; 
+  /* TROQUE A URL ABAIXO PELO CAMINHO DA SUA IMAGEM (ex: /images/marilia.webp) */
+  background: linear-gradient(rgba(9, 17, 30, 0.85), rgba(9, 17, 30, 0.95)), url('marilia-mendonca-canta-com-di-paullo-e-paulino2.webp') no-repeat center center fixed;
+  background-size: cover;
+  color: var(--txt); 
+  padding-bottom: 50px; 
+}
+
 .hidden { display: none !important; }
-button { font: inherit; cursor: pointer; border: 1px solid #3b5271; border-radius: 11px; background: #263953; color: var(--txt); padding: 10px 13px; font-weight: 650; transition: transform 0.1s; }
+button { font: inherit; cursor: pointer; border: 1px solid #3b5271; border-radius: 11px; background: rgba(38, 57, 83, 0.9); color: var(--txt); padding: 10px 13px; font-weight: 650; transition: transform 0.1s; }
 button:active { transform: scale(0.97); }
 button.primary { background: linear-gradient(135deg, #147f96, #276db7); border-color: #328da9; }
 button.good { background: linear-gradient(135deg, #087f69, #19a879); border-color: #087f69; }
 button.warn { background: linear-gradient(135deg, #a64160, #d65c70); border-color: #99585e; }
 button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-input, select { font: inherit; width: 100%; background: #0d1929; color: var(--txt); border: 1px solid #2d405b; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); color: var(--txt); border: 1px solid #2d405b; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
 
-/* LAYOUT */
+/* LAYOUT TELA DE LOGIN */
 .authGate { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
-.authCard { width: min(100%, 420px); background: #131f31; border: 1px solid #2d405b; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 18px 60px #0006; }
+.authCard { width: min(100%, 420px); background: var(--panel); border: 1px solid #2d405b; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 18px 60px rgba(0,0,0,0.6); backdrop-filter: blur(8px); }
+
+/* ESTRELINHA */
 .estrelinha-avatar { width: 90px; height: 90px; margin: 0 auto 15px; background: radial-gradient(circle at 30% 30%, #fff4bd, #ffd166 50%, #ff9f1c); border-radius: 50%; display: grid; place-items: center; font-size: 50px; box-shadow: 0 0 25px #ffd16644; }
+
 .app-container { max-width: 800px; margin: 0 auto; padding: 20px; }
 .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 12px; color: var(--muted); flex-wrap: wrap; gap:10px; }
-.teacher-area { text-align: center; margin: 20px 0 30px; }
+.teacher-area { text-align: center; margin: 20px 0 30px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
 .teacher-area h2 { margin: 10px 0 5px; font-size: 24px; }
 .teacher-area p { color: var(--cyan); font-weight: 600; font-size: 16px; margin: 0; }
 
 /* BOTOES AULAS */
 .main-actions { display: grid; grid-template-columns: 1fr; gap: 15px; }
 @media(min-width: 600px) { .main-actions { grid-template-columns: repeat(3, 1fr); } }
-.action-btn { min-height: 110px; border-radius: 16px; text-align: left; padding: 18px; display: flex; flex-direction: column; justify-content: center; gap: 5px; background: linear-gradient(145deg, #203e5b, #18283e); border: 2px solid transparent; transition: all 0.2s; cursor: pointer; }
+.action-btn { min-height: 110px; border-radius: 16px; text-align: left; padding: 18px; display: flex; flex-direction: column; justify-content: center; gap: 5px; background: linear-gradient(145deg, rgba(32, 62, 91, 0.9), rgba(24, 40, 62, 0.9)); border: 2px solid transparent; transition: all 0.2s; cursor: pointer; backdrop-filter: blur(5px); }
 .action-btn strong { font-size: 16px; }
 .action-btn span { font-size: 12px; color: #bdcce0; }
 .action-btn:hover { transform: scale(0.98); }
@@ -43,14 +56,14 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
 .action-btn[data-training-mode="duet"] { border-left-color: #b58c4b; }
 
 /* PLAYER E PITCH */
-.training-room { background: #101a29; border: 1px solid #2d405b; border-radius: 16px; padding: 20px; margin-top: 20px; text-align: center; }
-.target-note { font-size: 52px; font-weight: 850; color: var(--cyan); margin: 10px 0; }
+.training-room { background: var(--panel); border: 1px solid #2d405b; border-radius: 16px; padding: 20px; margin-top: 20px; text-align: center; backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.target-note { font-size: 52px; font-weight: 850; color: var(--cyan); margin: 10px 0; text-shadow: 0 0 15px rgba(66, 216, 232, 0.3); }
 .playerTransport { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
 .advanced-settings { margin-top: 30px; padding-top: 20px; border-top: 1px solid #2d405b; text-align: left; }
 .advanced-settings summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: bold; outline: none; }
 
 /* CÍRCULO DO SCORE */
-.score-circle { width: 100px; height: 100px; margin: 0 auto; border-radius: 50%; border: 6px solid var(--green); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color 0.3s; background: #0c1524; }
+.score-circle { width: 100px; height: 100px; margin: 0 auto; border-radius: 50%; border: 6px solid var(--green); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color 0.3s; background: rgba(12, 21, 36, 0.8); }
 .score-circle span.value { font-size: 24px; font-weight: 800; color: white; line-height: 1; margin-bottom: 2px; }
 .score-circle span.label { font-size: 10px; color: var(--muted); font-weight: bold; letter-spacing: 1px; }
 </style>
@@ -58,11 +71,14 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
 <body>
 
 <section id="authGate" class="authGate">
+  
   <div class="authCard hidden" id="magicLinkModal">
     <div class="estrelinha-avatar">⭐</div>
     <h1 style="margin: 0 0 5px;">Bem-vinda!</h1>
     <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Você recebeu um acesso exclusivo para o estúdio.</p>
+    
     <input id="magicName" type="text" placeholder="Qual é o seu nome? (Ex: Marla)" style="margin-bottom: 20px; font-size: 16px; text-align: center;">
+    
     <button class="primary" id="magicEnterBtn" style="width: 100%; min-height: 50px; font-size: 16px;">Entrar no Estúdio</button>
     <p class="small muted" id="magicMsg" style="margin-top: 15px; color: var(--yellow);"></p>
   </div>
@@ -76,9 +92,10 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
       <input id="loginPassword" type="password" required placeholder="Sua senha">
       <button class="primary" type="submit" id="emailLoginBtn">Entrar</button>
     </form>
-    <button class="primary" id="googleLoginBtn" type="button" style="width: 100%; margin-top: 15px; background: #f4f7fb; color: #1b2736;">Entrar com Google</button>
+    <button class="primary" id="googleLoginBtn" type="button" style="width: 100%; margin-top: 15px; background: rgba(244, 247, 251, 0.9); color: #1b2736;">Entrar com Google</button>
     <p class="small muted" id="authMessage" style="margin-top: 15px;"></p>
   </div>
+
 </section>
 
 <main class="app-container appLocked hidden" id="appMain">
@@ -86,13 +103,13 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
     <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
       <span>👤 <span id="savedState">Cantora</span></span>
       <span id="cloudState" style="color: var(--green);">Conectado</span>
-      <div id="presenceIndicator" style="display: flex; gap: 8px; margin-left: 10px; background: #0c1524; padding: 5px 10px; border-radius: 8px; border: 1px solid #2d405b;">
+      <div id="presenceIndicator" style="display: flex; gap: 8px; margin-left: 10px; background: rgba(12, 21, 36, 0.8); padding: 5px 10px; border-radius: 8px; border: 1px solid #2d405b; backdrop-filter: blur(5px);">
         <span style="color:var(--muted);">Procurando parceiras...</span>
       </div>
     </div>
     <div>
-      <a id="adminLink" class="hidden" href="/admin.html" style="margin-right: 15px; color: var(--cyan); text-decoration: none;">⚙ Administração</a>
-      <button id="logoutBtn" style="padding: 5px 10px; font-size: 12px; background: transparent;">Sair</button>
+      <a id="adminLink" class="hidden" href="/admin.html" style="margin-right: 15px; color: var(--cyan); text-decoration: none; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">⚙ Administração</a>
+      <button id="logoutBtn" style="padding: 5px 10px; font-size: 12px; background: rgba(38,57,83,0.6);">Sair</button>
     </div>
   </div>
 
@@ -167,7 +184,7 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
     <details class="advanced-settings">
       <summary>⚙️ Ajustes Avançados e Servidor TV Box</summary>
       
-      <div style="margin-top: 20px; padding: 15px; background: #0c1524; border-radius: 12px; border: 1px solid #2d405b;">
+      <div style="margin-top: 20px; padding: 15px; background: rgba(12, 21, 36, 0.8); border-radius: 12px; border: 1px solid #2d405b;">
         <strong style="color: var(--cyan); font-size: 13px; display: block; margin-bottom: 10px;">📥 CARREGAR PLAYBACK DO TV BOX</strong>
         <div style="display: flex; gap: 10px;">
             <select id="serverAudioSelect" style="flex: 1; margin: 0;"></select>
@@ -208,7 +225,6 @@ let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest
 let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
 
-// VARIÁVEIS DO SCORE
 let evalFrames = 0; let scoreSum = 0;
 
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
@@ -335,7 +351,7 @@ async function fetchServerAudioList(){
         if(!response.ok) throw new Error('Erro de conexão');
         const data=await response.json(); const files=data.files.filter(f=>/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
         select.replaceChildren();
-        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado.'; } 
+        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado na pasta uploads do MXQ Pro.'; } 
         else { files.forEach(f=>{ select.add(new Option(`${f.name} (${(Number(f.bytes||0)/1048576).toFixed(1)} MB)`,f.name)); }); status.textContent=`Encontrados ${files.length} arquivos.`; }
         return files;
     } catch(e) {
