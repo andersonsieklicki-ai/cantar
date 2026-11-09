@@ -30,12 +30,15 @@ button:active { transform: scale(0.97); }
 button.primary { background: linear-gradient(135deg, #147f96, #276db7); border-color: #328da9; }
 button.good { background: linear-gradient(135deg, #087f69, #19a879); border-color: #087f69; }
 button.warn { background: linear-gradient(135deg, #a64160, #d65c70); border-color: #99585e; }
+button.ghost { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); }
 button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); color: var(--txt); border: 1px solid #2d405b; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
 
 /* LAYOUT TELA DE LOGIN */
 .authGate { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
 .authCard { width: min(100%, 420px); background: var(--panel); border: 1px solid #2d405b; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 18px 60px rgba(0,0,0,0.6); backdrop-filter: blur(8px); }
+
+/* ESTRELINHA */
 .estrelinha-avatar { width: 90px; height: 90px; margin: 0 auto 15px; background: radial-gradient(circle at 30% 30%, #fff4bd, #ffd166 50%, #ff9f1c); border-radius: 50%; display: grid; place-items: center; font-size: 50px; box-shadow: 0 0 25px #ffd16644; }
 
 .app-container { max-width: 800px; margin: 0 auto; padding: 20px; }
@@ -62,17 +65,17 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
 .advanced-settings { margin-top: 30px; padding-top: 20px; border-top: 1px solid #2d405b; text-align: left; }
 .advanced-settings summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: bold; outline: none; }
 
-/* CÍRCULO DO SCORE E KARAOKE CUE */
+/* CÍRCULO DO SCORE E KARAOKE */
 .score-circle { width: 100px; height: 100px; margin: 0 auto; border-radius: 50%; border: 6px solid var(--green); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color 0.3s; background: rgba(12, 21, 36, 0.8); }
 .score-circle span.value { font-size: 24px; font-weight: 800; color: white; line-height: 1; margin-bottom: 2px; }
 .score-circle span.label { font-size: 10px; color: var(--muted); font-weight: bold; letter-spacing: 1px; }
 
-/* ESTILO DO KARAOKE */
-.karaoke-container { background: rgba(0,0,0,0.4); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid rgba(66, 216, 232, 0.2); min-height: 70px; display: flex; align-items: center; justify-content: center; }
-.karaoke-text { font-size: 22px; font-weight: 800; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.8); transition: all 0.2s ease; }
-.karaoke-text .active-word { color: var(--yellow); font-size: 1.3em; margin-right: 5px; text-shadow: 0 0 15px rgba(255, 209, 102, 0.5); }
-.karaoke-text .next-word { opacity: 0.6; font-size: 0.9em; }
-.karaoke-text .prepare { color: var(--green); }
+.karaoke-container { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); border: 1px solid rgba(66,216,232,0.3); border-radius: 12px; padding: 20px; margin: 15px 0; min-height: 100px; transition: all 0.3s ease; }
+.karaoke-cue { font-size: 14px; font-weight: bold; color: var(--cyan); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+.karaoke-line { font-size: 26px; font-weight: 800; color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.9); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; }
+.k-past { color: var(--green); opacity: 0.8; text-shadow: 0 0 10px var(--green); }
+.k-active { color: var(--yellow); font-size: 1.3em; text-shadow: 0 0 20px var(--yellow); transform: scale(1.1); transition: transform 0.1s; }
+.k-upcoming { color: rgba(255,255,255,0.6); }
 
 /* SYNC OVERLAY */
 .sync-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(9, 17, 30, 0.95); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -119,7 +122,7 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
       <span>👤 <span id="savedState">Cantor(a)</span></span>
       <span id="cloudState" style="color: var(--green);">Conectado</span>
       <div id="presenceIndicator" style="display: flex; gap: 8px; margin-left: 10px; background: rgba(12, 21, 36, 0.8); padding: 5px 10px; border-radius: 8px; border: 1px solid #2d405b; backdrop-filter: blur(5px);">
-        <span style="color:var(--muted);">🔴 Aguardando parceira...</span>
+        <span style="color:var(--muted);">🔴 Aguardando parceiros...</span>
       </div>
     </div>
     <div>
@@ -164,11 +167,6 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
     
     <div id="micQuickStatus" class="small muted">O microfone está desligado.</div>
 
-    <!-- AREA DO KARAOKE (NOVO) -->
-    <div class="karaoke-container">
-        <div id="karaokeText" class="karaoke-text">Aguardando início...</div>
-    </div>
-
     <div style="margin: 25px 0; display: grid; grid-template-columns: 1fr; gap: 20px;">
       <div>
         <div class="score-circle" id="scoreCircle">
@@ -183,6 +181,15 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
         <div class="small muted">SUA VOZ: <span id="note" style="color: white; font-weight: bold; font-size: 18px;">—</span> <span id="cents"></span></div>
         <div id="pitchStatus" class="small muted" style="margin-top: 5px;">Ligue o microfone e cante</div>
       </div>
+    </div>
+    
+    <!-- TELA DE KARAOKÊ COM LETRA E BOTÃO TOGGLE -->
+    <div style="text-align: right; margin-bottom: -10px; position: relative; z-index: 10;">
+        <button id="toggleLyricsBtn" class="ghost" style="padding: 5px 10px; font-size: 11px;">🎵 Ocultar Letra</button>
+    </div>
+    <div id="karaokeContainer" class="karaoke-container">
+        <div id="karaokeCue" class="karaoke-cue">—</div>
+        <div id="karaokeLine" class="karaoke-line">Aguardando início...</div>
     </div>
 
     <!-- CONTROLES DO PLAYER E GRAVAÇÃO REMOTA -->
@@ -236,16 +243,19 @@ input, select { font: inherit; width: 100%; background: rgba(13, 25, 41, 0.9); c
 <script>
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
 
-// INJETOR DO MAPA DEMO DA MÚSICA ESTRELINHA (Garante que a nota será cobrada!)
+// INJETOR DO MAPA DEMO DA MÚSICA ESTRELINHA (Com tempos realistas para testar o Karaokê)
 const demoEstrelinhaMap = [
-    { start: 10.0, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
-    { start: 11.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
-    { start: 12.5, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
-    { start: 15.0, duration: 1.5, leadMidi: 60, harmonyMidi: 64, syllable: "E", verified: true },
-    { start: 16.5, duration: 1.5, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
-    { start: 18.0, duration: 2.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true }
+    { start: 2.0, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
+    { start: 3.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
+    { start: 4.5, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
+    { start: 5.8, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "e", verified: true },
+    { start: 6.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
+    { start: 7.8, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
+    { start: 9.0, duration: 1.5, leadMidi: 65, harmonyMidi: 69, syllable: "abraçar", verified: true }
 ];
-if (!localStorage.getItem('estrelinha_events') || JSON.parse(localStorage.getItem('estrelinha_events')).length === 0) {
+let existingEvents = [];
+try { existingEvents = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e){}
+if (existingEvents.length === 0) {
     localStorage.setItem('estrelinha_events', JSON.stringify(demoEstrelinhaMap));
 }
 </script>
@@ -264,6 +274,13 @@ let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordM
 let manualMicInputGain=null;
 
 let evalFrames = 0; let scoreSum = 0;
+let isLyricsVisible = true; // Botão de Toggle da Letra
+
+$('toggleLyricsBtn').addEventListener('click', () => {
+    isLyricsVisible = !isLyricsVisible;
+    $('karaokeContainer').style.display = isLyricsVisible ? 'flex' : 'none';
+    $('toggleLyricsBtn').textContent = isLyricsVisible ? '🎵 Ocultar Letra' : '🎵 Mostrar Letra';
+});
 
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
 
@@ -305,7 +322,8 @@ function resetScoreUI() {
     evalFrames = 0; scoreSum = 0;
     $('liveScore').textContent = '100%';
     $('scoreCircle').style.borderColor = 'var(--green)';
-    $('karaokeText').innerHTML = 'Aguardando início...';
+    $('karaokeCue').textContent = '—';
+    $('karaokeLine').innerHTML = 'Aguardando início...';
 }
 
 async function startPlayback(){
@@ -339,7 +357,8 @@ async function startPlayback(){
             stopPlayback(true); 
             $('playerStatus').textContent=`Música Concluída! Precisão Final: ${finalScore}%`; 
             $('liveScore').textContent = finalScore + '%'; 
-            $('karaokeText').innerHTML = 'FIM DA MÚSICA';
+            $('karaokeCue').textContent = 'FIM';
+            $('karaokeLine').innerHTML = 'Música concluída.';
             return; 
         }
         
@@ -347,13 +366,22 @@ async function startPlayback(){
         
         let events = []; try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
         
-        const active = events.find(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
-        const upcoming = events.filter(e => e.verified && Number(e.start) > pos).sort((a,b) => a.start - b.start);
+        const activeIdx = events.findIndex(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
+        const active = activeIdx !== -1 ? events[activeIdx] : null;
+        
+        let cueHtml = '';
+        let lineHtml = '';
         
         if (active) {
-            // LÓGICA DO KARAOKÊ ATIVO
-            let nextWord = upcoming.length > 0 ? upcoming[0].syllable : '';
-            $('karaokeText').innerHTML = `<span class="active-word">${active.syllable || '🎤'}</span> <span class="next-word">${nextWord}</span>`;
+            cueHtml = '🎤 CANTANDO!';
+            
+            // KARAOKÊ: Palavra anterior (verde), atual (amarela gigante), próximas (brancas pequenas)
+            const prev = activeIdx > 0 ? events[activeIdx-1].syllable : '';
+            const curr = active.syllable || '🎤';
+            const next1 = activeIdx + 1 < events.length ? events[activeIdx+1].syllable : '';
+            const next2 = activeIdx + 2 < events.length ? events[activeIdx+2].syllable : '';
+            
+            lineHtml = `<span class="k-past">${prev}</span> <span class="k-active">${curr}</span> <span class="k-upcoming">${next1} ${next2}</span>`;
             
             const target = currentTrainingMode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
             $('expectedNote').textContent = midiName(target);
@@ -362,17 +390,26 @@ async function startPlayback(){
             window.activeTargetMidi = null;
             $('expectedNote').textContent = '—';
             
-            if (upcoming.length > 0) {
-                let nxt = upcoming[0];
-                if ((nxt.start - pos) <= 4) {
-                    $('karaokeText').innerHTML = `<span class="prepare">Prepare-se:</span> ${nxt.syllable || '...'}`;
+            const nextEvIdx = events.findIndex(e => e.verified && Number(e.start) > pos);
+            if (nextEvIdx !== -1) {
+                const nextEv = events[nextEvIdx];
+                const timeToStart = nextEv.start - pos;
+                if (timeToStart <= 4) {
+                    cueHtml = `Entra em ${Math.ceil(timeToStart)}...`;
+                    lineHtml = `<span class="k-upcoming">${nextEv.syllable} ...</span>`;
                 } else {
-                    $('karaokeText').innerHTML = `...`;
+                    cueHtml = 'Aguarde...';
+                    lineHtml = '...';
                 }
             } else {
-                $('karaokeText').innerHTML = `...`;
+                cueHtml = '—';
+                lineHtml = '...';
             }
         }
+        
+        $('karaokeCue').innerHTML = cueHtml;
+        $('karaokeLine').innerHTML = lineHtml;
+        
     }, 60);
     
     updatePlayerUI(); $('playerStatus').textContent='Reproduzindo...';
@@ -498,7 +535,7 @@ function liveLoop(){
         if(Date.now()-lastValid>1000){ $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Sustente uma vogal para o afinador ler'; }
         
         if(player.playing && targetMidiNow !== null) {
-            evalFrames++; scoreSum += 0; // Erro (não cantou)
+            evalFrames++; scoreSum += 0;
         }
     }
 
@@ -549,7 +586,6 @@ function stopMic(){
 
 $('startMic').addEventListener('click', startMic); $('stopMic').addEventListener('click', stopMic);
 
-// CONTAGEM REGRESSIVA VISUAL E GRAVAÇÃO
 function startVisualCountdownAndRecord() {
     const overlay = $('syncOverlay');
     const countEl = $('syncCount');
