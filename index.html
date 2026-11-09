@@ -109,6 +109,32 @@ input:focus, select:focus { border-color: var(--cyan); }
 .sync-overlay p { font-size: 18px; color: white; text-align: center; }
 
 details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-size: 14px; font-weight: bold; border-top: 1px solid var(--card-border); margin-top: 20px; outline: none; display: flex; align-items: center; gap: 10px; }
+
+/* KARAOKÊ CÊNICO */
+:root{--karaoke-gold:#ffd84d;--karaoke-dim:rgba(235,242,255,.34)}
+.karaoke-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 0 10px}
+.karaoke-toolbar .ghost{padding:9px 13px;font-size:11px;font-weight:800;letter-spacing:.04em}
+.karaoke-display{position:relative;isolation:isolate;overflow:hidden;min-height:clamp(220px,34vw,310px);padding:clamp(24px,5vw,44px) clamp(14px,4vw,30px) 20px;margin:0 0 18px;border-radius:22px;background:radial-gradient(ellipse at 50% 0%,rgba(0,229,255,.13),transparent 55%),linear-gradient(180deg,rgba(10,16,30,.98),rgba(2,5,12,.98));border:1px solid rgba(116,220,255,.28);box-shadow:inset 0 0 45px rgba(0,0,0,.72),0 16px 42px rgba(0,0,0,.42)}
+.k-cue{color:var(--karaoke-gold);font-size:11px;letter-spacing:.22em;margin-bottom:24px;text-shadow:0 0 16px rgba(255,216,77,.3)}
+.k-line{width:min(100%,900px);min-height:104px;margin:auto;align-content:center;align-items:center;justify-content:center;gap:8px 13px;line-height:1.42;font-size:clamp(27px,5.4vw,48px);font-weight:850;letter-spacing:-.035em;text-wrap:balance}
+.k-word{color:var(--karaoke-dim);font-weight:800;transition:color .16s ease,transform .16s ease,text-shadow .16s ease}
+.k-word.past{color:rgba(248,251,255,.92);text-shadow:0 1px 12px rgba(255,255,255,.08)}
+.k-word.active{background:linear-gradient(90deg,var(--karaoke-gold) var(--fill-pct,0%),rgba(255,255,255,.28) var(--fill-pct,0%));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--karaoke-gold);transform:translateY(-2px) scale(1.035);filter:drop-shadow(0 0 10px rgba(255,216,77,.18))}
+.karaoke-progress{width:min(560px,88%);height:4px;border-radius:99px;margin:25px auto 0;background:rgba(255,255,255,.12);overflow:hidden}
+.karaoke-progress-fill{width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#00c8ff,#ffe16b);box-shadow:0 0 12px rgba(0,229,255,.55);transition:width .08s linear}
+.karaoke-note-row{display:flex;justify-content:center;gap:clamp(18px,6vw,48px);margin-top:18px;padding-top:13px;width:100%;border-top:1px solid rgba(255,255,255,.09);font-size:10px;letter-spacing:.12em;color:#9aa9bd}
+.karaoke-note-row strong{font-size:14px;letter-spacing:0}
+.karaoke-display.performance{min-height:clamp(300px,55vh,520px);justify-content:center}
+.karaoke-display.performance .k-line{font-size:clamp(34px,7vw,66px);min-height:160px}
+.karaoke-display.performance .k-cue{font-size:13px;margin-bottom:35px}
+.karaoke-display.performance .karaoke-note-row{display:none}
+.karaoke-display.performance .karaoke-progress{margin-top:36px}
+.karaoke-toolbar .performance-label{font-size:10px;color:#91a0b5;letter-spacing:.12em}
+.karaoke-display:fullscreen{width:100vw;height:100vh;max-height:none;border:0;border-radius:0;padding:8vh 8vw;background:radial-gradient(ellipse at 50% 30%,#10243b,#02050b 72%)}
+.karaoke-display:fullscreen .k-line{font-size:clamp(42px,7vw,84px);min-height:30vh}
+@media(max-width:520px){.karaoke-display{padding:28px 12px 17px;min-height:225px}.k-line{gap:7px 10px;min-height:96px;font-size:clamp(25px,7vw,36px)}.k-cue{margin-bottom:18px}.karaoke-note-row{font-size:9px;gap:16px}.karaoke-display.performance{min-height:42vh}.karaoke-display.performance .k-line{font-size:clamp(34px,9vw,48px)}}
+@media(prefers-reduced-motion:reduce){.k-word,.karaoke-display,.karaoke-progress-fill{transition:none}}
+
 </style>
 </head>
 <body>
@@ -194,17 +220,20 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
             <button id="toggleMicBtn" style="background: rgba(0, 229, 255, 0.15); color: var(--cyan); border: 1px solid rgba(0, 229, 255, 0.3); padding: 8px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">LIGAR MIC</button>
         </div>
     </div>
-    <div style="text-align: right; margin-bottom: 5px;">
-        <button id="toggleLyricsBtn" class="ghost" style="padding: 6px 12px; font-size: 11px; font-weight: bold;">🎵 Ocultar Letra</button>
+    <div class="karaoke-toolbar">
+        <span class="performance-label">TELA DE LETRA • SINCRONIA COM O PLAYBACK</span>
+        <div style="display:flex;gap:8px">
+            <button id="karaokeFullscreenBtn" class="ghost" type="button">⛶ MODO PALCO</button>
+            <button id="toggleLyricsBtn" class="ghost" type="button">OCULTAR LETRA</button>
+        </div>
     </div>
-
-    <!-- TELA KARAOKE FLUIDA -->
-    <div class="karaoke-display" id="karaokeContainer">
-        <div id="karaokeCue" class="k-cue">AGUARDANDO</div>
-        <div id="karaokeLine" class="k-line">...</div>
-        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px; font-size: 12px; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; width: 100%;">
-            <div>ALVO: <span id="expectedNote" style="color: var(--cyan); font-weight: bold; font-size: 14px;">—</span></div>
-            <div>VOZ: <span id="note" style="color: white; font-weight: bold; font-size: 14px;">—</span> <span id="cents"></span></div>
+    <div class="karaoke-display" id="karaokeContainer" aria-live="polite">
+        <div id="karaokeCue" class="k-cue">AGUARDANDO PLAYBACK</div>
+        <div id="karaokeLine" class="k-line">Prepare a voz...</div>
+        <div class="karaoke-progress" aria-hidden="true"><div class="karaoke-progress-fill" id="karaokeProgressFill"></div></div>
+        <div class="karaoke-note-row">
+            <div>NOTA-ALVO: <strong id="expectedNote" style="color:var(--cyan)">—</strong></div>
+            <div>SUA VOZ: <strong id="note" style="color:white">—</strong> <span id="cents"></span></div>
         </div>
     </div>
 
@@ -316,7 +345,21 @@ window.hasDownloaded = false;
 $('toggleLyricsBtn').addEventListener('click', () => {
     isLyricsVisible = !isLyricsVisible;
     $('karaokeContainer').style.display = isLyricsVisible ? 'flex' : 'none';
-    $('toggleLyricsBtn').textContent = isLyricsVisible ? '🎵 Mostrar Letra' : '🎵 Ocultar Letra';
+    $('toggleLyricsBtn').textContent = isLyricsVisible ? 'OCULTAR LETRA' : 'MOSTRAR LETRA';
+});
+$('karaokeFullscreenBtn')?.addEventListener('click', async () => {
+    const stage = $('karaokeContainer');
+    try {
+        if (!document.fullscreenElement) await stage.requestFullscreen();
+        else await document.exitFullscreen();
+    } catch (err) {
+        stage.classList.toggle('performance');
+    }
+});
+document.addEventListener('fullscreenchange', () => {
+    const active = document.fullscreenElement === $('karaokeContainer');
+    $('karaokeContainer')?.classList.toggle('performance', active);
+    if ($('karaokeFullscreenBtn')) $('karaokeFullscreenBtn').textContent = active ? 'SAIR DO PALCO' : '⛶ MODO PALCO';
 });
 
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
@@ -374,6 +417,7 @@ function resetUI() {
     if($('cents')) $('cents').textContent = '';
     if($('pitchStatus')) $('pitchStatus').textContent = 'Pronto para treinar';
     if($('playerSeek')) $('playerSeek').value = 0;
+    if($('karaokeProgressFill')) $('karaokeProgressFill').style.width = '0%';
     if($('posText')) $('posText').textContent = '00:00';
 }
 
@@ -487,6 +531,7 @@ function engineLoop() {
                 
                 // Tratamento especial para Pausas/Intro (onde Midi é 0)
                 if(targetMidiNow === 0) {
+                    if($('karaokeProgressFill')) $('karaokeProgressFill').style.width = '0%';
                     if($('expectedNote')) $('expectedNote').textContent = '—';
                     if($('karaokeCue')) $('karaokeCue').textContent = '⏳ AGUARDE...'; 
                     let lineHtml = `<span class="k-word active" style="--fill-pct: 100%; color: var(--cyan);">${active.syllable}</span>`;
@@ -495,6 +540,8 @@ function engineLoop() {
                     if($('expectedNote')) $('expectedNote').textContent = midiName(targetMidiNow);
                     let progress = ((pos - active.start) / active.duration) * 100;
                     progress = Math.max(0, Math.min(100, progress));
+                    const progressFill = $('karaokeProgressFill');
+                    if (progressFill) progressFill.style.width = progress + '%';
                     
                     let lineHtml = '';
                     let startIndex = Math.max(0, activeIdx - 2);
@@ -512,6 +559,7 @@ function engineLoop() {
                 }
                 window.activeTargetMidi = targetMidiNow;
             } else {
+                if($('karaokeProgressFill')) $('karaokeProgressFill').style.width = '0%';
                 if($('expectedNote')) $('expectedNote').textContent = '—'; window.activeTargetMidi = null;
                 const nextEvIdx = events.findIndex(e => e.verified && Number(e.start) > pos);
                 if (nextEvIdx !== -1) {
