@@ -221,7 +221,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         <span id="durText">00:00</span>
     </div>
 
-    <div id="playerStatus" style="text-align: center; font-size: 12px; color: var(--yellow); margin: 15px 0 20px; font-weight: 600;">Clique no Play para buscar o áudio do TV Box.</div>
+    <div id="playerStatus" style="text-align: center; font-size: 12px; color: var(--yellow); margin: 15px 0 20px; font-weight: 600;">Verificando áudio no servidor...</div>
 
     <button class="btn-record" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
     <button class="btn-sync" id="syncRemoteBtn">🌍 Iniciar Dueto Remoto</button>
@@ -252,7 +252,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
   
   <!-- LIXEIRA DOM -->
   <div id="legacy-ui" class="hidden">
-    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button>
+    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button><a id="adminLink"></a>
   </div>
 </main>
 
@@ -274,7 +274,7 @@ if (existingEvents.length === 0) { localStorage.setItem('estrelinha_events', JSO
 </script>
 
 <script>
-// --- MOTOR CENTRAL (WEBAUDIO, KARAOKÊ, YIN) ---
+// --- MOTOR CENTRAL (WEBAUDIO, KARAOKÊ E YIN) ---
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -300,7 +300,6 @@ const TRACKS=['instrument','lead','harmony']; const trackBuffers={instrument:nul
 const AV_AUDIO_API = 'https://mxqpro-h313-1.tail8b8cce.ts.net:8443/api/audio';
 const player={sources:[], gains:{}, master:null, compressor:null, playing:false, offset:0, startedAt:0, duration:0};
 let currentTrainingMode='silvane';
-let hasDownloaded = false; // Controle de Auto-Load Seguro
 
 function ensurePlayerGraph(){
     const ac=audioContext();
@@ -338,31 +337,6 @@ function resetUI() {
 function stopPlayerSources(){ for(const item of player.sources){ try{item.stop()}catch{} try{item.disconnect()}catch{} } player.sources=[]; }
 
 async function startPlayback(){
-    // AUTO-LOAD SEGURO: Só busca o arquivo do TV Box no PRIMEIRO clique do usuário na tela
-    if(!hasDownloaded) {
-        if(window.activeSong) {
-            $('playerStatus').textContent = 'Buscando arquivo no TV Box...';
-            try {
-                const files = await fetchServerAudioList();
-                const savedLocal = localStorage.getItem('av3:serverPlayback:'+window.activeSong.id) || '';
-                let fileToAutoLoad = (savedLocal && files.some(f => f.name === savedLocal)) ? savedLocal : (files.length > 0 ? files[0].name : null);
-                
-                if (fileToAutoLoad) {
-                    $('serverAudioSelect').value = fileToAutoLoad;
-                    const url = AV_AUDIO_API + '/' + encodeURIComponent(fileToAutoLoad);
-                    await loadAVTrackFromUrl('instrument', url, fileToAutoLoad);
-                    hasDownloaded = true;
-                } else {
-                    $('playerStatus').textContent = 'Nenhuma música encontrada no TV Box.';
-                    return;
-                }
-            } catch(e) {
-                $('playerStatus').textContent = 'Erro de rede. Tailscale ligado?';
-                return;
-            }
-        }
-    }
-
     const loaded=TRACKS.filter(k=>trackBuffers[k]);
     if(!loaded.length){ $('playerStatus').textContent='Aguarde o download do áudio...'; return;}
     
@@ -625,38 +599,33 @@ $('btnCalibrate').addEventListener('click', async () => {
     }, 1000);
 });
 
-// CARREGAR DO SERVIDOR
+// CARREGAR DO SERVIDOR - RESTAURADO CÓDIGO CLÁSSICO FUNCIONAL SEM LIMITES DE TEMPO!
 async function loadAVTrackFromUrl(key,url,name){
-    $('playerStatus').textContent='Processando áudio (aguarde)...';
+    stopPlayback(true); $('playerStatus').textContent='Baixando playback do servidor...';
     try {
-        const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 60000); 
         const ac=ensurePlayerGraph(); if(ac.state==='suspended') await ac.resume();
-        const response=await fetch(url,{mode:'cors',cache:'no-store', signal: controller.signal});
-        clearTimeout(timeoutId);
+        const response=await fetch(url,{mode:'cors',cache:'no-store'});
         if(!response.ok) throw new Error('HTTP '+response.status);
         const raw=await response.arrayBuffer(); const buffer=await ac.decodeAudioData(raw);
         trackBuffers[key]=buffer; player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));
         updatePlayerUI(); $('durText').textContent = fmtTime(player.duration);
-        $('playerStatus').textContent=`Áudio carregado!`; $('recordBtn').disabled = false;
-        hasDownloaded = true;
+        $('playerStatus').textContent=`Áudio carregado com sucesso!`; $('recordBtn').disabled = false;
         return true;
-    } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha no carregamento. O MXQ Pro está offline?`; throw e; }
+    } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha ao carregar áudio: ${e.message}`; throw e; }
 }
 
 async function fetchServerAudioList(){
     const status=$('serverAudioStatus'), select=$('serverAudioSelect'); status.textContent='Buscando no TV Box...';
     try {
-        const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 8000);
-        const response=await fetch(AV_AUDIO_API,{method:'GET',mode:'cors',cache:'no-store', signal: controller.signal});
-        clearTimeout(timeoutId);
-        if(!response.ok) throw new Error('Erro HTTP');
+        const response=await fetch(AV_AUDIO_API,{method:'GET',mode:'cors',cache:'no-store'});
+        if(!response.ok) throw new Error('Erro de conexão');
         const data=await response.json(); const files=data.files.filter(f=>/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
         select.replaceChildren();
-        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Pasta de áudio vazia.'; } 
-        else { files.forEach(f=>{ select.add(new Option(`${f.name}`,f.name)); }); status.textContent=`${files.length} arquivos prontos.`; }
+        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado na pasta uploads do MXQ Pro.'; } 
+        else { files.forEach(f=>{ select.add(new Option(`${f.name} (${(Number(f.bytes||0)/1048576).toFixed(1)} MB)`,f.name)); }); status.textContent=`Encontrados ${files.length} arquivos.`; }
         return files;
     } catch(e) {
-        select.replaceChildren(new Option('Erro de Conexão - TV Box','')); status.textContent='O celular não achou o MXQ Pro.'; return [];
+        select.replaceChildren(new Option('Erro de Conexão - Tailscale online?','')); status.textContent='Falha ao conectar com o backend do TV Box.'; return [];
     }
 }
 window.fetchServerAudioList = fetchServerAudioList;
@@ -843,14 +812,17 @@ async function loadSong(song){
     });
 
     if (window.fetchServerAudioList) {
-        // Pré-carrega apenas o NOME do arquivo na lista (o áudio de 5MB só vai baixar no clique do Play)
-        window.fetchServerAudioList().then(files => {
+        try {
+            const files = await window.fetchServerAudioList();
             const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
             let fileToAutoLoad = (savedLocal && files.some(f => f.name === savedLocal)) ? savedLocal : (files.length > 0 ? files[0].name : null);
             if (fileToAutoLoad) {
                 $('serverAudioSelect').value = fileToAutoLoad;
+                $('loadServerAudioBtn').click(); 
             }
-        }).catch(()=>{});
+        } catch(e) {
+            console.warn("Falha no Auto-Load do áudio:", e);
+        }
     }
 }
 
@@ -897,11 +869,6 @@ document.querySelectorAll('[data-training-mode]').forEach(btn => {
         $('trackHarmonyVolume').dispatchEvent(new Event('input'));
         
         $('playbackPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        // Simula clique no Play (Gera o gatilho visual de permissão para baixar o áudio)
-        if(!hasDownloaded) {
-            $('playerStatus').textContent = 'Clique no Play para buscar o áudio do TV Box.';
-        }
     });
 });
 </script>
