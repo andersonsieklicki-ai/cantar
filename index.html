@@ -12,31 +12,18 @@
    ESTILO APLICATIVO DE BANCO (PREMIUM MOBILE)
    ======================================================= */
 :root { 
-    --bg-dark: #09111e; 
-    --cyan: #00e5ff; 
-    --green: #00e676; 
-    --yellow: #ffea00; 
-    --red: #ff1744; 
-    --txt: #ffffff; 
-    --muted: #a0abbc;
-    --card-bg: rgba(18, 25, 40, 0.65);
-    --card-border: rgba(255, 255, 255, 0.1);
+    --bg-dark: #09111e; --cyan: #00e5ff; --green: #00e676; --yellow: #ffea00; --red: #ff1744; 
+    --txt: #ffffff; --muted: #a0abbc;
+    --card-bg: rgba(18, 25, 40, 0.65); --card-border: rgba(255, 255, 255, 0.1);
 }
 
 * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
 body { 
-    margin: 0; 
-    background-color: var(--bg-dark);
-    /* IMAGEM DE FUNDO FIXA E ESCURECIDA */
+    margin: 0; background-color: var(--bg-dark);
     background-image: linear-gradient(rgba(4, 9, 18, 0.75), rgba(4, 9, 18, 0.95)), url('1001384647.png');
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    color: var(--txt); 
-    padding-bottom: 60px;
-    -webkit-font-smoothing: antialiased;
+    background-position: center top; background-repeat: no-repeat; background-attachment: fixed; background-size: cover;
+    color: var(--txt); padding-bottom: 60px; -webkit-font-smoothing: antialiased;
 }
 
 .hidden { display: none !important; }
@@ -47,18 +34,10 @@ button:active { transform: scale(0.95); }
 button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 input, select { font: inherit; width: 100%; background: rgba(0,0,0,0.4); color: var(--txt); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px; margin-bottom: 12px; outline: none; }
 input:focus, select:focus { border-color: var(--cyan); }
+.ghost { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); border-radius: 12px; }
 
 /* CARTÕES DE VIDRO (GLASSMORPHISM) */
-.bank-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--card-border);
-    border-radius: 24px;
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-}
+.bank-card { background: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--card-border); border-radius: 24px; padding: 24px; margin-bottom: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
 
 /* TELA DE LOGIN */
 .authGate { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -75,7 +54,6 @@ input:focus, select:focus { border-color: var(--cyan); }
 .user-greeting { font-size: 18px; font-weight: bold; margin: 0; }
 .user-status { font-size: 12px; color: var(--green); font-weight: 600; display: flex; align-items: center; gap: 5px; }
 .user-status.offline { color: var(--muted); }
-.user-status::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 .btn-logout { background: transparent; color: var(--muted); padding: 8px; font-size: 20px; }
 
 /* CARTÃO DE SALDO (Placar/Score) */
@@ -102,12 +80,7 @@ input:focus, select:focus { border-color: var(--cyan); }
 .k-line { font-size: 24px; font-weight: 800; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; line-height: 1.4; }
 .k-word { color: rgba(255,255,255,0.4); transition: transform 0.1s ease; }
 .k-word.past { color: var(--green); text-shadow: 0 0 10px rgba(0, 230, 118, 0.4); }
-.k-word.active {
-    background: linear-gradient(to right, var(--yellow) var(--fill-pct, 0%), rgba(255,255,255,0.4) var(--fill-pct, 0%));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transform: scale(1.15) translateY(-2px);
-}
+.k-word.active { background: linear-gradient(to right, var(--yellow) var(--fill-pct, 0%), rgba(255,255,255,0.4) var(--fill-pct, 0%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; transform: scale(1.15) translateY(-2px); }
 
 .controls-row { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
 .btn-round { width: 55px; height: 55px; border-radius: 50%; background: rgba(255,255,255,0.1); display: grid; place-items: center; font-size: 20px; color: white; border: 1px solid var(--card-border); }
@@ -118,12 +91,12 @@ input:focus, select:focus { border-color: var(--cyan); }
 .time-text { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .btn-record { background: rgba(255, 23, 68, 0.2); color: var(--red); border: 1px solid rgba(255, 23, 68, 0.4); border-radius: 12px; padding: 14px; font-weight: bold; width: 100%; font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.btn-record.recording { background: var(--red); color: white; animation: pulse 1.5s infinite; border-color: transparent; }
+.btn-record.recording { background: var(--red); color: white; animation: pulse 1.5s infinite; }
 .btn-sync { background: rgba(0, 230, 118, 0.2); color: var(--green); border: 1px solid rgba(0, 230, 118, 0.4); border-radius: 12px; padding: 14px; font-weight: bold; width: 100%; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(255, 23, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0); } }
 
-/* SYNC OVERLAY */
+/* SYNC & CALIBRAÇÃO OVERLAYS */
 .sync-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(4, 9, 18, 0.95); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(10px); }
 .sync-overlay.visible { opacity: 1; pointer-events: all; }
 .sync-overlay h1 { font-size: 100px; color: var(--cyan); margin: 0; text-shadow: 0 0 40px var(--cyan); line-height: 1; }
@@ -134,13 +107,23 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 </head>
 <body>
 
+<!-- OVERLAYS: SINCRONISMO E CALIBRAÇÃO -->
 <div class="sync-overlay" id="syncOverlay">
     <p style="color: var(--muted); margin-bottom: 10px; font-weight: bold; letter-spacing: 2px;">DUETO REMOTO</p>
     <h1 id="syncCount">4</h1>
     <p style="color: var(--yellow); margin-top:20px; font-size: 22px; font-weight: bold;">Preparem-se!</p>
 </div>
 
+<div class="sync-overlay" id="calibOverlay">
+    <div class="brand-logo">⭐</div>
+    <h2 style="color: var(--cyan); margin-bottom: 10px;">Calibrando Voz</h2>
+    <p>Cante a letra <b>"Aaaaa"</b> bem forte até a contagem terminar.</p>
+    <h1 id="calibCount" style="color: var(--yellow); font-size: 100px;">3</h1>
+    <p id="calibStatus" style="color: var(--green); margin-top:20px;"></p>
+</div>
+
 <section id="authGate" class="authGate">
+  <!-- MÁGICA: LOGIN RÁPIDO (CONVITE) -->
   <div class="bank-card authCard hidden" id="magicLinkModal">
     <div class="brand-logo">⭐</div>
     <h1 style="margin: 0 0 5px; font-size: 22px;">Acesso Exclusivo</h1>
@@ -150,6 +133,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     <p class="small muted" id="magicMsg" style="margin-top: 15px;"></p>
   </div>
 
+  <!-- LOGIN PADRÃO (ADMIN) -->
   <div class="bank-card authCard" id="standardLogin">
     <div class="brand-logo">⭐</div>
     <h1 style="margin: 0 0 5px; font-size: 22px;">Gestão Vocal</h1>
@@ -166,6 +150,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 
 <main class="app-container appLocked hidden" id="appMain">
   
+  <!-- HEADER TIPO BANCO -->
   <header class="app-header">
     <div class="user-profile">
         <div class="user-avatar">🎙️</div>
@@ -177,6 +162,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     <button id="logoutBtn" class="btn-logout" aria-label="Sair">🚪</button>
   </header>
 
+  <!-- CARTÃO DE SALDO (PONTUAÇÃO GERAL E MÚSICA) -->
   <div class="bank-card balance-card">
     <div class="balance-label" id="teacherSongTitle">Carregando música...</div>
     <div class="balance-value" id="liveScore">100<span style="font-size: 30px; opacity: 0.5;">%</span></div>
@@ -187,6 +173,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     </div>
   </div>
 
+  <!-- AÇÕES RÁPIDAS (BOTOES REDONDOS) -->
   <div class="quick-actions">
     <div class="action-item action-sil" data-training-mode="silvane">
         <div class="action-icon">🎤</div>
@@ -202,14 +189,22 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     </div>
   </div>
 
+  <!-- PAINEL DO PLAYER (TELA DETALHADA) -->
   <div class="bank-card hidden" id="playbackPanel">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h3 id="playbackTitle" style="margin: 0; font-size: 16px;">Modo de Treino</h3>
-        <button id="toggleMicBtn" style="background: rgba(0, 229, 255, 0.15); color: var(--cyan); border: 1px solid rgba(0, 229, 255, 0.3); padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">LIGAR MIC</button>
+        <div style="display: flex; gap: 5px;">
+            <button id="btnCalibrate" style="background: rgba(255, 234, 0, 0.15); color: var(--yellow); border: 1px solid rgba(255, 234, 0, 0.3); padding: 6px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;" disabled>🎚️ CALIBRAR</button>
+            <button id="toggleMicBtn" style="background: rgba(0, 229, 255, 0.15); color: var(--cyan); border: 1px solid rgba(0, 229, 255, 0.3); padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">LIGAR MIC</button>
+        </div>
+    </div>
+
+    <div style="text-align: right; margin-bottom: 5px;">
+        <button id="toggleLyricsBtn" class="ghost" style="padding: 5px 10px; font-size: 11px;">🎵 Ocultar Letra</button>
     </div>
 
     <!-- TELA KARAOKE -->
-    <div class="karaoke-display">
+    <div class="karaoke-display" id="karaokeContainer">
         <div id="karaokeCue" class="k-cue">AGUARDANDO</div>
         <div id="karaokeLine" class="k-line">...</div>
         <div style="display: flex; justify-content: center; gap: 15px; margin-top: 15px; font-size: 11px; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
@@ -218,6 +213,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         </div>
     </div>
 
+    <!-- PLAYER CONTROLS -->
     <div class="controls-row">
         <button class="btn-round" id="playerStop" disabled>■</button>
         <button class="btn-round play" id="playerPlay">▶</button>
@@ -230,11 +226,13 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         <span id="durText">00:00</span>
     </div>
 
-    <div id="playerStatus" style="text-align: center; font-size: 12px; color: var(--yellow); margin: 15px 0 20px; font-weight: 600;">Aguardando download do áudio...</div>
+    <div id="playerStatus" style="text-align: center; font-size: 12px; color: var(--yellow); margin: 15px 0 20px; font-weight: 600;">O áudio será carregado em segundo plano...</div>
 
+    <!-- BOTÕES GRAVAÇÃO -->
     <button class="btn-record" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
     <button class="btn-sync" id="syncRemoteBtn">🌍 Iniciar Dueto Remoto</button>
 
+    <!-- CONFIGURAÇÕES -->
     <details>
       <summary>Ajustes de Áudio e Servidor</summary>
       
@@ -242,7 +240,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         <label class="small muted">Volume Playback</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
         <label class="small muted">Volume Sil</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
         <label class="small muted">Volume Marla</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
-        <label class="small muted">Sensibilidade do Microfone</label><input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
+        <label class="small muted">Sensibilidade do Microfone (Auto-ajustada via Calibração)</label><input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
         
         <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
             <label class="small muted">Arquivo do Servidor (TV Box)</label>
@@ -256,11 +254,17 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
       </div>
     </details>
   </div>
+
+  <!-- LIXEIRA DOM (Itens necessários pro JS rodar sem erro) -->
+  <div id="legacy-ui" class="hidden">
+    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button><a id="adminLink"></a>
+  </div>
 </main>
 
 <script>
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
 
+// INJETOR DO MAPA DEMO (Tempos refinados para um fluxo contínuo do Karaokê)
 const demoEstrelinhaMap = [
     { start: 2.0, duration: 0.8, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
     { start: 2.8, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
@@ -276,6 +280,7 @@ if (existingEvents.length === 0) { localStorage.setItem('estrelinha_events', JSO
 </script>
 
 <script>
+// --- MOTOR CENTRAL (WEBAUDIO, KARAOKÊ, PONTUAÇÃO E YIN UNIFICADOS) ---
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -284,10 +289,16 @@ function freqMidi(f){return 69+12*Math.log2(f/440)}
 function noteInfo(f){let m=freqMidi(f),n=Math.round(m),cents=Math.round((m-n)*100);return{midi:n,name:midiName(n),cents,freq:f}}
 
 let ctx=null, stream=null, analyser=null, source=null, manualMicInputGain=null;
-let raf=0, lastValid=0, evalFrames=0, scoreSum=0;
+let raf=0, lastValid=0, evalFrames=0, scoreSum=0, silenceFrames=0;
 let recording=false, mediaRecorder=null, recordChunks=[];
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null;
-let isMicOn = false;
+
+let isLyricsVisible = true;
+$('toggleLyricsBtn').addEventListener('click', () => {
+    isLyricsVisible = !isLyricsVisible;
+    $('karaokeContainer').style.display = isLyricsVisible ? 'flex' : 'none';
+    $('toggleLyricsBtn').textContent = isLyricsVisible ? '🎵 Ocultar Letra' : '🎵 Mostrar Letra';
+});
 
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
 
@@ -317,7 +328,7 @@ function playerPosition(){
 }
 
 function resetUI() {
-    evalFrames = 0; scoreSum = 0;
+    evalFrames = 0; scoreSum = 0; silenceFrames = 0;
     $('liveScore').textContent = '100';
     $('karaokeCue').textContent = 'AGUARDANDO';
     $('karaokeLine').innerHTML = '...';
@@ -378,6 +389,7 @@ $('playerSeek').addEventListener('change', e => {
     else { $('posText').textContent = fmtTime(player.offset); }
 });
 
+// FUNÇÃO YIN (Mais sensível)
 function yin(buffer,sampleRate){
     let size=buffer.length,rms=0; for(let i=0;i<size;i++) rms+=buffer[i]*buffer[i]; rms=Math.sqrt(rms/size); 
     if(rms<0.001) return null; 
@@ -390,9 +402,11 @@ function yin(buffer,sampleRate){
     if(f<65||f>1000) return null; return {freq:f, clarity:1-cmnd[chosen], rms};
 }
 
+// O SUPER LOOP (Engine visual e de áudio 60fps)
 function engineLoop() {
     let targetMidiNow = null;
     
+    // 1. ATUALIZA PLAYER E KARAOKÊ (Se estiver tocando)
     if (player.playing) {
         const pos = playerPosition();
         $('posText').textContent = fmtTime(pos);
@@ -406,13 +420,16 @@ function engineLoop() {
             $('karaokeLine').innerHTML = '';
         } else {
             let events = []; try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
+            
             const activeIdx = events.findIndex(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
             const active = activeIdx !== -1 ? events[activeIdx] : null;
             
             if (active) {
                 targetMidiNow = currentTrainingMode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
                 $('expectedNote').textContent = midiName(targetMidiNow);
+                window.activeTargetMidi = targetMidiNow;
                 
+                // MÁGICA DO GRADIENTE KARAOKÊ
                 let progress = ((pos - active.start) / active.duration) * 100;
                 progress = Math.max(0, Math.min(100, progress));
                 
@@ -427,16 +444,20 @@ function engineLoop() {
                         lineHtml += `<span class="k-word">${ev.syllable}</span>`;
                     }
                 }
+                
                 $('karaokeCue').textContent = '🎤 NO RITMO!';
                 $('karaokeLine').innerHTML = lineHtml;
+                
             } else {
                 $('expectedNote').textContent = '—';
+                window.activeTargetMidi = null;
                 const nextEvIdx = events.findIndex(e => e.verified && Number(e.start) > pos);
                 if (nextEvIdx !== -1) {
                     const nxt = events[nextEvIdx];
                     const timeToStart = nxt.start - pos;
                     if (timeToStart <= 4) {
                         $('karaokeCue').textContent = `Entra em ${Math.ceil(timeToStart)}...`;
+                        
                         let lineHtml = '';
                         for(let i = nextEvIdx; i < Math.min(events.length, nextEvIdx + 4); i++) {
                             lineHtml += `<span class="k-word">${events[i].syllable}</span>`;
@@ -454,7 +475,8 @@ function engineLoop() {
         }
     }
 
-    if (analyser && isMicOn) {
+    // 2. ATUALIZA O AFINADOR E PONTUAÇÃO (Se mic estiver ligado)
+    if (analyser && window.appIsMicActive) {
         const raw = new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(raw); 
         const p = yin(raw, ctx.sampleRate);
         
@@ -465,24 +487,26 @@ function engineLoop() {
             $('pitchStatus').textContent = 'Lendo...'; 
             lastValid = Date.now();
             
-            if (player.playing && targetMidiNow !== null) {
+            if (player.playing && window.activeTargetMidi !== null) {
                 evalFrames++;
                 let sungMidi = freqMidi(p.freq);
                 let normalizedSung = sungMidi;
-                while(normalizedSung < targetMidiNow - 6) normalizedSung += 12;
-                while(normalizedSung > targetMidiNow + 6) normalizedSung -= 12;
-                let centsDiff = Math.abs(Math.round((normalizedSung - targetMidiNow) * 100));
+                while(normalizedSung < window.activeTargetMidi - 6) normalizedSung += 12;
+                while(normalizedSung > window.activeTargetMidi + 6) normalizedSung -= 12;
+                let centsDiff = Math.abs(Math.round((normalizedSung - window.activeTargetMidi) * 100));
                 
                 if (centsDiff <= 50) scoreSum += 100;
                 else if (centsDiff <= 100) scoreSum += 50;
                 else scoreSum += 20;
+                silenceFrames = 0;
             }
         } else {
             if (Date.now() - lastValid > 800) { 
                 $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Aguardando voz'; 
             }
-            if (player.playing && targetMidiNow !== null) {
-                if (Date.now() - lastValid > 400) { evalFrames++; scoreSum += 0; }
+            if (player.playing && window.activeTargetMidi !== null) {
+                silenceFrames++;
+                if (silenceFrames > 5) { evalFrames++; scoreSum += 0; } // Punido após ~350ms de silêncio
             }
         }
         
@@ -494,16 +518,16 @@ function engineLoop() {
         }
     }
 
-    if (player.playing || (analyser && isMicOn)) {
+    if (player.playing || (analyser && window.appIsMicActive)) {
         raf = requestAnimationFrame(engineLoop);
     } else {
         raf = 0;
     }
 }
 
-// TOGGLE DO MICROFONE (Unificado num só botão sem erros de DOM)
+// TOGGLE DO MICROFONE 
 $('toggleMicBtn').addEventListener('click', async () => {
-    if(!isMicOn) {
+    if(!window.appIsMicActive) {
         try{
             if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) throw new Error('Mic não suportado.');
             stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});
@@ -515,11 +539,12 @@ $('toggleMicBtn').addEventListener('click', async () => {
             analyser = ctx.createAnalyser(); analyser.fftSize=4096; analyser.smoothingTimeConstant=0;
             manualMicInputGain.connect(analyser); 
             
-            isMicOn = true; window.appIsMicActive = true;
+            window.appIsMicActive = true;
             $('toggleMicBtn').textContent = '🔴 MIC ON';
             $('toggleMicBtn').style.background = 'rgba(255, 23, 68, 0.2)';
             $('toggleMicBtn').style.color = 'var(--red)';
             $('toggleMicBtn').style.borderColor = 'rgba(255, 23, 68, 0.4)';
+            $('btnCalibrate').disabled = false;
             
             if(!raf) engineLoop();
         }catch(e){ alert('Erro no mic: ' + e.message); }
@@ -527,15 +552,62 @@ $('toggleMicBtn').addEventListener('click', async () => {
         if(mediaRecorder && mediaRecorder.state==='recording') stopRecording();
         if(stream) stream.getTracks().forEach(t=>t.stop()); stream=null; analyser=null; source=null; manualMicInputGain=null;
         
-        isMicOn = false; window.appIsMicActive = false;
+        window.appIsMicActive = false;
         $('toggleMicBtn').textContent = 'LIGAR MIC';
         $('toggleMicBtn').style.background = 'rgba(0, 229, 255, 0.15)';
         $('toggleMicBtn').style.color = 'var(--cyan)';
         $('toggleMicBtn').style.borderColor = 'rgba(0, 229, 255, 0.3)';
+        $('btnCalibrate').disabled = true;
         $('note').textContent = '—'; $('cents').textContent = '';
     }
 });
 
+// CALIBRAÇÃO INTELIGENTE
+$('btnCalibrate').addEventListener('click', async () => {
+    if(!stream) { alert("Ligue o microfone primeiro!"); return; }
+    const overlay = $('calibOverlay'); const statusEl = $('calibStatus'); const countEl = $('calibCount');
+    overlay.classList.add('visible');
+    
+    let countdown = 3; statusEl.textContent = 'Prepare-se...'; countEl.textContent = countdown;
+    
+    let iv = setInterval(() => {
+        countdown--;
+        if(countdown > 0) { countEl.textContent = countdown; } 
+        else {
+            clearInterval(iv);
+            statusEl.textContent = 'Lendo volume (Cante o mais alto possível)...'; countEl.textContent = "🎤";
+            
+            let peakRms = 0;
+            let readInterval = setInterval(() => {
+                if(analyser) {
+                    const raw=new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(raw);
+                    let rms = 0; for(let i=0;i<raw.length;i++) rms += raw[i]*raw[i]; rms = Math.sqrt(rms/raw.length);
+                    if (rms > peakRms) peakRms = rms;
+                }
+            }, 100);
+
+            setTimeout(() => {
+                clearInterval(readInterval);
+                let idealGain = 1.0;
+                if (peakRms > 0 && peakRms < 0.1) idealGain = 0.2 / peakRms;
+                if (idealGain > 8) idealGain = 8;
+                
+                $('micGainSlider').value = idealGain;
+                if(manualMicInputGain) manualMicInputGain.gain.value = idealGain;
+                
+                if (peakRms < 0.05) {
+                    $('trackInstrumentVolume').value = 0.5;
+                    if(player.gains['instrument']) player.gains['instrument'].gain.value = 0.5;
+                }
+                
+                statusEl.textContent = 'Voz Calibrada com Sucesso!';
+                setTimeout(() => { overlay.classList.remove('visible'); }, 2000);
+            }, 2500);
+        }
+    }, 1000);
+});
+
+// CARREGAR DO SERVIDOR
 async function loadAVTrackFromUrl(key,url,name){
     stopPlayback(true); $('playerStatus').textContent='Baixando playback do servidor...';
     try {
@@ -589,7 +661,7 @@ TRACKS.forEach(key=>{
 
 $('micGainSlider').addEventListener('input', e => { if(manualMicInputGain && ctx) manualMicInputGain.gain.value = Number(e.target.value); });
 
-// GRAVAÇÃO
+// GRAVAÇÃO LOCAL
 async function startRecording() {
     if(!stream) { $('playerStatus').textContent = 'Ligue o microfone.'; return; }
     if(!trackBuffers.instrument) { $('playerStatus').textContent = 'Carregue o playback.'; return; }
@@ -696,7 +768,7 @@ async function enter(user){
         } else {
             $('adminLink').classList.add('hidden');
             let profile = await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));
-            if(!profile.exists()) throw new Error('Perfil não encontrado.');
+            if(!profile.exists()) throw new Error('Perfil não encontrado. Peça um novo link.');
             $('savedState').textContent = profile.data().nome || 'Cantora';
             updatePresence(true); 
             
@@ -716,7 +788,10 @@ async function enter(user){
         assignedSongs = songs; const sel = $('studentSongSelect'); sel.replaceChildren();
         if(!songs.length){ sel.add(new Option('Nenhuma música encontrada','')); return; }
         songs.forEach(s => sel.add(new Option(s.titulo||s.id, s.id))); sel.disabled = false;
-        loadSong(songs[0]); $('cloudState').textContent='Conectado';
+        
+        // Auto-load asincrono sem travar a UI
+        loadSong(songs[0]);
+        $('cloudState').textContent='Conectado';
     } catch(e) {
         await signOut(auth); gate.style.display='grid'; main.classList.add('appLocked'); $('authMessage').textContent = e.message;
     }
@@ -732,7 +807,7 @@ async function loadSong(song){
         const data = snap.data();
         if (data.action === 'start_sync' && data.sessionId && data.sessionId !== lastSessionId) {
             lastSessionId = data.sessionId;
-            if (!window.appIsMicActive) { alert("A outra cantora iniciou o Dueto, mas seu MICROFONE ESTÁ DESLIGADO!\nLigue seu microfone e sincronizem novamente."); return; }
+            if (!window.appIsMicActive) { alert("A outra pessoa iniciou o Dueto, mas seu MICROFONE ESTÁ DESLIGADO!\nLigue seu microfone e sincronizem novamente."); return; }
             
             const overlay = $('syncOverlay'); const countEl = $('syncCount');
             overlay.classList.add('visible'); let count = 4; countEl.textContent = count;
@@ -748,15 +823,15 @@ async function loadSong(song){
     });
 
     if (window.fetchServerAudioList) {
-        try {
-            const files = await window.fetchServerAudioList();
+        // Promise sem await para não travar a tela
+        window.fetchServerAudioList().then(files => {
             const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
             let fileToAutoLoad = (savedLocal && files.some(f => f.name === savedLocal)) ? savedLocal : (files.length > 0 ? files[0].name : null);
             if (fileToAutoLoad) {
                 $('serverAudioSelect').value = fileToAutoLoad;
                 $('loadServerAudioBtn').click(); 
             }
-        } catch(e) {}
+        }).catch(()=>{});
     }
 }
 
