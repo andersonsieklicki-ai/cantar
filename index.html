@@ -50,8 +50,8 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
 .advanced-settings summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: bold; outline: none; }
 
 /* CÍRCULO DO SCORE */
-.score-circle { width: 120px; height: 120px; margin: 20px auto; border-radius: 50%; border: 6px solid var(--green); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color 0.3s; background: #0c1524; }
-.score-circle span.value { font-size: 32px; font-weight: 800; color: white; line-height: 1; margin-bottom: 2px; }
+.score-circle { width: 100px; height: 100px; margin: 0 auto; border-radius: 50%; border: 6px solid var(--green); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color 0.3s; background: #0c1524; }
+.score-circle span.value { font-size: 24px; font-weight: 800; color: white; line-height: 1; margin-bottom: 2px; }
 .score-circle span.label { font-size: 10px; color: var(--muted); font-weight: bold; letter-spacing: 1px; }
 </style>
 </head>
@@ -132,9 +132,7 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
     
     <div id="micQuickStatus" class="small muted">O microfone está desligado.</div>
 
-    <!-- AREA DO AFINADOR E PONTUAÇÃO (SCORE) -->
     <div style="margin: 25px 0; display: grid; grid-template-columns: 1fr; gap: 20px;">
-      
       <div>
         <div class="score-circle" id="scoreCircle">
           <span class="value" id="liveScore">100%</span>
@@ -199,7 +197,7 @@ input, select { font: inherit; width: 100%; background: #0d1929; color: var(--tx
 </script>
 
 <script>
-// --- MOTOR DE ÁUDIO E YIN (EMBUTIDO) ---
+// --- MOTOR DE ÁUDIO, PONTUAÇÃO E YIN (EMBUTIDO) ---
 (()=>{'use strict';
 const $=id=>document.getElementById(id), names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}
@@ -210,9 +208,8 @@ let ctx=null, stream=null, analyser=null, source=null, raf=0, history=[], latest
 let recording=false, mediaRecorder=null, recordChunks=[], recStart=0;
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null, recordMicCompressor=null, recordPlaybackGain=null;
 
-// VARIÁVEIS DE PONTUAÇÃO (SCORE)
-let evalFrames = 0;
-let scoreSum = 0;
+// VARIÁVEIS DO SCORE
+let evalFrames = 0; let scoreSum = 0;
 
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
 
@@ -275,8 +272,6 @@ async function startPlayback(){
     }
     
     player.offset=offset; player.startedAt=when; player.playing=true; const myGeneration=player.generation;
-    
-    // Zera o placar no inicio da música
     resetScoreUI();
     
     clearInterval(player.timer);
@@ -291,7 +286,7 @@ async function startPlayback(){
         if (active) {
             const target = currentTrainingMode === 'marla' ? Number(active.harmonyMidi) : Number(active.leadMidi);
             $('expectedNote').textContent = midiName(target);
-            window.activeTargetMidi = target; // Passa pro detector YIN
+            window.activeTargetMidi = target;
         } else {
             $('expectedNote').textContent = '—';
             window.activeTargetMidi = null;
@@ -304,8 +299,7 @@ async function startPlayback(){
 function stopPlayback(reset=true){
     if(player.playing){ player.offset=playerPosition(); player.playing=false; }
     stopPlayerSources(); clearInterval(player.timer); player.timer=null;
-    if(reset) { player.offset=0; resetScoreUI(); }
-    window.activeTargetMidi = null;
+    if(reset) { player.offset=0; resetScoreUI(); window.activeTargetMidi = null; }
     updatePlayerUI();
 }
 function pausePlayback(){
@@ -341,7 +335,7 @@ async function fetchServerAudioList(){
         if(!response.ok) throw new Error('Erro de conexão');
         const data=await response.json(); const files=data.files.filter(f=>/^estrelinha-[a-zA-Z0-9-]+\.mp3$/.test(f.name));
         select.replaceChildren();
-        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado na pasta uploads do MXQ Pro.'; } 
+        if(!files.length){ select.add(new Option('Nenhum MP3 no servidor','')); status.textContent='Nenhum MP3 encontrado.'; } 
         else { files.forEach(f=>{ select.add(new Option(`${f.name} (${(Number(f.bytes||0)/1048576).toFixed(1)} MB)`,f.name)); }); status.textContent=`Encontrados ${files.length} arquivos.`; }
         return files;
     } catch(e) {
@@ -356,6 +350,8 @@ $('loadServerAudioBtn').addEventListener('click', async ()=>{
     try {
         await loadAVTrackFromUrl('instrument',url,filename);
         if(window.activeSong) localStorage.setItem('av3:serverPlayback:'+window.activeSong.id,filename);
+    } catch (e) {
+        console.warn(e);
     } finally { $('loadServerAudioBtn').disabled=false; }
 });
 $('refreshServerAudioBtn').addEventListener('click', fetchServerAudioList);
@@ -384,39 +380,36 @@ function yin(buffer,sampleRate){
 
 function liveLoop(){
     if(!analyser) return; const raw=new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(raw); const p=yin(raw,ctx.sampleRate);
-    
-    // SISTEMA DE PONTUAÇÃO E FEEDBACK VISUAL
     let targetMidiNow = window.activeTargetMidi || null;
 
     if(p && p.clarity>0.65){
         const ni=noteInfo(p.freq); $('note').textContent = ni.name; $('cents').textContent = (ni.cents>0?'+':'')+ni.cents;
         $('pitchStatus').textContent = 'Analisando voz...'; lastValid=Date.now();
         
-        // Avaliação de Score só ocorre se tiver alvo
         if(player.playing && targetMidiNow !== null) {
             evalFrames++;
             let centsDiff = Math.abs(Math.round((freqMidi(p.freq) - targetMidiNow) * 100));
-            if (centsDiff <= 30) scoreSum += 100;      // Na mosca (Verde)
-            else if (centsDiff <= 60) scoreSum += 50;  // Quase (Amarelo)
-            else scoreSum += 10;                       // Desafinou (Vermelho)
+            if (centsDiff <= 30) scoreSum += 100;
+            else if (centsDiff <= 60) scoreSum += 50;
+            else scoreSum += 10;
         }
     } else {
         if(Date.now()-lastValid>1000){ $('note').textContent = '—'; $('cents').textContent = ''; $('pitchStatus').textContent = 'Sustente uma vogal para o afinador ler'; }
-        
-        // Penalidade por não cantar quando deveria
         if(player.playing && targetMidiNow !== null) {
-            evalFrames++;
-            scoreSum += 0;
+            evalFrames++; scoreSum += 0;
         }
     }
 
-    // Atualiza a Bolinha de Score
     if(evalFrames > 0) {
         let currentScore = Math.round(scoreSum / evalFrames);
         $('liveScore').textContent = currentScore + '%';
-        if(currentScore >= 80) $('scoreCircle').style.borderColor = 'var(--green)';
-        else if(currentScore >= 60) $('scoreCircle').style.borderColor = 'var(--yellow)';
-        else $('scoreCircle').style.borderColor = 'var(--red)';
+        
+        const circle = $('scoreCircle');
+        if(circle) {
+            if(currentScore >= 80) circle.style.borderColor = 'var(--green)';
+            else if(currentScore >= 60) circle.style.borderColor = 'var(--yellow)';
+            else circle.style.borderColor = 'var(--red)';
+        }
     }
 
     raf=setTimeout(()=>requestAnimationFrame(liveLoop),75);
@@ -633,19 +626,38 @@ async function loadSong(song){
     });
 
     if (window.fetchServerAudioList) {
-        const files = await window.fetchServerAudioList();
-        const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
-        
-        let fileToAutoLoad = null;
-        if (savedLocal && files.some(f => f.name === savedLocal)) {
-            fileToAutoLoad = savedLocal;
-        } else if (files.length > 0) {
-            fileToAutoLoad = files[0].name;
-        }
+        try {
+            const files = await window.fetchServerAudioList();
+            const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
+            
+            let fileToAutoLoad = null;
+            if (savedLocal && files.some(f => f.name === savedLocal)) {
+                fileToAutoLoad = savedLocal;
+            } else if (files.length > 0) {
+                fileToAutoLoad = files[0].name;
+            }
 
-        if (fileToAutoLoad) {
-            $('serverAudioSelect').value = fileToAutoLoad;
-            $('loadServerAudioBtn').click();
+            if (fileToAutoLoad) {
+                $('serverAudioSelect').value = fileToAutoLoad;
+                
+                // Dispara o carregamento do MP3 encontrado
+                $('playerStatus').textContent='Baixando playback do servidor...';
+                const url = 'https://mxqpro-h313-1.tail8b8cce.ts.net:8443/api/audio/' + encodeURIComponent(fileToAutoLoad);
+                
+                // Usando a função global para evitar conflito de escopo
+                if(window.appTrackBuffers) {
+                    const res = await fetch(url,{mode:'cors',cache:'no-store'});
+                    if(res.ok) {
+                        const raw = await res.arrayBuffer();
+                        const ac = window.appCtx();
+                        window.appTrackBuffers['instrument'] = await ac.decodeAudioData(raw);
+                        $('playerStatus').textContent=`Áudio carregado com sucesso!`; 
+                        $('recordBtn').disabled = false;
+                    }
+                }
+            }
+        } catch(e) {
+            console.warn("Falha no Auto-Load do áudio:", e);
         }
     }
 }
