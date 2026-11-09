@@ -96,7 +96,7 @@ input:focus, select:focus { border-color: var(--cyan); }
 
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(255, 23, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0); } }
 
-/* SYNC OVERLAY */
+/* SYNC & CALIBRAÇÃO OVERLAYS */
 .sync-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(4, 9, 18, 0.95); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(10px); }
 .sync-overlay.visible { opacity: 1; pointer-events: all; }
 .sync-overlay h1 { font-size: 100px; color: var(--cyan); margin: 0; text-shadow: 0 0 40px var(--cyan); line-height: 1; }
@@ -123,7 +123,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 </div>
 
 <section id="authGate" class="authGate">
-  <!-- MÁGICA: LOGIN RÁPIDO (CONVITE) -->
   <div class="bank-card authCard hidden" id="magicLinkModal">
     <div class="brand-logo">⭐</div>
     <h1 style="margin: 0 0 5px; font-size: 22px;">Acesso Exclusivo</h1>
@@ -133,7 +132,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     <p class="small muted" id="magicMsg" style="margin-top: 15px;"></p>
   </div>
 
-  <!-- LOGIN PADRÃO (ADMIN) -->
   <div class="bank-card authCard" id="standardLogin">
     <div class="brand-logo">⭐</div>
     <h1 style="margin: 0 0 5px; font-size: 22px;">Gestão Vocal</h1>
@@ -150,7 +148,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 
 <main class="app-container appLocked hidden" id="appMain">
   
-  <!-- HEADER TIPO BANCO -->
   <header class="app-header">
     <div class="user-profile">
         <div class="user-avatar">🎙️</div>
@@ -173,7 +170,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     </div>
   </div>
 
-  <!-- AÇÕES RÁPIDAS (BOTOES REDONDOS) -->
   <div class="quick-actions">
     <div class="action-item action-sil" data-training-mode="silvane">
         <div class="action-icon">🎤</div>
@@ -189,7 +185,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     </div>
   </div>
 
-  <!-- PAINEL DO PLAYER (TELA DETALHADA) -->
+  <!-- PAINEL DO PLAYER -->
   <div class="bank-card hidden" id="playbackPanel">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h3 id="playbackTitle" style="margin: 0; font-size: 16px;">Modo de Treino</h3>
@@ -213,7 +209,6 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         </div>
     </div>
 
-    <!-- PLAYER CONTROLS -->
     <div class="controls-row">
         <button class="btn-round" id="playerStop" disabled>■</button>
         <button class="btn-round play" id="playerPlay">▶</button>
@@ -226,13 +221,12 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         <span id="durText">00:00</span>
     </div>
 
-    <div id="playerStatus" style="text-align: center; font-size: 12px; color: var(--yellow); margin: 15px 0 20px; font-weight: 600;">Aguardando download do áudio...</div>
+    <div id="playerStatus" style="text-align: center; font-size: 12px; color: var(--yellow); margin: 15px 0 20px; font-weight: 600;">Clique no Play para buscar o áudio do TV Box.</div>
 
-    <!-- BOTÕES GRAVAÇÃO -->
     <button class="btn-record" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
     <button class="btn-sync" id="syncRemoteBtn">🌍 Iniciar Dueto Remoto</button>
 
-    <!-- CONFIGURAÇÕES (Ocultas por padrão para não poluir) -->
+    <!-- CONFIGURAÇÕES (Ajustes de Servidor e TV Box) -->
     <details>
       <summary>Ajustes de Áudio e Servidor</summary>
       
@@ -240,7 +234,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         <label class="small muted">Volume Playback (Banda)</label><input type="range" id="trackInstrumentVolume" min="0" max="1" step="0.01" value="0.85">
         <label class="small muted">Volume Sil</label><input type="range" id="trackLeadVolume" min="0" max="1" step="0.01" value="0.45">
         <label class="small muted">Volume Marla</label><input type="range" id="trackHarmonyVolume" min="0" max="1" step="0.01" value="0.45">
-        <label class="small muted">Sensibilidade do Microfone</label><input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
+        <label class="small muted">Sensibilidade do Microfone (Auto-ajustada via Calibração)</label><input type="range" id="micGainSlider" min="1" max="8" step="0.5" value="1.5">
         
         <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
             <label class="small muted">Arquivo do Servidor (TV Box)</label>
@@ -255,17 +249,16 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     </details>
 
   </div>
-
-  <!-- LIXEIRA DOM (Elementos legados necessários pro JS) -->
+  
+  <!-- LIXEIRA DOM -->
   <div id="legacy-ui" class="hidden">
-    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><button id="stopMicLegacy"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button><a id="adminLink"></a>
+    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button>
   </div>
 </main>
 
 <script>
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
 
-// INJETOR DO MAPA DEMO (Tempos refinados para um fluxo contínuo do Karaokê)
 const demoEstrelinhaMap = [
     { start: 2.0, duration: 0.8, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
     { start: 2.8, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
@@ -307,6 +300,7 @@ const TRACKS=['instrument','lead','harmony']; const trackBuffers={instrument:nul
 const AV_AUDIO_API = 'https://mxqpro-h313-1.tail8b8cce.ts.net:8443/api/audio';
 const player={sources:[], gains:{}, master:null, compressor:null, playing:false, offset:0, startedAt:0, duration:0};
 let currentTrainingMode='silvane';
+let hasDownloaded = false; // Controle de Auto-Load Seguro
 
 function ensurePlayerGraph(){
     const ac=audioContext();
@@ -344,6 +338,31 @@ function resetUI() {
 function stopPlayerSources(){ for(const item of player.sources){ try{item.stop()}catch{} try{item.disconnect()}catch{} } player.sources=[]; }
 
 async function startPlayback(){
+    // AUTO-LOAD SEGURO: Só busca o arquivo do TV Box no PRIMEIRO clique do usuário na tela
+    if(!hasDownloaded) {
+        if(window.activeSong) {
+            $('playerStatus').textContent = 'Buscando arquivo no TV Box...';
+            try {
+                const files = await fetchServerAudioList();
+                const savedLocal = localStorage.getItem('av3:serverPlayback:'+window.activeSong.id) || '';
+                let fileToAutoLoad = (savedLocal && files.some(f => f.name === savedLocal)) ? savedLocal : (files.length > 0 ? files[0].name : null);
+                
+                if (fileToAutoLoad) {
+                    $('serverAudioSelect').value = fileToAutoLoad;
+                    const url = AV_AUDIO_API + '/' + encodeURIComponent(fileToAutoLoad);
+                    await loadAVTrackFromUrl('instrument', url, fileToAutoLoad);
+                    hasDownloaded = true;
+                } else {
+                    $('playerStatus').textContent = 'Nenhuma música encontrada no TV Box.';
+                    return;
+                }
+            } catch(e) {
+                $('playerStatus').textContent = 'Erro de rede. Tailscale ligado?';
+                return;
+            }
+        }
+    }
+
     const loaded=TRACKS.filter(k=>trackBuffers[k]);
     if(!loaded.length){ $('playerStatus').textContent='Aguarde o download do áudio...'; return;}
     
@@ -524,6 +543,43 @@ function engineLoop() {
     }
 }
 
+// TOGGLE DO MICROFONE 
+$('toggleMicBtn').addEventListener('click', async () => {
+    if(!window.appIsMicActive) {
+        try{
+            if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) throw new Error('Mic não suportado.');
+            stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});
+            audioContext(); if(ctx.state==='suspended') await ctx.resume();
+            
+            source = ctx.createMediaStreamSource(stream); 
+            manualMicInputGain = ctx.createGain(); manualMicInputGain.gain.value = Number($('micGainSlider').value || 1.5);
+            source.connect(manualMicInputGain);
+            analyser = ctx.createAnalyser(); analyser.fftSize=4096; analyser.smoothingTimeConstant=0;
+            manualMicInputGain.connect(analyser); 
+            
+            window.appIsMicActive = true;
+            $('toggleMicBtn').textContent = '🔴 MIC ON';
+            $('toggleMicBtn').style.background = 'rgba(255, 23, 68, 0.2)';
+            $('toggleMicBtn').style.color = 'var(--red)';
+            $('toggleMicBtn').style.borderColor = 'rgba(255, 23, 68, 0.4)';
+            $('btnCalibrate').disabled = false;
+            
+            if(!raf) engineLoop();
+        }catch(e){ alert('Erro no mic: ' + e.message); }
+    } else {
+        if(mediaRecorder && mediaRecorder.state==='recording') stopRecording();
+        if(stream) stream.getTracks().forEach(t=>t.stop()); stream=null; analyser=null; source=null; manualMicInputGain=null;
+        
+        window.appIsMicActive = false;
+        $('toggleMicBtn').textContent = 'LIGAR MIC';
+        $('toggleMicBtn').style.background = 'rgba(0, 229, 255, 0.15)';
+        $('toggleMicBtn').style.color = 'var(--cyan)';
+        $('toggleMicBtn').style.borderColor = 'rgba(0, 229, 255, 0.3)';
+        $('btnCalibrate').disabled = true;
+        $('note').textContent = '—'; $('cents').textContent = '';
+    }
+});
+
 // CALIBRAÇÃO INTELIGENTE
 $('btnCalibrate').addEventListener('click', async () => {
     if(!stream) { alert("Ligue o microfone primeiro!"); return; }
@@ -569,53 +625,11 @@ $('btnCalibrate').addEventListener('click', async () => {
     }, 1000);
 });
 
-// FUNÇÕES DE MICROFONE
-async function startMic(){
-    try{
-        if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) throw new Error('Mic não suportado.');
-        stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:1},video:false});
-        audioContext(); if(ctx.state==='suspended') await ctx.resume();
-        
-        source = ctx.createMediaStreamSource(stream); 
-        manualMicInputGain = ctx.createGain(); manualMicInputGain.gain.value = Number($('micGainSlider').value || 1.5);
-        source.connect(manualMicInputGain);
-        analyser = ctx.createAnalyser(); analyser.fftSize=4096; analyser.smoothingTimeConstant=0;
-        manualMicInputGain.connect(analyser); 
-        
-        window.appIsMicActive = true;
-        $('toggleMicBtn').textContent = '🔴 MIC ON';
-        $('toggleMicBtn').style.background = 'rgba(255, 23, 68, 0.2)';
-        $('toggleMicBtn').style.color = 'var(--red)';
-        $('toggleMicBtn').style.borderColor = 'rgba(255, 23, 68, 0.4)';
-        $('btnCalibrate').disabled = false;
-        
-        if(!raf) engineLoop();
-    }catch(e){ alert('Erro no mic: ' + e.message); }
-}
-
-function stopMic(){
-    if(mediaRecorder && mediaRecorder.state==='recording') stopRecording();
-    if(stream) stream.getTracks().forEach(t=>t.stop()); stream=null; analyser=null; source=null; manualMicInputGain=null;
-    
-    window.appIsMicActive = false;
-    $('toggleMicBtn').textContent = 'LIGAR MIC';
-    $('toggleMicBtn').style.background = 'rgba(0, 229, 255, 0.15)';
-    $('toggleMicBtn').style.color = 'var(--cyan)';
-    $('toggleMicBtn').style.borderColor = 'rgba(0, 229, 255, 0.3)';
-    $('btnCalibrate').disabled = true;
-    $('note').textContent = '—'; $('cents').textContent = '';
-}
-
-$('toggleMicBtn').addEventListener('click', async () => {
-    if(!window.appIsMicActive) { await startMic(); } 
-    else { stopMic(); }
-});
-
-// FETCH DO TV BOX E PLAYBACK
+// CARREGAR DO SERVIDOR
 async function loadAVTrackFromUrl(key,url,name){
-    stopPlayback(true); $('playerStatus').textContent='Baixando playback do servidor...';
+    $('playerStatus').textContent='Processando áudio (aguarde)...';
     try {
-        const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 segundos p/ download de arquivo grande
+        const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 60000); 
         const ac=ensurePlayerGraph(); if(ac.state==='suspended') await ac.resume();
         const response=await fetch(url,{mode:'cors',cache:'no-store', signal: controller.signal});
         clearTimeout(timeoutId);
@@ -624,14 +638,15 @@ async function loadAVTrackFromUrl(key,url,name){
         trackBuffers[key]=buffer; player.duration=Math.max(...TRACKS.filter(k=>trackBuffers[k]).map(k=>trackBuffers[k].duration));
         updatePlayerUI(); $('durText').textContent = fmtTime(player.duration);
         $('playerStatus').textContent=`Áudio carregado!`; $('recordBtn').disabled = false;
+        hasDownloaded = true;
         return true;
-    } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha ao carregar áudio.`; throw e; }
+    } catch(e) { trackBuffers[key]=null; $('playerStatus').textContent=`Falha no carregamento. O MXQ Pro está offline?`; throw e; }
 }
 
 async function fetchServerAudioList(){
     const status=$('serverAudioStatus'), select=$('serverAudioSelect'); status.textContent='Buscando no TV Box...';
     try {
-        const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 8000); // Rápido para a lista
+        const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 8000);
         const response=await fetch(AV_AUDIO_API,{method:'GET',mode:'cors',cache:'no-store', signal: controller.signal});
         clearTimeout(timeoutId);
         if(!response.ok) throw new Error('Erro HTTP');
@@ -665,7 +680,7 @@ TRACKS.forEach(key=>{
 
 $('micGainSlider').addEventListener('input', e => { if(manualMicInputGain && ctx) manualMicInputGain.gain.value = Number(e.target.value); });
 
-// GRAVAÇÃO
+// GRAVAÇÃO LOCAL
 async function startRecording() {
     if(!stream) { $('playerStatus').textContent = 'Ligue o microfone.'; return; }
     if(!trackBuffers.instrument) { $('playerStatus').textContent = 'Carregue o playback.'; return; }
@@ -690,13 +705,15 @@ async function startRecording() {
         };
         mediaRecorder.start(250); recording=true;
         $('recordBtn').innerHTML = '🔴 Gravando...'; $('recordBtn').classList.add('recording');
-        startPlayback();
+        
+        if(!player.playing) startPlayback();
+        
     } catch(e) { $('playerStatus').textContent = 'Erro ao gravar.'; recording = false; }
 }
 
 function stopRecording(){
     if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-    recording=false; stopPlayback();
+    recording=false; stopPlayback(false);
     $('recordBtn').innerHTML = '🔴 Gravar Ensaio Local'; $('recordBtn').classList.remove('recording');
 }
 
@@ -793,9 +810,7 @@ async function enter(user){
         if(!songs.length){ sel.add(new Option('Nenhuma música encontrada','')); return; }
         songs.forEach(s => sel.add(new Option(s.titulo||s.id, s.id))); sel.disabled = false;
         
-        // Auto-load sem travar a thread
         loadSong(songs[0]);
-        
         $('cloudState').textContent='Conectado';
     } catch(e) {
         await signOut(auth); gate.style.display='grid'; main.classList.add('appLocked'); $('authMessage').textContent = e.message;
@@ -828,12 +843,12 @@ async function loadSong(song){
     });
 
     if (window.fetchServerAudioList) {
+        // Pré-carrega apenas o NOME do arquivo na lista (o áudio de 5MB só vai baixar no clique do Play)
         window.fetchServerAudioList().then(files => {
             const savedLocal = localStorage.getItem('av3:serverPlayback:'+song.id) || '';
             let fileToAutoLoad = (savedLocal && files.some(f => f.name === savedLocal)) ? savedLocal : (files.length > 0 ? files[0].name : null);
             if (fileToAutoLoad) {
                 $('serverAudioSelect').value = fileToAutoLoad;
-                $('loadServerAudioBtn').click(); 
             }
         }).catch(()=>{});
     }
@@ -882,6 +897,11 @@ document.querySelectorAll('[data-training-mode]').forEach(btn => {
         $('trackHarmonyVolume').dispatchEvent(new Event('input'));
         
         $('playbackPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Simula clique no Play (Gera o gatilho visual de permissão para baixar o áudio)
+        if(!hasDownloaded) {
+            $('playerStatus').textContent = 'Clique no Play para buscar o áudio do TV Box.';
+        }
     });
 });
 </script>
