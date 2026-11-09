@@ -152,6 +152,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 </section>
 
 <main class="app-container appLocked hidden" id="appMain">
+  
   <header class="app-header">
     <div class="user-profile">
         <div class="user-avatar">🎙️</div>
@@ -169,7 +170,7 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     <div class="balance-value" id="liveScore">100<span style="font-size: 30px; opacity: 0.5;">%</span></div>
     <div class="balance-info" id="pitchStatus">Aguardando início</div>
     <div style="margin-top: 20px;">
-        <select id="studentSongSelect" disabled style="margin: 0; font-size: 13px; padding: 10px; background: rgba(0,0,0,0.5); text-align: center; border-radius: 20px;"><option>Buscando biblioteca...</option></select>
+        <select id="studentSongSelect" disabled style="margin: 0; font-size: 13px; padding: 10px; background: rgba(255,255,255,0.05); text-align: center; border-radius: 20px;"><option>Buscando biblioteca...</option></select>
     </div>
   </div>
 
@@ -221,12 +222,12 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
         <span id="posText">00:00</span>
         <span id="durText">00:00</span>
     </div>
-    <div id="playerStatus" style="text-align: center; font-size: 13px; color: var(--yellow); margin: 15px 0 25px; font-weight: 600;">Selecione uma aula acima para iniciar.</div>
+    <div id="playerStatus" style="text-align: center; font-size: 13px; color: var(--yellow); margin: 15px 0 25px; font-weight: 600;">Aguardando seleção...</div>
 
     <button class="btn-record" id="recordBtn" disabled>🔴 Gravar Ensaio Local</button>
     <button class="btn-sync" id="syncRemoteBtn" disabled>🌍 Iniciar Dueto Remoto</button>
 
-    <!-- CONFIGURAÇÕES LIMPAS -->
+    <!-- CONFIGURAÇÕES -->
     <details>
       <summary>⚙️ Ajustes de Áudio</summary>
       <div style="padding-top: 15px;">
@@ -238,41 +239,64 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
     </details>
   </div>
   
+  <!-- LIXEIRA DOM -->
   <div id="legacy-ui" class="hidden">
-    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><button id="stopMicLegacy"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button><a id="adminLink"></a>
+    <button id="installApp"></button><span id="installHelp"></span><span id="micState"></span><span id="audioEngineState"></span><input type="file" id="trackInstrumentFile"><span id="trackInstrumentPct"></span><span id="trackInstrumentName"></span><input type="file" id="trackLeadFile"><span id="trackLeadPct"></span><span id="trackLeadName"></span><input type="file" id="trackHarmonyFile"><span id="trackHarmonyPct"></span><span id="trackHarmonyName"></span><button id="playerCountIn"></button><input type="checkbox" id="playerLoopEnabled"><input id="playerLoopStart"><input id="playerLoopEnd"><div id="serverAudioPicker"></div><button id="addMusicalEvent"></button><button id="saveMusicalEvents"></button><button id="publishMusicalEvents"></button><button id="loadMusicalEvents"></button><button id="exportMusicalEvents"></button><input type="file" id="importMusicalEvents"><table id="musicalEventTable"><tbody></tbody></table><span id="musicalEventStatus"></span><button id="micQuickStart"></button><button id="micQuickStop"></button><button id="stopMicLegacy"></button><select id="singer"></select><span id="freq"></span><div id="meterDot"></div><canvas id="liveChart"></canvas><span id="signal"></span><span id="recordSyncBadge"></span><button id="stopRecord"></button><button id="downloadCsv"></button><button id="openServerLibraryBtn"></button><span id="recordState"></span><span id="statAccuracy"></span><span id="statCents"></span><span id="statLow"></span><span id="statHigh"></span><span id="sessionAdvice"></span><select id="tonic"></select><select id="scale"></select><select id="manualLead"></select><select id="interval"></select><select id="direction"></select><select id="chordQuality"></select><select id="chordRoot"></select><button id="useDetected"></button><button id="calcHarmony"></button><button id="playLead"></button><button id="playTarget"></button><button id="playPair"></button><span id="leadDisplay"></span><span id="targetDisplay"></span><span id="chordFit"></span><span id="harmonyExplain"></span><div id="pianoKeys"></div><input type="file" id="audioFile"><span id="fileName"></span><button id="analyzeFile"></button><button id="downloadFileCsv"></button><span id="fileProgress"></span><canvas id="fileChart"></canvas><span id="fileMin"></span><span id="fileMax"></span><span id="fileRange"></span><span id="fileStable"></span><span id="fileReport"></span><button id="addSongRow"></button><button id="saveSongMap"></button><button id="exportSongCsv"></button><table id="songTable"><tbody></tbody></table><span id="mapStatus"></span><input id="bandKey"><input id="bandBpm"><input id="bandMeter"><textarea id="bandNotes"></textarea><button id="saveBand"></button><span id="bandStatus"></span><div id="calendarTasks"></div><span id="planProgress"></span><input id="metronomeBpm"><select id="metronomeBeat"></select><button id="metroStart"></button><button id="metroStop"></button><span id="metroCount"></span><div id="checklist"></div><span id="checkCount"></span><i id="checkBar"></i><button id="resetChecks"></button><b id="doneCount"></b><i id="overallBar"></i><span id="percentDone"></span><select id="lessonNote"></select><button id="playLessonNote"></button><button id="playLessonLong"></button><button id="playFiveTone"></button><button id="playArpeggio"></button><a id="adminLink"></a><span id="cloudState"></span>
   </div>
 </main>
 
 <script>
 (()=>{const originalGet=Storage.prototype.getItem,originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;const keys=new Set(['estrelinha_checks','estrelinha_days','estrelinha_songmap','estrelinha_band','estrelinha_events']);const scoped=k=>{if(!keys.has(String(k)))return String(k);const uid=window.__AV_USER_UID||'anon',song=window.__AV_SONG_ID||'none';return `av3:${uid}:${song}:${k}`};Storage.prototype.getItem=function(k){return originalGet.call(this,this===localStorage?scoped(k):k)};Storage.prototype.setItem=function(k,v){return originalSet.call(this,this===localStorage?scoped(k):k,v)};Storage.prototype.removeItem=function(k){return originalRemove.call(this,this===localStorage?scoped(k):k)};})();
 
+// MAPA COMPLETO DA PRIMEIRA PARTE DA MÚSICA "ESTRELINHA"
 const demoEstrelinhaMap = [
-    { start: 22.0, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
-    { start: 24.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
-    { start: 25.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
-    { start: 27.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "e", verified: true },
-    { start: 28.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
-    { start: 30.0, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
-    { start: 31.5, duration: 2.0, leadMidi: 65, harmonyMidi: 69, syllable: "fora", verified: true },
-    { start: 34.0, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "como", verified: true },
-    { start: 36.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "de", verified: true },
-    { start: 37.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "costume", verified: true },
-    { start: 39.5, duration: 2.0, leadMidi: 62, harmonyMidi: 65, syllable: "vamos", verified: true },
-    { start: 42.0, duration: 2.5, leadMidi: 64, harmonyMidi: 67, syllable: "conversar", verified: true },
-    { start: 45.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "Pra", verified: true },
-    { start: 46.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "te", verified: true },
-    { start: 47.5, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "alegrar", verified: true },
-    { start: 50.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "tem", verified: true },
-    { start: 51.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "até", verified: true },
-    { start: 52.5, duration: 2.5, leadMidi: 64, harmonyMidi: 67, syllable: "vagalume", verified: true }
+    { start: 21.0, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "Enxugue", verified: true },
+    { start: 23.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "esse", verified: true },
+    { start: 24.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "rosto", verified: true },
+    { start: 26.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "e", verified: true },
+    { start: 27.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "venha", verified: true },
+    { start: 29.0, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
+    { start: 30.5, duration: 2.0, leadMidi: 65, harmonyMidi: 69, syllable: "fora", verified: true },
+    { start: 33.0, duration: 1.5, leadMidi: 64, harmonyMidi: 67, syllable: "como", verified: true },
+    { start: 35.0, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "de", verified: true },
+    { start: 36.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "costume", verified: true },
+    { start: 38.5, duration: 1.5, leadMidi: 62, harmonyMidi: 65, syllable: "vamos", verified: true },
+    { start: 41.0, duration: 2.5, leadMidi: 64, harmonyMidi: 67, syllable: "conversar", verified: true },
+    { start: 44.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "Pra", verified: true },
+    { start: 45.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "te", verified: true },
+    { start: 46.5, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "alegrar", verified: true },
+    { start: 49.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "tem", verified: true },
+    { start: 50.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "até", verified: true },
+    { start: 51.5, duration: 2.5, leadMidi: 64, harmonyMidi: 67, syllable: "vagalume", verified: true },
+    { start: 55.5, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "Tem", verified: true },
+    { start: 56.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "dia", verified: true },
+    { start: 57.5, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "que", verified: true },
+    { start: 58.5, duration: 1.0, leadMidi: 65, harmonyMidi: 69, syllable: "vai", verified: true },
+    { start: 59.5, duration: 2.0, leadMidi: 64, harmonyMidi: 67, syllable: "piorar", verified: true },
+    { start: 62.0, duration: 1.5, leadMidi: 62, harmonyMidi: 65, syllable: "Saudade", verified: true },
+    { start: 64.0, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "vai", verified: true },
+    { start: 65.0, duration: 2.0, leadMidi: 60, harmonyMidi: 64, syllable: "apertar", verified: true },
+    { start: 67.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "Até", verified: true },
+    { start: 68.5, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "que", verified: true },
+    { start: 69.5, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "cê", verified: true },
+    { start: 70.5, duration: 0.5, leadMidi: 62, harmonyMidi: 65, syllable: "tá", verified: true },
+    { start: 71.5, duration: 0.5, leadMidi: 60, harmonyMidi: 64, syllable: "indo", verified: true },
+    { start: 72.5, duration: 2.0, leadMidi: 59, harmonyMidi: 62, syllable: "bem", verified: true },
+    { start: 75.0, duration: 1.0, leadMidi: 60, harmonyMidi: 64, syllable: "Faz", verified: true },
+    { start: 76.5, duration: 1.0, leadMidi: 62, harmonyMidi: 65, syllable: "falta", verified: true },
+    { start: 78.0, duration: 1.0, leadMidi: 64, harmonyMidi: 67, syllable: "aqui", verified: true },
+    { start: 79.5, duration: 0.5, leadMidi: 65, harmonyMidi: 69, syllable: "pra", verified: true },
+    { start: 80.5, duration: 0.5, leadMidi: 64, harmonyMidi: 67, syllable: "mim", verified: true },
+    { start: 81.5, duration: 2.0, leadMidi: 64, harmonyMidi: 67, syllable: "também", verified: true }
 ];
-let existingEvents = []; try { existingEvents = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e){}
-if (existingEvents.length === 0) { localStorage.setItem('estrelinha_events', JSON.stringify(demoEstrelinhaMap)); }
+// Sobrescreve forçadamente o demo antigo com a letra completa
+localStorage.setItem('estrelinha_events', JSON.stringify(demoEstrelinhaMap));
 </script>
 
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const names=['Dó','Dó#','Ré','Ré#','Mi','Fá','Fá#','Sol','Sol#','Lá','Lá#','Si'], shortNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 function midiName(m){return shortNames[((m%12)+12)%12]+(Math.floor(m/12)-1)}
 function freqMidi(f){return 69+12*Math.log2(f/440)}
@@ -307,7 +331,7 @@ function ensurePlayerGraph(){
         player.master.connect(player.compressor); player.compressor.connect(ac.destination);
     }
     TRACKS.forEach(key=>{
-        if(!player.gains[key]){ const g=ac.createGain(); g.gain.value=Number($('track'+(key.charAt(0).toUpperCase()+key.slice(1))+'Volume')?.value||0.5); g.connect(player.master); player.gains[key]=g; }
+        if(!player.gains[key]){ const g=ac.createGain(); g.gain.value=Number($('track'+cap(key)+'Volume')?.value||0.5); g.connect(player.master); player.gains[key]=g; }
     });
     return ac;
 }
@@ -340,6 +364,7 @@ function updatePlayerUI(){
 function resetUI() {
     evalFrames = 0; scoreSum = 0; silenceFrames = 0;
     $('liveScore').textContent = '100';
+    $('scoreCircle').style.borderColor = 'var(--green)';
     $('karaokeCue').textContent = 'AGUARDANDO';
     $('karaokeLine').innerHTML = '...';
     $('expectedNote').textContent = '—';
@@ -347,12 +372,11 @@ function resetUI() {
     $('cents').textContent = '';
     $('pitchStatus').textContent = 'Pronto para treinar';
     $('playerSeek').value = 0;
-    $('posText').textContent = '00:00';
+    if($('posText')) $('posText').textContent = '00:00';
 }
 
 function stopPlayerSources(){ for(const item of player.sources){ try{item.stop()}catch{} try{item.disconnect()}catch{} } player.sources=[]; }
 
-// MÁGICA: CARREGAMENTO DIRETO DO GITHUB
 window.loadAVTrackFromUrl = async function(key, url, name) {
     stopPlayback(true);
     $('playerStatus').textContent = 'Baixando playback do servidor (GitHub)...';
@@ -709,25 +733,27 @@ async function activateInviteForUser(user,code,name=''){
 
 async function updatePresence(isOnline) {
     if (!currentUser) return;
-    try { await setDoc(doc(db, 'status', currentUser.uid), { nome: currentUser.displayName || $('savedState').textContent, online: isOnline, lastSeen: serverTimestamp() }, { merge: true });
+    try { await setDoc(doc(db, 'status', currentUser.uid), { nome: currentUser.displayName || (if($('savedState')) $('savedState').textContent), online: isOnline, lastSeen: serverTimestamp() }, { merge: true });
     } catch(e) {}
 }
 window.addEventListener('beforeunload', () => updatePresence(false));
 
 async function enter(user){
-    currentUser=user; gate.style.display='none'; main.classList.remove('appLocked', 'hidden'); $('cloudState').textContent='Validando…';
+    currentUser=user; gate.style.display='none'; main.classList.remove('appLocked', 'hidden'); 
+    if($('cloudState')) $('cloudState').textContent='Validando…';
     try {
         const adminSnap = await getDoc(doc(db,'admins',user.uid));
         isAdmin = (String(user.email||'').toLowerCase()==='andersonsieklicki@gmail.com' && user.emailVerified) || (adminSnap.exists() && adminSnap.data().ativo);
         let songs=[];
         if(isAdmin){
-            $('adminLink').classList.remove('hidden'); $('savedState').textContent='Anderson (Admin)';
+            if($('adminLink')) $('adminLink').classList.remove('hidden'); 
+            if($('savedState')) $('savedState').textContent='Anderson (Admin)';
             const snap = await getDocs(collection(db,'musicas')); songs = snap.docs.map(d=>({id:d.id,...d.data()}));
         } else {
-            $('adminLink').classList.add('hidden');
+            if($('adminLink')) $('adminLink').classList.add('hidden');
             let profile = await getDoc(doc(db,'usuarios',user.uid,'perfil','dados'));
             if(!profile.exists()) throw new Error('Perfil não encontrado. Peça um novo link.');
-            $('savedState').textContent = profile.data().nome || 'Cantora';
+            if($('savedState')) $('savedState').textContent = profile.data().nome || 'Cantora';
             updatePresence(true); 
             
             if(presenceUnsubscribe) presenceUnsubscribe();
@@ -737,26 +763,26 @@ async function enter(user){
                     const data = d.data();
                     if (d.id !== currentUser.uid && data.online) { html += `<span style="color:var(--green); font-weight:bold;">🟢 ${data.nome}</span> `; found = true; }
                 });
-                indicator.innerHTML = found ? html : `<span style="color:var(--muted);" class="offline">🔴 Offline</span>`;
+                if(indicator) indicator.innerHTML = found ? html : `<span style="color:var(--muted);" class="offline">🔴 Offline</span>`;
             });
             const ids = profile.data().musicaIds || []; if(!ids.length) throw new Error('Sem músicas.');
             const results = await Promise.all(ids.map(id=>getDoc(doc(db,'musicas',id))));
             songs = results.filter(x=>x.exists()&&x.data().publicada).map(x=>({id:x.id,...x.data()}));
         }
-        assignedSongs = songs; const sel = $('studentSongSelect'); sel.replaceChildren();
-        if(!songs.length){ sel.add(new Option('Nenhuma música encontrada','')); return; }
-        songs.forEach(s => sel.add(new Option(s.titulo||s.id, s.id))); sel.disabled = false;
+        assignedSongs = songs; const sel = $('studentSongSelect'); if(sel) sel.replaceChildren();
+        if(!songs.length){ if(sel) sel.add(new Option('Nenhuma música encontrada','')); return; }
+        if(sel) { songs.forEach(s => sel.add(new Option(s.titulo||s.id, s.id))); sel.disabled = false; }
         
         loadSong(songs[0]);
-        $('cloudState').textContent='Conectado';
+        if($('cloudState')) $('cloudState').textContent='Conectado';
     } catch(e) {
-        await signOut(auth); gate.style.display='grid'; main.classList.add('appLocked'); $('authMessage').textContent = e.message;
+        await signOut(auth); gate.style.display='grid'; main.classList.add('appLocked'); if($('authMessage')) $('authMessage').textContent = e.message;
     }
 }
 
 async function loadSong(song){
     window.activeSong = song;
-    $('teacherSongTitle').textContent = song.titulo || 'Treino Vocal';
+    if($('teacherSongTitle')) $('teacherSongTitle').textContent = song.titulo || 'Treino Vocal';
     
     if(syncUnsubscribe) syncUnsubscribe();
     syncUnsubscribe = onSnapshot(doc(db, 'sessoes_treino', song.id), (snap) => {
@@ -767,12 +793,13 @@ async function loadSong(song){
             if (!window.appIsMicActive) { alert("A outra pessoa iniciou o Dueto, mas seu MICROFONE ESTÁ DESLIGADO!\nLigue seu microfone e sincronizem novamente."); return; }
             
             const overlay = $('syncOverlay'); const countEl = $('syncCount');
-            overlay.classList.add('visible'); let count = 4; countEl.textContent = count;
+            if(overlay) overlay.classList.add('visible'); 
+            let count = 4; if(countEl) countEl.textContent = count;
             let iv = setInterval(() => {
                 count--;
-                if(count > 0) countEl.textContent = count;
+                if(count > 0) { if(countEl) countEl.textContent = count; }
                 else {
-                    clearInterval(iv); overlay.classList.remove('visible');
+                    clearInterval(iv); if(overlay) overlay.classList.remove('visible');
                     window.appStartRecording();
                 }
             }, 1000);
