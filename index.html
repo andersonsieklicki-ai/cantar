@@ -135,6 +135,25 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
 @media(max-width:520px){.karaoke-display{padding:28px 12px 17px;min-height:225px}.k-line{gap:7px 10px;min-height:96px;font-size:clamp(25px,7vw,36px)}.k-cue{margin-bottom:18px}.karaoke-note-row{font-size:9px;gap:16px}.karaoke-display.performance{min-height:42vh}.karaoke-display.performance .k-line{font-size:clamp(34px,9vw,48px)}}
 @media(prefers-reduced-motion:reduce){.k-word,.karaoke-display,.karaoke-progress-fill{transition:none}}
 
+
+.lyric-sync-tools{
+  display:grid;grid-template-columns:auto 34px 72px 34px;align-items:center;
+  gap:8px;margin:0 0 12px;padding:11px 12px;border-radius:14px;
+  background:rgba(4,10,20,.78);border:1px solid rgba(116,220,255,.18)
+}
+.lyric-sync-tools>span{font-size:10px;letter-spacing:.12em;color:#a9b8ca;font-weight:800}
+.lyric-sync-tools button{
+  height:32px;border-radius:9px;background:rgba(0,229,255,.12);
+  color:#6eeaff;border:1px solid rgba(0,229,255,.28);font-size:20px;font-weight:800
+}
+.lyric-sync-tools strong{text-align:center;color:#ffe16b;font-size:13px;font-variant-numeric:tabular-nums}
+.lyric-sync-tools input{grid-column:1/-1;margin:0;padding:0;height:18px;accent-color:#00d9ff}
+.lyric-sync-tools small{grid-column:1/-1;color:#8191a7;font-size:10px;line-height:1.4}
+@media(max-width:520px){
+ .lyric-sync-tools{grid-template-columns:1fr 34px 72px 34px}
+ .lyric-sync-tools>span{grid-column:1/-1}
+}
+
 </style>
 </head>
 <body>
@@ -227,6 +246,16 @@ details summary { cursor: pointer; padding: 15px 0; color: var(--muted); font-si
             <button id="toggleLyricsBtn" class="ghost" type="button">OCULTAR LETRA</button>
         </div>
     </div>
+    <div class="lyric-sync-tools" aria-label="Ajuste fino da sincronização da letra">
+        <span>AJUSTE DA LEGENDA</span>
+        <button type="button" id="lyricOffsetMinus" aria-label="Adiantar legenda">−</button>
+        <strong id="lyricOffsetValue">+3,0 s</strong>
+        <button type="button" id="lyricOffsetPlus" aria-label="Atrasar legenda">+</button>
+        <input id="lyricOffsetRange" type="range" min="-5" max="8" step="0.1" value="3"
+               aria-label="Deslocamento da legenda em segundos">
+        <small>Use − para adiantar e + para atrasar a letra em relação ao playback.</small>
+    </div>
+
     <div class="karaoke-display" id="karaokeContainer" aria-live="polite">
         <div id="karaokeCue" class="k-cue">AGUARDANDO PLAYBACK</div>
         <div id="karaokeLine" class="k-line">Prepare a voz...</div>
@@ -322,7 +351,8 @@ const demoEstrelinhaMap = [
     { start: 58.5, duration: 2.0, leadMidi: 64, harmonyMidi: 67, syllable: "também", verified: true }
 ];
 
-localStorage.setItem('estrelinha_events', JSON.stringify(demoEstrelinhaMap));
+window.__ESTRELINHA_DEMO_MAP__ = demoEstrelinhaMap;
+try { localStorage.setItem('estrelinha_events', JSON.stringify(demoEstrelinhaMap)); } catch(e) {}
 </script>
 
 <script>
@@ -340,6 +370,19 @@ let recording=false, mediaRecorder=null, recordChunks=[];
 let recordMixDestination=null, recordMicSource=null, recordMicGain=null, recordMicFilter=null;
 
 let isLyricsVisible = true;
+let lyricOffsetSeconds = 3.0; // Mapa antigo começava aos 20s; ajuste inicial reduzido para entrada aos 17s.
+function updateLyricOffsetUI() {
+    const range = $('lyricOffsetRange');
+    const label = $('lyricOffsetValue');
+    if (range) range.value = String(lyricOffsetSeconds);
+    if (label) label.textContent = (lyricOffsetSeconds >= 0 ? '+' : '') +
+        lyricOffsetSeconds.toFixed(1).replace('.', ',') + ' s';
+}
+function changeLyricOffset(delta) {
+    lyricOffsetSeconds = Math.max(-5, Math.min(8, Math.round((lyricOffsetSeconds + delta) * 10) / 10));
+    updateLyricOffsetUI();
+}
+
 window.hasDownloaded = false;
 
 $('toggleLyricsBtn').addEventListener('click', () => {
@@ -361,6 +404,14 @@ document.addEventListener('fullscreenchange', () => {
     $('karaokeContainer')?.classList.toggle('performance', active);
     if ($('karaokeFullscreenBtn')) $('karaokeFullscreenBtn').textContent = active ? 'SAIR DO PALCO' : '⛶ MODO PALCO';
 });
+
+$('lyricOffsetMinus')?.addEventListener('click', () => changeLyricOffset(-0.25));
+$('lyricOffsetPlus')?.addEventListener('click', () => changeLyricOffset(0.25));
+$('lyricOffsetRange')?.addEventListener('input', e => {
+    lyricOffsetSeconds = Number(e.target.value) || 0;
+    updateLyricOffsetUI();
+});
+updateLyricOffsetUI();
 
 function audioContext(){ if(!ctx) ctx=new(window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); return ctx; }
 
@@ -513,6 +564,7 @@ function engineLoop() {
     
     if (player.playing) {
         const pos = playerPosition();
+        const lyricPos = pos + lyricOffsetSeconds;
         if($('posText')) $('posText').textContent = fmtTime(pos);
         if($('playerSeek')) $('playerSeek').value = player.duration ? String(Math.round(pos/player.duration*1000)) : 0;
         
@@ -521,9 +573,14 @@ function engineLoop() {
             if($('playerStatus')) $('playerStatus').textContent = `Concluído!`; 
             if($('karaokeCue')) $('karaokeCue').textContent = 'FIM DA MÚSICA'; 
             if($('karaokeLine')) $('karaokeLine').innerHTML = '';
+            if($('karaokeProgressFill')) $('karaokeProgressFill').style.width = '0%';
         } else {
-            let events = []; try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
-            const activeIdx = events.findIndex(e => e.verified && pos >= Number(e.start) && pos <= (Number(e.start) + Number(e.duration)));
+            let events = [];
+            try { events = JSON.parse(localStorage.getItem('estrelinha_events') || '[]'); } catch(e) {}
+            if (!Array.isArray(events) || !events.length) {
+                events = Array.isArray(window.__ESTRELINHA_DEMO_MAP__) ? window.__ESTRELINHA_DEMO_MAP__ : [];
+            }
+            const activeIdx = events.findIndex(e => e.verified && lyricPos >= Number(e.start) && lyricPos <= (Number(e.start) + Number(e.duration)));
             const active = activeIdx !== -1 ? events[activeIdx] : null;
             
             if (active) {
@@ -538,7 +595,7 @@ function engineLoop() {
                     if($('karaokeLine')) $('karaokeLine').innerHTML = lineHtml;
                 } else {
                     if($('expectedNote')) $('expectedNote').textContent = midiName(targetMidiNow);
-                    let progress = ((pos - active.start) / active.duration) * 100;
+                    let progress = ((lyricPos - active.start) / active.duration) * 100;
                     progress = Math.max(0, Math.min(100, progress));
                     const progressFill = $('karaokeProgressFill');
                     if (progressFill) progressFill.style.width = progress + '%';
@@ -561,9 +618,9 @@ function engineLoop() {
             } else {
                 if($('karaokeProgressFill')) $('karaokeProgressFill').style.width = '0%';
                 if($('expectedNote')) $('expectedNote').textContent = '—'; window.activeTargetMidi = null;
-                const nextEvIdx = events.findIndex(e => e.verified && Number(e.start) > pos);
+                const nextEvIdx = events.findIndex(e => e.verified && Number(e.start) > lyricPos);
                 if (nextEvIdx !== -1) {
-                    const nxt = events[nextEvIdx]; const timeToStart = nxt.start - pos;
+                    const nxt = events[nextEvIdx]; const timeToStart = nxt.start - lyricPos;
                     if (timeToStart <= 4) {
                         if($('karaokeCue')) $('karaokeCue').textContent = `Entra em ${Math.ceil(timeToStart)}...`;
                         let lineHtml = '';
